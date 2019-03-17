@@ -15,11 +15,10 @@ But when it came to writing custom trading software there was no charting librar
 <br>
 
 <div align="center">
-![White preview](assets/README-db7bd751.gif)</div>
-
+![White preview](assets/README-db7bd751.gif)
+</div>
 
 <br>
-
 
 ## Features
 
