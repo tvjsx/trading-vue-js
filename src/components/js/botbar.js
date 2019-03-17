@@ -1,0 +1,168 @@
+
+import Const from '../../stuff/constants.js'
+import Utils from '../../stuff/utils.js'
+
+const { HOUR, DAY, WEEK, MONTH, YEAR, MONTHMAP } = Const
+
+const {
+    SIDEBAR, SBMIN, BOTBAR, PANWIDTH, PANHEIGHT
+} = Const.ChartConfig
+
+export default class Botbar {
+
+    constructor(canvas, comp) {
+
+        this.canvas = canvas
+        this.ctx = canvas.getContext('2d')
+        this.comp = comp
+        this.$p = comp.$props
+        this.data = this.$p.sub
+        this.range = this.$p.range
+        this.layout = this.$p.layout
+
+    }
+
+    update() {
+
+        this.grid_0 = this.layout.grids[0]
+
+        const width = this.layout.botbar.width
+        const height = this.layout.botbar.height
+
+        const h = height - 0.5
+        const sb = this.layout.grids[0].sb
+
+        this.ctx.fillStyle = this.$p.colors.colorBack
+        this.ctx.font = this.$p.font
+        this.ctx.fillRect(0, 0, width, height)
+
+        this.ctx.strokeStyle = this.$p.colors.colorScale
+
+        this.ctx.beginPath()
+        this.ctx.moveTo(0, 0.5)
+        this.ctx.lineTo(Math.floor(width + 1), 0.5)
+        this.ctx.stroke()
+
+        this.ctx.fillStyle = this.$p.colors.colorText
+        this.ctx.beginPath()
+
+        for (var p of this.layout.botbar.xs) {
+
+            let lbl = this.format_date(p[1][0])
+
+            if (p[0] > width - sb) continue
+
+            this.ctx.moveTo(p[0] - 0.5, 0)
+            this.ctx.lineTo(p[0] - 0.5, 4.5)
+
+            this.ctx.globalAlpha = this.lbl_alpha(p[1][0])
+            this.ctx.textAlign = 'center'
+            this.ctx.fillText(lbl, p[0], 18)
+            this.ctx.globalAlpha = 1
+
+        }
+
+        this.ctx.stroke()
+        if (this.$p.cursor.x && this.$p.cursor.t) this.panel()
+
+    }
+
+    panel() {
+
+        let lbl = this.format_cursor_x()
+        this.ctx.fillStyle = this.$p.colors.colorPanel
+
+        let measure = this.ctx.measureText(lbl + '    ')
+        let panwidth = measure.width
+        let cursor = this.nearest()
+        let x = cursor - panwidth * 0.5 - 0.5
+        let y = - 0.5
+        this.ctx.fillRect(x, y, panwidth, PANHEIGHT)
+
+        this.ctx.fillStyle = this.$p.colors.colorTextHL
+        this.ctx.textAlign = 'center'
+        this.ctx.fillText(lbl, cursor, y + 16)
+
+    }
+
+    // TODO: implement time zones
+    format_date(t) {
+
+        let d = new Date(t)
+
+        if (Utils.year_start(t) === t) return d.getFullYear()
+        if (Utils.month_start(t) === t) return MONTHMAP[d.getMonth()]
+        if (Utils.day_start(t) === t) return d.getDate()
+
+        let h = Utils.add_zero(d.getHours())
+        let m = Utils.add_zero(d.getMinutes())
+        let s = Utils.add_zero(d.getSeconds())
+        return h + ":" + m
+
+    }
+
+    format_cursor_x() {
+
+        let t = this.$p.cursor.t
+        let ti = this.$p.interval
+        let d = new Date(t)
+
+        if (ti === YEAR) {
+            return d.getFullYear()
+        }
+
+        if (ti <= MONTH) {
+            var yr = '`' + `${d.getFullYear()}`.slice(-2)
+            var mo = MONTHMAP[d.getMonth()]
+            var dd = '01'
+        }
+        if (ti <= WEEK) dd = d.getDate()
+
+        let date = `${dd} ${mo} ${yr}`
+        let time = ''
+
+        if (ti < DAY) {
+            let h = Utils.add_zero(d.getHours())
+            let m = Utils.add_zero(d.getMinutes())
+            time = h + ":" + m
+        }
+
+        return `${date}  ${time}`
+
+    }
+
+    // Highlights the begining of a time interval
+    // TODO: improve. Problem: let's say we have a new month,
+    // but if there is no grid line in place, there
+    // will be no month name on t-axis. Sad.
+    // Solution: manipulate the grid, skew it, you know
+    lbl_alpha(t) {
+
+        let ti = this.$p.interval
+
+        if (t === 0) return 1.0
+        if (Utils.month_start(t) === t) return 1.0
+        if (Utils.day_start(t) === t) return 1.0
+        if (t % HOUR === 0) return 1.0
+
+        return 0.5
+
+    }
+
+    // Nearest data object (when locked)
+    nearest() {
+        if (this.$p.cursor.locked) {
+            let t = this.$p.cursor.values[0].ohlcv[0]
+            let x = Math.floor(this.grid_0.t_magnet(t))
+            return x
+        }
+        return this.$p.cursor.x
+    }
+
+
+    mousemove(e) { }
+    mouseout(e) { }
+    mouseup(e) { }
+    mousedown(e) { }
+
+}

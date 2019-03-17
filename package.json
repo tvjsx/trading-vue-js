@@ -1,0 +1,40 @@
+{
+  "name": "trading-vue-js",
+  "version": "0.1.1",
+  "description": "Hackable charting lib for traders",
+  "main": "./dist/trading-vue.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack-dev-server --config webpack/dev.config.js --mode development --progress --hot",
+    "build": "webpack  --config webpack/build.config.js --mode production --progress"
+  },
+  "keywords": [],
+  "author": "C451",
+  "license": "MIT",
+  "files": [
+      "dist/*",
+      "src/*"
+  ],
+  "devDependencies": {
+    "@babel/core": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
+    "babel-loader": "^8.0.5",
+    "css-loader": "^2.1.1",
+    "html-webpack-plugin": "^3.2.0",
+    "request": "^2.88.0",
+    "tulind": "^0.8.15",
+    "uglifyjs-webpack-plugin": "^2.1.2",
+    "vue-loader": "^15.7.0",
+    "vue-style-loader": "^4.1.2",
+    "vue-template-compiler": "^2.6.8",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.2.1"
+  },
+  "dependencies": {
+    "hammerjs": "^2.0.8",
+    "hamsterjs": "^1.1.3",
+    "moment": "^2.24.0",
+    "vue": "^2.6.8"
+  }
+}
