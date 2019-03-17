@@ -1,6 +1,9 @@
 <template>
 <trading-vue :data="chart" :width="this.width" :height="this.height"
     :overlays="overlays"
+    :color-back="colors.colorBack"
+    :color-grid="colors.colorGrid"
+    :color-text="colors.colorText"
 >
 <!-- GRUG EDITION
     :color-back="colors.colorBack"
@@ -153,7 +156,9 @@ export default {
             width: window.innerWidth,
             height: window.innerHeight,
             colors: {
-                colorBack: '#0b1725',
+                colorBack: '#fff',
+                colorGrid: '#eee',
+                colorText: '#333',
                 colorCandleUp: '#c2a07f',
                 colorCandleDw: '#e54150',
                 colorVolUp: '#bd9e9742'

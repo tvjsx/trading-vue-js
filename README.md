@@ -12,6 +12,13 @@
 I've been using [TradingView.com](https://www.tradingview.com) for several years and oh boy, I like this service.
 But when it came to writing custom trading software there was no charting library with the same level of usability, not even near. There **WAS** no lib.
 
+<br>
+
+![White preview](assets/README-db7bd751.gif)
+
+<br>
+
+
 ## Features
 
 * Scrolling & zoomming as we all like
@@ -32,7 +39,7 @@ Coming Soon
 
 ## How to use
 
-Also Coming Soon
+Coming Sooner
 
 ## Roadmap
 
