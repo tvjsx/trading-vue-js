@@ -14,7 +14,9 @@ But when it came to writing custom trading software there was no charting librar
 
 <br>
 
-![White preview](assets/README-db7bd751.gif)
+<div align="center">
+![White preview](assets/README-db7bd751.gif)</div>
+
 
 <br>
 
