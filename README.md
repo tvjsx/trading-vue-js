@@ -40,12 +40,40 @@ Coming Soon
 
 ## How to use
 
-Coming Sooner
+Here is a minimal working example:
+
+```html
+<template>
+<trading-vue :data="this.$data"></trading-vue>
+</template>
+<script>
+
+import TradingVue from './TradingVue.vue'
+
+export default {
+    name: 'app',
+    components: { TradingVue },
+    data() {
+        return {
+            ohlcv: [
+                [ 1551128400000, 33,  37.1, 14,  14,  196 ],
+                [ 1551132000000, 13.7, 30, 6.6,  30,  206 ],
+                [ 1551135600000, 29.9, 33, 21.3, 21.8, 74 ],
+                [ 1551139200000, 21.7, 25.9, 18, 24,  140 ],
+                [ 1551142800000, 24.1, 24.1, 24, 24.1, 29 ],
+            ]
+        }
+    }
+}
+
+</script>
+
+```
 
 ## Roadmap
 
 * Solve known issues (search for "TODO: IMPORTANT")
-* Performance improvments
+* Performance improvements
 * Add more built-in overlays
 * Add toolbar (drawing tools)
 * Custom loayout / layout persistence
