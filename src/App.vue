@@ -24,13 +24,17 @@ export default {
     },
     mounted() {
         window.addEventListener('resize', this.onResize)
+        setTimeout(() => {
+            // Async data setup
+            this.$set(this, 'chart', Data)
+        }, 0)
     },
     beforeDestroy() {
         window.removeEventListener('resize', this.onResize)
     },
     data() {
         return {
-            chart: Data,
+            chart: {}, // Data will be here,
             width: window.innerWidth,
             height: window.innerHeight,
             colors: {

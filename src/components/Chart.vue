@@ -43,8 +43,7 @@ export default {
         this.ctx = new Context(this.$props)
 
         // Initial layout (All measurments for the chart)
-        this.calc_interval()
-        this.default_range()
+        this.init_range()
         this.sub = this.subset()
         this._layout = new Layout(this)
 
@@ -71,6 +70,7 @@ export default {
         calc_interval() {
             // TODO: make better detection mechanism.
             // What if the second candle is missing?
+            if (this.ohlcv.length < 2) return
             this.interval = this.ohlcv[1][0] - this.ohlcv[0][0]
         },
         default_range() {
@@ -78,16 +78,17 @@ export default {
             const ml = Const.ChartConfig.MINIMUM_LEN + 0.5
             const l = this.ohlcv.length - 1
 
+            if (this.ohlcv.length < 2) return
             if (this.ohlcv.length < dl) {
                 var s = 0, d = ml
             } else {
                 var s = l - dl, d = 0.5
             }
 
-            this.range = [
+            Utils.overwrite(this.range, [
                 this.ohlcv[s][0] - this.interval * d,
                 this.ohlcv[l][0] + this.interval * ml
-            ]
+            ])
         },
         subset() {
             return this.ohlcv.filter(x =>
@@ -121,6 +122,10 @@ export default {
         section_props(i) {
             return i === 0 ?
                 this.main_section : this.sub_section
+        },
+        init_range() {
+            this.calc_interval()
+            this.default_range()
         }
     },
     computed: {
@@ -158,7 +163,7 @@ export default {
     data() {
         return {
             // Current data slice
-            sub: this.$props.data.ohlcv.slice(),
+            sub: [],
 
             // Time range
             range: [],
@@ -187,6 +192,7 @@ export default {
         },
         data: {
             handler: function() {
+                if (!this.sub.length) this.init_range()
                 const sub = this.subset()
                 Utils.overwrite(this.sub, sub)
                 const lay = new Layout(this)
