@@ -3,7 +3,8 @@
   <img width="318" heigth="256" src="assets/README-c8a97eb7.png" alt="trading-vue logo">
 </div>
 
-# TradingVue.js
+# TradingVue.js ![Version](https://img.shields.io/badge/Version-v0.1.2-brightgreen.svg) ![license](https://img.shields.io/badge/license-MIT-blue.svg) ![GRUGLIKE](https://img.shields.io/badge/GRUG-LIKE-yelo.svg)
+
 
 **TradingVue.js** is a hackable charting lib for traders. You can draw literally ANYTHING on top of candlestick charts.
 
