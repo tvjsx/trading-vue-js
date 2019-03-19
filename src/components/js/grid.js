@@ -128,7 +128,9 @@ export default class Grid {
     update() {
 
         // Update reference to the grid
+        // TODO: check what happens if data changes interval
         this.layout = this.$p.layout.grids[this.id]
+        this.interval = this.$p.interval
 
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
         this.grid()
@@ -252,6 +254,8 @@ export default class Grid {
         // and keep scrolling,
         // the chart continues to scale down a little.
         // Solution: I don't know yet
+
+        if (!this.range.length || this.data.length < 2) return
 
         let l = this.data.length - 1
         let data = this.data

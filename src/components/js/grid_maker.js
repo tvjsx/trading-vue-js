@@ -48,6 +48,12 @@ function GridMaker(params, master_grid = null) {
 
     function calc_sidebar() {
 
+        if (sub.length < 2) {
+            self.prec = 0
+            self.sb = SBMIN
+            return
+        }
+
         // Gets formated levels (their lengths),
         // calculates max and measures the sidebar length
         // from it:
@@ -96,6 +102,8 @@ function GridMaker(params, master_grid = null) {
 
     function calc_positions() {
 
+        if (sub.length < 2) return
+
         let dt = range[1] - range[0]
 
         // A pixel space available to draw on (x-axis)
@@ -130,6 +138,8 @@ function GridMaker(params, master_grid = null) {
         let d = Math.pow(10, p)
         let s = $SCALES.map(x => x * d)
 
+        // TODO: center the range (look at RSI for eaxmple,
+        // it looks ugly when "80" is near the top)
         return Utils.strip(Utils.nearest_a(m, s)[1])
     }
 
@@ -147,7 +157,7 @@ function GridMaker(params, master_grid = null) {
             // TODO: IMPORTANT missing candles. Will not work
             // Solution: use t2sreen() to convert timestamps
             // to screen coordinates. Also need to check how
-            // the whole thing works with missing data points. 
+            // the whole thing works with missing data points.
             for (var i = 0; i < sub.length; i++) {
                 let p = sub[i]
                 if (p[0] % self.t_step === 0) {
