@@ -33,7 +33,7 @@ But when it came to writing custom trading software there was no charting librar
 
 ## Demo & Docs
 
-Oh yeah, here will be something cool.
+#### [Demo | click your 🐁 ](https://c451.github.io/trading-vue-demo/)
 
 ## Install
 
@@ -81,6 +81,7 @@ export default {
 
 ## Roadmap
 
+* Docs
 * Solve known issues (search for "TODO: IMPORTANT")
 * Performance improvements
 * Add more built-in overlays
