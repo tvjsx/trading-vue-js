@@ -3,7 +3,7 @@
   <img width="318" heigth="256" src="assets/README-c8a97eb7.png" alt="trading-vue logo">
 </div>
 
-# TradingVue.js ![Version](https://img.shields.io/badge/Version-v0.1.2-brightgreen.svg) ![license](https://img.shields.io/badge/license-MIT-blue.svg) ![GRUGLIKE](https://img.shields.io/badge/GRUG-LIKE-yellow.svg) ![build](https://img.shields.io/badge/build-passing-brightgreen.svg) ![size](https://img.shields.io/github/size/C451/trading-vue-js/dist/trading-vue.min.js.svg) ![yes](https://img.shields.io/badge/by%20trader-for%20traders-lightgray.svg)
+# TradingVue.js ![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=version) ![license](https://img.shields.io/badge/license-MIT-blue.svg) ![GRUGLIKE](https://img.shields.io/badge/GRUG-LIKE-yellow.svg) ![build](https://img.shields.io/badge/build-passing-brightgreen.svg) ![size](https://img.shields.io/github/size/C451/trading-vue-js/dist/trading-vue.min.js.svg) ![yes](https://img.shields.io/badge/by%20trader-for%20traders-lightgray.svg)
 
 
 **TradingVue.js** is a hackable charting lib for traders. You can draw literally ANYTHING on top of candlestick charts.
@@ -37,7 +37,15 @@ Oh yeah, here will be something cool.
 
 ## Install
 
-Coming Soon
+**NPM**
+```
+npm i trading-vue-js -S
+```
+**In browser**
+
+```
+<script src="trading-vue.min.js"></script>
+```
 
 ## How to use
 
@@ -49,7 +57,7 @@ Here is a minimal working example:
 </template>
 <script>
 
-import TradingVue from './TradingVue.vue'
+import TradingVue from 'trading-vue-js'
 
 export default {
     name: 'app',
@@ -79,6 +87,7 @@ export default {
 * Add toolbar (drawing tools)
 * Custom loayout / layout persistence
 * Fix and improve mobile version
+* **Version 1.0.0 here**
 
 ## Contribution
 
