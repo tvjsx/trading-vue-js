@@ -1,11 +1,21 @@
 /*!
- * TradingVue.JS - v0.1.0 - Sun Mar 17 2019
+ * TradingVue.JS - v0.1.2 - Wed Mar 20 2019
  * http://trading-vue-js.github.io/
  * Copyright (c) 2019 c451 Code's All Right;
  * Licensed under the MIT license
  * 
  */
-/******/ (function(modules) { // webpackBootstrap
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define([], factory);
+	else if(typeof exports === 'object')
+		exports["TradingVueJs"] = factory();
+	else
+		root["TradingVueJs"] = factory();
+})(window, function() {
+return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -3539,9 +3549,15 @@ function GridMaker(params) {
   }
 
   function calc_sidebar() {
-    // Gets formated levels (their lengths),
+    if (sub.length < 2) {
+      self.prec = 0;
+      self.sb = SBMIN;
+      return;
+    } // Gets formated levels (their lengths),
     // calculates max and measures the sidebar length
     // from it:
+
+
     self.prec = calc_precision(sub);
     var lens = sub.map(function (x) {
       return x[1].toFixed(self.prec).length;
@@ -3587,6 +3603,7 @@ function GridMaker(params) {
   }
 
   function calc_positions() {
+    if (sub.length < 2) return;
     var dt = range[1] - range[0]; // A pixel space available to draw on (x-axis)
 
     self.spacex = $p.width - self.sb; // Candle capacity
@@ -3617,7 +3634,9 @@ function GridMaker(params) {
     var d = Math.pow(10, p);
     var s = grid_maker_$SCALES.map(function (x) {
       return x * d;
-    });
+    }); // TODO: center the range (look at RSI for eaxmple,
+    // it looks ugly when "80" is near the top)
+
     return utils.strip(utils.nearest_a(m, s)[1]);
   } // TODO: build several grid lines outside of
   // the data area (to fill the space)
@@ -3631,7 +3650,7 @@ function GridMaker(params) {
       self.xs = []; // TODO: IMPORTANT missing candles. Will not work
       // Solution: use t2sreen() to convert timestamps
       // to screen coordinates. Also need to check how
-      // the whole thing works with missing data points. 
+      // the whole thing works with missing data points.
 
       for (var i = 0; i < sub.length; i++) {
         var p = sub[i];
@@ -4252,7 +4271,9 @@ function () {
       var _this2 = this;
 
       // Update reference to the grid
+      // TODO: check what happens if data changes interval
       this.layout = this.$p.layout.grids[this.id];
+      this.interval = this.$p.interval;
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       this.grid();
       if (this.layout.volume) this.volume(); // TODO: implemet layers rendering order
@@ -4446,6 +4467,7 @@ function () {
       // and keep scrolling,
       // the chart continues to scale down a little.
       // Solution: I don't know yet
+      if (!this.range.length || this.data.length < 2) return;
       var l = this.data.length - 1;
       var data = this.data;
       var range = this.range;
@@ -6195,8 +6217,7 @@ Botbar_component.options.__file = "src/components/Botbar.vue"
     // Context for text measurements
     this.ctx = new context(this.$props); // Initial layout (All measurments for the chart)
 
-    this.calc_interval();
-    this.default_range();
+    this.init_range();
     this.sub = this.subset();
     this._layout = new js_layout(this); // Updates current cursor values
 
@@ -6220,12 +6241,14 @@ Botbar_component.options.__file = "src/components/Botbar.vue"
     calc_interval: function calc_interval() {
       // TODO: make better detection mechanism.
       // What if the second candle is missing?
+      if (this.ohlcv.length < 2) return;
       this.interval = this.ohlcv[1][0] - this.ohlcv[0][0];
     },
     default_range: function default_range() {
       var dl = constants.ChartConfig.DEFAULT_LEN;
       var ml = constants.ChartConfig.MINIMUM_LEN + 0.5;
       var l = this.ohlcv.length - 1;
+      if (this.ohlcv.length < 2) return;
 
       if (this.ohlcv.length < dl) {
         var s = 0,
@@ -6235,7 +6258,7 @@ Botbar_component.options.__file = "src/components/Botbar.vue"
             d = 0.5;
       }
 
-      this.range = [this.ohlcv[s][0] - this.interval * d, this.ohlcv[l][0] + this.interval * ml];
+      utils.overwrite(this.range, [this.ohlcv[s][0] - this.interval * d, this.ohlcv[l][0] + this.interval * ml]);
     },
     subset: function subset() {
       var _this = this;
@@ -6272,6 +6295,10 @@ Botbar_component.options.__file = "src/components/Botbar.vue"
     },
     section_props: function section_props(i) {
       return i === 0 ? this.main_section : this.sub_section;
+    },
+    init_range: function init_range() {
+      this.calc_interval();
+      this.default_range();
     }
   },
   computed: {
@@ -6309,7 +6336,7 @@ Botbar_component.options.__file = "src/components/Botbar.vue"
   data: function data() {
     return {
       // Current data slice
-      sub: this.$props.data.ohlcv.slice(),
+      sub: [],
       // Time range
       range: [],
       // Candlestick interval
@@ -6339,6 +6366,7 @@ Botbar_component.options.__file = "src/components/Botbar.vue"
     },
     data: {
       handler: function handler() {
+        if (!this.sub.length) this.init_range();
         var sub = this.subset();
         utils.overwrite(this.sub, sub);
         var lay = new js_layout(this);
@@ -6537,8 +6565,12 @@ TradingVue_component.options.__file = "src/TradingVue.vue"
 // CONCATENATED MODULE: ./src/index.js
 
 
-if (window) {
-  window.TradingVue = TradingVue;
+TradingVue.install = function (Vue) {
+  Vue.component(TradingVue.name, TradingVue);
+};
+
+if (typeof window !== 'undefined' && window.Vue) {
+  window.Vue.use(TradingVue);
 }
 
 /* harmony default export */ var src = __webpack_exports__["default"] = (TradingVue);
@@ -6807,4 +6839,5 @@ function applyToTag (styleElement, obj) {
 
 /***/ })
 /******/ ]);
+});
 //# sourceMappingURL=trading-vue.js.map

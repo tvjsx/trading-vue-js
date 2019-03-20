@@ -7,14 +7,17 @@ const path = require('path')
 const VERS = require('../package.json').version
 const DATE = new Date().toDateString()
 
-module.exports = {
+let common = {
     entry: {
         'trading-vue': './src/index.js',
         'trading-vue.min': './src/index.js',
     },
     output: {
         path: path.resolve(__dirname, '../dist'),
-        filename: '[name].js'
+        filename: '[name].js',
+        library: 'TradingVueJs',
+        libraryTarget: 'umd',
+        //libraryExport: "default"
     },
     module: {
         rules: [{
@@ -53,5 +56,10 @@ module.exports = {
                 `Copyright (c) 2019 c451 Code's All Right;\n` +
                 `Licensed under the MIT license\n`
         })
-    ],
+    ]
 }
+
+
+module.exports = [
+    common
+]
