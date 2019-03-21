@@ -1,5 +1,5 @@
 /*!
- * TradingVue.JS - v0.1.2 - Wed Mar 20 2019
+ * TradingVue.JS - v0.1.4 - Thu Mar 21 2019
  * http://trading-vue-js.github.io/
  * Copyright (c) 2019 c451 Code's All Right;
  * Licensed under the MIT license
@@ -3425,6 +3425,14 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         Object.assign(obj[k], new_obj[k]);
       }
     }
+  },
+  // Detects candles interval
+  detect_interval: function detect_interval(ohlcv) {
+    // If second candle is missing it will still work
+    var l = ohlcv.length - 1;
+    var i1 = ohlcv[1][0] - ohlcv[0][0];
+    var i2 = ohlcv[l][0] - ohlcv[l - 1][0];
+    return Math.min(i1, i2);
   }
 });
 // CONCATENATED MODULE: ./src/components/js/layout_fn.js
@@ -6239,10 +6247,8 @@ Botbar_component.options.__file = "src/components/Botbar.vue"
       this.cursor.locked = state;
     },
     calc_interval: function calc_interval() {
-      // TODO: make better detection mechanism.
-      // What if the second candle is missing?
       if (this.ohlcv.length < 2) return;
-      this.interval = this.ohlcv[1][0] - this.ohlcv[0][0];
+      this.interval = utils.detect_interval(this.ohlcv);
     },
     default_range: function default_range() {
       var dl = constants.ChartConfig.DEFAULT_LEN;

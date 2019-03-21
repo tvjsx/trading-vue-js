@@ -88,5 +88,14 @@ export default {
                 Object.assign(obj[k], new_obj[k])
             }
         }
+    },
+
+    // Detects candles interval
+    detect_interval(ohlcv) {
+        // If second candle is missing it will still work
+        let l = ohlcv.length - 1;
+        let i1 = ohlcv[1][0] - ohlcv[0][0]
+        let i2 = ohlcv[l][0] - ohlcv[l-1][0]
+        return Math.min(i1, i2)
     }
 }
