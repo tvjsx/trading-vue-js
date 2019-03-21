@@ -1,6 +1,6 @@
 
 <div align="center">
-  <img width="318" heigth="256" src="https://raw.githubusercontent.com/C451/trading-vue-js/master/assets/README-c8a97eb7.png" alt="trading-vue logo">
+  <img width="318" heigth="256" src="https://raw.githubusercontent.com/C451/trading-vue-js/master/assets/README-c8a97eb7.png?raw=true" alt="trading-vue logo">
 </div>
 
 # TradingVue.js ![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=version) ![license](https://img.shields.io/badge/license-MIT-blue.svg) ![GRUGLIKE](https://img.shields.io/badge/GRUG-LIKE-yellow.svg) ![build](https://img.shields.io/badge/build-passing-brightgreen.svg) ![size](https://img.shields.io/github/size/C451/trading-vue-js/dist/trading-vue.min.js.svg) ![yes](https://img.shields.io/badge/by%20trader-for%20traders-lightgray.svg)
@@ -94,6 +94,7 @@ PRO TIP: **ohlcv** is mandatory if you want to see something other than a white 
             "type": "<e.g. EMA, SMA>",
             "data": [
                 [timestamp, ... ], // Arbitrary length
+                ...
             ],
             "settings": { } // Arbitrary settings format
         },
@@ -105,6 +106,7 @@ PRO TIP: **ohlcv** is mandatory if you want to see something other than a white 
             "type": "<e.g. EMA, SMA>",
             "data": [
                 [timestamp, ... ], // Arbitrary length
+                ...
             ],
             "settings": { } // Arbitrary settings format
         },
@@ -170,7 +172,7 @@ That's why I said you can draw ANYTHING. Stay with me, I will prove this bold st
 ## Grin
 
 <div align="center">
-  <img src="assets/README-0027a833.png" alt="trading-vue logo">
+  <img src="https://github.com/C451/trading-vue-js/blob/master/assets/README-0027a833.png?raw=true" alt="trading-vue logo">
 </div>
 
 #### [ Code | click your 🐁 ](https://gist.github.com/C451/eb3620a44c2fc4bd3112406c7426c70c)
