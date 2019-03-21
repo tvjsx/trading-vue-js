@@ -1,5 +1,6 @@
 <script>
 // The side bar (yep, that thing with a bunch of $$$)
+// TODO: free scaling Y-axis
 
 import Sidebar from './js/sidebar.js'
 import Canvas from '../mixins/canvas.js'
