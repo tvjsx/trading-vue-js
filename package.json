@@ -8,13 +8,22 @@
     "dev": "webpack-dev-server --config webpack/dev.config.js --mode development --progress --hot",
     "build": "webpack  --config webpack/build.config.js --mode production --progress"
   },
-  "keywords": [],
   "author": "C451",
   "license": "MIT",
   "files": [
       "dist/*",
       "src/*"
   ],
+  "keywords": [
+    "trading",
+    "vue",
+    "charts",
+    "crypto",
+    "visualization",
+    "reactive"
+  ],
+  "homepage": "https://github.com/C451/trading-vue-js#readme",
+  "repository": "github:C451/trading-vue-js",
   "devDependencies": {
     "@babel/core": "^7.3.4",
     "@babel/preset-env": "^7.3.4",
