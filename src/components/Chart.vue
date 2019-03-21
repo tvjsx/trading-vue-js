@@ -68,10 +68,8 @@ export default {
             this.cursor.locked = state
         },
         calc_interval() {
-            // TODO: make better detection mechanism.
-            // What if the second candle is missing?
             if (this.ohlcv.length < 2) return
-            this.interval = this.ohlcv[1][0] - this.ohlcv[0][0]
+            this.interval = Utils.detect_interval(this.ohlcv)
         },
         default_range() {
             const dl = Const.ChartConfig.DEFAULT_LEN
