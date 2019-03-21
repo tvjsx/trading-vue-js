@@ -35,14 +35,14 @@ export default function(self, range) {
         screen2t: x => {
             const dt = range[1] - range[0]
             const r = self.spacex / dt
-            return Math.floor(range[0] + x / r) 
+            return Math.floor(range[0] + x / r)
         },
         // $-axis nearest step
         $_magnet: price => { },
         // Nearest candlestick
-        cs_magnet: t => { },
+        cs_magnet: t => {  /* TODO: implement */ },
         // Nearest data points
-        data_magnet: t => { }
+        data_magnet: t => {  /* TODO: implement */ }
     })
 
     return self

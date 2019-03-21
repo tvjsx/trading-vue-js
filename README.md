@@ -78,6 +78,20 @@ export default {
 </script>
 ```
 
+## Core philosophy
+
+The core philosophy is **Data -> Screen mapping**. Thus, the lib provides you with functions that map your data (whatever) to screen coordinates. The lib does all the dirty work behined the scenes: scrolling, scaling, reactivity, etc.
+
+ ```
+ layout.t2screen(t) // time -> x
+ layout.$2screen($) // price -> y
+ layout.t_magnet(t) // time -> neareset candle x
+ layout.screen2$(y) // y -> price
+ layout.screen2t(x) // x -> time
+ ```
+ Using these functions and the standard js canvas API, you can do the magic.
+
+
 ## Data structure
 
 PRO TIP: **ohlcv** is mandatory if you want to see something other than a white screen
@@ -103,7 +117,7 @@ PRO TIP: **ohlcv** is mandatory if you want to see something other than a white 
     "offchart": [ // Displayed BELOW the chart
         {
             "name": "<Indicator name>",
-            "type": "<e.g. EMA, SMA>",
+            "type": "<e.g. RSI, Stoch>",
             "data": [
                 [timestamp, ... ], // Arbitrary length
                 ...
@@ -189,6 +203,26 @@ That's why I said you can draw ANYTHING. Stay with me, I will prove this bold st
 * Fix and improve mobile version
 * **Version 1.0.0 here**
 
+## Development & Building
+
+**Run development enviroment (hot)**
+```
+npm run dev
+```
+http://localhost:8080
+
+**Build the bundle**
+
+```
+npm run build
+```
+
 ## Contribution
 
 In progress
+
+## Donations
+
+ɃTC 19vDB2pyn2ndJBH4p6We2SJNe8VZggyxfG
+
+ETH 0xFD3e4be6d3dAfCba7aFC7BE8b3D00847682158e8

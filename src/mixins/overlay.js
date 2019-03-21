@@ -1,6 +1,8 @@
 
 // Usuful stuff for creating overlays. Include as mixin
 
+// TODO: Add mouse events
+
 export default {
     props: [
         'id', 'num', 'interval', 'cursor', 'colors',
