@@ -15,11 +15,16 @@ const {
 } = Const.ChartConfig
 
 // master_grid - ref to the master grid
-function GridMaker(params, master_grid = null) {
+function GridMaker(id, params, master_grid = null) {
 
-    let { sub, interval, range, ctx, $p, height } = params
+    let { sub, interval, range, ctx, $p, layers_meta, height } = params
     var self = {}
-
+    var lm = layers_meta[id]
+    var y_range_fn = null
+    if (lm && Object.keys(lm).length) {
+        // Gets last y_range fn()
+        y_range_fn = lm[Object.keys(lm).length - 1].y_range
+    }
     // Calc vertical ($/₿) range
     function calc_$range() {
 
@@ -41,6 +46,7 @@ function GridMaker(params, master_grid = null) {
             }
             var hi = Math.max(...arr)
             var lo = Math.min(...arr)
+            if (y_range_fn) { [hi, lo] = y_range_fn(hi, lo) }
         }
 
         // Expand a lil

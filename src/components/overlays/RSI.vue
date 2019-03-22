@@ -76,7 +76,17 @@ export default {
 
         // Colors for the legend, should have the
         // same dimention as a data point (excl. timestamp)
-        data_colors() { return [this.color] }
+        data_colors() { return [this.color] },
+
+        // Y-Range tansform. For example you need a fixed
+        // Y-range for an indicator, you can do it here!
+        // Gets estimated range, @return you favorite range
+        y_range(hi, lo) {
+            return [
+                Math.max(hi, this.sett.upper || 70),
+                Math.min(lo, this.sett.lower || 30) 
+            ]
+        }
     },
     // Define internal setting & constants here
     computed: {

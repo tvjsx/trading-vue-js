@@ -11,7 +11,8 @@
              v-on:range-changed="range_changed"
              v-on:cursor-changed="cursor_changed"
              v-on:cursor-locked="cursor_locked"
-             v-on:layer-data-colors="set_data_colors">
+             v-on:layer-data-colors="set_data_colors"
+             v-on:layer-meta-props="emit_meta_props">
         </grid>
         <sidebar v-bind="sidebar_props" v-bind:grid_id="grid_id"
                  v-bind:rerender="rerender">
@@ -46,6 +47,9 @@ export default {
         },
         set_data_colors(d) {
             this.$set(this.data_colors, d.layer_id, d.colors)
+        },
+        emit_meta_props(d) {
+            this.$emit('layer-meta-props', d)
         }
     },
     computed: {
@@ -93,7 +97,7 @@ export default {
                 if(val.data.length !== old_val.data.length) {
                     // Look at this nasty trick!
                     // We need to re-render sidebar only
-                    // when grids added or removed 
+                    // when grids added or removed
                     this.rerender++
                 }
             },

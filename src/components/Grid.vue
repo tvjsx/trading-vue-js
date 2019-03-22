@@ -90,7 +90,8 @@ export default {
                         type: x.type,
                         data: x.data,
                         settings: x.settings,
-                        num: i
+                        num: i,
+                        grid_id: this.$props.grid_id,
                     })
                 })
             )
@@ -130,7 +131,9 @@ export default {
                 'new-grid-layer': this.new_layer,
                 'redraw-grid': this.redraw,
                 'layer-data-colors': d =>
-                    this.$emit('layer-data-colors', d)
+                    this.$emit('layer-data-colors', d),
+                'layer-meta-props': d =>
+                    this.$emit('layer-meta-props', d)
             }
         }
     }

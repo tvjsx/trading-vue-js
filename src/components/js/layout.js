@@ -22,7 +22,8 @@ const {
 
 function Layout(params) {
 
-    let { sub, offsub, interval, range, ctx, $props:$p } = params
+    let { sub, offsub, interval, range, ctx, layers_meta, $props:$p }
+        = params
 
     // Splits space between main chart
     // and offchart indicator grids
@@ -81,14 +82,16 @@ function Layout(params) {
 
     // Main grid
     const hs = grid_hs()
-    let specs = { sub, interval, range, ctx, $p, height: hs[0] }
-    let gms = [new GridMaker(specs)]
+    let specs = {
+        sub, interval, range, ctx, $p, layers_meta, height: hs[0]
+    }
+    let gms = [new GridMaker(0, specs)]
 
     // Sub grids
     for (var [i, { data }] of offsub.entries()) {
         specs.sub = data
         specs.height = hs[i + 1]
-        gms.push(new GridMaker(specs, gms[0].get_layout()))
+        gms.push(new GridMaker(i + 1, specs, gms[0].get_layout()))
     }
 
     // Max sidebar among all grinds

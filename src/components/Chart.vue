@@ -7,7 +7,8 @@
             v-bind:grid_id="i"
             v-on:range-changed="range_changed"
             v-on:cursor-changed="cursor_changed"
-            v-on:cursor-locked="cursor_locked">
+            v-on:cursor-locked="cursor_locked"
+            v-on:layer-meta-props="layer_meta_props">
         </grid-section>
         <botbar v-bind="botbar_props"></botbar>
     </div>
@@ -124,6 +125,18 @@ export default {
         init_range() {
             this.calc_interval()
             this.default_range()
+        },
+        layer_meta_props(d) {
+            // TODO: check reactivity when layout is changed
+            if (!(d.grid_id in this.layers_meta)) {
+                this.$set(this.layers_meta, d.grid_id, {})
+            }
+            this.$set(this.layers_meta[d.grid_id],
+                Utils.get_num_id(d.layer_id), d)
+
+            // Rerender
+            const lay = new Layout(this)
+            Utils.copy_layout(this._layout, lay)
         }
     },
     computed: {
@@ -179,7 +192,10 @@ export default {
             },
 
             // A trick to re-render botbar
-            rerender: 0
+            rerender: 0,
+
+            // Layers meta-props (changing behaviour)
+            layers_meta: {}
         }
     },
     watch: {
