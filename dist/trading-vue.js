@@ -3566,7 +3566,7 @@ function GridMaker(id, params) {
       for (var i = 1; i < dim; i++) {
         arr.push.apply(arr, grid_maker_toConsumableArray(sub.map(function (x) {
           return x[i];
-        })));
+        }).filter(Number)));
       }
 
       var hi = Math.max.apply(Math, arr);
@@ -3598,7 +3598,10 @@ function GridMaker(id, params) {
 
 
     self.prec = calc_precision(sub);
-    var lens = sub.map(function (x) {
+    var subn = sub.filter(function (x) {
+      return typeof x[1] === 'number';
+    });
+    var lens = subn.map(function (x) {
       return x[1].toFixed(self.prec).length;
     });
     var str = '0'.repeat(Math.max.apply(Math, grid_maker_toConsumableArray(lens))) + '    ';
