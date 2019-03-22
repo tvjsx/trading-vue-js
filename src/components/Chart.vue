@@ -147,6 +147,9 @@ export default {
             p.rerender = this.rerender
             return p
         },
+        offsub() {
+            return this.overlay_subset(this.offchart)
+        },
         // Datasets: candles, onchart, offchart indicators
         ohlcv() {
             return this.$props.data.ohlcv || []
