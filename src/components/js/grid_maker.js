@@ -42,7 +42,7 @@ function GridMaker(id, params, master_grid = null) {
             const dim = sub[0] ? sub[0].length : 0
             let arr = []
             for (var i = 1; i < dim; i++) {
-                arr.push(...sub.map(x => x[i]))
+                arr.push(...sub.map(x => x[i]).filter(Number))
             }
             var hi = Math.max(...arr)
             var lo = Math.min(...arr)
@@ -68,7 +68,8 @@ function GridMaker(id, params, master_grid = null) {
         // from it:
 
         self.prec = calc_precision(sub)
-        let lens = sub.map(x => x[1].toFixed(self.prec).length)
+        let subn = sub.filter(x => typeof x[1] === 'number')
+        let lens = subn.map(x => x[1].toFixed(self.prec).length)
         let str = '0'.repeat(Math.max(...lens)) + '    '
 
         self.sb = ctx.measureText(str).width

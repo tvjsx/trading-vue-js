@@ -1,5 +1,5 @@
 /*!
- * TradingVue.JS - v0.1.4 - Thu Mar 21 2019
+ * TradingVue.JS - v0.1.4 - Fri Mar 22 2019
  * http://trading-vue-js.github.io/
  * Copyright (c) 2019 c451 Code's All Right;
  * Licensed under the MIT license
@@ -3311,7 +3311,8 @@ var Chartvue_type_template_id_4d06a4de_render = function() {
           on: {
             "range-changed": _vm.range_changed,
             "cursor-changed": _vm.cursor_changed,
-            "cursor-locked": _vm.cursor_locked
+            "cursor-locked": _vm.cursor_locked,
+            "layer-meta-props": _vm.layer_meta_props
           }
         })
       }),
@@ -3433,6 +3434,10 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     var i1 = ohlcv[1][0] - ohlcv[0][0];
     var i2 = ohlcv[l][0] - ohlcv[l - 1][0];
     return Math.min(i1, i2);
+  },
+  // Gets numberic part of overlay id (e.g 'EMA_1' = > 1)
+  get_num_id: function get_num_id(id) {
+    return parseInt(id.split('_').pop());
   }
 });
 // CONCATENATED MODULE: ./src/components/js/layout_fn.js
@@ -3477,9 +3482,13 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     // $-axis nearest step
     $_magnet: function $_magnet(price) {},
     // Nearest candlestick
-    cs_magnet: function cs_magnet(t) {},
+    cs_magnet: function cs_magnet(t) {
+      /* TODO: implement */
+    },
     // Nearest data points
-    data_magnet: function data_magnet(t) {}
+    data_magnet: function data_magnet(t) {
+      /* TODO: implement */
+    }
   });
   return self;
 });
@@ -3517,15 +3526,24 @@ var _Const$ChartConfig = constants.ChartConfig,
     BOTBAR = _Const$ChartConfig.BOTBAR,
     VOLSCALE = _Const$ChartConfig.VOLSCALE; // master_grid - ref to the master grid
 
-function GridMaker(params) {
-  var master_grid = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+function GridMaker(id, params) {
+  var master_grid = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
   var sub = params.sub,
       interval = params.interval,
       range = params.range,
       ctx = params.ctx,
       $p = params.$p,
+      layers_meta = params.layers_meta,
       height = params.height;
-  var self = {}; // Calc vertical ($/₿) range
+  var self = {};
+  var lm = layers_meta[id];
+  var y_range_fn = null;
+
+  if (lm && Object.keys(lm).length) {
+    // Gets last y_range fn()
+    y_range_fn = lm[Object.keys(lm).length - 1].y_range;
+  } // Calc vertical ($/₿) range
+
 
   function calc_$range() {
     if (!master_grid) {
@@ -3538,6 +3556,10 @@ function GridMaker(params) {
       })));
     } else {
       // Offchart indicator range
+      // TODO: make two types of values: numbers and strings,
+      // and calculate range only with numbers.
+      // Thus, we can allow meta data to be added
+      // e.g. [<timestamp>, 3000, "buy"]
       var dim = sub[0] ? sub[0].length : 0;
       var arr = [];
 
@@ -3549,6 +3571,15 @@ function GridMaker(params) {
 
       var hi = Math.max.apply(Math, arr);
       var lo = Math.min.apply(Math, arr);
+
+      if (y_range_fn) {
+        var _y_range_fn = y_range_fn(hi, lo);
+
+        var _y_range_fn2 = _slicedToArray(_y_range_fn, 2);
+
+        hi = _y_range_fn2[0];
+        lo = _y_range_fn2[1];
+      }
     } // Expand a lil
 
 
@@ -3768,15 +3799,16 @@ var layout_Const$ChartConfig = constants.ChartConfig,
 
 function Layout(params) {
   var sub = params.sub,
-      offchart = params.offchart,
+      offsub = params.offsub,
       interval = params.interval,
       range = params.range,
       ctx = params.ctx,
+      layers_meta = params.layers_meta,
       $p = params.$props; // Splits space between main chart
   // and offchart indicator grids
 
   function grid_hs() {
-    var n = offchart.length;
+    var n = offsub.length;
     var off_h = 2 * Math.sqrt(n) / 7 / (n || 1);
     var height = $p.height - layout_BOTBAR; // Offchart grid height
 
@@ -3832,23 +3864,24 @@ function Layout(params) {
     range: range,
     ctx: ctx,
     $p: $p,
+    layers_meta: layers_meta,
     height: hs[0]
   };
-  var gms = [new grid_maker(specs)]; // Sub grids
+  var gms = [new grid_maker(0, specs)]; // Sub grids
 
   var _iteratorNormalCompletion = true;
   var _didIteratorError = false;
   var _iteratorError = undefined;
 
   try {
-    for (var _iterator = offchart.entries()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+    for (var _iterator = offsub.entries()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
       var _step$value = layout_slicedToArray(_step.value, 2),
           i = _step$value[0],
           data = _step$value[1].data;
 
       specs.sub = data;
       specs.height = hs[i + 1];
-      gms.push(new grid_maker(specs, gms[0].get_layout()));
+      gms.push(new grid_maker(i + 1, specs, gms[0].get_layout()));
     } // Max sidebar among all grinds
 
   } catch (err) {
@@ -4813,8 +4846,9 @@ component.options.__file = "src/components/Crosshair.vue"
 /* harmony default export */ var components_Crosshair = (component.exports);
 // CONCATENATED MODULE: ./src/mixins/overlay.js
 // Usuful stuff for creating overlays. Include as mixin
+// TODO: Add mouse events
 /* harmony default export */ var overlay = ({
-  props: ['id', 'num', 'interval', 'cursor', 'colors', 'layout', 'sub', 'data', 'settings'],
+  props: ['id', 'num', 'interval', 'cursor', 'colors', 'layout', 'sub', 'data', 'settings', 'grid_id'],
   mounted: function mounted() {
     this.$emit('new-grid-layer', {
       name: this.$options.name,
@@ -4826,7 +4860,14 @@ component.options.__file = "src/components/Crosshair.vue"
         layer_id: this.$props.id,
         colors: this.data_colors()
       });
-    }
+    } // Overlay meta-props (adjusting behaviour)
+
+
+    this.$emit('layer-meta-props', {
+      grid_id: this.$props.grid_id,
+      layer_id: this.$props.id,
+      y_range: this.y_range
+    });
   },
   render: function render(h) {
     return h();
@@ -5043,6 +5084,12 @@ Spline_component.options.__file = "src/components/overlays/Spline.vue"
     // same dimention as a data point (excl. timestamp)
     data_colors: function data_colors() {
       return [this.color];
+    },
+    // Y-Range tansform. For example you need a fixed
+    // Y-range for an indicator, you can do it here!
+    // Gets estimated range, @return you favorite range
+    y_range: function y_range(hi, lo) {
+      return [Math.max(hi, this.sett.upper || 70), Math.min(lo, this.sett.lower || 30)];
     }
   },
   // Define internal setting & constants here
@@ -5206,7 +5253,8 @@ RSI_component.options.__file = "src/components/overlays/RSI.vue"
             type: x.type,
             data: x.data,
             settings: x.settings,
-            num: i
+            num: i,
+            grid_id: _this4.$props.grid_id
           })
         });
       });
@@ -5249,6 +5297,9 @@ RSI_component.options.__file = "src/components/overlays/RSI.vue"
         'redraw-grid': this.redraw,
         'layer-data-colors': function layerDataColors(d) {
           return _this5.$emit('layer-data-colors', d);
+        },
+        'layer-meta-props': function layerMetaProps(d) {
+          return _this5.$emit('layer-meta-props', d);
         }
       }
     };
@@ -5306,7 +5357,8 @@ var Sectionvue_type_template_id_8fbe9336_render = function() {
               "range-changed": _vm.range_changed,
               "cursor-changed": _vm.cursor_changed,
               "cursor-locked": _vm.cursor_locked,
-              "layer-data-colors": _vm.set_data_colors
+              "layer-data-colors": _vm.set_data_colors,
+              "layer-meta-props": _vm.emit_meta_props
             }
           },
           "grid",
@@ -5494,6 +5546,7 @@ function () {
 
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Sidebar.vue?vue&type=script&lang=js&
 // The side bar (yep, that thing with a bunch of $$$)
+// TODO: free scaling Y-axis
 
 
 /* harmony default export */ var Sidebarvue_type_script_lang_js_ = ({
@@ -5736,6 +5789,8 @@ Legendvue_type_template_id_34724886_render._withStripped = true
 
       // Matches Overlay.data_colors with the data values
       // (see Spline.vue)
+      // TODO: custom data formatter (display in the legend
+      // only whatever you need)
       if (!values[id]) return this.n_a(1);
       return values[id].slice(1).map(function (x, i) {
         var cs = _this2.$props.data_colors[id];
@@ -5809,6 +5864,7 @@ Legend_component.options.__file = "src/components/Legend.vue"
 //
 //
 //
+//
 
 
 
@@ -5833,6 +5889,9 @@ Legend_component.options.__file = "src/components/Legend.vue"
     },
     set_data_colors: function set_data_colors(d) {
       this.$set(this.data_colors, d.layer_id, d.colors);
+    },
+    emit_meta_props: function emit_meta_props(d) {
+      this.$emit('layer-meta-props', d);
     }
   },
   computed: {
@@ -5879,7 +5938,7 @@ Legend_component.options.__file = "src/components/Legend.vue"
         if (val.data.length !== old_val.data.length) {
           // Look at this nasty trick!
           // We need to re-render sidebar only
-          // when grids added or removed 
+          // when grids added or removed
           this.rerender++;
         }
       },
@@ -6203,6 +6262,7 @@ Botbar_component.options.__file = "src/components/Botbar.vue"
 //
 //
 //
+//
 
 
 
@@ -6305,6 +6365,17 @@ Botbar_component.options.__file = "src/components/Botbar.vue"
     init_range: function init_range() {
       this.calc_interval();
       this.default_range();
+    },
+    layer_meta_props: function layer_meta_props(d) {
+      // TODO: check reactivity when layout is changed
+      if (!(d.grid_id in this.layers_meta)) {
+        this.$set(this.layers_meta, d.grid_id, {});
+      }
+
+      this.$set(this.layers_meta[d.grid_id], utils.get_num_id(d.layer_id), d); // Rerender
+
+      var lay = new js_layout(this);
+      utils.copy_layout(this._layout, lay);
     }
   },
   computed: {
@@ -6327,6 +6398,9 @@ Botbar_component.options.__file = "src/components/Botbar.vue"
       p.height = p.layout.botbar.height;
       p.rerender = this.rerender;
       return p;
+    },
+    offsub: function offsub() {
+      return this.overlay_subset(this.offchart);
     },
     // Datasets: candles, onchart, offchart indicators
     ohlcv: function ohlcv() {
@@ -6358,7 +6432,9 @@ Botbar_component.options.__file = "src/components/Botbar.vue"
         values: {}
       },
       // A trick to re-render botbar
-      rerender: 0
+      rerender: 0,
+      // Layers meta-props (changing behaviour)
+      layers_meta: {}
     };
   },
   watch: {
