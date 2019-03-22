@@ -22,13 +22,13 @@ const {
 
 function Layout(params) {
 
-    let { sub, offchart, interval, range, ctx, $props:$p } = params
+    let { sub, offsub, interval, range, ctx, $props:$p } = params
 
     // Splits space between main chart
     // and offchart indicator grids
     function grid_hs() {
 
-        const n = offchart.length
+        const n = offsub.length
         const off_h = (2 * Math.sqrt(n) / 7) / (n || 1)
         const height = $p.height - BOTBAR
 
@@ -85,7 +85,7 @@ function Layout(params) {
     let gms = [new GridMaker(specs)]
 
     // Sub grids
-    for (var [i, { data }] of offchart.entries()) {
+    for (var [i, { data }] of offsub.entries()) {
         specs.sub = data
         specs.height = hs[i + 1]
         gms.push(new GridMaker(specs, gms[0].get_layout()))

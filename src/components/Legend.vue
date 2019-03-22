@@ -75,6 +75,8 @@ export default {
         format(id, values) {
             // Matches Overlay.data_colors with the data values
             // (see Spline.vue)
+            // TODO: custom data formatter (display in the legend
+            // only whatever you need)
             if (!values[id]) return this.n_a(1)
             return values[id].slice(1).map((x, i) => {
                 const cs = this.$props.data_colors[id]
