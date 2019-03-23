@@ -1,6 +1,6 @@
 /*!
- * TradingVue.JS - v0.1.4 - Fri Mar 22 2019
- * http://trading-vue-js.github.io/
+ * TradingVue.JS - v0.1.6 - Sun Mar 24 2019
+ * https://github.com/C451/trading-vue-js
  * Copyright (c) 2019 c451 Code's All Right;
  * Licensed under the MIT license
  * 
@@ -98,7 +98,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ 	return __webpack_require__(__webpack_require__.s = 10);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -2754,11 +2754,11 @@ if (true) {
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(4);
+var content = __webpack_require__(8);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var add = __webpack_require__(7).default
+var add = __webpack_require__(11).default
 var update = add("1db01c0b", content, false, {});
 // Hot Module Replacement
 if(false) {}
@@ -3095,6 +3095,372 @@ if (typeof window.define === 'function' && window.define.amd) {
 
 /***/ }),
 /* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Indexed Array Binary Search module
+ */
+
+/**
+ * Dependencies
+ */
+var util = __webpack_require__(4),
+    cmp = __webpack_require__(5),
+    bin = __webpack_require__(6);
+
+/**
+ * Module interface definition
+ */
+module.exports = IndexedArray;
+
+/**
+ * Indexed Array constructor
+ *
+ * It loads the array data, defines the index field and the comparison function
+ * to be used.
+ *
+ * @param {Array} data is an array of objects
+ * @param {String} index is the object's property used to search the array
+ */
+function IndexedArray(data, index) {
+
+    // is data sortable array or array-like object?
+    if (!util.isSortableArrayLike(data))
+        throw new Error("Invalid data");
+
+    // is index a valid property?
+    if (!index || data.length > 0 && !(index in data[0]))
+        throw new Error("Invalid index");
+
+    // data array
+    this.data = data;
+
+    // name of the index property
+    this.index = index;
+
+    // set index boundary values
+    this.setBoundaries();
+
+    // default comparison function
+    this.compare = typeof this.minv === "number" ? cmp.numcmp : cmp.strcmp;
+
+    // default search function
+    this.search = bin.search;
+
+    // cache of index values to array positions
+    // each value stores an object as { found: true|false, index: array-index }
+    this.valpos = {};
+
+    // cursor and adjacent positions
+    this.cursor = null;
+    this.nextlow = null;
+    this.nexthigh = null;
+}
+
+/**
+ * Set the comparison function
+ *
+ * @param {Function} fn to compare index values that returnes 1, 0, -1
+ */
+IndexedArray.prototype.setCompare = function (fn) {
+    if (typeof fn !== "function")
+        throw new Error("Invalid argument");
+
+    this.compare = fn;
+    return this;
+};
+
+/**
+ * Set the search function
+ *
+ * @param {Function} fn to search index values in the array of objects
+ */
+IndexedArray.prototype.setSearch = function (fn) {
+    if (typeof fn !== "function")
+        throw new Error("Invalid argument");
+
+    this.search = fn;
+    return this;
+};
+
+/**
+ * Sort the data array by its index property
+ */
+IndexedArray.prototype.sort = function () {
+    var self = this,
+        index = this.index;
+
+    // sort the array
+    this.data.sort(function (a, b) {
+        return self.compare(a[index], b[index]);
+    });
+
+    // recalculate boundary values
+    this.setBoundaries();
+
+    return this;
+};
+
+/**
+ * Inspect and set the boundaries of the internal data array
+ */
+IndexedArray.prototype.setBoundaries = function () {
+    var data = this.data,
+        index = this.index;
+
+    this.minv = data.length && data[0][index];
+    this.maxv = data.length && data[data.length - 1][index];
+
+    return this;
+};
+
+/**
+ * Get the position of the object corresponding to the given index
+ *
+ * @param {Number|String} index is the id of the requested object
+ * @returns {Number} the position of the object in the array
+ */
+IndexedArray.prototype.fetch = function (value) {
+    // check data has objects
+    if (this.data.length === 0) {
+        this.cursor = null;
+        this.nextlow = null;
+        this.nexthigh = null;
+        return this;
+    }
+
+    // check the request is within range
+    if (this.compare(value, this.minv) === -1) {
+        this.cursor = null;
+        this.nextlow = null;
+        this.nexthigh = 0;
+        return this;
+    }
+    if (this.compare(value, this.maxv) === 1) {
+        this.cursor = null;
+        this.nextlow = this.data.length - 1;
+        this.nexthigh = null;
+        return this;
+    }
+
+    var valpos = this.valpos,
+        pos = valpos[value];
+
+    // if the request is memorized, just give it back
+    if (pos) {
+        if (pos.found) {
+            this.cursor = pos.index;
+            this.nextlow = null;
+            this.nexthigh = null;
+        } else {
+            this.cursor = null;
+            this.nextlow = pos.prev;
+            this.nexthigh = pos.next;
+        }
+        return this;
+    }
+
+    // if not, do the search
+    var result = this.search.call(this, value);
+    this.cursor = result.index;
+    this.nextlow = result.prev;
+    this.nexthigh = result.next;
+    return this;
+};
+
+/**
+ * Get the object corresponding to the given index
+ *
+ * When no value is given, the function will default to the last fetched item.
+ *
+ * @param {Number|String} [optional] index is the id of the requested object
+ * @returns {Object} the found object or null
+ */
+IndexedArray.prototype.get = function (value) {
+    if (value)
+        this.fetch(value);
+
+    var pos = this.cursor;
+    return pos !== null ? this.data[pos] : null;
+};
+
+/**
+ * Get an slice of the data array
+ *
+ * Boundaries have to be in order.
+ *
+ * @param {Number|String} begin index is the id of the requested object
+ * @param {Number|String} end index is the id of the requested object
+ * @returns {Object} the slice of data array or []
+ */
+IndexedArray.prototype.getRange = function (begin, end) {
+    // check if boundaries are in order
+    if (this.compare(begin, end) === 1) {
+        return [];
+    }
+
+    // fetch start and default to the next index above
+    this.fetch(begin);
+    var start = this.cursor || this.nexthigh;
+
+    // fetch finish and default to the next index below
+    this.fetch(end);
+    var finish = this.cursor || this.nextlow;
+
+    // if any boundary is not set, return no range
+    if (start === null || finish === null) {
+        return [];
+    }
+
+    // return range
+    return this.data.slice(start, finish + 1);
+};
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports) {
+
+/**
+ * Utils module
+ */
+
+/**
+ * Check if an object is an array-like object
+ *
+ * @credit Javascript: The Definitive Guide, O'Reilly, 2011
+ */
+function isArrayLike(o) {
+    if (o &&                                 // o is not null, undefined, etc.
+        typeof o === "object" &&             // o is an object
+        isFinite(o.length) &&                // o.length is a finite number
+        o.length >= 0 &&                     // o.length is non-negative
+        o.length === Math.floor(o.length) && // o.length is an integer
+        o.length < 4294967296)               // o.length < 2^32
+        return true;                         // Then o is array-like
+    else
+        return false;                        // Otherwise it is not
+}
+
+/**
+ * Check for the existence of the sort function in the object
+ */
+function isSortable(o) {
+    if (o &&                                 // o is not null, undefined, etc.
+        typeof o === "object" &&             // o is an object
+        typeof o.sort === "function")        // o.sort is a function
+        return true;                         // Then o is array-like
+    else
+        return false;                        // Otherwise it is not
+}
+
+/**
+ * Check for sortable-array-like objects
+ */
+module.exports.isSortableArrayLike = function (o) {
+    return isArrayLike(o) && isSortable(o);
+};
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+/**
+ * Utility compare functions
+ */
+
+module.exports = {
+
+    /**
+     * Compare two numbers.
+     *
+     * @param {Number} a
+     * @param {Number} b
+     * @returns {Number} 1 if a > b, 0 if a = b, -1 if a < b
+     */
+    numcmp: function (a, b) {
+        return a - b;
+    },
+
+    /**
+     * Compare two strings.
+     *
+     * @param {Number|String} a
+     * @param {Number|String} b
+     * @returns {Number} 1 if a > b, 0 if a = b, -1 if a < b
+     */
+    strcmp: function (a, b) {
+        return a < b ? -1 : a > b ? 1 : 0;
+    }
+
+};
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports) {
+
+/**
+ * Binary search implementation
+ */
+
+/**
+ * Main search recursive function
+ */
+function loop(data, min, max, index, valpos) {
+
+    // set current position as the middle point between min and max
+    var curr = (max + min) >>> 1;
+
+    // compare current index value with the one we are looking for
+    var diff = this.compare(data[curr][this.index], index);
+
+    // found?
+    if (!diff) {
+        return valpos[index] = {
+            "found": true,
+            "index": curr,
+            "prev": null,
+            "next": null
+        };
+    }
+
+    // no more positions available?
+    if (min >= max) {
+        return valpos[index] = {
+            "found": false,
+            "index": null,
+            "prev": (diff < 0) ? max : max - 1,
+            "next": (diff < 0) ? max + 1 : max
+        };
+    }
+
+    // continue looking for index in one of the remaining array halves
+    // current position can be skept as index is not there...
+    if (diff > 0)
+        return loop.call(this, data, min, curr - 1, index, valpos);
+    else
+        return loop.call(this, data, curr + 1, max, index, valpos);
+}
+
+/**
+ * Search bootstrap
+ * The function has to be executed in the context of the IndexedArray object
+ */
+function search(index) {
+    var data = this.data;
+    return loop.call(this, data, 0, data.length - 1, index, this.valpos);
+}
+
+/**
+ * Export search function
+ */
+module.exports.search = search;
+
+
+/***/ }),
+/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3104,17 +3470,17 @@ if (typeof window.define === 'function' && window.define.amd) {
  /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Legend_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
-/* 4 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(5)(false);
+exports = module.exports = __webpack_require__(9)(false);
 // Module
 exports.push([module.i, "\n.trading-vue-legend {\n    position: absolute;\n    z-index: 100;\n    font-size: 1.25em;\n    top: 10px;\n    left: 10px;\n    pointer-events: none;\n}\n.trading-vue-ohlcv {\n    pointer-events: none;\n    margin-bottom: 0.5em;\n}\n.t-vue-lspan {\n    font-variant-numeric: tabular-nums;\n    font-weight: 100;\n    font-size: 0.95em;\n    color: #999999; /* TODO: move => params */\n    margin-left: 0.1em;\n    margin-right: 0.2em;\n}\n.t-vue-title {\n    margin-right: 0.25em;\n    font-size: 1.45em;\n    font-weight: 200;\n}\n.t-vue-ind {\n    margin-left: 0.2em;\n    margin-bottom: 0.5em;\n    font-weight: 200;\n    font-size: 1.0em;\n}\n.t-vue-ivalue {\n    margin-left: 0.5em;\n}\n", ""]);
 
 
 
 /***/ }),
-/* 5 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3205,7 +3571,7 @@ function toComment(sourceMap) {
 }
 
 /***/ }),
-/* 6 */
+/* 10 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3347,6 +3713,8 @@ function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.
 
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
+var IndexedArray = __webpack_require__(3);
+
 /* harmony default export */ var utils = ({
   clamp: function clamp(num, min, max) {
     return num <= min ? min : num >= max ? max : num;
@@ -3438,6 +3806,11 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
   // Gets numberic part of overlay id (e.g 'EMA_1' = > 1)
   get_num_id: function get_num_id(id) {
     return parseInt(id.split('_').pop());
+  },
+  // Fast filter. Really fast, like 10X 
+  fast_filter: function fast_filter(arr, t1, t2) {
+    var ia = new IndexedArray(arr, "0");
+    return ia.getRange(t1, t2);
   }
 });
 // CONCATENATED MODULE: ./src/components/js/layout_fn.js
@@ -5819,7 +6192,7 @@ Legendvue_type_template_id_34724886_render._withStripped = true
 // CONCATENATED MODULE: ./src/components/Legend.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_Legendvue_type_script_lang_js_ = (Legendvue_type_script_lang_js_); 
 // EXTERNAL MODULE: ./src/components/Legend.vue?vue&type=style&index=0&lang=css&
-var Legendvue_type_style_index_0_lang_css_ = __webpack_require__(3);
+var Legendvue_type_style_index_0_lang_css_ = __webpack_require__(7);
 
 // CONCATENATED MODULE: ./src/components/Legend.vue
 
@@ -6330,11 +6703,7 @@ Botbar_component.options.__file = "src/components/Botbar.vue"
       utils.overwrite(this.range, [this.ohlcv[s][0] - this.interval * d, this.ohlcv[l][0] + this.interval * ml]);
     },
     subset: function subset() {
-      var _this = this;
-
-      return this.ohlcv.filter(function (x) {
-        return x[0] >= _this.range[0] - _this.interval && x[0] <= _this.range[1];
-      });
+      return utils.fast_filter(this.ohlcv, this.range[0] - this.interval, this.range[1]);
     },
     common_props: function common_props() {
       return {
@@ -6349,15 +6718,13 @@ Botbar_component.options.__file = "src/components/Botbar.vue"
       };
     },
     overlay_subset: function overlay_subset(source) {
-      var _this2 = this;
+      var _this = this;
 
       return source.map(function (d) {
         return {
           type: d.type,
           name: d.name,
-          data: d.data.filter(function (x) {
-            return x[0] >= _this2.range[0] - _this2.interval && x[0] <= _this2.range[1];
-          }),
+          data: utils.fast_filter(d.data, _this.range[0] - _this.interval, _this.range[1]),
           settings: d.settings
         };
       });
@@ -6661,7 +7028,7 @@ if (typeof window !== 'undefined' && window.Vue) {
 /* harmony default export */ var src = __webpack_exports__["default"] = (TradingVue);
 
 /***/ }),
-/* 7 */
+/* 11 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
