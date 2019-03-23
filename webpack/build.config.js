@@ -52,7 +52,7 @@ let common = {
         new webpack.BannerPlugin({
             banner:
                 `TradingVue.JS - v${VERS} - ${DATE}\n` +
-                `http://trading-vue-js.github.io/\n` +
+                `https://github.com/C451/trading-vue-js\n` +
                 `Copyright (c) 2019 c451 Code's All Right;\n` +
                 `Licensed under the MIT license\n`
         })
