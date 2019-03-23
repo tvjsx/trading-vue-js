@@ -1,4 +1,6 @@
 
+var IndexedArray = require("arrayslicer");
+
 export default {
 
     clamp(num, min, max) {
@@ -102,5 +104,11 @@ export default {
     // Gets numberic part of overlay id (e.g 'EMA_1' = > 1)
     get_num_id(id) {
         return parseInt(id.split('_').pop())
+    },
+
+    // Fast filter. Really fast, like 10X 
+    fast_filter(arr, t1, t2) {
+        var ia = new IndexedArray(arr, "0")
+        return ia.getRange(t1, t2)
     }
 }

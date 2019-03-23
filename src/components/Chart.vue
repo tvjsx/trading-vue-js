@@ -90,9 +90,10 @@ export default {
             ])
         },
         subset() {
-            return this.ohlcv.filter(x =>
-                x[0] >= this.range[0] - this.interval &&
-                x[0] <= this.range[1]
+            return Utils.fast_filter(
+                this.ohlcv,
+                this.range[0] - this.interval,
+                this.range[1]
             )
         },
         common_props() {
@@ -111,9 +112,10 @@ export default {
             return source.map(d => ({
                 type: d.type,
                 name: d.name,
-                data: d.data.filter(x =>
-                    x[0] >= this.range[0] - this.interval &&
-                    x[0] <= this.range[1]
+                data: Utils.fast_filter(
+                    d.data,
+                    this.range[0] - this.interval,
+                    this.range[1]
                 ),
                 settings: d.settings
             }))
