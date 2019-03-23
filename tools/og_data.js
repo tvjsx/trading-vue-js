@@ -8,7 +8,7 @@ const fs = require('fs')
 const write_to = './data/data.json'
 
 const t1 = Math.floor(new Date().getTime() / 1000)
-const t0 = t1 - 3600 * 420
+const t0 = t1 - 3600 * 4200
 
 // Hey Coingy, we will borrow some data, ok?
 const mrk = 'BITF/BTC/USD'
@@ -111,5 +111,5 @@ function save(data) {
 
     fs.writeFileSync(write_to, JSON.stringify(data,null,4))
 
-    console.log('Data secured (420 points)')
+    console.log('Data secured (4200 points)')
 }

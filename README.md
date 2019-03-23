@@ -11,7 +11,6 @@
 
 This project was created for those who are tired of the same old set of indicators and want to make crazy experements with financial data. Think of this library as an assembler for building charts. UX is higly inspired by [TradingView.com](https://www.tradingview.com).
 
-
 <br>
 
 <div align="center">
@@ -235,7 +234,7 @@ npm run build
 4. Push to the branch (`git push origin cool-new-feature`)
 5. Create a new Pull Request
 
-Please read the guidelines in CONTRIBUTING.md 
+Please read the guidelines in CONTRIBUTING.md
 
 ## Donations
 

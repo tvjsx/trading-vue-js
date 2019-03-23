@@ -19,7 +19,7 @@
 ## Code style guide
 
 1. Please, keep the lines short. 80 chars max.
-2. If .js or .vue modules is significantly longer than 250 line, it might be a good idea to split it into two.
+2. If a .js or .vue module is significantly longer than 250 line, it might be a good idea to split it into two.
 3. If a function is longer than 50 lines, then this is definitely a candidate for refactoring.
 4. snake_case is everywhere except the top-level component props (TradingVue.vue).
 5. The project doesn't use semicolons. Sorry, semicolon lovers.
