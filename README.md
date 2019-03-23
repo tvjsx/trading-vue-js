@@ -3,14 +3,14 @@
   <img width="318" heigth="256" src="https://raw.githubusercontent.com/C451/trading-vue-js/master/assets/README-c8a97eb7.png?raw=true" alt="trading-vue logo">
 </div>
 
-# TradingVue.js ![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=version) ![license](https://img.shields.io/badge/license-MIT-blue.svg) ![GRUGLIKE](https://img.shields.io/badge/GRUG-LIKE-yellow.svg) ![build](https://img.shields.io/badge/build-passing-brightgreen.svg) ![size](https://img.shields.io/github/size/C451/trading-vue-js/dist/trading-vue.min.js.svg) ![yes](https://img.shields.io/badge/by%20trader-for%20traders-lightgray.svg)
+# TradingVue.js ![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=version) ![license](https://img.shields.io/badge/license-MIT-blue.svg) ![GRUGLIKE](https://img.shields.io/badge/GRUG-LIKE-yellow.svg) ![build](https://img.shields.io/badge/build-passing-brightgreen.svg) ![size](https://img.shields.io/github/size/C451/trading-vue-js/dist/trading-vue.min.js.svg) ![yes](https://img.shields.io/badge/by%20traders-for%20traders-lightgray.svg)
 
 **TradingVue.js** is a hackable charting lib for traders. You can draw literally ANYTHING on top of candlestick charts.
 
-## Why?
+## Why
 
-I've been using [TradingView.com](https://www.tradingview.com) for several years and oh boy, I like this service.
-But when it came to writing custom trading software there was no charting library with the same level of usability, not even near. There **WAS** no lib.
+This project was created for those who are tired of the same old set of indicators and want to make crazy experements with financial data. Think of this library as an assembler for building charts. UX is higly inspired by [TradingView.com](https://www.tradingview.com).
+
 
 <br>
 
@@ -24,8 +24,8 @@ But when it came to writing custom trading software there was no charting librar
 
 * Scrolling & zoomming as we all like
 * Simple API for making new overlays
-* No need for fancy math!
-* One overlay === one .vue file (or .js)
+* No need for fancy math
+* One overlay === one .vue component
 * Fully reactive
 * Fully responsive
 * Customizable colors and fonts
@@ -38,7 +38,7 @@ But when it came to writing custom trading software there was no charting librar
 
 **NPM**
 ```
-npm i trading-vue-js -S
+npm i trading-vue-js
 ```
 **In browser**
 
@@ -79,7 +79,7 @@ export default {
 
 ## Core philosophy
 
-The core philosophy is **Data -> Screen mapping**. Thus, the lib provides you with functions that map your data (whatever) to screen coordinates. The lib does all the dirty work behined the scenes: scrolling, scaling, reactivity, etc.
+The core philosophy is **Data -> Screen Mapping (DSM)**. The library provides you with functions that map your data (it could be anything) to screen coordinates. The lib does all the dirty work behind the scenes: scrolling, scaling, reactivity, etc.
 
  ```
  layout.t2screen(t) // time -> x
@@ -88,7 +88,7 @@ The core philosophy is **Data -> Screen mapping**. Thus, the lib provides you wi
  layout.screen2$(y) // y -> price
  layout.screen2t(x) // x -> time
  ```
- Using these functions and the standard js canvas API, you can do the magic.
+ Using these functions and the standard js canvas API, you can do magic.
 
 
 ## Data structure
@@ -127,7 +127,7 @@ PRO TIP: **ohlcv** is mandatory if you want to see something other than a white 
     ]
 }
 ```
-The process of adding a new indicator is simple. First you define your own data format (should be timestamped though) and display settings. For example, EMA data might look like this:
+The process of adding a new indicator is simple: first you define your own data format (should be timestamped though) and display settings. For example, EMA data might look like this:
 
  ```json
  {
@@ -160,13 +160,17 @@ export default {
             const layout = this.$props.layout
             ctx.strokeStyle = this.color
             ctx.beginPath()
+
             for (var p of this.$props.data) {
+
                 // t2screen & $2screen - special functions that
                 // map your data coordinates to grid coordinates
                 let x = layout.t2screen(p[0])
                 let y = layout.$2screen(p[1])
+
                 ctx.lineTo(x, y)
             }
+
             ctx.stroke()
         },
         use_for() { return ['EMA'] },
@@ -180,7 +184,7 @@ export default {
 }
 ```
 
-That's why I said you can draw ANYTHING. Stay with me, I will prove this bold statement to you:
+That's why the title doesn't lie: you can draw ANYTHING.
 
 ## Grin
 
@@ -194,7 +198,7 @@ That's why I said you can draw ANYTHING. Stay with me, I will prove this bold st
 ## Roadmap
 
 * Docs
-* Solve known issues (search for "TODO: IMPORTANT")
+* Solve known issues (marked as 'TODO: IMPORTANT')
 * Performance improvements
 * Add more built-in overlays
 * Add toolbar (drawing tools)
@@ -204,11 +208,18 @@ That's why I said you can draw ANYTHING. Stay with me, I will prove this bold st
 
 ## Development & Building
 
+**Install devDependencies**
+
+```
+npm install
+```
+
 **Run development enviroment (hot)**
+
 ```
 npm run dev
 ```
-http://localhost:8080
+*Server is running on http://localhost:8080*
 
 **Build the bundle**
 
@@ -216,9 +227,15 @@ http://localhost:8080
 npm run build
 ```
 
-## Contribution
+## Contributing
 
-In progress
+1. Fork ( https://github.com/C451/trading-vue-js/fork )
+2. Create your feature branch (`git checkout -b cool-new-feature`)
+3. Commit your changes (`git commit -am 'Let's rock smth'`)
+4. Push to the branch (`git push origin cool-new-feature`)
+5. Create a new Pull Request
+
+Please read the guidelines in CONTRIBUTING.md 
 
 ## Donations
 
