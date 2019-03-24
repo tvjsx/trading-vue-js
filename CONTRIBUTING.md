@@ -2,7 +2,7 @@
 
 ## There are several things you should be aware of as a contributor:
 
-1. You are a great human. Seriously. You try to make the world better place while 90% of population are just selfish consumers.
+1. You are a great human. Seriously. You try to make the world a better place while 90% of population are just selfish consumers.
 2. If you have a big idea for the project, let's discuss it first. It would be very sad, if you spent time on something that does not align with project's direction.
 3. Commits are better with pull-requests and clear explanation.
 4. Good people === good times. Please, be respectful to other folks.
@@ -29,4 +29,4 @@ And finally:
 ## Let's make singularity closer (I'm sure it will be fun)!
 
 ~
-That's all. I personally hate long and boring docs. Have a good morning/day/evening!
+That's all. I personally hate long and boring docs. Have a great morning/day/evening!
