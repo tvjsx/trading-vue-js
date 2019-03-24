@@ -2,7 +2,7 @@
 import Const from '../../stuff/constants.js'
 import Utils from '../../stuff/utils.js'
 
-const { HOUR, DAY, WEEK, MONTH, YEAR, MONTHMAP } = Const
+const { MINUTE15, HOUR, DAY, WEEK, MONTH, YEAR, MONTHMAP } = Const
 
 const {
     SIDEBAR, SBMIN, BOTBAR, PANWIDTH, PANHEIGHT
@@ -55,7 +55,9 @@ export default class Botbar {
             this.ctx.moveTo(p[0] - 0.5, 0)
             this.ctx.lineTo(p[0] - 0.5, 4.5)
 
-            this.ctx.globalAlpha = this.lbl_alpha(p[1][0])
+            if (!this.lbl_highlight(p[1][0])) {
+                this.ctx.globalAlpha = 0.85
+            }
             this.ctx.textAlign = 'center'
             this.ctx.fillText(lbl, p[0], 18)
             this.ctx.globalAlpha = 1
@@ -90,9 +92,9 @@ export default class Botbar {
 
         let d = new Date(t)
 
-        if (Utils.year_start(t) === t) return d.getFullYear()
-        if (Utils.month_start(t) === t) return MONTHMAP[d.getMonth()]
-        if (Utils.day_start(t) === t) return d.getDate()
+        if (Utils.year_start(t)) return d.getFullYear()
+        if (Utils.month_start(t)) return MONTHMAP[d.getMonth()]
+        if (Utils.day_start(t)) return d.getDate()
 
         let h = Utils.add_zero(d.getHours())
         let m = Utils.add_zero(d.getMinutes())
@@ -136,16 +138,16 @@ export default class Botbar {
     // but if there is no grid line in place, there
     // will be no month name on t-axis. Sad.
     // Solution: manipulate the grid, skew it, you know
-    lbl_alpha(t) {
+    lbl_highlight(t) {
 
         let ti = this.$p.interval
 
-        if (t === 0) return 1.0
-        if (Utils.month_start(t) === t) return 1.0
-        if (Utils.day_start(t) === t) return 1.0
-        if (t % HOUR === 0) return 1.0
+        if (t === 0) return true
+        if (Utils.month_start(t)) return true
+        if (Utils.day_start(t)) return true
+        if (ti <= MINUTE15 && t % HOUR === 0) return true
 
-        return 0.5
+        return false
 
     }
 

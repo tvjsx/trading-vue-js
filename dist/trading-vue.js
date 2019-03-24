@@ -6374,7 +6374,8 @@ function botbar_createClass(Constructor, protoProps, staticProps) { if (protoPro
 
 
 
-var botbar_HOUR = constants.HOUR,
+var botbar_MINUTE15 = constants.MINUTE15,
+    botbar_HOUR = constants.HOUR,
     botbar_DAY = constants.DAY,
     botbar_WEEK = constants.WEEK,
     botbar_MONTH = constants.MONTH,
@@ -6431,7 +6432,11 @@ function () {
           if (p[0] > width - sb) continue;
           this.ctx.moveTo(p[0] - 0.5, 0);
           this.ctx.lineTo(p[0] - 0.5, 4.5);
-          this.ctx.globalAlpha = this.lbl_alpha(p[1][0]);
+
+          if (!this.lbl_highlight(p[1][0])) {
+            this.ctx.globalAlpha = 0.85;
+          }
+
           this.ctx.textAlign = 'center';
           this.ctx.fillText(lbl, p[0], 18);
           this.ctx.globalAlpha = 1;
@@ -6474,9 +6479,9 @@ function () {
     key: "format_date",
     value: function format_date(t) {
       var d = new Date(t);
-      if (utils.year_start(t) === t) return d.getFullYear();
-      if (utils.month_start(t) === t) return botbar_MONTHMAP[d.getMonth()];
-      if (utils.day_start(t) === t) return d.getDate();
+      if (utils.year_start(t)) return d.getFullYear();
+      if (utils.month_start(t)) return botbar_MONTHMAP[d.getMonth()];
+      if (utils.day_start(t)) return d.getDate();
       var h = utils.add_zero(d.getHours());
       var m = utils.add_zero(d.getMinutes());
       var s = utils.add_zero(d.getSeconds());
@@ -6517,14 +6522,14 @@ function () {
     // Solution: manipulate the grid, skew it, you know
 
   }, {
-    key: "lbl_alpha",
-    value: function lbl_alpha(t) {
+    key: "lbl_highlight",
+    value: function lbl_highlight(t) {
       var ti = this.$p.interval;
-      if (t === 0) return 1.0;
-      if (utils.month_start(t) === t) return 1.0;
-      if (utils.day_start(t) === t) return 1.0;
-      if (t % botbar_HOUR === 0) return 1.0;
-      return 0.5;
+      if (t === 0) return true;
+      if (utils.month_start(t)) return true;
+      if (utils.day_start(t)) return true;
+      if (ti <= botbar_MINUTE15 && t % botbar_HOUR === 0) return true;
+      return false;
     } // Nearest data object (when locked)
 
   }, {
