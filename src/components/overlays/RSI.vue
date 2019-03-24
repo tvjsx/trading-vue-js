@@ -8,6 +8,9 @@ export default {
     name: 'RSI',
     mixins: [Overlay],
     methods: {
+        meta_info() {
+            return { author: 'C451', version: '1.0.0' }
+        },
         // Here goes your code. You are provided with:
         // { All stuff is reactive }
         // $props.layout -> positions of all chart elements +
@@ -84,7 +87,7 @@ export default {
         y_range(hi, lo) {
             return [
                 Math.max(hi, this.sett.upper || 70),
-                Math.min(lo, this.sett.lower || 30) 
+                Math.min(lo, this.sett.lower || 30)
             ]
         }
     },

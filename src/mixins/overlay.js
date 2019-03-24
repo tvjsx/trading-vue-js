@@ -9,6 +9,7 @@ export default {
         'layout', 'sub', 'data', 'settings', 'grid_id'
     ],
     mounted() {
+        this.meta_info()
         this.$emit('new-grid-layer', {
             name: this.$options.name,
             renderer: this
@@ -27,9 +28,26 @@ export default {
         })
     },
     methods: {
+        meta_info() {
+            /* implement it (mandatory) */
+            let id = this.$props.id
+            console.warn(
+                `${id} meta_info() should be implemented`)
+            console.warn(
+            `Format: meta_info() {
+                author: 'Satoshi Smith',
+                version: '1.0.0',
+                contact (opt) '<email>'
+                github: (opt) '<GitHub Page>',
+            }`)
+        },
         use_for() {
             /* implement it (mandatory) */
-            console.warning('use_for() should be implemented')
+            console.warn('use_for() should be implemented')
+            console.warn(
+            `Format: use_for() {
+                  return ['tyep1', 'type2', ...]
+            }`)
         },
         data_colors() {
             /* implement it (optional) */

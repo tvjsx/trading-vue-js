@@ -10,6 +10,9 @@ export default {
     name: 'Spline',
     mixins: [Overlay],
     methods: {
+        meta_info() {
+            return { author: 'C451', version: '1.0.0' }
+        },
         // Here goes your code. You are provided with:
         // { All stuff is reactive }
         // $props.layout -> positions of all chart elements +
