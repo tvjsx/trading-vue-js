@@ -1,5 +1,5 @@
 /*!
- * TradingVue.JS - v0.1.6 - Sun Mar 24 2019
+ * TradingVue.JS - v0.1.7 - Sun Mar 24 2019
  * https://github.com/C451/trading-vue-js
  * Copyright (c) 2019 c451 Code's All Right;
  * Licensed under the MIT license
