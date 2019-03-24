@@ -26,5 +26,18 @@ export default {
             y_range: this.y_range
         })
     },
+    methods: {
+        use_for() {
+            /* implement it (mandatory) */
+            console.warning('use_for() should be implemented')
+        },
+        data_colors() {
+            /* implement it (optional) */
+        },
+        y_range(hi, lo) {
+            /* implement it (optional) */
+        }
+    },
+
     render(h) { return h() }
 }
