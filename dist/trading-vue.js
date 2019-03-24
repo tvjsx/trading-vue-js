@@ -5245,6 +5245,18 @@ component.options.__file = "src/components/Crosshair.vue"
       y_range: this.y_range
     });
   },
+  methods: {
+    use_for: function use_for() {
+      /* implement it (mandatory) */
+      console.warning('use_for() should be implemented');
+    },
+    data_colors: function data_colors() {
+      /* implement it (optional) */
+    },
+    y_range: function y_range(hi, lo) {
+      /* implement it (optional) */
+    }
+  },
   render: function render(h) {
     return h();
   }
@@ -7015,6 +7027,13 @@ if (false) { var TradingVue_api; }
 TradingVue_component.options.__file = "src/TradingVue.vue"
 /* harmony default export */ var TradingVue = (TradingVue_component.exports);
 // CONCATENATED MODULE: ./src/index.js
+/* concated harmony reexport TradingVue */__webpack_require__.d(__webpack_exports__, "TradingVue", function() { return TradingVue; });
+/* concated harmony reexport Overlay */__webpack_require__.d(__webpack_exports__, "Overlay", function() { return overlay; });
+/* concated harmony reexport Utils */__webpack_require__.d(__webpack_exports__, "Utils", function() { return utils; });
+/* concated harmony reexport Constants */__webpack_require__.d(__webpack_exports__, "Constants", function() { return constants; });
+
+
+
 
 
 TradingVue.install = function (Vue) {
@@ -7023,9 +7042,16 @@ TradingVue.install = function (Vue) {
 
 if (typeof window !== 'undefined' && window.Vue) {
   window.Vue.use(TradingVue);
+  window.TradingVueLib = {
+    TradingVue: TradingVue,
+    Overlay: overlay,
+    Utils: utils,
+    Constants: constants
+  };
 }
 
 /* harmony default export */ var src = __webpack_exports__["default"] = (TradingVue);
+
 
 /***/ }),
 /* 11 */
