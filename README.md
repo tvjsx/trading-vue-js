@@ -21,7 +21,7 @@ If you create trading software - this lib is probably for you. If you like to ma
 
 ## Features
 
-* Scrolling & zoomming as we all like
+* Scrolling & zooming as we all like
 * Simple API for making new overlays
 * No need for fancy math
 * One overlay === one .vue component
