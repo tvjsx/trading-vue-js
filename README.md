@@ -9,7 +9,7 @@
 
 ## Why
 
-If you create trading software - this lib is probably for you. If you like to make custom indicators and think out of the box - this lib is most likely for you. And if you miss usability of [TradingView.com](https://www.tradingview.com) in open-source libraries and can't stand it - you are definetly in the right place!
+If you create trading software - this lib is probably for you. If you like to make custom indicators and think out of the box - this lib is most likely for you. And if you miss usability of [TradingView.com](https://www.tradingview.com) in other open-source libraries and can't stand it - you are definetly in the right place!
 
 <br>
 
