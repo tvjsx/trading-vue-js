@@ -236,7 +236,7 @@ npm run build
 
 Please read the guidelines in CONTRIBUTING.md
 
-## Donations
+## Donation
 
 ɃTC 19vDB2pyn2ndJBH4p6We2SJNe8VZggyxfG
 
