@@ -8,6 +8,7 @@ import Const from '../../stuff/constants.js'
 import Candle from './candle.js'
 import Volbar from './volbar.js'
 import Utils from '../../stuff/utils.js'
+import Layer from '../../stuff/layer.js'
 
 const { BOTBAR } = Const.ChartConfig
 
@@ -135,16 +136,19 @@ export default class Grid {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
         this.grid()
 
-        if (this.layout.volume) this.volume()
+        let overlays = []
+        if (this.layout.volume) overlays.push(this.v_layer())
+        if (this.layout.candles) overlays.push(this.c_layer())
+        overlays.push(...this.overlays)
 
-        // TODO: implemet layers rendering order
-        this.overlays.forEach(l => {
+        // z-index sorting
+        overlays.sort((l1, l2) => l1.z - l2.z)
+
+        overlays.forEach(l => {
             this.ctx.save()
             l.renderer.draw(this.ctx)
             this.ctx.restore()
         })
-
-        if (this.layout.candles) this.candles()
 
         if (this.crosshair) {
             this.crosshair.renderer.draw(this.ctx)
@@ -189,16 +193,19 @@ export default class Grid {
     // Actually draws candles
     // TODO: let user to overwrite. Let them create Mountain Dew
     // candles and Snoop-dogg volume bars! (see. BitmexRekt)
-    candles() {
-        for (var c of this.layout.candles) {
-            let candle = new Candle(this, c)
-        }
+    c_layer() {
+        return new Layer('Candles', 0, () => {
+            for (var c of this.layout.candles) {
+                let candle = new Candle(this, c)
+            }
+        })
     }
-
-    volume() {
-        for (var c of this.layout.volume) {
-            let volbar = new Volbar(this, c)
-        }
+    v_layer() {
+        return new Layer('Volume', -100, () => {
+            for (var c of this.layout.volume) {
+                let volbar = new Volbar(this, c)
+            }
+        })
     }
 
     mousezoom(delta) {

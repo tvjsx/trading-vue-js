@@ -12,7 +12,8 @@ export default {
         this.meta_info()
         this.$emit('new-grid-layer', {
             name: this.$options.name,
-            renderer: this
+            renderer: this,
+            z: this.$props.settings['z-index'] || -1,
         })
         if (this.data_colors) {
             this.$emit('layer-data-colors', {
