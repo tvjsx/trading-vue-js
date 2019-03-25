@@ -149,7 +149,7 @@ The process of adding a new indicator is simple: first you define your own data 
 And then you make a new overlay class to display that data on the grid:
 
 ```js
-import Overlay from '../../mixins/overlay.js'
+import { Overlay } from 'trading-vue-js'
 
 export default {
     name: 'EMA',

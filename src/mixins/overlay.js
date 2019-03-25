@@ -28,11 +28,19 @@ export default {
         })
     },
     methods: {
+        use_for() {
+            /* override it (mandatory) */
+            console.warn('use_for() should be implemented')
+            console.warn(
+            `Format: use_for() {
+                  return ['tyep1', 'type2', ...]
+            }`)
+        },
         meta_info() {
-            /* implement it (mandatory) */
+            /* override it (optional) */
             let id = this.$props.id
             console.warn(
-                `${id} meta_info() should be implemented`)
+                `${id} meta_info() is req. for publishing`)
             console.warn(
             `Format: meta_info() {
                 author: 'Satoshi Smith',
@@ -41,19 +49,11 @@ export default {
                 github: (opt) '<GitHub Page>',
             }`)
         },
-        use_for() {
-            /* implement it (mandatory) */
-            console.warn('use_for() should be implemented')
-            console.warn(
-            `Format: use_for() {
-                  return ['tyep1', 'type2', ...]
-            }`)
-        },
         data_colors() {
-            /* implement it (optional) */
+            /* override it (optional) */
         },
         y_range(hi, lo) {
-            /* implement it (optional) */
+            /* override it (optional) */
         }
     },
 
