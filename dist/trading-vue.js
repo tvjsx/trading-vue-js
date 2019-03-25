@@ -1,5 +1,5 @@
 /*!
- * TradingVue.JS - v0.1.7 - Sun Mar 24 2019
+ * TradingVue.JS - v0.1.8 - Mon Mar 25 2019
  * https://github.com/C451/trading-vue-js
  * Copyright (c) 2019 c451 Code's All Right;
  * Licensed under the MIT license
@@ -4529,6 +4529,26 @@ function () {
 }();
 
 
+// CONCATENATED MODULE: ./src/stuff/layer.js
+function layer_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+// Layer constructor, helper class
+var Layer = function Layer(name, z, renderer) {
+  layer_classCallCheck(this, Layer);
+
+  if (typeof renderer === 'function') {
+    this.renderer = {
+      draw: renderer
+    };
+  } else {
+    this.renderer = renderer;
+  }
+
+  this.name = name;
+  this.z = z;
+};
+
+/* harmony default export */ var stuff_layer = (Layer);
 // CONCATENATED MODULE: ./src/components/js/grid.js
 function grid_slicedToArray(arr, i) { return grid_arrayWithHoles(arr) || grid_iterableToArrayLimit(arr, i) || grid_nonIterableRest(); }
 
@@ -4537,6 +4557,14 @@ function grid_nonIterableRest() { throw new TypeError("Invalid attempt to destru
 function grid_iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function grid_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function grid_toConsumableArray(arr) { return grid_arrayWithoutHoles(arr) || grid_iterableToArray(arr) || grid_nonIterableSpread(); }
+
+function grid_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function grid_iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function grid_arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
 function grid_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -4547,6 +4575,7 @@ function grid_createClass(Constructor, protoProps, staticProps) { if (protoProps
 // Grid.js listens to various user-generated events,
 // emits Vue-events if something has changed (e.g. range)
 // Think of it as an I/O system for Grid.vue
+
 
 
 
@@ -4693,16 +4722,21 @@ function () {
       this.interval = this.$p.interval;
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       this.grid();
-      if (this.layout.volume) this.volume(); // TODO: implemet layers rendering order
+      var overlays = [];
+      if (this.layout.volume) overlays.push(this.v_layer());
+      if (this.layout.candles) overlays.push(this.c_layer());
+      overlays.push.apply(overlays, grid_toConsumableArray(this.overlays)); // z-index sorting
 
-      this.overlays.forEach(function (l) {
+      overlays.sort(function (l1, l2) {
+        return l1.z - l2.z;
+      });
+      overlays.forEach(function (l) {
         _this2.ctx.save();
 
         l.renderer.draw(_this2.ctx);
 
         _this2.ctx.restore();
       });
-      if (this.layout.candles) this.candles();
 
       if (this.crosshair) {
         this.crosshair.renderer.draw(this.ctx);
@@ -4787,58 +4821,66 @@ function () {
     // candles and Snoop-dogg volume bars! (see. BitmexRekt)
 
   }, {
-    key: "candles",
-    value: function candles() {
-      var _iteratorNormalCompletion3 = true;
-      var _didIteratorError3 = false;
-      var _iteratorError3 = undefined;
+    key: "c_layer",
+    value: function c_layer() {
+      var _this3 = this;
 
-      try {
-        for (var _iterator3 = this.layout.candles[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-          var c = _step3.value;
-          var candle = new Candle(this, c);
-        }
-      } catch (err) {
-        _didIteratorError3 = true;
-        _iteratorError3 = err;
-      } finally {
+      return new stuff_layer('Candles', 0, function () {
+        var _iteratorNormalCompletion3 = true;
+        var _didIteratorError3 = false;
+        var _iteratorError3 = undefined;
+
         try {
-          if (!_iteratorNormalCompletion3 && _iterator3.return != null) {
-            _iterator3.return();
+          for (var _iterator3 = _this3.layout.candles[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+            var c = _step3.value;
+            var candle = new Candle(_this3, c);
           }
+        } catch (err) {
+          _didIteratorError3 = true;
+          _iteratorError3 = err;
         } finally {
-          if (_didIteratorError3) {
-            throw _iteratorError3;
+          try {
+            if (!_iteratorNormalCompletion3 && _iterator3.return != null) {
+              _iterator3.return();
+            }
+          } finally {
+            if (_didIteratorError3) {
+              throw _iteratorError3;
+            }
           }
         }
-      }
+      });
     }
   }, {
-    key: "volume",
-    value: function volume() {
-      var _iteratorNormalCompletion4 = true;
-      var _didIteratorError4 = false;
-      var _iteratorError4 = undefined;
+    key: "v_layer",
+    value: function v_layer() {
+      var _this4 = this;
 
-      try {
-        for (var _iterator4 = this.layout.volume[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-          var c = _step4.value;
-          var volbar = new Volbar(this, c);
-        }
-      } catch (err) {
-        _didIteratorError4 = true;
-        _iteratorError4 = err;
-      } finally {
+      return new stuff_layer('Volume', -100, function () {
+        var _iteratorNormalCompletion4 = true;
+        var _didIteratorError4 = false;
+        var _iteratorError4 = undefined;
+
         try {
-          if (!_iteratorNormalCompletion4 && _iterator4.return != null) {
-            _iterator4.return();
+          for (var _iterator4 = _this4.layout.volume[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+            var c = _step4.value;
+            var volbar = new Volbar(_this4, c);
           }
+        } catch (err) {
+          _didIteratorError4 = true;
+          _iteratorError4 = err;
         } finally {
-          if (_didIteratorError4) {
-            throw _iteratorError4;
+          try {
+            if (!_iteratorNormalCompletion4 && _iterator4.return != null) {
+              _iterator4.return();
+            }
+          } finally {
+            if (_didIteratorError4) {
+              throw _iteratorError4;
+            }
           }
         }
-      }
+      });
     }
   }, {
     key: "mousezoom",
@@ -5226,9 +5268,11 @@ component.options.__file = "src/components/Crosshair.vue"
 /* harmony default export */ var overlay = ({
   props: ['id', 'num', 'interval', 'cursor', 'colors', 'layout', 'sub', 'data', 'settings', 'grid_id'],
   mounted: function mounted() {
+    this.meta_info();
     this.$emit('new-grid-layer', {
       name: this.$options.name,
-      renderer: this
+      renderer: this,
+      z: this.$props.settings['z-index'] || -1
     });
 
     if (this.data_colors) {
@@ -5247,14 +5291,21 @@ component.options.__file = "src/components/Crosshair.vue"
   },
   methods: {
     use_for: function use_for() {
-      /* implement it (mandatory) */
-      console.warning('use_for() should be implemented');
+      /* override it (mandatory) */
+      console.warn('use_for() should be implemented');
+      console.warn("Format: use_for() {\n                  return ['tyep1', 'type2', ...]\n            }");
+    },
+    meta_info: function meta_info() {
+      /* override it (optional) */
+      var id = this.$props.id;
+      console.warn("".concat(id, " meta_info() is req. for publishing"));
+      console.warn("Format: meta_info() {\n                author: 'Satoshi Smith',\n                version: '1.0.0',\n                contact (opt) '<email>'\n                github: (opt) '<GitHub Page>',\n            }");
     },
     data_colors: function data_colors() {
-      /* implement it (optional) */
+      /* override it (optional) */
     },
     y_range: function y_range(hi, lo) {
-      /* implement it (optional) */
+      /* override it (optional) */
     }
   },
   render: function render(h) {
@@ -5271,6 +5322,12 @@ component.options.__file = "src/components/Crosshair.vue"
   name: 'Spline',
   mixins: [overlay],
   methods: {
+    meta_info: function meta_info() {
+      return {
+        author: 'C451',
+        version: '1.0.0'
+      };
+    },
     // Here goes your code. You are provided with:
     // { All stuff is reactive }
     // $props.layout -> positions of all chart elements +
@@ -5390,6 +5447,12 @@ Spline_component.options.__file = "src/components/overlays/Spline.vue"
   name: 'RSI',
   mixins: [overlay],
   methods: {
+    meta_info: function meta_info() {
+      return {
+        author: 'C451',
+        version: '1.0.0'
+      };
+    },
     // Here goes your code. You are provided with:
     // { All stuff is reactive }
     // $props.layout -> positions of all chart elements +
