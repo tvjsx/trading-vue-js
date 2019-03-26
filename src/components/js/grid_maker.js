@@ -62,7 +62,7 @@ function GridMaker(id, params, master_grid = null) {
     function calc_zoom() {
         let zoom = y_t ? y_t.zoom : 1
         let zk = y_t ? (1 / zoom - 1) / 2  : 0
-        let xpn = Math.min(]EXPAND / zoom, EXPAND)
+        let xpn = Math.min(EXPAND / zoom, EXPAND)
         return [xpn, zk]
     }
 
