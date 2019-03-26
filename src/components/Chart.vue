@@ -8,6 +8,7 @@
             v-on:range-changed="range_changed"
             v-on:cursor-changed="cursor_changed"
             v-on:cursor-locked="cursor_locked"
+            v-on:sidebar-transform="set_ytransform"
             v-on:layer-meta-props="layer_meta_props">
         </grid-section>
         <botbar v-bind="botbar_props"></botbar>
@@ -58,9 +59,7 @@ export default {
             Utils.overwrite(this.range, r)
             const sub = this.subset()
             Utils.overwrite(this.sub, sub)
-            const lay = new Layout(this)
-            Utils.copy_layout(this._layout, lay)
-
+            this.update_layout()
         },
         cursor_changed(e) {
             this.updater.sync(e)
@@ -71,6 +70,14 @@ export default {
         calc_interval() {
             if (this.ohlcv.length < 2) return
             this.interval = Utils.detect_interval(this.ohlcv)
+        },
+        set_ytransform(s) {
+            let obj = this.y_transforms[s.grid_id] || {}
+            if (s.zoom) obj.zoom = s.zoom
+            if (s.offset) obj.offset = s.offset
+            this.$set(this.y_transforms, s.grid_id, obj)
+            this.update_layout()
+            Utils.overwrite(this.range, this.range)
         },
         default_range() {
             const dl = Const.ChartConfig.DEFAULT_LEN
@@ -105,7 +112,8 @@ export default {
                 interval: this.interval,
                 cursor: this.cursor,
                 colors: this.$props.colors,
-                font: this.$props.font
+                font: this.$props.font,
+                y_ts: this.y_transforms
             }
         },
         overlay_subset(source) {
@@ -137,6 +145,9 @@ export default {
                 Utils.get_num_id(d.layer_id), d)
 
             // Rerender
+            this.update_layout()
+        },
+        update_layout() {
             const lay = new Layout(this)
             Utils.copy_layout(this._layout, lay)
         }
@@ -197,25 +208,25 @@ export default {
             rerender: 0,
 
             // Layers meta-props (changing behaviour)
-            layers_meta: {}
+            layers_meta: {},
+
+            // Y-transforms (for y-zoom and -shift)
+            y_transforms: {}
         }
     },
     watch: {
         width() {
-            const lay = new Layout(this)
-            Utils.copy_layout(this._layout, lay)
+            this.update_layout()
         },
         height() {
-            const lay = new Layout(this)
-            Utils.copy_layout(this._layout, lay)
+            this.update_layout()
         },
         data: {
             handler: function() {
                 if (!this.sub.length) this.init_range()
                 const sub = this.subset()
                 Utils.overwrite(this.sub, sub)
-                const lay = new Layout(this)
-                Utils.copy_layout(this._layout, lay)
+                this.update_layout()
                 Utils.overwrite(this.range, this.range)
                 this.rerender++
             },

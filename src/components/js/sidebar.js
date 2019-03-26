@@ -1,5 +1,7 @@
+import * as Hammer from 'hammerjs'
 import Const from '../../stuff/constants.js'
 import Utils from '../../stuff/utils.js'
+
 
 const { PANHEIGHT } = Const.ChartConfig
 
@@ -17,7 +19,67 @@ export default class Sidebar {
         this.layout = this.$p.layout.grids[this.id]
 
         this.side = side
+        this.listeners()
 
+    }
+
+    listeners() {
+        var mc = new Hammer.Manager(this.canvas)
+        mc.add(new Hammer.Pan({
+            direction: Hammer.DIRECTION_VERTICAL,
+            threshold: 1
+        }))
+        //mc.add(new Hammer.Pinch())
+        //mc.get('pinch').set({ enable: true })
+        mc.add( new Hammer.Tap({ event: 'doubletap', taps: 2 }) );
+
+        mc.on('panstart', event => {
+            if (this.$p.y_transform) {
+                this.zoom = this.$p.y_transform.zoom
+            } else {
+                this.zoom = 1.0
+            }
+            this.drug = {
+                y: event.center.y,
+                z: this.zoom
+            }
+        })
+
+        mc.on('panmove', event => {
+            if (this.drug) {
+                this.zoom = this.drug.z + (this.drug.y - event.center.y) * 0.001
+                this.comp.$emit('sidebar-transform', {
+                    grid_id: this.id, zoom: this.zoom
+                })
+                this.update()
+            }
+        })
+
+        mc.on('panend', event => {
+            this.drug = null
+        })
+
+        mc.on('doubletap', event => {
+            this.comp.$emit('sidebar-transform', {
+                grid_id: this.id, zoom: 1.0
+            })
+            this.zoom = 1.0
+            this.update()
+        })
+
+        /* TODO: Do later for mobile version
+        mc.on('pinchstart', event =>  {
+            this.pinch = {}
+        })
+
+        mc.on('pinchend', event =>  {
+            this.pinch = null
+        })
+
+        mc.on('pinch', event => {
+            if (this.pinch) this.pinchzoom(event.scale)
+        })
+        */
     }
 
     update() {
