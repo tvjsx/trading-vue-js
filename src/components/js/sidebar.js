@@ -47,9 +47,11 @@ export default class Sidebar {
 
         mc.on('panmove', event => {
             if (this.drug) {
-                this.zoom = this.drug.z + (this.drug.y - event.center.y) * 0.001
+                this.zoom = this.calc_zoom(event)
                 this.comp.$emit('sidebar-transform', {
-                    grid_id: this.id, zoom: this.zoom
+                    grid_id: this.id,
+                    zoom: this.zoom,
+                    auto: false
                 })
                 this.update()
             }
@@ -61,7 +63,9 @@ export default class Sidebar {
 
         mc.on('doubletap', event => {
             this.comp.$emit('sidebar-transform', {
-                grid_id: this.id, zoom: 1.0
+                grid_id: this.id,
+                zoom: 1.0,
+                auto: true
             })
             this.zoom = 1.0
             this.update()
@@ -181,6 +185,13 @@ export default class Sidebar {
         this.ctx.textAlign = 'left'
         this.ctx.fillText(lbl, a, y + 16)
 
+    }
+
+    calc_zoom(event) {
+        let d = this.drug.y - event.center.y
+        let speed = d > 0 ? 3 : 1
+        let k = 1 + speed * d / this.layout.height
+        return Utils.clamp(this.drug.z * k, 0.005, 100)
     }
 
     mousemove(e) { }

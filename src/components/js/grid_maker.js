@@ -53,10 +53,17 @@ function GridMaker(id, params, master_grid = null) {
             if (y_range_fn) { [hi, lo] = y_range_fn(hi, lo) }
         }
         // Expand a lil
-        let zk = y_t ? 1 - y_t.zoom : 0
-        self.$_hi = hi + (hi - lo) * (EXPAND + zk) + 0
-        self.$_lo = lo - (hi - lo) * (EXPAND + zk) + 0
+        var [xpn, zk] = calc_zoom()
+        self.$_hi = hi + (hi - lo) * (xpn + zk) + 0
+        self.$_lo = lo - (hi - lo) * (xpn + zk) + 0
 
+    }
+
+    function calc_zoom() {
+        let zoom = y_t ? y_t.zoom : 1
+        let zk = y_t ? (1 / zoom - 1) / 2  : 0
+        let xpn = Math.min(]EXPAND / zoom, EXPAND)
+        return [xpn, zk]
     }
 
     function calc_sidebar() {
