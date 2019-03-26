@@ -5,13 +5,12 @@
             v-bind:values="section_values"
             v-bind:grid_id="grid_id"
             v-bind:common="legend_props"
-            v-bind:data_colors="data_colors">
+            v-bind:meta_props="get_meta_props">
         </chart-legend>
         <grid v-bind="grid_props" v-bind:grid_id="grid_id"
              v-on:range-changed="range_changed"
              v-on:cursor-changed="cursor_changed"
              v-on:cursor-locked="cursor_locked"
-             v-on:layer-data-colors="set_data_colors"
              v-on:layer-meta-props="emit_meta_props">
         </grid>
         <sidebar v-bind="sidebar_props" v-bind:grid_id="grid_id"
@@ -45,10 +44,8 @@ export default {
         cursor_locked(state) {
             this.$emit('cursor-locked', state)
         },
-        set_data_colors(d) {
-            this.$set(this.data_colors, d.layer_id, d.colors)
-        },
         emit_meta_props(d) {
+            this.$set(this.meta_props, d.layer_id, d)
             this.$emit('layer-meta-props', d)
         }
     },
@@ -89,6 +86,10 @@ export default {
                 p.data = [p.data[id - 1]]
             }
             return p
+        },
+        get_meta_props() {
+            const id = this.$props.grid_id
+            return this.meta_props
         }
     },
     watch: {
@@ -106,7 +107,7 @@ export default {
     },
     data() {
         return {
-            data_colors: {},
+            meta_props: {},
             rerender: 0
         }
     }

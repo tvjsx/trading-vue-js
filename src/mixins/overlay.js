@@ -15,16 +15,12 @@ export default {
             renderer: this,
             z: this.$props.settings['z-index'] || -1,
         })
-        if (this.data_colors) {
-            this.$emit('layer-data-colors', {
-                layer_id: this.$props.id,
-                colors: this.data_colors()
-            })
-        }
+    
         // Overlay meta-props (adjusting behaviour)
         this.$emit('layer-meta-props', {
             grid_id: this.$props.grid_id,
             layer_id: this.$props.id,
+            data_colors: this.data_colors,
             y_range: this.y_range
         })
     },

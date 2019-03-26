@@ -130,8 +130,6 @@ export default {
             layer_events: {
                 'new-grid-layer': this.new_layer,
                 'redraw-grid': this.redraw,
-                'layer-data-colors': d =>
-                    this.$emit('layer-data-colors', d),
                 'layer-meta-props': d =>
                     this.$emit('layer-meta-props', d)
             }
