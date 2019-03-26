@@ -124,6 +124,7 @@ export default class Grid {
         } else {
             this.overlays.push(layer)
         }
+        this.update()
     }
 
     update() {

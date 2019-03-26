@@ -97,8 +97,6 @@ export default {
             handler: function (val, old_val) {
                 if(val.data.length !== old_val.data.length) {
                     // Look at this nasty trick!
-                    // We need to re-render sidebar only
-                    // when grids added or removed
                     this.rerender++
                 }
             },
