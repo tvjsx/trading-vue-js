@@ -112,12 +112,12 @@ export default {
             },
             deep: true
         },
-        layout: {
+        /*layout: {
             handler: function() {
                 this.redraw()
             },
             deep: true
-        },
+        },*/
         cursor: {
             handler: function() {
                 this.redraw()

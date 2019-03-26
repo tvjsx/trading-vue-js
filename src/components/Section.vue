@@ -13,8 +13,11 @@
              v-on:cursor-locked="cursor_locked"
              v-on:layer-meta-props="emit_meta_props">
         </grid>
-        <sidebar v-bind="sidebar_props" v-bind:grid_id="grid_id"
-                 v-bind:rerender="rerender">
+        <sidebar
+            v-bind="sidebar_props"
+            v-bind:grid_id="grid_id"
+            v-bind:rerender="rerender"
+            v-on:sidebar-transform="sidebar_transform">
         </sidebar>
     </div>
 </template>
@@ -44,6 +47,9 @@ export default {
         cursor_locked(state) {
             this.$emit('cursor-locked', state)
         },
+        sidebar_transform(s) {
+            this.$emit('sidebar-transform', s)
+        },
         emit_meta_props(d) {
             this.$set(this.meta_props, d.layer_id, d)
             this.$emit('layer-meta-props', d)
@@ -69,6 +75,7 @@ export default {
             let p = Object.assign({}, this.$props.common)
             p.width = p.layout.grids[id].sb
             p.height = p.layout.grids[id].height
+            p.y_transform = p.y_ts[id]
             return p
         },
         section_values() {

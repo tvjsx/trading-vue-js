@@ -22,8 +22,10 @@ const {
 
 function Layout(params) {
 
-    let { sub, offsub, interval, range, ctx, layers_meta, $props:$p }
-        = params
+    let {
+        sub, offsub, interval, range, ctx, layers_meta, $props:$p,
+        y_transforms: y_ts
+    } = params
 
     // Splits space between main chart
     // and offchart indicator grids
@@ -83,7 +85,8 @@ function Layout(params) {
     // Main grid
     const hs = grid_hs()
     let specs = {
-        sub, interval, range, ctx, $p, layers_meta, height: hs[0]
+        sub, interval, range, ctx, $p, layers_meta, height: hs[0],
+        y_t: y_ts[0]
     }
     let gms = [new GridMaker(0, specs)]
 
@@ -91,6 +94,7 @@ function Layout(params) {
     for (var [i, { data }] of offsub.entries()) {
         specs.sub = data
         specs.height = hs[i + 1]
+        specs.y_t = y_ts[i + 1]
         gms.push(new GridMaker(i + 1, specs, gms[0].get_layout()))
     }
 

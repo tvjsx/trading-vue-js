@@ -17,7 +17,10 @@ const {
 // master_grid - ref to the master grid
 function GridMaker(id, params, master_grid = null) {
 
-    let { sub, interval, range, ctx, $p, layers_meta, height } = params
+    let {
+        sub, interval, range, ctx, $p, layers_meta, height, y_t
+    } = params
+
     var self = {}
     var lm = layers_meta[id]
     var y_range_fn = null
@@ -25,6 +28,7 @@ function GridMaker(id, params, master_grid = null) {
         // Gets last y_range fn()
         y_range_fn = lm[Object.keys(lm).length - 1].y_range
     }
+
     // Calc vertical ($/₿) range
     function calc_$range() {
 
@@ -48,10 +52,10 @@ function GridMaker(id, params, master_grid = null) {
             var lo = Math.min(...arr)
             if (y_range_fn) { [hi, lo] = y_range_fn(hi, lo) }
         }
-
         // Expand a lil
-        self.$_hi = hi + (hi - lo) * EXPAND
-        self.$_lo = lo - (hi - lo) * EXPAND
+        let zk = y_t ? 1 - y_t.zoom : 0
+        self.$_hi = hi + (hi - lo) * (EXPAND + zk) + 0
+        self.$_lo = lo - (hi - lo) * (EXPAND + zk) + 0
 
     }
 
