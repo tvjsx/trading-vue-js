@@ -22,6 +22,9 @@
                 {{v.value}}
             </span>
         </span>
+        <span v-if="ind.unk" class="t-vue-unknown">
+            (Unknown type)
+        </span>
     </div>
 </div>
 </template>
@@ -53,7 +56,8 @@ export default {
                 const id = x.type + `_${i}`
                 return {
                     name: x.name || id,
-                    values: values ? f(id, values) : this.n_a(1)
+                    values: values ? f(id, values) : this.n_a(1),
+                    unk: !(id in (this.$props.meta_props || {}))
                 }
             })
         },
@@ -131,5 +135,8 @@ export default {
 }
 .t-vue-ivalue {
     margin-left: 0.5em;
+}
+.t-vue-unknown {
+    color: #999999; /* TODO: move => params */
 }
 </style>
