@@ -29,7 +29,7 @@
 export default {
     name: 'ChartLegend',
     props: [
-        'common', 'values', 'grid_id', 'data_colors'
+        'common', 'values', 'grid_id', 'meta_props'
     ],
     computed: {
         ohlcv() {
@@ -73,13 +73,14 @@ export default {
     },
     methods: {
         format(id, values) {
+            let meta = this.$props.meta_props[id] || {}
             // Matches Overlay.data_colors with the data values
             // (see Spline.vue)
             // TODO: custom data formatter (display in the legend
             // only whatever you need)
             if (!values[id]) return this.n_a(1)
             return values[id].slice(1).map((x, i) => {
-                const cs = this.$props.data_colors[id]
+                const cs = meta.data_colors ? meta.data_colors() : []
                 if (typeof x == 'number') {
                     // Show 8 digits for small values
                     x = x.toFixed(x > 0.001 ? 4 : 8)
