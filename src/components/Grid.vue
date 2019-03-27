@@ -12,7 +12,7 @@ export default {
     name: 'Grid',
     props: [
         'sub', 'layout', 'range', 'interval', 'cursor', 'colors', 'overlays',
-        'width', 'height', 'data', 'grid_id'
+        'width', 'height', 'data', 'grid_id', 'y_transform'
     ],
     mixins: [Canvas],
     components: { Crosshair },

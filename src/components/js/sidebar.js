@@ -3,7 +3,7 @@ import Const from '../../stuff/constants.js'
 import Utils from '../../stuff/utils.js'
 
 
-const { PANHEIGHT } = Const.ChartConfig
+const { PANHEIGHT, EXPAND } = Const.ChartConfig
 
 export default class Sidebar {
 
@@ -29,8 +29,7 @@ export default class Sidebar {
             direction: Hammer.DIRECTION_VERTICAL,
             threshold: 1
         }))
-        //mc.add(new Hammer.Pinch())
-        //mc.get('pinch').set({ enable: true })
+
         mc.add( new Hammer.Tap({ event: 'doubletap', taps: 2 }) );
 
         mc.on('panstart', event => {
@@ -43,6 +42,10 @@ export default class Sidebar {
                 y: event.center.y,
                 z: this.zoom
             }
+            this.y_range = [
+                this.layout.$_hi,
+                this.layout.$_lo
+            ]
         })
 
         mc.on('panmove', event => {
@@ -51,7 +54,9 @@ export default class Sidebar {
                 this.comp.$emit('sidebar-transform', {
                     grid_id: this.id,
                     zoom: this.zoom,
-                    auto: false
+                    auto: false,
+                    range: this.calc_range(),
+                    drugging: true
                 })
                 this.update()
             }
@@ -59,6 +64,10 @@ export default class Sidebar {
 
         mc.on('panend', event => {
             this.drug = null
+            this.comp.$emit('sidebar-transform', {
+                grid_id: this.id,
+                drugging: false
+            })
         })
 
         mc.on('doubletap', event => {
@@ -71,19 +80,8 @@ export default class Sidebar {
             this.update()
         })
 
-        /* TODO: Do later for mobile version
-        mc.on('pinchstart', event =>  {
-            this.pinch = {}
-        })
+        // TODO: Do later for mobile version
 
-        mc.on('pinchend', event =>  {
-            this.pinch = null
-        })
-
-        mc.on('pinch', event => {
-            if (this.pinch) this.pinchzoom(event.scale)
-        })
-        */
     }
 
     update() {
@@ -192,6 +190,21 @@ export default class Sidebar {
         let speed = d > 0 ? 3 : 1
         let k = 1 + speed * d / this.layout.height
         return Utils.clamp(this.drug.z * k, 0.005, 100)
+    }
+
+    // Not the best place to calculate y-range but
+    // this is the simplest solution I found up to
+    // date
+    calc_range() {
+        let z = this.zoom / this.drug.z
+        let zk = (1 / z - 1) / 2
+
+        let range = this.y_range.slice()
+        let delta = range[0] - range[1]
+        range[0] = range[0] + delta * zk
+        range[1] = range[1] - delta * zk
+
+        return range
     }
 
     mousemove(e) { }

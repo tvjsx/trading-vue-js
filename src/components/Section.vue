@@ -11,7 +11,8 @@
              v-on:range-changed="range_changed"
              v-on:cursor-changed="cursor_changed"
              v-on:cursor-locked="cursor_locked"
-             v-on:layer-meta-props="emit_meta_props">
+             v-on:layer-meta-props="emit_meta_props"
+             v-on:sidebar-transform="sidebar_transform">
         </grid>
         <sidebar
             v-bind="sidebar_props"
@@ -68,6 +69,7 @@ export default {
 
             p.width = p.layout.grids[id].width
             p.height = p.layout.grids[id].height
+            p.y_transform = p.y_ts[id]
             return p
         },
         sidebar_props() {

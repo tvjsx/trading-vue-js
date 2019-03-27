@@ -73,8 +73,7 @@ export default {
         },
         set_ytransform(s) {
             let obj = this.y_transforms[s.grid_id] || {}
-            if (s.zoom) obj.zoom = s.zoom
-            if (s.offset) obj.offset = s.offset
+            Object.assign(obj, s)
             this.$set(this.y_transforms, s.grid_id, obj)
             this.update_layout()
             Utils.overwrite(this.range, this.range)
