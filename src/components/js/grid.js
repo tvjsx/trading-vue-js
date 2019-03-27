@@ -37,19 +37,22 @@ export default class Grid {
         hamster.wheel((event, delta) => this.mousezoom(-delta * 50))
 
         var mc = new Hammer.Manager(this.canvas)
-        mc.add(new Hammer.Pan({
-            direction: Hammer.DIRECTION_HORIZONTAL
-        }))
+        mc.add(new Hammer.Pan())
         mc.add(new Hammer.Tap())
         mc.add(new Hammer.Pinch())
         mc.get('pinch').set({ enable: true })
 
         mc.on('panstart', event => {
+
             this.drug = {
                 x: event.center.x,
                 y: event.center.y,
                 r: this.range.slice(),
-                t: this.range[1] - this.range[0]
+                t: this.range[1] - this.range[0],
+                o: this.$p.y_transform ?
+                    (this.$p.y_transform.offset || 0) : 0,
+                y_r: this.$p.y_transform ?
+                    this.$p.y_transform.range.slice() : undefined
             }
             this.comp.$emit('cursor-changed', {
                 grid_id: this.id,
@@ -60,7 +63,10 @@ export default class Grid {
 
         mc.on('panmove', event => {
             if (this.drug) {
-                this.mousedrug(this.drug.x + event.deltaX)
+                this.mousedrug(
+                    this.drug.x + event.deltaX,
+                    this.drug.y + event.deltaY,
+                )
                 this.comp.$emit('cursor-changed', {
                     grid_id: this.id,
                     x: event.center.x, y: event.center.y
@@ -229,12 +235,26 @@ export default class Grid {
 
     }
 
-    mousedrug(x) {
+    mousedrug(x, y) {
 
-        let delta = this.drug.t * (this.drug.x - x) / this.layout.width
+        let dt = this.drug.t * (this.drug.x - x) / this.layout.width
 
-        this.range[0] = this.drug.r[0] + delta
-        this.range[1] = this.drug.r[1] + delta
+        let d$ = this.layout.$_hi - this.layout.$_lo
+        d$ *= (this.drug.y - y) / this.layout.height
+        let offset = this.drug.o + d$
+
+        if (this.$p.y_transform && !this.$p.y_transform.auto) {
+            this.comp.$emit('sidebar-transform', {
+                grid_id: this.id,
+                range: [
+                    this.drug.y_r[0] - offset,
+                    this.drug.y_r[1] - offset,
+                ]
+            })
+        }
+
+        this.range[0] = this.drug.r[0] + dt
+        this.range[1] = this.drug.r[1] + dt
 
         this.change_range()
 
