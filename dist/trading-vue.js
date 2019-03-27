@@ -1,5 +1,5 @@
 /*!
- * TradingVue.JS - v0.1.8 - Mon Mar 25 2019
+ * TradingVue.JS - v0.2.0 - Wed Mar 27 2019
  * https://github.com/C451/trading-vue-js
  * Copyright (c) 2019 c451 Code's All Right;
  * Licensed under the MIT license
@@ -3475,7 +3475,7 @@ module.exports.search = search;
 
 exports = module.exports = __webpack_require__(9)(false);
 // Module
-exports.push([module.i, "\n.trading-vue-legend {\n    position: absolute;\n    z-index: 100;\n    font-size: 1.25em;\n    top: 10px;\n    left: 10px;\n    pointer-events: none;\n}\n.trading-vue-ohlcv {\n    pointer-events: none;\n    margin-bottom: 0.5em;\n}\n.t-vue-lspan {\n    font-variant-numeric: tabular-nums;\n    font-weight: 100;\n    font-size: 0.95em;\n    color: #999999; /* TODO: move => params */\n    margin-left: 0.1em;\n    margin-right: 0.2em;\n}\n.t-vue-title {\n    margin-right: 0.25em;\n    font-size: 1.45em;\n    font-weight: 200;\n}\n.t-vue-ind {\n    margin-left: 0.2em;\n    margin-bottom: 0.5em;\n    font-weight: 200;\n    font-size: 1.0em;\n}\n.t-vue-ivalue {\n    margin-left: 0.5em;\n}\n", ""]);
+exports.push([module.i, "\n.trading-vue-legend {\n    position: absolute;\n    z-index: 100;\n    font-size: 1.25em;\n    top: 10px;\n    left: 10px;\n    pointer-events: none;\n}\n.trading-vue-ohlcv {\n    pointer-events: none;\n    margin-bottom: 0.5em;\n}\n.t-vue-lspan {\n    font-variant-numeric: tabular-nums;\n    font-weight: 100;\n    font-size: 0.95em;\n    color: #999999; /* TODO: move => params */\n    margin-left: 0.1em;\n    margin-right: 0.2em;\n}\n.t-vue-title {\n    margin-right: 0.25em;\n    font-size: 1.45em;\n    font-weight: 200;\n}\n.t-vue-ind {\n    margin-left: 0.2em;\n    margin-bottom: 0.5em;\n    font-weight: 200;\n    font-size: 1.0em;\n}\n.t-vue-ivalue {\n    margin-left: 0.5em;\n}\n.t-vue-unknown {\n    color: #999999; /* TODO: move => params */\n}\n", ""]);
 
 
 
@@ -3678,6 +3678,7 @@ var Chartvue_type_template_id_4d06a4de_render = function() {
             "range-changed": _vm.range_changed,
             "cursor-changed": _vm.cursor_changed,
             "cursor-locked": _vm.cursor_locked,
+            "sidebar-transform": _vm.set_ytransform,
             "layer-meta-props": _vm.layer_meta_props
           }
         })
@@ -3907,7 +3908,8 @@ function GridMaker(id, params) {
       ctx = params.ctx,
       $p = params.$p,
       layers_meta = params.layers_meta,
-      height = params.height;
+      height = params.height,
+      y_t = params.y_t;
   var self = {};
   var lm = layers_meta[id];
   var y_range_fn = null;
@@ -3953,11 +3955,16 @@ function GridMaker(id, params) {
         hi = _y_range_fn2[0];
         lo = _y_range_fn2[1];
       }
-    } // Expand a lil
+    } // Fixed y-range in non-auto mode
 
 
-    self.$_hi = hi + (hi - lo) * EXPAND;
-    self.$_lo = lo - (hi - lo) * EXPAND;
+    if (y_t && !y_t.auto && y_t.range) {
+      self.$_hi = y_t.range[0];
+      self.$_lo = y_t.range[1];
+    } else {
+      self.$_hi = hi + (hi - lo) * EXPAND;
+      self.$_lo = lo - (hi - lo) * EXPAND;
+    }
   }
 
   function calc_sidebar() {
@@ -4180,7 +4187,8 @@ function Layout(params) {
       range = params.range,
       ctx = params.ctx,
       layers_meta = params.layers_meta,
-      $p = params.$props; // Splits space between main chart
+      $p = params.$props,
+      y_ts = params.y_transforms; // Splits space between main chart
   // and offchart indicator grids
 
   function grid_hs() {
@@ -4241,7 +4249,8 @@ function Layout(params) {
     ctx: ctx,
     $p: $p,
     layers_meta: layers_meta,
-    height: hs[0]
+    height: hs[0],
+    y_t: y_ts[0]
   };
   var gms = [new grid_maker(0, specs)]; // Sub grids
 
@@ -4257,6 +4266,7 @@ function Layout(params) {
 
       specs.sub = data;
       specs.height = hs[i + 1];
+      specs.y_t = y_ts[i + 1];
       gms.push(new grid_maker(i + 1, specs, gms[0].get_layout()));
     } // Max sidebar among all grinds
 
@@ -4613,9 +4623,7 @@ function () {
         return _this.mousezoom(-delta * 50);
       });
       var mc = new hammer["Manager"](this.canvas);
-      mc.add(new hammer["Pan"]({
-        direction: hammer["DIRECTION_HORIZONTAL"]
-      }));
+      mc.add(new hammer["Pan"]());
       mc.add(new hammer["Tap"]());
       mc.add(new hammer["Pinch"]());
       mc.get('pinch').set({
@@ -4626,7 +4634,9 @@ function () {
           x: event.center.x,
           y: event.center.y,
           r: _this.range.slice(),
-          t: _this.range[1] - _this.range[0]
+          t: _this.range[1] - _this.range[0],
+          o: _this.$p.y_transform ? _this.$p.y_transform.offset || 0 : 0,
+          y_r: _this.$p.y_transform ? _this.$p.y_transform.range.slice() : undefined
         };
 
         _this.comp.$emit('cursor-changed', {
@@ -4639,7 +4649,7 @@ function () {
       });
       mc.on('panmove', function (event) {
         if (_this.drug) {
-          _this.mousedrug(_this.drug.x + event.deltaX);
+          _this.mousedrug(_this.drug.x + event.deltaX, _this.drug.y + event.deltaY);
 
           _this.comp.$emit('cursor-changed', {
             grid_id: _this.id,
@@ -4710,6 +4720,8 @@ function () {
       } else {
         this.overlays.push(layer);
       }
+
+      this.update();
     }
   }, {
     key: "update",
@@ -4901,10 +4913,21 @@ function () {
     }
   }, {
     key: "mousedrug",
-    value: function mousedrug(x) {
-      var delta = this.drug.t * (this.drug.x - x) / this.layout.width;
-      this.range[0] = this.drug.r[0] + delta;
-      this.range[1] = this.drug.r[1] + delta;
+    value: function mousedrug(x, y) {
+      var dt = this.drug.t * (this.drug.x - x) / this.layout.width;
+      var d$ = this.layout.$_hi - this.layout.$_lo;
+      d$ *= (this.drug.y - y) / this.layout.height;
+      var offset = this.drug.o + d$;
+
+      if (this.$p.y_transform && !this.$p.y_transform.auto) {
+        this.comp.$emit('sidebar-transform', {
+          grid_id: this.id,
+          range: [this.drug.y_r[0] - offset, this.drug.y_r[1] - offset]
+        });
+      }
+
+      this.range[0] = this.drug.r[0] + dt;
+      this.range[1] = this.drug.r[1] + dt;
       this.change_range();
     }
   }, {
@@ -5273,19 +5296,12 @@ component.options.__file = "src/components/Crosshair.vue"
       name: this.$options.name,
       renderer: this,
       z: this.$props.settings['z-index'] || -1
-    });
-
-    if (this.data_colors) {
-      this.$emit('layer-data-colors', {
-        layer_id: this.$props.id,
-        colors: this.data_colors()
-      });
-    } // Overlay meta-props (adjusting behaviour)
-
+    }); // Overlay meta-props (adjusting behaviour)
 
     this.$emit('layer-meta-props', {
       grid_id: this.$props.grid_id,
       layer_id: this.$props.id,
+      data_colors: this.data_colors,
       y_range: this.y_range
     });
   },
@@ -5596,7 +5612,7 @@ RSI_component.options.__file = "src/components/overlays/RSI.vue"
 
 /* harmony default export */ var Gridvue_type_script_lang_js_ = ({
   name: 'Grid',
-  props: ['sub', 'layout', 'range', 'interval', 'cursor', 'colors', 'overlays', 'width', 'height', 'data', 'grid_id'],
+  props: ['sub', 'layout', 'range', 'interval', 'cursor', 'colors', 'overlays', 'width', 'height', 'data', 'grid_id', 'y_transform'],
   mixins: [canvas],
   components: {
     Crosshair: components_Crosshair
@@ -5726,12 +5742,13 @@ RSI_component.options.__file = "src/components/overlays/RSI.vue"
       },
       deep: true
     },
-    layout: {
-      handler: function handler() {
-        this.redraw();
-      },
-      deep: true
-    },
+
+    /*layout: {
+        handler: function() {
+            this.redraw()
+        },
+        deep: true
+    },*/
     cursor: {
       handler: function handler() {
         this.redraw();
@@ -5746,9 +5763,6 @@ RSI_component.options.__file = "src/components/overlays/RSI.vue"
       layer_events: {
         'new-grid-layer': this.new_layer,
         'redraw-grid': this.redraw,
-        'layer-data-colors': function layerDataColors(d) {
-          return _this5.$emit('layer-data-colors', d);
-        },
         'layer-meta-props': function layerMetaProps(d) {
           return _this5.$emit('layer-meta-props', d);
         }
@@ -5795,7 +5809,7 @@ var Sectionvue_type_template_id_8fbe9336_render = function() {
           values: _vm.section_values,
           grid_id: _vm.grid_id,
           common: _vm.legend_props,
-          data_colors: _vm.data_colors
+          meta_props: _vm.get_meta_props
         }
       }),
       _vm._v(" "),
@@ -5808,8 +5822,8 @@ var Sectionvue_type_template_id_8fbe9336_render = function() {
               "range-changed": _vm.range_changed,
               "cursor-changed": _vm.cursor_changed,
               "cursor-locked": _vm.cursor_locked,
-              "layer-data-colors": _vm.set_data_colors,
-              "layer-meta-props": _vm.emit_meta_props
+              "layer-meta-props": _vm.emit_meta_props,
+              "sidebar-transform": _vm.sidebar_transform
             }
           },
           "grid",
@@ -5821,7 +5835,10 @@ var Sectionvue_type_template_id_8fbe9336_render = function() {
       _c(
         "sidebar",
         _vm._b(
-          { attrs: { grid_id: _vm.grid_id, rerender: _vm.rerender } },
+          {
+            attrs: { grid_id: _vm.grid_id, rerender: _vm.rerender },
+            on: { "sidebar-transform": _vm.sidebar_transform }
+          },
           "sidebar",
           _vm.sidebar_props,
           false
@@ -5846,9 +5863,12 @@ function sidebar_createClass(Constructor, protoProps, staticProps) { if (protoPr
 
 
 
-var PANHEIGHT = constants.ChartConfig.PANHEIGHT;
 
-var Sidebar =
+var sidebar_Const$ChartConfig = constants.ChartConfig,
+    PANHEIGHT = sidebar_Const$ChartConfig.PANHEIGHT,
+    sidebar_EXPAND = sidebar_Const$ChartConfig.EXPAND;
+
+var sidebar_Sidebar =
 /*#__PURE__*/
 function () {
   function Sidebar(canvas, comp) {
@@ -5865,9 +5885,72 @@ function () {
     this.id = this.$p.grid_id;
     this.layout = this.$p.layout.grids[this.id];
     this.side = side;
+    this.listeners();
   }
 
   sidebar_createClass(Sidebar, [{
+    key: "listeners",
+    value: function listeners() {
+      var _this = this;
+
+      var mc = new hammer["Manager"](this.canvas);
+      mc.add(new hammer["Pan"]({
+        direction: hammer["DIRECTION_VERTICAL"],
+        threshold: 1
+      }));
+      mc.add(new hammer["Tap"]({
+        event: 'doubletap',
+        taps: 2
+      }));
+      mc.on('panstart', function (event) {
+        if (_this.$p.y_transform) {
+          _this.zoom = _this.$p.y_transform.zoom;
+        } else {
+          _this.zoom = 1.0;
+        }
+
+        _this.drug = {
+          y: event.center.y,
+          z: _this.zoom
+        };
+        _this.y_range = [_this.layout.$_hi, _this.layout.$_lo];
+      });
+      mc.on('panmove', function (event) {
+        if (_this.drug) {
+          _this.zoom = _this.calc_zoom(event);
+
+          _this.comp.$emit('sidebar-transform', {
+            grid_id: _this.id,
+            zoom: _this.zoom,
+            auto: false,
+            range: _this.calc_range(),
+            drugging: true
+          });
+
+          _this.update();
+        }
+      });
+      mc.on('panend', function (event) {
+        _this.drug = null;
+
+        _this.comp.$emit('sidebar-transform', {
+          grid_id: _this.id,
+          drugging: false
+        });
+      });
+      mc.on('doubletap', function (event) {
+        _this.comp.$emit('sidebar-transform', {
+          grid_id: _this.id,
+          zoom: 1.0,
+          auto: true
+        });
+
+        _this.zoom = 1.0;
+
+        _this.update();
+      }); // TODO: Do later for mobile version
+    }
+  }, {
     key: "update",
     value: function update() {
       // Update reference to the grid
@@ -5978,6 +6061,28 @@ function () {
       this.ctx.fillText(lbl, a, y + 16);
     }
   }, {
+    key: "calc_zoom",
+    value: function calc_zoom(event) {
+      var d = this.drug.y - event.center.y;
+      var speed = d > 0 ? 3 : 1;
+      var k = 1 + speed * d / this.layout.height;
+      return utils.clamp(this.drug.z * k, 0.005, 100);
+    } // Not the best place to calculate y-range but
+    // this is the simplest solution I found up to
+    // date
+
+  }, {
+    key: "calc_range",
+    value: function calc_range() {
+      var z = this.zoom / this.drug.z;
+      var zk = (1 / z - 1) / 2;
+      var range = this.y_range.slice();
+      var delta = range[0] - range[1];
+      range[0] = range[0] + delta * zk;
+      range[1] = range[1] - delta * zk;
+      return range;
+    }
+  }, {
     key: "mousemove",
     value: function mousemove(e) {}
   }, {
@@ -6002,11 +6107,11 @@ function () {
 
 /* harmony default export */ var Sidebarvue_type_script_lang_js_ = ({
   name: 'Sidebar',
-  props: ['sub', 'layout', 'range', 'interval', 'cursor', 'colors', 'font', 'width', 'height', 'grid_id', 'rerender'],
+  props: ['sub', 'layout', 'range', 'interval', 'cursor', 'colors', 'font', 'width', 'height', 'grid_id', 'rerender', 'y_transform'],
   mixins: [canvas],
   mounted: function mounted() {
     var el = this.$refs['canvas'];
-    this.renderer = new Sidebar(el, this);
+    this.renderer = new sidebar_Sidebar(el, this);
     this.setup();
     this.redraw();
   },
@@ -6154,7 +6259,13 @@ var Legendvue_type_template_id_34724886_render = function() {
               )
             }),
             0
-          )
+          ),
+          _vm._v(" "),
+          ind.unk
+            ? _c("span", { staticClass: "t-vue-unknown" }, [
+                _vm._v("\n            (Unknown type)\n        ")
+              ])
+            : _vm._e()
         ])
       })
     ],
@@ -6195,9 +6306,12 @@ Legendvue_type_template_id_34724886_render._withStripped = true
 //
 //
 //
+//
+//
+//
 /* harmony default export */ var Legendvue_type_script_lang_js_ = ({
   name: 'ChartLegend',
-  props: ['common', 'values', 'grid_id', 'data_colors'],
+  props: ['common', 'values', 'grid_id', 'meta_props'],
   computed: {
     ohlcv: function ohlcv() {
       if (!this.$props.values || !this.$props.values.ohlcv) {
@@ -6216,7 +6330,8 @@ Legendvue_type_template_id_34724886_render._withStripped = true
         var id = x.type + "_".concat(i);
         return {
           name: x.name || id,
-          values: values ? f(id, values) : _this.n_a(1)
+          values: values ? f(id, values) : _this.n_a(1),
+          unk: !(id in (_this.$props.meta_props || {}))
         };
       });
     },
@@ -6236,15 +6351,14 @@ Legendvue_type_template_id_34724886_render._withStripped = true
   },
   methods: {
     format: function format(id, values) {
-      var _this2 = this;
-
-      // Matches Overlay.data_colors with the data values
+      var meta = this.$props.meta_props[id] || {}; // Matches Overlay.data_colors with the data values
       // (see Spline.vue)
       // TODO: custom data formatter (display in the legend
       // only whatever you need)
+
       if (!values[id]) return this.n_a(1);
       return values[id].slice(1).map(function (x, i) {
-        var cs = _this2.$props.data_colors[id];
+        var cs = meta.data_colors ? meta.data_colors() : [];
 
         if (typeof x == 'number') {
           // Show 8 digits for small values
@@ -6316,6 +6430,9 @@ Legend_component.options.__file = "src/components/Legend.vue"
 //
 //
 //
+//
+//
+//
 
 
 
@@ -6338,10 +6455,11 @@ Legend_component.options.__file = "src/components/Legend.vue"
     cursor_locked: function cursor_locked(state) {
       this.$emit('cursor-locked', state);
     },
-    set_data_colors: function set_data_colors(d) {
-      this.$set(this.data_colors, d.layer_id, d.colors);
+    sidebar_transform: function sidebar_transform(s) {
+      this.$emit('sidebar-transform', s);
     },
     emit_meta_props: function emit_meta_props(d) {
+      this.$set(this.meta_props, d.layer_id, d);
       this.$emit('layer-meta-props', d);
     }
   },
@@ -6357,6 +6475,7 @@ Legend_component.options.__file = "src/components/Legend.vue"
 
       p.width = p.layout.grids[id].width;
       p.height = p.layout.grids[id].height;
+      p.y_transform = p.y_ts[id];
       return p;
     },
     sidebar_props: function sidebar_props() {
@@ -6364,6 +6483,7 @@ Legend_component.options.__file = "src/components/Legend.vue"
       var p = Object.assign({}, this.$props.common);
       p.width = p.layout.grids[id].sb;
       p.height = p.layout.grids[id].height;
+      p.y_transform = p.y_ts[id];
       return p;
     },
     section_values: function section_values() {
@@ -6381,6 +6501,10 @@ Legend_component.options.__file = "src/components/Legend.vue"
       }
 
       return p;
+    },
+    get_meta_props: function get_meta_props() {
+      var id = this.$props.grid_id;
+      return this.meta_props;
     }
   },
   watch: {
@@ -6388,8 +6512,6 @@ Legend_component.options.__file = "src/components/Legend.vue"
       handler: function handler(val, old_val) {
         if (val.data.length !== old_val.data.length) {
           // Look at this nasty trick!
-          // We need to re-render sidebar only
-          // when grids added or removed
           this.rerender++;
         }
       },
@@ -6398,7 +6520,7 @@ Legend_component.options.__file = "src/components/Legend.vue"
   },
   data: function data() {
     return {
-      data_colors: {},
+      meta_props: {},
       rerender: 0
     };
   }
@@ -6719,6 +6841,7 @@ Botbar_component.options.__file = "src/components/Botbar.vue"
 //
 //
 //
+//
 
 
 
@@ -6753,8 +6876,7 @@ Botbar_component.options.__file = "src/components/Botbar.vue"
       utils.overwrite(this.range, r);
       var sub = this.subset();
       utils.overwrite(this.sub, sub);
-      var lay = new js_layout(this);
-      utils.copy_layout(this._layout, lay);
+      this.update_layout();
     },
     cursor_changed: function cursor_changed(e) {
       this.updater.sync(e);
@@ -6765,6 +6887,13 @@ Botbar_component.options.__file = "src/components/Botbar.vue"
     calc_interval: function calc_interval() {
       if (this.ohlcv.length < 2) return;
       this.interval = utils.detect_interval(this.ohlcv);
+    },
+    set_ytransform: function set_ytransform(s) {
+      var obj = this.y_transforms[s.grid_id] || {};
+      Object.assign(obj, s);
+      this.$set(this.y_transforms, s.grid_id, obj);
+      this.update_layout();
+      utils.overwrite(this.range, this.range);
     },
     default_range: function default_range() {
       var dl = constants.ChartConfig.DEFAULT_LEN;
@@ -6794,7 +6923,8 @@ Botbar_component.options.__file = "src/components/Botbar.vue"
         interval: this.interval,
         cursor: this.cursor,
         colors: this.$props.colors,
-        font: this.$props.font
+        font: this.$props.font,
+        y_ts: this.y_transforms
       };
     },
     overlay_subset: function overlay_subset(source) {
@@ -6824,6 +6954,9 @@ Botbar_component.options.__file = "src/components/Botbar.vue"
 
       this.$set(this.layers_meta[d.grid_id], utils.get_num_id(d.layer_id), d); // Rerender
 
+      this.update_layout();
+    },
+    update_layout: function update_layout() {
       var lay = new js_layout(this);
       utils.copy_layout(this._layout, lay);
     }
@@ -6884,25 +7017,24 @@ Botbar_component.options.__file = "src/components/Botbar.vue"
       // A trick to re-render botbar
       rerender: 0,
       // Layers meta-props (changing behaviour)
-      layers_meta: {}
+      layers_meta: {},
+      // Y-transforms (for y-zoom and -shift)
+      y_transforms: {}
     };
   },
   watch: {
     width: function width() {
-      var lay = new js_layout(this);
-      utils.copy_layout(this._layout, lay);
+      this.update_layout();
     },
     height: function height() {
-      var lay = new js_layout(this);
-      utils.copy_layout(this._layout, lay);
+      this.update_layout();
     },
     data: {
       handler: function handler() {
         if (!this.sub.length) this.init_range();
         var sub = this.subset();
         utils.overwrite(this.sub, sub);
-        var lay = new js_layout(this);
-        utils.copy_layout(this._layout, lay);
+        this.update_layout();
         utils.overwrite(this.range, this.range);
         this.rerender++;
       },
