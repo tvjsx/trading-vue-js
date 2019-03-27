@@ -205,6 +205,10 @@ That's why the title doesn't lie: you can draw ANYTHING.
 * Fix and improve mobile version
 * **Version 1.0.0 here**
 
+## Changelog
+
+See CHANGELOG.md
+
 ## Development & Building
 
 **Install devDependencies**
