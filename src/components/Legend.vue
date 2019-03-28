@@ -52,8 +52,10 @@ export default {
         indicators() {
             const values = this.$props.values
             const f = this.format
-            return this.json_data.map((x, i) => {
-                const id = x.type + `_${i}`
+            var types = {}
+            return this.json_data.map(x => {
+                if (!(x.type in types)) types[x.type] = 0
+                const id = x.type + `_${types[x.type]++}`
                 return {
                     name: x.name || id,
                     values: values ? f(id, values) : this.n_a(1),
