@@ -1,5 +1,5 @@
 /*!
- * TradingVue.JS - v0.2.0 - Wed Mar 27 2019
+ * TradingVue.JS - v0.2.1 - Thu Mar 28 2019
  * https://github.com/C451/trading-vue-js
  * Copyright (c) 2019 c451 Code's All Right;
  * Licensed under the MIT license
@@ -3808,10 +3808,20 @@ var IndexedArray = __webpack_require__(3);
   get_num_id: function get_num_id(id) {
     return parseInt(id.split('_').pop());
   },
-  // Fast filter. Really fast, like 10X 
+  // Fast filter. Really fast, like 10X
   fast_filter: function fast_filter(arr, t1, t2) {
-    var ia = new IndexedArray(arr, "0");
-    return ia.getRange(t1, t2);
+    if (!arr.length) return arr;
+
+    try {
+      var ia = new IndexedArray(arr, "0");
+      return ia.getRange(t1, t2);
+    } catch (e) {
+      // Something wrong with fancy slice lib
+      // Fast fix: fallback to filter
+      return arr.filter(function (x) {
+        return x[0] >= t1 && x[0] <= t2;
+      });
+    }
   }
 });
 // CONCATENATED MODULE: ./src/components/js/layout_fn.js
