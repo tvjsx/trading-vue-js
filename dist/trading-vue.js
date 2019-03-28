@@ -1,5 +1,5 @@
 /*!
- * TradingVue.JS - v0.2.1 - Thu Mar 28 2019
+ * TradingVue.JS - v0.2.2 - Thu Mar 28 2019
  * https://github.com/C451/trading-vue-js
  * Copyright (c) 2019 c451 Code's All Right;
  * Licensed under the MIT license
@@ -6336,8 +6336,10 @@ Legendvue_type_template_id_34724886_render._withStripped = true
 
       var values = this.$props.values;
       var f = this.format;
-      return this.json_data.map(function (x, i) {
-        var id = x.type + "_".concat(i);
+      var types = {};
+      return this.json_data.map(function (x) {
+        if (!(x.type in types)) types[x.type] = 0;
+        var id = x.type + "_".concat(types[x.type]++);
         return {
           name: x.name || id,
           values: values ? f(id, values) : _this.n_a(1),
