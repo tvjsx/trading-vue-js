@@ -106,9 +106,18 @@ export default {
         return parseInt(id.split('_').pop())
     },
 
-    // Fast filter. Really fast, like 10X 
+    // Fast filter. Really fast, like 10X
     fast_filter(arr, t1, t2) {
-        var ia = new IndexedArray(arr, "0")
-        return ia.getRange(t1, t2)
+        if (!arr.length) return arr
+        try {
+            var ia = new IndexedArray(arr, "0")
+            return ia.getRange(t1, t2)
+        } catch(e) {
+            // Something wrong with fancy slice lib
+            // Fast fix: fallback to filter
+            return arr.filter(x =>
+                x[0] >= t1 && x[0] <= t2
+            )
+        }
     }
 }
