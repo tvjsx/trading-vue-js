@@ -82,7 +82,7 @@ And we are live on http://localhost:8080 !
 
 ![](assets/Guide-f7ba1f13.png)
 
-## Adding a custom overlay
+## Adding custom overlay
 
 ### App.vue
 
@@ -143,7 +143,7 @@ As you can see, at the top there is **trading-vue** component, which have a bunc
 
 *You can find full description of the props in the [API book]()*.
 
-### Using an existing overlay class
+### Using existing overlay class
 
 Add `overlays` property to the trading-vue component, which contains an array (we will define it later):
 
@@ -206,7 +206,7 @@ The indicator from the previous section does absolutely nothing - it's static an
 
 We need a new overlay class.
 
-### Creating a new class
+### Creating new class
 
 Our data-object will have the following format:
 ```js
