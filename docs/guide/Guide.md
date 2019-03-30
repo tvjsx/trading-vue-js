@@ -278,7 +278,7 @@ import PerfectTrades from './PerfectTrades.js'
 ...
 ```
 
-*Now PerfectTrades is now defined and there is no "Unknown type" warning.*
+*PerfectTrades is now defined and there is no "Unknown type" warning.*
 
 ### Custom draw() method
 
