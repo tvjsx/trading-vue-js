@@ -4,7 +4,7 @@
 This library is in alpha stage, API may change. This guide version is **0.2.2**
 :::
 
-![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=Current lib version)
+![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=Current%20lib%20version)
 
 **TradingVue.js** is a hackable charting lib for traders, highly inspired by UX of TradingView.com. It allows you to create custom indicators and even new types of charts.
 
