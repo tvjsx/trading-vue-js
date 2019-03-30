@@ -83,7 +83,7 @@ The core philosophy is **Data -> Screen Mapping (DSM)**. The library provides yo
  ```
  layout.t2screen(t) // time -> x
  layout.$2screen($) // price -> y
- layout.t_magnet(t) // time -> neareset candle x
+ layout.t_magnet(t) // time -> nearest candle x
  layout.screen2$(y) // y -> price
  layout.screen2t(x) // x -> time
  ```
