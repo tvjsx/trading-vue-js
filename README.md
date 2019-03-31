@@ -31,7 +31,7 @@ If you create trading software - this lib is probably for you. If you like to ma
 
 ## Demo & Docs
 
-#### [Demo](https://c451.github.io/trading-vue-demo/) | [Getting Started](https://github.com/C451/trading-vue-js/blob/master/docs/guide/Guide.md) 
+#### [Demo](https://c451.github.io/trading-vue-demo/) | [Getting Started](https://github.com/C451/trading-vue-js/blob/master/docs/guide) 
 
 ## Install
 
