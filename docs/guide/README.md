@@ -136,12 +136,12 @@ export default {
 
 As you can see, at the top there is **trading-vue** component, which have a bunch of properties, such as
 
-* **data** - your data set in the specific format (see [Data Format]())
+* **data** - your data set in the specific format (see [Data Format](https://github.com/C451/trading-vue-js/tree/master/docs/api#data-structure))
 * **width** - full chart width in px
 * **height** - full chart height in px
 * **color-xxxx** - custom colors for some elements
 
-*You can find full description of the props in the [API book]()*.
+*You can find full description of the props in the [API book](https://github.com/C451/trading-vue-js/tree/master/docs/api#api-book)*.
 
 ### Using existing overlay class
 
