@@ -12,8 +12,8 @@ This library is in alpha stage, API may change. This guide version is **0.2.2**
 |---|---|---|
 | titleTxt | String | Chart title text  |
 | id | String | HTML id of root div |
-| width | Number | Chart width |
-| height | Number | Chart height  |
+| width | Number | Chart width (px) |
+| height | Number | Chart height (px) |
 | colorTitle | String | Title text color |
 | colorBack | String | Background color |
 | colorGrid | String | Grid color |
@@ -81,7 +81,7 @@ Data for building overlays. Defined in `mixins/overlay.js`, accessed through ove
 | id | String | Overlay unique id (within current grid) ,e.g 'EMA_1' |
 | num | Number | Overlay unique num (within current grid) |
 | interval | Number | Candlestick interval, ms (e.g. 1 min = 60000 ) |
-| cursor | Object | Crosshair position and selected values, see below |
+| cursor | Object | Crosshair position and selected values, see below* |
 | colors | Object | All colors from `TradingVue.vue` combined |
 | layout | Object | Layout API object, see below |
 | sub | Array | Current subset of candlestick data |
@@ -89,9 +89,46 @@ Data for building overlays. Defined in `mixins/overlay.js`, accessed through ove
 | settings | Object | Indicator's settings, defined in `data.json` |
 | grid_id | Number | Current grid id |
 
-### Cursor data
+### Cursor data*
 
-¯\\_(ツ)_/¯ Will be here soon
+| Field | Type | Description |
+|---|---|---|
+| x | Number | Current x position (px) |
+| y | Number | Current y position (px) |
+| t | Number | Current timestamp (ms) |
+| y$ | Number | Current price level |
+| grid_id | Number | Current grid id |
+| locked | Boolean | *true* during scrolling, *false* otherwise |
+| values | Object | Current indicator values in a specific format |
+
+#### Values format
+
+```js
+values: {
+    "<grid_id>": {
+        "ohlcv": [ ... ] | undefined,
+        "<overlay_id>": [ ... ],
+        ...
+    },
+    ...
+}
+```
+
+*Eaxample:*
+
+```js
+{
+    0: {
+        ohlcv: [1553378400000,4051.3,4063.9,4051.3,4063.8,259.61602371],
+        EMA_0: [1553378400000,4054.9315737970815],
+        EMA_1: [1553378400000,4057.3817565994727]
+    },
+    1: {
+        ohlcv: undefined,
+        RSI_0: [1553378400000,53.148999912870806]
+    }
+}
+```
 
 ### Layout API
 
