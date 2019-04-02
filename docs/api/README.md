@@ -81,9 +81,9 @@ Data for building overlays. Defined in `mixins/overlay.js`, accessed through ove
 | id | String | Overlay unique id (within current grid) ,e.g 'EMA_1' |
 | num | Number | Overlay unique num (within current grid) |
 | interval | Number | Candlestick interval, ms (e.g. 1 min = 60000 ) |
-| cursor | Object | Crosshair position and selected values, see below* |
+| cursor* | Object | Crosshair position and selected values, see below |
 | colors | Object | All colors from `TradingVue.vue` combined |
-| layout | Object | Layout API object, see below |
+| layout** | Object | Layout API object, see below |
 | sub | Array | Current subset of candlestick data |
 | data | Array | Current subset of indicator data |
 | settings | Object | Indicator's settings, defined in `data.json` |
@@ -130,6 +130,88 @@ values: {
 }
 ```
 
-### Layout API
+### Layout API**
 
-¯\\_(ツ)_/¯ Will be here soon
+#### Layout object
+
+Defined in `layout.js`, accessed through overlay's `this.$props.layout`.
+
+| Field | Type | Description |
+|---|---|---|
+| $_hi | Number | Upper bound of price-range |
+| $_lo | Number | Lower bound of price-range |
+| $_step | Number | Grid price step |
+| t_step | Number | Grid time step  |
+| A | Number | Scale transform coefficient |
+| B | Number | Offset transform coefficient |
+| id | Number | Grid id |
+| prec | Number | Sidebar precision (decimals after point) |
+| height | Number | Grid height (px)  |
+| width | Number | Grid width (without sidebar, px) |
+| offset | Number | Grid offset from the top (px) |
+| px_step | Number | Candlestick step (px) |
+| sb |  Number | Sidebar width |
+| spacex | Number | Drawing area width (px) |
+| startx | Number | First candle position (px) |
+| candles | Array | Candles subset |
+| volume | Array | Volume bars positions and sizes |
+| xs | Array | vertical grid lines `[[x, candle], ...]` |
+| ys | Array | horizontal grid lines `[[y, price], ...]` |
+
+#### Mapping functions
+
+Defined in `layout_fn.js`, accessed through overlay's `this.$props.layout`.
+
+##### $2screen($)
+
+Returns y-coordinate for given price
+
+* **Arguments**: price: *Number*
+* **Returns**: pixels: *Number*
+
+##### t2screen(t)
+
+Returns x-coordinate for given timestamp
+
+* **Arguments**: time: *Number*
+* **Returns**: pixels: *Number*
+
+##### screen2$(y)
+
+Returns price for given y-coordinate
+
+* **Arguments**: y: *Number*
+* **Returns**: price: *Number*
+
+##### screen2t(x)
+
+Returns time for given x-coordinate
+
+* **Arguments**: x: *Number*
+* **Returns**: time: *Number*
+
+##### t_magnet(t)
+
+Returns x-coordinate of nearest candle for given time
+
+* **Arguments**: time: *Number*
+* **Returns**: pixels: *Number*
+
+*Example:*
+
+```js
+const layout = this.$props.layout
+
+ctx.beginPath()
+
+for (var p of this.$props.data) {
+
+    let x = layout.t2screen(p[0])
+    let y = layout.$2screen(p[1])
+
+    ctx.lineTo(x, y)
+
+}
+
+ctx.stroke()
+```
