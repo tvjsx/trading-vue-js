@@ -114,7 +114,7 @@ values: {
 }
 ```
 
-*Eaxample:*
+*Example:*
 
 ```js
 {
@@ -166,36 +166,36 @@ Defined in `layout_fn.js`, accessed through overlay's `this.$props.layout`.
 
 Returns y-coordinate for given price
 
-* **Arguments**: price: *Number*
-* **Returns**: pixels: *Number*
+* **Arguments**: price (Number)
+* **Returns**: pixels (Number)
 
 ##### t2screen(t)
 
 Returns x-coordinate for given timestamp
 
-* **Arguments**: time: *Number*
-* **Returns**: pixels: *Number*
+* **Arguments**: time (Number)
+* **Returns**: pixels (Number)
 
 ##### screen2$(y)
 
 Returns price for given y-coordinate
 
-* **Arguments**: y: *Number*
-* **Returns**: price: *Number*
+* **Arguments**: y (Number)
+* **Returns**: price (Number)
 
 ##### screen2t(x)
 
 Returns time for given x-coordinate
 
-* **Arguments**: x: *Number*
-* **Returns**: time: *Number*
+* **Arguments**: x (Number)
+* **Returns**: time (Number)
 
 ##### t_magnet(t)
 
 Returns x-coordinate of nearest candle for given time
 
-* **Arguments**: time: *Number*
-* **Returns**: pixels: *Number*
+* **Arguments**: time (Number)
+* **Returns**: pixels (Number)
 
 *Example:*
 
