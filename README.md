@@ -196,7 +196,7 @@ That's why the title doesn't lie: you can draw ANYTHING.
 
 ## Roadmap
 
-* Docs
+* ~~Docs~~
 * Solve known issues (marked as 'TODO: IMPORTANT')
 * Performance improvements
 * Add more built-in overlays
