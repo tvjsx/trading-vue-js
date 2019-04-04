@@ -103,10 +103,10 @@ export default {
             return this.sett.color || '#ec206e'
         },
         band_color() {
-            return this.sett.band_color || '#ddd'
+            return this.sett.bandColor || '#ddd'
         },
         back_color() {
-            return this.sett.back_color || '#381e9c16'
+            return this.sett.backColor || '#381e9c16'
         }
     }
 

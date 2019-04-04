@@ -13,9 +13,10 @@ export default {
         this.$emit('new-grid-layer', {
             name: this.$options.name,
             renderer: this,
-            z: this.$props.settings['z-index'] || -1,
+            z: this.$props.settings['z-index'] ||
+               this.$props.settings['zIndex'] || -1,
         })
-    
+
         // Overlay meta-props (adjusting behaviour)
         this.$emit('layer-meta-props', {
             grid_id: this.$props.grid_id,

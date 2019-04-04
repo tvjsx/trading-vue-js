@@ -76,8 +76,8 @@ async function deal_with_it(data) {
                 settings: {
                     upper: 70,
                     lower: 30,
-                    back_color: "#9b9ba316",
-                    band_color: "#666"
+                    backColor: "#9b9ba316",
+                    bandColor: "#666"
                 }
             }
         ]
