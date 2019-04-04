@@ -121,7 +121,8 @@ async function trade_like_god(data, len) {
             if (Math.random() < 0.1 && last[1] === 1) {
                 let sell = (p[2] -  p[3]) * Math.random() + p[3]
                 if (sell > entry) {
-                    last = [p[0], 0, sell]
+                    let pr = '+' + (100 * (sell / entry - 1)).toFixed(2) + '%'
+                    last = [p[0], 0, sell, pr]
                     trades.push(last)
                 }
                 if (p[3] / entry < 0.999) {

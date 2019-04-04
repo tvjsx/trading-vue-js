@@ -7,18 +7,20 @@ import Crosshair from './Crosshair.vue'
 
 import Spline from "./overlays/Spline.vue";
 import RSI from "./overlays/RSI.vue";
+import Trades from "./overlays/Trades.vue";
 
 export default {
     name: 'Grid',
     props: [
         'sub', 'layout', 'range', 'interval', 'cursor', 'colors', 'overlays',
-        'width', 'height', 'data', 'grid_id', 'y_transform'
+        'width', 'height', 'data', 'grid_id', 'y_transform', 'font'
     ],
     mixins: [Canvas],
     components: { Crosshair },
     created() {
         // List of all possible overlays (builtin + custom)
-        this._list = [Spline, RSI].concat(this.$props.overlays)
+        this._list = [Spline, RSI, Trades]
+            .concat(this.$props.overlays)
         this._registry = {}
 
         // We need to know which components we will use.
@@ -101,7 +103,8 @@ export default {
                 cursor: this.$props.cursor,
                 colors: this.$props.colors,
                 layout: this.$props.layout.grids[this.$props.grid_id],
-                sub:    this.$props.sub
+                sub:    this.$props.sub,
+                font:   this.$props.font
             }
         }
     },
