@@ -6,7 +6,8 @@
 export default {
     props: [
         'id', 'num', 'interval', 'cursor', 'colors',
-        'layout', 'sub', 'data', 'settings', 'grid_id'
+        'layout', 'sub', 'data', 'settings', 'grid_id',
+        'font'
     ],
     mounted() {
         this.meta_info()
