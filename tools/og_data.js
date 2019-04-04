@@ -57,7 +57,16 @@ async function deal_with_it(data) {
                 type: "EMA",
                 data: await make_ema(data, 43),
                 settings: {}
+            },
+            {
+                name: "Trades",
+                type: "Trades",
+                data: await trade_like_god(data),
+                settings: {
+                    "z-index": 5
+                }
             }
+
         ],
         offchart: [
             {
@@ -66,7 +75,9 @@ async function deal_with_it(data) {
                 data: await make_rsi(data, 20),
                 settings: {
                     upper: 70,
-                    lower: 30
+                    lower: 30,
+                    back_color: "#9b9ba316",
+                    band_color: "#666"
                 }
             }
         ]
@@ -94,6 +105,35 @@ async function make_rsi(data, len) {
         })
     })
 }
+
+async function trade_like_god(data, len) {
+    let trades = []
+    let entry = 0
+    let last = [0, 0]
+    return new Promise(rs => {
+        for (var p of data) {
+            if (Math.random() < 0.1 && last[1] === 0) {
+                entry = (p[2] -  p[3]) * Math.random() + p[3]
+                last = [p[0], 1, entry]
+                trades.push(last)
+                continue
+            }
+            if (Math.random() < 0.1 && last[1] === 1) {
+                let sell = (p[2] -  p[3]) * Math.random() + p[3]
+                if (sell > entry) {
+                    last = [p[0], 0, sell]
+                    trades.push(last)
+                }
+                if (p[3] / entry < 0.999) {
+                    trades.pop()
+                    last = [0,0]
+                }
+            }
+        }
+        rs(trades)
+    })
+}
+
 
 // Merge backwards
 function merge(vec1, vec2) {
