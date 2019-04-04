@@ -1,5 +1,5 @@
 /*!
- * TradingVue.JS - v0.2.2 - Thu Mar 28 2019
+ * TradingVue.JS - v0.2.3 - Thu Apr 04 2019
  * https://github.com/C451/trading-vue-js
  * Copyright (c) 2019 c451 Code's All Right;
  * Licensed under the MIT license
@@ -5299,13 +5299,13 @@ component.options.__file = "src/components/Crosshair.vue"
 // Usuful stuff for creating overlays. Include as mixin
 // TODO: Add mouse events
 /* harmony default export */ var overlay = ({
-  props: ['id', 'num', 'interval', 'cursor', 'colors', 'layout', 'sub', 'data', 'settings', 'grid_id'],
+  props: ['id', 'num', 'interval', 'cursor', 'colors', 'layout', 'sub', 'data', 'settings', 'grid_id', 'font'],
   mounted: function mounted() {
     this.meta_info();
     this.$emit('new-grid-layer', {
       name: this.$options.name,
       renderer: this,
-      z: this.$props.settings['z-index'] || -1
+      z: this.$props.settings['z-index'] || this.$props.settings['zIndex'] || -1
     }); // Overlay meta-props (adjusting behaviour)
 
     this.$emit('layer-meta-props', {
@@ -5581,10 +5581,10 @@ Spline_component.options.__file = "src/components/overlays/Spline.vue"
       return this.sett.color || '#ec206e';
     },
     band_color: function band_color() {
-      return this.sett.band_color || '#ddd';
+      return this.sett.bandColor || '#ddd';
     },
     back_color: function back_color() {
-      return this.sett.back_color || '#381e9c16';
+      return this.sett.backColor || '#381e9c16';
     }
   }
 });
@@ -5613,6 +5613,106 @@ var RSI_component = normalizeComponent(
 if (false) { var RSI_api; }
 RSI_component.options.__file = "src/components/overlays/RSI.vue"
 /* harmony default export */ var RSI = (RSI_component.exports);
+// CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/components/overlays/Trades.vue?vue&type=script&lang=js&
+
+/* harmony default export */ var Tradesvue_type_script_lang_js_ = ({
+  name: 'Trades',
+  mixins: [overlay],
+  methods: {
+    meta_info: function meta_info() {
+      return {
+        author: 'C451',
+        version: '1.0.0'
+      };
+    },
+    draw: function draw(ctx) {
+      var layout = this.$props.layout;
+      ctx.lineWidth = 1.5;
+      ctx.strokeStyle = 'black';
+
+      for (var i in this.$props.data) {
+        var p = this.$props.data[i];
+        var prev = this.$props.data[i - 1];
+        ctx.fillStyle = p[1] ? this.buy_color : this.sell_color;
+        ctx.beginPath();
+        var x = layout.t2screen(p[0]); // x - Mapping
+
+        var y = layout.$2screen(p[2]); // y - Mapping
+
+        ctx.arc(x, y, this.marker_size + 0.5, 0, Math.PI * 2, true);
+        ctx.fill();
+        ctx.stroke();
+
+        if (this.show_label && p[3]) {
+          this.draw_label(ctx, x, y, p, prev);
+        }
+      }
+    },
+    draw_label: function draw_label(ctx, x, y, p) {
+      ctx.fillStyle = this.label_color;
+      ctx.font = this.new_font;
+      ctx.textAlign = 'center';
+      ctx.fillText(p[3], x, y - 25);
+    },
+    // TODO: dynamic data_colors
+    use_for: function use_for() {
+      return ['Trades'];
+    }
+  },
+  // Define internal setting & constants here
+  computed: {
+    sett: function sett() {
+      return this.$props.settings;
+    },
+    default_font: function default_font() {
+      //console.log(this.$props.font.split('px').pop())
+      return '12px ' + this.$props.font.split('px').pop();
+    },
+    buy_color: function buy_color() {
+      return this.sett.buyColor || '#63df89';
+    },
+    sell_color: function sell_color() {
+      return this.sett.sellColor || '#ec4662';
+    },
+    label_color: function label_color() {
+      return this.sett.labelColor || '#333';
+    },
+    marker_size: function marker_size() {
+      return this.sett.markerSize || 5;
+    },
+    show_label: function show_label() {
+      return this.sett.showLabel !== false;
+    },
+    new_font: function new_font() {
+      return this.sett.font || this.default_font;
+    }
+  }
+});
+// CONCATENATED MODULE: ./src/components/overlays/Trades.vue?vue&type=script&lang=js&
+ /* harmony default export */ var overlays_Tradesvue_type_script_lang_js_ = (Tradesvue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/components/overlays/Trades.vue
+var Trades_render, Trades_staticRenderFns
+
+
+
+
+/* normalize component */
+
+var Trades_component = normalizeComponent(
+  overlays_Tradesvue_type_script_lang_js_,
+  Trades_render,
+  Trades_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var Trades_api; }
+Trades_component.options.__file = "src/components/overlays/Trades.vue"
+/* harmony default export */ var Trades = (Trades_component.exports);
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Grid.vue?vue&type=script&lang=js&
 // Sets up all layers/overlays for the grid with 'grid_id'
 
@@ -5620,9 +5720,10 @@ RSI_component.options.__file = "src/components/overlays/RSI.vue"
 
 
 
+
 /* harmony default export */ var Gridvue_type_script_lang_js_ = ({
   name: 'Grid',
-  props: ['sub', 'layout', 'range', 'interval', 'cursor', 'colors', 'overlays', 'width', 'height', 'data', 'grid_id', 'y_transform'],
+  props: ['sub', 'layout', 'range', 'interval', 'cursor', 'colors', 'overlays', 'width', 'height', 'data', 'grid_id', 'y_transform', 'font'],
   mixins: [canvas],
   components: {
     Crosshair: components_Crosshair
@@ -5631,7 +5732,7 @@ RSI_component.options.__file = "src/components/overlays/RSI.vue"
     var _this = this;
 
     // List of all possible overlays (builtin + custom)
-    this._list = [Spline, RSI].concat(this.$props.overlays);
+    this._list = [Spline, RSI, Trades].concat(this.$props.overlays);
     this._registry = {}; // We need to know which components we will use.
     // Custom overlay components overwrite built-ins:
 
@@ -5741,7 +5842,8 @@ RSI_component.options.__file = "src/components/overlays/RSI.vue"
         cursor: this.$props.cursor,
         colors: this.$props.colors,
         layout: this.$props.layout.grids[this.$props.grid_id],
-        sub: this.$props.sub
+        sub: this.$props.sub,
+        font: this.$props.font
       };
     }
   },
@@ -6112,7 +6214,6 @@ function () {
 
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Sidebar.vue?vue&type=script&lang=js&
 // The side bar (yep, that thing with a bunch of $$$)
-// TODO: free scaling Y-axis
 
 
 /* harmony default export */ var Sidebarvue_type_script_lang_js_ = ({
