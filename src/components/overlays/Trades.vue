@@ -13,10 +13,7 @@ export default {
             let layout = this.$props.layout
             ctx.lineWidth = 1.5
             ctx.strokeStyle = 'black'
-            for (var i in this.$props.data) {
-
-                let p = this.$props.data[i]
-                let prev = this.$props.data[i - 1]
+            for (var p of this.$props.data) {
 
                 ctx.fillStyle = p[1] ? this.buy_color : this.sell_color
                 ctx.beginPath()
@@ -27,7 +24,7 @@ export default {
                 ctx.stroke()
 
                 if (this.show_label && p[3]) {
-                    this.draw_label(ctx, x, y, p, prev)
+                    this.draw_label(ctx, x, y, p)
                 }
             }
         },
