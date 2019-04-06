@@ -14,7 +14,7 @@ If you create trading software - this lib is probably for you. If you like to ma
 <br>
 
 <div align="center">
-    <img width="780" heigth="446" src="https://github.com/C451/trading-vue-js/blob/master/assets/README-db7bd751.gif?raw=true" alt="White preview">
+    <img width="780" heigth="446" src="https://github.com/C451/trading-vue-js/blob/master/assets/README-new-preview.gif?raw=true" alt="White preview">
 </div>
 
 <br>
