@@ -12,7 +12,6 @@ const MONTH = WEEK * 4
 const YEAR = MONTH * 12
 
 const MONTHMAP = [
-    "None",
     "Jan", "Feb", "Mar", "Apr",
     "May", "Jun","Jul", "Aug",
     "Sep", "Oct","Nov", "Dec"
