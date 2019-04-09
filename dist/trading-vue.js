@@ -1,5 +1,5 @@
 /*!
- * TradingVue.JS - v0.2.3 - Thu Apr 04 2019
+ * TradingVue.JS - v0.2.4 - Tue Apr 09 2019
  * https://github.com/C451/trading-vue-js
  * Copyright (c) 2019 c451 Code's All Right;
  * Licensed under the MIT license
@@ -3610,7 +3610,7 @@ var DAY = HOUR * 24;
 var WEEK = DAY * 7;
 var MONTH = WEEK * 4;
 var YEAR = MONTH * 12;
-var MONTHMAP = ["None", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]; // Grid time steps
+var MONTHMAP = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]; // Grid time steps
 
 var TIMESCALES = [YEAR * 10, YEAR * 5, YEAR * 3, YEAR * 2, YEAR, MONTH * 6, MONTH * 4, MONTH * 3, MONTH * 2, MONTH, DAY * 15, DAY * 10, DAY * 7, DAY * 5, DAY * 3, DAY * 2, DAY, HOUR * 12, HOUR * 6, HOUR * 3, HOUR * 1.5, HOUR, MINUTE30, MINUTE15, MINUTE * 10, MINUTE5, MINUTE * 2, MINUTE]; // Grid $ steps
 
@@ -5629,22 +5629,39 @@ RSI_component.options.__file = "src/components/overlays/RSI.vue"
       var layout = this.$props.layout;
       ctx.lineWidth = 1.5;
       ctx.strokeStyle = 'black';
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
 
-      for (var i in this.$props.data) {
-        var p = this.$props.data[i];
-        var prev = this.$props.data[i - 1];
-        ctx.fillStyle = p[1] ? this.buy_color : this.sell_color;
-        ctx.beginPath();
-        var x = layout.t2screen(p[0]); // x - Mapping
+      try {
+        for (var _iterator = this.$props.data[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var p = _step.value;
+          ctx.fillStyle = p[1] ? this.buy_color : this.sell_color;
+          ctx.beginPath();
+          var x = layout.t2screen(p[0]); // x - Mapping
 
-        var y = layout.$2screen(p[2]); // y - Mapping
+          var y = layout.$2screen(p[2]); // y - Mapping
 
-        ctx.arc(x, y, this.marker_size + 0.5, 0, Math.PI * 2, true);
-        ctx.fill();
-        ctx.stroke();
+          ctx.arc(x, y, this.marker_size + 0.5, 0, Math.PI * 2, true);
+          ctx.fill();
+          ctx.stroke();
 
-        if (this.show_label && p[3]) {
-          this.draw_label(ctx, x, y, p, prev);
+          if (this.show_label && p[3]) {
+            this.draw_label(ctx, x, y, p);
+          }
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator.return != null) {
+            _iterator.return();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
         }
       }
     },
