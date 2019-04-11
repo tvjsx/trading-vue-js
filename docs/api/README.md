@@ -275,7 +275,7 @@ Custom y-range. *Optional*
 * **Arguments**:
     - hi (Number) Upper bound of calculated y-range
     - lo (Number) Lower bound of calculated y-range
-* **Returns**: New of transformed y-range. Use when you need to change the scaling behavior of y-axis, e.g.:
+* **Returns**: New or transformed y-range. Use when you need to change the scaling behavior of y-axis, e.g.:
 
 ```js
 y_range(hi, lo) {
@@ -291,7 +291,7 @@ y_range(hi, lo) {
 Custom legend formatter. *Optional*
 
 * **Arguments**: values (Array) Current cursor values
-* **Returns**: Formated value object, e.g.
+* **Returns**: Formated values array, e.g.
 
 ```js
 legend(values) {
