@@ -36,9 +36,39 @@ export default {
             ctx.textAlign = 'center'
             ctx.fillText(p[3], x, y - 25)
         },
+        use_for() { return ['Trades'] },
 
-        // TODO: dynamic data_colors
-        use_for() { return ['Trades'] }
+        // Defines legend format (values & colors)
+        legend(values) {
+            switch (values[1]) {
+                case -1:
+                    var pos = 'Short'
+                    break
+                case 0:
+                    var pos = 'Closed'
+                    break
+                case 1:
+                    var pos = 'Long'
+                    break
+                default:
+                    var pos = 'Unknown'
+            }
+
+            return [
+                {
+                    value: pos
+                },
+                {
+                    value: values[2].toFixed(4),
+                    color: this.$props.colors.colorText
+                }
+            ].concat(values[3] ? [
+                {
+                    value: values[3]
+                }
+            ] : [])
+        }
+
 
     },
     // Define internal setting & constants here
