@@ -82,9 +82,11 @@ export default {
             let meta = this.$props.meta_props[id] || {}
             // Matches Overlay.data_colors with the data values
             // (see Spline.vue)
-            // TODO: custom data formatter (display in the legend
-            // only whatever you need)
             if (!values[id]) return this.n_a(1)
+
+            // Custom formatter
+            if (meta.legend) return meta.legend(values[id])
+
             return values[id].slice(1).map((x, i) => {
                 const cs = meta.data_colors ? meta.data_colors() : []
                 if (typeof x == 'number') {

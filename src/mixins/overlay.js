@@ -22,6 +22,7 @@ export default {
         this.$emit('layer-meta-props', {
             grid_id: this.$props.grid_id,
             layer_id: this.$props.id,
+            legend: this.legend,
             data_colors: this.data_colors,
             y_range: this.y_range
         })
