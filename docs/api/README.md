@@ -1,7 +1,7 @@
 # API Book
 
 ::: warning
-This library is in alpha stage, API may change. This guide version is **0.2.2**
+This library is in alpha stage, API may change. This guide version is **0.2.4**
 :::
 
 ![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=Current%20lib%20version)
@@ -162,35 +162,35 @@ Defined in `layout.js`, accessed through overlay's `this.$props.layout`.
 
 Defined in `layout_fn.js`, accessed through overlay's `this.$props.layout`.
 
-##### $2screen($)
+#### $2screen($)
 
 Returns y-coordinate for given price
 
 * **Arguments**: price (Number)
 * **Returns**: pixels (Number)
 
-##### t2screen(t)
+#### t2screen(t)
 
 Returns x-coordinate for given timestamp
 
 * **Arguments**: time (Number)
 * **Returns**: pixels (Number)
 
-##### screen2$(y)
+#### screen2$(y)
 
 Returns price for given y-coordinate
 
 * **Arguments**: y (Number)
 * **Returns**: price (Number)
 
-##### screen2t(x)
+#### screen2t(x)
 
 Returns time for given x-coordinate
 
 * **Arguments**: x (Number)
 * **Returns**: time (Number)
 
-##### t_magnet(t)
+#### t_magnet(t)
 
 Returns x-coordinate of nearest candle for given time
 
@@ -214,4 +214,95 @@ for (var p of this.$props.data) {
 }
 
 ctx.stroke()
+```
+
+### Overlay meta-methods
+
+To change the default behaviour of an overlay, override this methods.
+
+#### meta_info()
+
+Defines plugin version and other useful information. *Optional*, required for publishing.
+
+```js
+meta_info() {
+    return {
+        author: 'Satoshi Smith',
+        version: '1.0.0',
+        contact: '<email>',      // (opt)
+        github: '<GitHub Page>'  // (opt)
+    }
+})
+```
+
+#### draw(ctx)
+
+Your custom drawing function. **Required**
+
+* **Arguments**: ctx (Canvas context)
+
+```js
+draw(ctx) {
+    ...
+}
+```
+
+#### use_for(ctx)
+
+* **Returns**: list of indicator types which this overlay can draw. **Required**
+The best practice is to include a generic type first and then a specific, e.g.
+
+```js
+use_for() {
+    return ['Spline', 'EMA', 'SMA']
+}
+```
+
+#### data_colors()
+
+* **Returns**: List of data colors in the same order as corresponding values. *Optional*
+
+```js
+data_colors() {
+    return ['red', '#ff0000', '#ff000055']
+}
+```
+
+#### y_range(hi, lo)
+
+Custom y-range. *Optional*
+
+* **Arguments**:
+    - hi (Number) Upper bound of calculated y-range
+    - lo (Number) Lower bound of calculated y-range
+* **Returns**: New of transformed y-range. Use when you need to change the scaling behavior of y-axis, e.g.:
+
+```js
+y_range(hi, lo) {
+    return [
+        Math.max(hi, 70),
+        Math.min(lo, 30)
+    ]
+}
+```
+
+#### legend(values)
+
+Custom legend formatter. *Optional*
+
+* **Arguments**: values (Array) Current cursor values
+* **Returns**: Formated value object, e.g.
+
+```js
+legend(values) {
+    return [
+        {
+            value: values[1].toFixed(0),
+            color: 'green'
+        },
+        {
+            value: values[2]
+        }
+    ]
+}
 ```
