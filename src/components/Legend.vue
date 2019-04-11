@@ -53,14 +53,15 @@ export default {
             const values = this.$props.values
             const f = this.format
             var types = {}
-            return this.json_data.map(x => {
-                if (!(x.type in types)) types[x.type] = 0
-                const id = x.type + `_${types[x.type]++}`
-                return {
-                    name: x.name || id,
-                    values: values ? f(id, values) : this.n_a(1),
-                    unk: !(id in (this.$props.meta_props || {}))
-                }
+            return this.json_data
+                .filter(x =>  x.settings.legend !== false).map(x => {
+                    if (!(x.type in types)) types[x.type] = 0
+                    const id = x.type + `_${types[x.type]++}`
+                    return {
+                        name: x.name || id,
+                        values: values ? f(id, values) : this.n_a(1),
+                        unk: !(id in (this.$props.meta_props || {}))
+                    }
             })
         },
         calc_style() {
