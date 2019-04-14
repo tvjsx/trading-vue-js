@@ -83,7 +83,7 @@ This library is in alpha stage, API may change. This guide version is **0.2.4**
     "name": "Indicator name",
     "type": "RSI",
     "data": [
-        [ <timestamp>, <Number>],
+        [ <timestamp>, <Number> ],
         ...
     ],
     "settings": {
