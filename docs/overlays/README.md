@@ -50,7 +50,7 @@ This library is in alpha stage, API may change. This guide version is **0.2.4**
     "name": "Indicator name",
     "type": "Channel",
     "data": [
-        [ <timestamp>, <Upper>,  <Middle>,  <Lower>],
+        [ <timestamp>, <Upper>,  <Middle>,  <Lower> ],
         ...
     ],
     "settings": {
