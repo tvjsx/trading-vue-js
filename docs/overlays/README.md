@@ -14,7 +14,7 @@ This library is in alpha stage, API may change. This guide version is **0.2.4**
 
 ### Data format
 
-```json
+```
 {
     "name": "Indicator name",
     "type": "Spline",
@@ -45,7 +45,7 @@ This library is in alpha stage, API may change. This guide version is **0.2.4**
 
 ### Data format
 
-```json
+```
 {
     "name": "Indicator name",
     "type": "Channel",
@@ -78,7 +78,7 @@ This library is in alpha stage, API may change. This guide version is **0.2.4**
 
 ### Data format
 
-```json
+```
 {
     "name": "Indicator name",
     "type": "RSI",
@@ -100,7 +100,7 @@ This library is in alpha stage, API may change. This guide version is **0.2.4**
 | **legend**  | Boolean  | Show legend, default = true |
 | lineWidth | Number | Line width, px |
 | color | String | Lines color, hex |
-| backColor  | String | Backround color, hex |
+| backColor  | String | Background color, hex |
 | bandColor   | String  |  Bands color, hex |
 | upper | Number  | Upper band, default = 70 |
 | lower | Number  |  Lower band, default = 30 |
@@ -113,7 +113,7 @@ This library is in alpha stage, API may change. This guide version is **0.2.4**
 
 ### Data format
 
-```json
+```
 {
     "name": "Indicator name",
     "type": "Trades",
