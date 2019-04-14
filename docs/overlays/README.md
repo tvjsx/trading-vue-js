@@ -1,0 +1,147 @@
+# Built-in Overlays
+
+::: warning
+This library is in alpha stage, API may change. This guide version is **0.2.4**
+:::
+
+![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=Current%20lib%20version)
+
+## Spline
+
+| Type name | Aliases | Description |
+|---|---|---|
+| Spline  | EMA, SMA | Single spline |
+
+### Data format
+
+```json
+{
+    "name": "Indicator name",
+    "type": "Spline",
+    "data": [
+        [ <timestamp>, <Number> ],
+        ...
+    ],
+    "settings": {
+        ...
+    }
+}
+```
+
+### Settings
+
+| Prop | Type | Description |
+|---|---|---|
+| **z-index** | Number | 0 = candlestick layer, default = -1 |
+| **legend**  | Boolean  | Show legend, default = true |
+| lineWidth | Number | Line width, px |
+| color | String | Line color, hex |
+
+## Channel
+
+| Type name | Aliases | Description |
+|---|---|---|
+| Channel  | KC, BB | Channel with middle line (band) |
+
+### Data format
+
+```json
+{
+    "name": "Indicator name",
+    "type": "Channel",
+    "data": [
+        [ <timestamp>, <Upper>,  <Middle>,  <Lower>],
+        ...
+    ],
+    "settings": {
+        ...
+    }
+}
+```
+
+### Settings
+
+| Prop | Type | Description |
+|---|---|---|
+| **z-index** | Number | 0 = candlestick layer, default = -1 |
+| **legend**  | Boolean  | Show legend, default = true |
+| lineWidth | Number | Line width, px |
+| color | String | Lines color, hex |
+| backColor | String | Channel body color, hex |
+| showMid  | Boolean | Show/hide middle line, default = true |
+
+## RSI
+
+| Type name | Aliases | Description |
+|---|---|---|
+| RSI  | - | Relative strength index |
+
+### Data format
+
+```json
+{
+    "name": "Indicator name",
+    "type": "RSI",
+    "data": [
+        [ <timestamp>, <Number>],
+        ...
+    ],
+    "settings": {
+        ...
+    }
+}
+```
+
+### Settings
+
+| Prop | Type | Description |
+|---|---|---|
+| **z-index** | Number | 0 = candlestick layer, default = -1 |
+| **legend**  | Boolean  | Show legend, default = true |
+| lineWidth | Number | Line width, px |
+| color | String | Lines color, hex |
+| backColor  | String | Backround color, hex |
+| bandColor   | String  |  Bands color, hex |
+| upper | Number  | Upper band, default = 70 |
+| lower | Number  |  Lower band, default = 30 |
+
+## Trades
+
+| Type name | Aliases | Description |
+|---|---|---|
+| Trades | - | Trade markers with labels|
+
+### Data format
+
+```json
+{
+    "name": "Indicator name",
+    "type": "Trades",
+    "data": [
+        [ <timestamp>, <Type>, <Price>, (opt)<Label> ],
+        ...
+    ],
+    "settings": {
+        ...
+    }
+}
+```
+
+```js
+Type:
+1 = Buy marker
+0 = Sell marker
+```
+
+### Settings
+
+| Prop | Type | Description |
+|---|---|---|
+| **z-index** | Number | 0 = candlestick layer, default = -1 |
+| **legend**  | Boolean  | Show legend, default = true |
+| buyColor | String | Buy marker color, hex |
+| sellColor | String | Sell marker color, hex  |
+| labelColor | String | Marker label color, hex  |
+| markerSize | Number | Marker size, px |
+| showLabel | Boolean | Show/hide label, default = false |
+| font | Strung | Label font string, e.g '11x Arial...'|
