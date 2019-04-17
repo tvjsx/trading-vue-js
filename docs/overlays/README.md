@@ -143,5 +143,5 @@ Type:
 | sellColor | String | Sell marker color, hex  |
 | labelColor | String | Marker label color, hex  |
 | markerSize | Number | Marker size, px |
-| showLabel | Boolean | Show/hide label, default = false |
+| showLabel | Boolean | Show/hide label, default = true |
 | font | Strung | Label font string, e.g '11x Arial...'|
