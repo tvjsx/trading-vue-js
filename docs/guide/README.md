@@ -1,7 +1,7 @@
 # Getting Started
 
 ::: warning
-This library is in alpha stage, API may change. This guide version is **0.2.2**
+This library is in alpha stage, API may change. This guide version is **0.2.5**
 :::
 
 ![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=Current%20lib%20version)
