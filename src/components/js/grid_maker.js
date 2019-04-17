@@ -38,10 +38,6 @@ function GridMaker(id, params, master_grid = null) {
 
         } else {
             // Offchart indicator range
-            // TODO: make two types of values: numbers and strings,
-            // and calculate range only with numbers.
-            // Thus, we can allow meta data to be added
-            // e.g. [<timestamp>, 3000, "buy"]
             const dim = sub[0] ? sub[0].length : 0
             let arr = []
             for (var i = 1; i < dim; i++) {
