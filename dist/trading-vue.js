@@ -1,5 +1,5 @@
 /*!
- * TradingVue.JS - v0.2.4 - Tue Apr 09 2019
+ * TradingVue.JS - v0.2.5 - Wed Apr 17 2019
  * https://github.com/C451/trading-vue-js
  * Copyright (c) 2019 c451 Code's All Right;
  * Licensed under the MIT license
@@ -3941,10 +3941,6 @@ function GridMaker(id, params) {
       })));
     } else {
       // Offchart indicator range
-      // TODO: make two types of values: numbers and strings,
-      // and calculate range only with numbers.
-      // Thus, we can allow meta data to be added
-      // e.g. [<timestamp>, 3000, "buy"]
       var dim = sub[0] ? sub[0].length : 0;
       var arr = [];
 
@@ -5311,6 +5307,7 @@ component.options.__file = "src/components/Crosshair.vue"
     this.$emit('layer-meta-props', {
       grid_id: this.$props.grid_id,
       layer_id: this.$props.id,
+      legend: this.legend,
       data_colors: this.data_colors,
       y_range: this.y_range
     });
@@ -5671,9 +5668,36 @@ RSI_component.options.__file = "src/components/overlays/RSI.vue"
       ctx.textAlign = 'center';
       ctx.fillText(p[3], x, y - 25);
     },
-    // TODO: dynamic data_colors
     use_for: function use_for() {
       return ['Trades'];
+    },
+    // Defines legend format (values & colors)
+    legend: function legend(values) {
+      switch (values[1]) {
+        case -1:
+          var pos = 'Short';
+          break;
+
+        case 0:
+          var pos = 'Closed';
+          break;
+
+        case 1:
+          var pos = 'Long';
+          break;
+
+        default:
+          var pos = 'Unknown';
+      }
+
+      return [{
+        value: pos
+      }, {
+        value: values[2].toFixed(4),
+        color: this.$props.colors.colorText
+      }].concat(values[3] ? [{
+        value: values[3]
+      }] : []);
     }
   },
   // Define internal setting & constants here
@@ -6455,7 +6479,9 @@ Legendvue_type_template_id_34724886_render._withStripped = true
       var values = this.$props.values;
       var f = this.format;
       var types = {};
-      return this.json_data.map(function (x) {
+      return this.json_data.filter(function (x) {
+        return x.settings.legend !== false;
+      }).map(function (x) {
         if (!(x.type in types)) types[x.type] = 0;
         var id = x.type + "_".concat(types[x.type]++);
         return {
@@ -6483,10 +6509,10 @@ Legendvue_type_template_id_34724886_render._withStripped = true
     format: function format(id, values) {
       var meta = this.$props.meta_props[id] || {}; // Matches Overlay.data_colors with the data values
       // (see Spline.vue)
-      // TODO: custom data formatter (display in the legend
-      // only whatever you need)
 
-      if (!values[id]) return this.n_a(1);
+      if (!values[id]) return this.n_a(1); // Custom formatter
+
+      if (meta.legend) return meta.legend(values[id]);
       return values[id].slice(1).map(function (x, i) {
         var cs = meta.data_colors ? meta.data_colors() : [];
 
