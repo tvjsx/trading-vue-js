@@ -63,7 +63,8 @@ async function deal_with_it(data) {
                 type: "Trades",
                 data: await trade_like_god(data),
                 settings: {
-                    "z-index": 5
+                    "z-index": 5,
+                    "legend": false
                 }
             }
 
