@@ -37,6 +37,38 @@ This library is in alpha stage, API may change. This guide version is **0.2.5**
 | lineWidth | Number | Line width, px |
 | color | String | Line color, hex |
 
+## Splines
+
+| Type name | Aliases | Description |
+|---|---|---|
+| Splines  | - | Multiple splines |
+
+### Data format
+
+```
+{
+    "name": "Indicator name",
+    "type": "Splines",
+    "data": [
+        [ <timestamp>, <Number>, <Number>, ... ],
+        ...
+    ],
+    "settings": {
+        ...
+    }
+}
+```
+
+### Settings
+
+| Prop | Type | Description |
+|---|---|---|
+| **z-index** | Number | 0 = candlestick layer, default = -1 |
+| **legend**  | Boolean  | Show legend, default = true |
+| lineWidth | Number | General line width, px |
+| lineWidths | Array of Numbers | Line widths, [px]|
+| colors | Array of Strings | Line colors, [hex] |
+
 ## Channel
 
 | Type name | Aliases | Description |
