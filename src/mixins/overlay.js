@@ -48,12 +48,6 @@ export default {
                 contact (opt) '<email>'
                 github: (opt) '<GitHub Page>',
             }`)
-        },
-        data_colors() {
-            /* override it (optional) */
-        },
-        y_range(hi, lo) {
-            /* override it (optional) */
         }
     },
 
