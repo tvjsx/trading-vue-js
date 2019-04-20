@@ -6,6 +6,7 @@ import Canvas from '../mixins/canvas.js'
 import Crosshair from './Crosshair.vue'
 
 import Spline from "./overlays/Spline.vue";
+import Splines from "./overlays/Splines.vue";
 import RSI from "./overlays/RSI.vue";
 import Trades from "./overlays/Trades.vue";
 
@@ -19,7 +20,7 @@ export default {
     components: { Crosshair },
     created() {
         // List of all possible overlays (builtin + custom)
-        this._list = [Spline, RSI, Trades]
+        this._list = [Spline, Splines, RSI, Trades]
             .concat(this.$props.overlays)
         this._registry = {}
 
