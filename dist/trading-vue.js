@@ -1,5 +1,5 @@
 /*!
- * TradingVue.JS - v0.2.5 - Wed Apr 17 2019
+ * TradingVue.JS - v0.2.6 - Sat Apr 20 2019
  * https://github.com/C451/trading-vue-js
  * Copyright (c) 2019 c451 Code's All Right;
  * Licensed under the MIT license
@@ -5323,12 +5323,6 @@ component.options.__file = "src/components/Crosshair.vue"
       var id = this.$props.id;
       console.warn("".concat(id, " meta_info() is req. for publishing"));
       console.warn("Format: meta_info() {\n                author: 'Satoshi Smith',\n                version: '1.0.0',\n                contact (opt) '<email>'\n                github: (opt) '<GitHub Page>',\n            }");
-    },
-    data_colors: function data_colors() {
-      /* override it (optional) */
-    },
-    y_range: function y_range(hi, lo) {
-      /* override it (optional) */
     }
   },
   render: function render(h) {
@@ -5462,6 +5456,121 @@ var Spline_component = normalizeComponent(
 if (false) { var Spline_api; }
 Spline_component.options.__file = "src/components/overlays/Spline.vue"
 /* harmony default export */ var Spline = (Spline_component.exports);
+// CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/components/overlays/Splines.vue?vue&type=script&lang=js&
+// Channel renderer. (Keltner, Bollinger)
+
+/* harmony default export */ var Splinesvue_type_script_lang_js_ = ({
+  name: 'Splines',
+  mixins: [overlay],
+  methods: {
+    meta_info: function meta_info() {
+      return {
+        author: 'C451',
+        version: '1.0.0'
+      };
+    },
+    draw: function draw(ctx) {
+      var layout = this.$props.layout;
+
+      for (var i = 0; i < this.lines_num; i++) {
+        ctx.strokeStyle = this.clrx[i];
+        ctx.lineWidth = this.widths[i] || this.line_width;
+        ctx.beginPath();
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+          for (var _iterator = this.$props.data[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var p = _step.value;
+            var x = layout.t2screen(p[0]);
+            var y = layout.$2screen(p[i + 1]);
+            ctx.lineTo(x, y);
+          }
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion && _iterator.return != null) {
+              _iterator.return();
+            }
+          } finally {
+            if (_didIteratorError) {
+              throw _iteratorError;
+            }
+          }
+        }
+
+        ctx.stroke();
+      }
+    },
+    use_for: function use_for() {
+      return ['Splines', 'DMI'];
+    },
+    data_colors: function data_colors() {
+      return this.clrx;
+    }
+  },
+  // Define internal setting & constants here
+  computed: {
+    sett: function sett() {
+      return this.$props.settings;
+    },
+    line_width: function line_width() {
+      return this.sett.lineWidth || 0.75;
+    },
+    widths: function widths() {
+      return this.sett.lineWidths || [];
+    },
+    clrx: function clrx() {
+      var colors = this.sett.colors || [];
+      var n = this.$props.num;
+
+      if (!colors.length) {
+        for (var i = 0; i < this.lines_num; i++) {
+          colors.push(this.COLORS[(n + i) % 5]);
+        }
+      }
+
+      return colors;
+    },
+    lines_num: function lines_num() {
+      if (!this.$props.data[0]) return 0;
+      return this.$props.data[0].length - 1;
+    }
+  },
+  data: function data() {
+    return {
+      COLORS: ['#42b28a', '#5691ce', '#612ff9', '#d50b90', '#ff2316']
+    };
+  }
+});
+// CONCATENATED MODULE: ./src/components/overlays/Splines.vue?vue&type=script&lang=js&
+ /* harmony default export */ var overlays_Splinesvue_type_script_lang_js_ = (Splinesvue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/components/overlays/Splines.vue
+var Splines_render, Splines_staticRenderFns
+
+
+
+
+/* normalize component */
+
+var Splines_component = normalizeComponent(
+  overlays_Splinesvue_type_script_lang_js_,
+  Splines_render,
+  Splines_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var Splines_api; }
+Splines_component.options.__file = "src/components/overlays/Splines.vue"
+/* harmony default export */ var Splines = (Splines_component.exports);
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/components/overlays/RSI.vue?vue&type=script&lang=js&
 // R S I . Because we love it
 // Adds all necessary stuff for you.
@@ -5762,6 +5871,7 @@ Trades_component.options.__file = "src/components/overlays/Trades.vue"
 
 
 
+
 /* harmony default export */ var Gridvue_type_script_lang_js_ = ({
   name: 'Grid',
   props: ['sub', 'layout', 'range', 'interval', 'cursor', 'colors', 'overlays', 'width', 'height', 'data', 'grid_id', 'y_transform', 'font'],
@@ -5773,7 +5883,7 @@ Trades_component.options.__file = "src/components/overlays/Trades.vue"
     var _this = this;
 
     // List of all possible overlays (builtin + custom)
-    this._list = [Spline, RSI, Trades].concat(this.$props.overlays);
+    this._list = [Spline, Splines, RSI, Trades].concat(this.$props.overlays);
     this._registry = {}; // We need to know which components we will use.
     // Custom overlay components overwrite built-ins:
 
