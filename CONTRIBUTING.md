@@ -11,10 +11,10 @@
 ## Ways to contribute
 
 1. The easiest way to contribute is to fix bad grammar in the docs or files like this.
-2. The most creative way to contribute is to make built-in indicators. Although this library is positioned as an assembler, we should have a nice set of standart indicators.
+2. The most creative way to contribute is to make built-in indicators. Although this library is positioned as an assembler, we should have a nice set of standard indicators.
 3. If you are true code Jedi, you can help solve performance problems and reactivity bugs. There are already plenty of things to do, just search for **"TODO: IMPORTANT"**
 4. If you are a designer and something hurts your eyes, feel free to submit a suggestion. Don't like colors? Or maybe you have an idea for an icon? Tell us!
-5. Make a project using this libraby. This will be a huge contribution.
+5. Make a project using this library. This will be a huge contribution.
 
 ## Code style guide
 
@@ -26,7 +26,7 @@
 
 And finally:
 
-## Let's make singularity closer (I'm sure it will be fun)!
+## Let's make the singularity closer (I'm sure it will be fun)!
 
 ~
 That's all. I personally hate long and boring docs. Have a great morning/day/evening!
