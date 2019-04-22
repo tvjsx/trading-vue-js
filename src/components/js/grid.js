@@ -103,24 +103,24 @@ export default class Grid {
         })
     }
 
-    mousemove(e) {
+    mousemove(event) {
         this.comp.$emit('cursor-changed', {
             grid_id: this.id, x: event.pageX, y: event.pageY
         })
         if (!this.drug) this.update()
     }
 
-    mouseout(e) {
+    mouseout(event) {
         this.comp.$emit('cursor-changed', {})
     }
 
-    mouseup(e) {
+    mouseup(event) {
         this.drug = null
     //    this.pinch = null
         this.comp.$emit('cursor-locked', false)
     }
 
-    mousedown(e) {
+    mousedown(event) {
         this.comp.$emit('cursor-locked', true)
     }
 
