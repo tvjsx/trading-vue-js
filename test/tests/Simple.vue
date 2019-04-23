@@ -19,7 +19,7 @@ export default {
     methods: {
         onResize(event) {
             this.width = window.innerWidth
-            this.height = window.innerHeight
+            this.height = window.innerHeight - 50
         }
     },
     mounted() {
@@ -28,6 +28,7 @@ export default {
             // Async data setup
             this.$set(this, 'chart', Data)
         }, 0)
+        this.onResize()
     },
     beforeDestroy() {
         window.removeEventListener('resize', this.onResize)
@@ -48,11 +49,5 @@ export default {
 </script>
 
 <style>
-html,
-body {
-    background-color: #000;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-}
+
 </style>
