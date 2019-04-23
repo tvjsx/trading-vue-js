@@ -9,6 +9,7 @@ import Spline from "./overlays/Spline.vue";
 import Splines from "./overlays/Splines.vue";
 import RSI from "./overlays/RSI.vue";
 import Trades from "./overlays/Trades.vue";
+import Channel from "./overlays/Channel.vue";
 
 export default {
     name: 'Grid',
@@ -20,7 +21,7 @@ export default {
     components: { Crosshair },
     created() {
         // List of all possible overlays (builtin + custom)
-        this._list = [Spline, Splines, RSI, Trades]
+        this._list = [Spline, Splines, RSI, Trades, Channel]
             .concat(this.$props.overlays)
         this._registry = {}
 
