@@ -2,7 +2,7 @@
     <div>
         <div id="test-title">
             <h1>Simple.vue</h1>
-            <p>Should display everything okay</p>
+            <p>Should display everything okay [1/1]</p>
             <a href="#" class="next-test-btn">Next test ></a>
         </div>
         <div id="test-container">
@@ -25,7 +25,7 @@ export default {
 <style>
 html,
 body {
-    background-color: #323338;
+    background-color: #34363c;
     margin: 0;
     padding: 0;
     overflow: hidden;
@@ -42,15 +42,19 @@ body {
     top: 50px;
 }
 #test-title h1 {
-    color: #ddd;
+    color: #9b9ca0;
     margin: 5px 0 0 10px;
 }
 #test-title p {
     position: absolute;
     width: 100%;
-    top: -2px;
+    top: 1px;
     text-align: center;
-    font-size: 1.05em;
+    font-family: -apple-system,BlinkMacSystemFont,
+    Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,
+    Fira Sans,Droid Sans,Helvetica Neue,
+    sans-serif;
+    font-weight: 200;
 }
 
 .next-test-btn {
