@@ -191,12 +191,13 @@ That's why the title doesn't lie: you can draw ANYTHING.
   <img src="https://github.com/C451/trading-vue-js/blob/master/assets/README-0027a833.png?raw=true" alt="trading-vue logo">
 </div>
 
-#### [ Code | click your 🐁 ](https://gist.github.com/C451/eb3620a44c2fc4bd3112406c7426c70c)
+#### [ Code | click your 🐁 ](https://gist.github.com/C451/6d8ea8d603e3faadd801b4b3f2e7a57d)
 
 
 ## Roadmap
 
 * ~~Docs~~
+* Tests
 * Solve known issues (marked as 'TODO: IMPORTANT')
 * Performance improvements
 * Add more built-in overlays
