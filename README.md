@@ -231,6 +231,15 @@ npm run dev
 npm run build
 ```
 
+**Visual testing**
+
+```
+npm run test
+```
+
+*Server is running on http://localhost:8080*
+
+
 ## Contributing
 
 1. Fork ( https://github.com/C451/trading-vue-js/fork )
