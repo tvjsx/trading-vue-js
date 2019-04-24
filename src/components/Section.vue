@@ -120,3 +120,8 @@ export default {
     }
 }
 </script>
+<style>
+.trading-vue-section {
+    height: 0;
+}
+</style>
