@@ -108,11 +108,10 @@ export default {
 </script>
 <style>
 .trading-vue-legend {
-    position: absolute;
+    position: relative;
     z-index: 100;
     font-size: 1.25em;
-    top: 10px;
-    left: 10px;
+    margin-left: 10px;
     pointer-events: none;
 }
 .trading-vue-ohlcv {
