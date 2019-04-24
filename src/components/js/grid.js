@@ -25,6 +25,8 @@ export default class Grid {
         this.id = this.$p.grid_id
         this.layout = this.$p.layout.grids[this.id]
         this.interval = this.$p.interval
+        this.offset_x = 0
+        this.offset_y = 0
 
         this.listeners()
         this.overlays = []
@@ -43,10 +45,9 @@ export default class Grid {
         mc.get('pinch').set({ enable: true })
 
         mc.on('panstart', event => {
-
             this.drug = {
-                x: event.center.x,
-                y: event.center.y,
+                x: event.center.x + this.offset_x,
+                y: event.center.y + this.offset_y,
                 r: this.range.slice(),
                 t: this.range[1] - this.range[0],
                 o: this.$p.y_transform ?
@@ -56,7 +57,8 @@ export default class Grid {
             }
             this.comp.$emit('cursor-changed', {
                 grid_id: this.id,
-                x: event.center.x, y: event.center.y
+                x: event.center.x + this.offset_x,
+                y: event.center.y + this.offset_y
             })
             this.comp.$emit('cursor-locked', true)
         })
@@ -69,7 +71,8 @@ export default class Grid {
                 )
                 this.comp.$emit('cursor-changed', {
                     grid_id: this.id,
-                    x: event.center.x, y: event.center.y
+                    x: event.center.x + this.offset_x,
+                    y: event.center.y + this.offset_y
                 })
             }
         })
@@ -82,7 +85,8 @@ export default class Grid {
         mc.on('tap', event => {
             this.comp.$emit('cursor-changed', {
                 grid_id: this.id,
-                x: event.center.x, y: event.center.y
+                x: event.center.x + this.offset_x,
+                y: event.center.y + this.offset_y
             })
             this.update()
         })
@@ -105,9 +109,16 @@ export default class Grid {
 
     mousemove(event) {
         this.comp.$emit('cursor-changed', {
-            grid_id: this.id, x: event.pageX, y: event.pageY
+            grid_id: this.id,
+            x: event.layerX,
+            y: event.layerY + this.layout.offset
         })
         if (!this.drug) this.update()
+        // TODO: Temp solution, need to implement
+        // a proper way to get the chart el offset
+        this.offset_x = event.layerX - event.pageX
+        this.offset_y = event.layerY - event.pageY
+            + this.layout.offset
     }
 
     mouseout(event) {
