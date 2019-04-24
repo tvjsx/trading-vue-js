@@ -8,12 +8,12 @@
 
 <script>
 import TradingVue from '../../src/TradingVue.vue'
-import Data from '../data/data_btc.json'
+import Data from '../data/data_aapl.json'
 import Utils from '../../src/stuff/utils.js'
 
 export default {
-    name: 'Simple',
-    description: 'Should display everything okay',
+    name: 'Stocks',
+    description: 'Should correctly display dates and hide weekend gaps',
     components: {
         TradingVue
     },
@@ -50,5 +50,4 @@ export default {
 </script>
 
 <style>
-
 </style>
