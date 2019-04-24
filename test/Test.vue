@@ -2,22 +2,46 @@
     <div>
         <div id="test-title">
             <h1>Simple.vue</h1>
-            <p>Should display everything okay [1/1]</p>
-            <a href="#" class="next-test-btn">Next test ></a>
+            <p>{{current_test.description}} [{{test_index+1}}/{{len}}]</p>
+            <a href="#" class="next-test-btn"
+                v-on:click="next_test">
+                Next test
+            </a>
         </div>
         <div id="test-container">
-            <simple></simple>
+            <component v-bind:is="current_test"></component>
         </div>
     </div>
 </template>
 
 <script>
 import Simple from './tests/Simple.vue'
+import Stocks from './tests/Stocks.vue'
+
+const TESTS = { Simple, Stocks }
 
 export default {
     name: 'app',
-    components: {
-        Simple
+    components: TESTS,
+    mounted() {
+        this.current_test = Object.values(TESTS)[0]
+    },
+    data() {
+        return {
+            len: Object.values(TESTS).length,
+            test_index: 0,
+            current_test: 'Simple'
+        }
+    },
+    methods: {
+        next_test() {
+            let list = Object.values(TESTS)
+
+            if (++this.test_index >= list.length) {
+                this.test_index = 0
+            }
+            this.current_test = list[this.test_index]
+        }
     }
 };
 </script>
