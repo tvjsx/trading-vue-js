@@ -1,7 +1,7 @@
 
 <template>
     <!-- Main component  -->
-    <div class="trading-vue"
+    <div class="trading-vue" v-bind:id="id"
         :style="{ color: this.colorText, font: this.font }">
         <!-- <toolbar> </toolbar> TODO: add drawing tools -->
         <chart v-bind="chart_props"></chart>
