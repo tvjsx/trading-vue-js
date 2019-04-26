@@ -3884,7 +3884,12 @@ var TradingVuevue_type_template_id_235c0ade_render = function() {
     "div",
     {
       staticClass: "trading-vue",
-      style: { color: this.colorText, font: this.font },
+      style: {
+        color: this.colorText,
+        font: this.font,
+        width: this.width + "px",
+        height: this.height + "px"
+      },
       attrs: { id: _vm.id }
     },
     [_c("chart", _vm._b({}, "chart", _vm.chart_props, false))],
@@ -4374,16 +4379,15 @@ function GridMaker(id, params) {
     // we just borrow it from the master_grid
     if (!master_grid) {
       self.t_step = time_step();
-      self.xs = []; // TODO: IMPORTANT missing candles. Will not work
-      // Solution: use t2sreen() to convert timestamps
-      // to screen coordinates. Also need to check how
-      // the whole thing works with missing data points.
+      self.xs = [];
+      var dt = range[1] - range[0];
+      var r = self.spacex / dt;
 
       for (var i = 0; i < sub.length; i++) {
         var p = sub[i];
 
         if (p[0] % self.t_step === 0) {
-          var x = Math.floor(self.startx + i * self.px_step);
+          var x = Math.floor((p[0] - range[0]) * r);
           self.xs.push([x, p]);
         }
       }
@@ -4507,6 +4511,12 @@ function Layout(params) {
     return [m].concat(Array(n).fill(px));
   }
 
+  function t2screen(t) {
+    var dt = range[1] - range[0];
+    var r = self.spacex / dt;
+    return Math.floor((t - range[0]) * r);
+  }
+
   function candles_n_vol() {
     self.candles = [];
     self.volume = [];
@@ -4522,16 +4532,21 @@ function Layout(params) {
 
     for (var i = 0; i < sub.length; i++) {
       var p = sub[i];
+      mid = t2screen(p[0]);
       self.candles.push({
-        x: self.startx + i * self.px_step,
+        x: mid,
         w: self.px_step * layout_CANDLEW,
         o: p[1] * self.A + self.B,
         h: p[2] * self.A + self.B,
         l: p[3] * self.A + self.B,
         c: p[4] * self.A + self.B,
         sent: p
-      });
-      mid = self.startx + i * self.px_step;
+      }); // Clear volume bar if there is a time gap
+
+      if (sub[i - 1] && p[0] - sub[i - 1][0] > interval) {
+        prev = null;
+      }
+
       x1 = prev || Math.floor(mid - self.px_step * 0.5);
       x2 = Math.floor(mid + self.px_step * 0.5) - 0.5;
       self.volume.push({
@@ -4720,14 +4735,13 @@ function () {
 
       return res;
     } // Nearest datapoints
-    // TODO: switch to screen2t() method for ohlcv
 
   }, {
     key: "cursor_data",
     value: function cursor_data(grid, e) {
       var data = this.comp.main_section.sub;
       var xs = data.map(function (x, i) {
-        return grid.startx + i * grid.px_step;
+        return grid.t2screen(x[0]) + 0.5;
       });
       var i = utils.nearest_a(e.x, xs)[0];
       if (!xs[i]) return {};
@@ -7757,6 +7771,9 @@ if (false) { var Chart_api; }
 Chart_component.options.__file = "src/components/Chart.vue"
 /* harmony default export */ var Chart = (Chart_component.exports);
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/TradingVue.vue?vue&type=script&lang=js&
+//
+//
+//
 //
 //
 //
