@@ -50,12 +50,11 @@ class CursorUpdater {
     }
 
     // Nearest datapoints
-    // TODO: switch to screen2t() method for ohlcv
     cursor_data(grid, e) {
 
         const data = this.comp.main_section.sub
 
-        let xs = data.map((x, i) => grid.startx + i * grid.px_step)
+        let xs = data.map((x, i) => grid.t2screen(x[0]) + 0.5)
         let i = Utils.nearest_a(e.x, xs)[0]
         if (!xs[i]) return {}
         return {
