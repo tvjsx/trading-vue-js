@@ -1,5 +1,5 @@
 /*!
- * TradingVue.JS - v0.2.7 - Fri Apr 26 2019
+ * TradingVue.JS - v0.2.8 - Fri Apr 26 2019
  * https://github.com/C451/trading-vue-js
  * Copyright (c) 2019 c451 Code's All Right;
  * Licensed under the MIT license
@@ -3864,7 +3864,7 @@ exports.push([module.i, "\n.trading-vue-legend {\n    position: relative;\n    z
 
 exports = module.exports = __webpack_require__(3)(false);
 // Module
-exports.push([module.i, "\n.trading-vue-section {\n    height: 0;\n}\n", ""]);
+exports.push([module.i, "\n.trading-vue-section {\n    height: 0;\n    position: absolute;\n}\n", ""]);
 
 
 

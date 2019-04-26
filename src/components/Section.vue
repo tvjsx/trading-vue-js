@@ -123,5 +123,6 @@ export default {
 <style>
 .trading-vue-section {
     height: 0;
+    position: absolute;
 }
 </style>
