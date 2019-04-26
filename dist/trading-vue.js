@@ -1,5 +1,5 @@
 /*!
- * TradingVue.JS - v0.2.6 - Sat Apr 20 2019
+ * TradingVue.JS - v0.2.7 - Fri Apr 26 2019
  * https://github.com/C451/trading-vue-js
  * Copyright (c) 2019 c451 Code's All Right;
  * Licensed under the MIT license
@@ -98,7 +98,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 10);
+/******/ 	return __webpack_require__(__webpack_require__.s = 14);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -2754,17 +2754,386 @@ if (true) {
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(8);
+var content = __webpack_require__(11);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var add = __webpack_require__(11).default
+var add = __webpack_require__(4).default
 var update = add("1db01c0b", content, false, {});
 // Hot Module Replacement
 if(false) {}
 
 /***/ }),
 /* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(13);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var add = __webpack_require__(4).default
+var update = add("12d2309d", content, false, {});
+// Hot Module Replacement
+if(false) {}
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/*
+  MIT License http://www.opensource.org/licenses/mit-license.php
+  Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function (useSourceMap) {
+  var list = []; // return the list of modules as css string
+
+  list.toString = function toString() {
+    return this.map(function (item) {
+      var content = cssWithMappingToString(item, useSourceMap);
+
+      if (item[2]) {
+        return '@media ' + item[2] + '{' + content + '}';
+      } else {
+        return content;
+      }
+    }).join('');
+  }; // import a list of modules into the list
+
+
+  list.i = function (modules, mediaQuery) {
+    if (typeof modules === 'string') {
+      modules = [[null, modules, '']];
+    }
+
+    var alreadyImportedModules = {};
+
+    for (var i = 0; i < this.length; i++) {
+      var id = this[i][0];
+
+      if (id != null) {
+        alreadyImportedModules[id] = true;
+      }
+    }
+
+    for (i = 0; i < modules.length; i++) {
+      var item = modules[i]; // skip already imported module
+      // this implementation is not 100% perfect for weird media query combinations
+      // when a module is imported multiple times with different media queries.
+      // I hope this will never occur (Hey this way we have smaller bundles)
+
+      if (item[0] == null || !alreadyImportedModules[item[0]]) {
+        if (mediaQuery && !item[2]) {
+          item[2] = mediaQuery;
+        } else if (mediaQuery) {
+          item[2] = '(' + item[2] + ') and (' + mediaQuery + ')';
+        }
+
+        list.push(item);
+      }
+    }
+  };
+
+  return list;
+};
+
+function cssWithMappingToString(item, useSourceMap) {
+  var content = item[1] || '';
+  var cssMapping = item[3];
+
+  if (!cssMapping) {
+    return content;
+  }
+
+  if (useSourceMap && typeof btoa === 'function') {
+    var sourceMapping = toComment(cssMapping);
+    var sourceURLs = cssMapping.sources.map(function (source) {
+      return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */';
+    });
+    return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+  }
+
+  return [content].join('\n');
+} // Adapted from convert-source-map (MIT)
+
+
+function toComment(sourceMap) {
+  // eslint-disable-next-line no-undef
+  var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+  var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+  return '/*# ' + data + ' */';
+}
+
+/***/ }),
+/* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+
+// CONCATENATED MODULE: ./node_modules/vue-style-loader/lib/listToStyles.js
+/**
+ * Translates the list format produced by css-loader into something
+ * easier to manipulate.
+ */
+function listToStyles (parentId, list) {
+  var styles = []
+  var newStyles = {}
+  for (var i = 0; i < list.length; i++) {
+    var item = list[i]
+    var id = item[0]
+    var css = item[1]
+    var media = item[2]
+    var sourceMap = item[3]
+    var part = {
+      id: parentId + ':' + i,
+      css: css,
+      media: media,
+      sourceMap: sourceMap
+    }
+    if (!newStyles[id]) {
+      styles.push(newStyles[id] = { id: id, parts: [part] })
+    } else {
+      newStyles[id].parts.push(part)
+    }
+  }
+  return styles
+}
+
+// CONCATENATED MODULE: ./node_modules/vue-style-loader/lib/addStylesClient.js
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return addStylesClient; });
+/*
+  MIT License http://www.opensource.org/licenses/mit-license.php
+  Author Tobias Koppers @sokra
+  Modified by Evan You @yyx990803
+*/
+
+
+
+var hasDocument = typeof document !== 'undefined'
+
+if (typeof DEBUG !== 'undefined' && DEBUG) {
+  if (!hasDocument) {
+    throw new Error(
+    'vue-style-loader cannot be used in a non-browser environment. ' +
+    "Use { target: 'node' } in your Webpack config to indicate a server-rendering environment."
+  ) }
+}
+
+/*
+type StyleObject = {
+  id: number;
+  parts: Array<StyleObjectPart>
+}
+
+type StyleObjectPart = {
+  css: string;
+  media: string;
+  sourceMap: ?string
+}
+*/
+
+var stylesInDom = {/*
+  [id: number]: {
+    id: number,
+    refs: number,
+    parts: Array<(obj?: StyleObjectPart) => void>
+  }
+*/}
+
+var head = hasDocument && (document.head || document.getElementsByTagName('head')[0])
+var singletonElement = null
+var singletonCounter = 0
+var isProduction = false
+var noop = function () {}
+var options = null
+var ssrIdKey = 'data-vue-ssr-id'
+
+// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+// tags it will allow on a page
+var isOldIE = typeof navigator !== 'undefined' && /msie [6-9]\b/.test(navigator.userAgent.toLowerCase())
+
+function addStylesClient (parentId, list, _isProduction, _options) {
+  isProduction = _isProduction
+
+  options = _options || {}
+
+  var styles = listToStyles(parentId, list)
+  addStylesToDom(styles)
+
+  return function update (newList) {
+    var mayRemove = []
+    for (var i = 0; i < styles.length; i++) {
+      var item = styles[i]
+      var domStyle = stylesInDom[item.id]
+      domStyle.refs--
+      mayRemove.push(domStyle)
+    }
+    if (newList) {
+      styles = listToStyles(parentId, newList)
+      addStylesToDom(styles)
+    } else {
+      styles = []
+    }
+    for (var i = 0; i < mayRemove.length; i++) {
+      var domStyle = mayRemove[i]
+      if (domStyle.refs === 0) {
+        for (var j = 0; j < domStyle.parts.length; j++) {
+          domStyle.parts[j]()
+        }
+        delete stylesInDom[domStyle.id]
+      }
+    }
+  }
+}
+
+function addStylesToDom (styles /* Array<StyleObject> */) {
+  for (var i = 0; i < styles.length; i++) {
+    var item = styles[i]
+    var domStyle = stylesInDom[item.id]
+    if (domStyle) {
+      domStyle.refs++
+      for (var j = 0; j < domStyle.parts.length; j++) {
+        domStyle.parts[j](item.parts[j])
+      }
+      for (; j < item.parts.length; j++) {
+        domStyle.parts.push(addStyle(item.parts[j]))
+      }
+      if (domStyle.parts.length > item.parts.length) {
+        domStyle.parts.length = item.parts.length
+      }
+    } else {
+      var parts = []
+      for (var j = 0; j < item.parts.length; j++) {
+        parts.push(addStyle(item.parts[j]))
+      }
+      stylesInDom[item.id] = { id: item.id, refs: 1, parts: parts }
+    }
+  }
+}
+
+function createStyleElement () {
+  var styleElement = document.createElement('style')
+  styleElement.type = 'text/css'
+  head.appendChild(styleElement)
+  return styleElement
+}
+
+function addStyle (obj /* StyleObjectPart */) {
+  var update, remove
+  var styleElement = document.querySelector('style[' + ssrIdKey + '~="' + obj.id + '"]')
+
+  if (styleElement) {
+    if (isProduction) {
+      // has SSR styles and in production mode.
+      // simply do nothing.
+      return noop
+    } else {
+      // has SSR styles but in dev mode.
+      // for some reason Chrome can't handle source map in server-rendered
+      // style tags - source maps in <style> only works if the style tag is
+      // created and inserted dynamically. So we remove the server rendered
+      // styles and inject new ones.
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  if (isOldIE) {
+    // use singleton mode for IE9.
+    var styleIndex = singletonCounter++
+    styleElement = singletonElement || (singletonElement = createStyleElement())
+    update = applyToSingletonTag.bind(null, styleElement, styleIndex, false)
+    remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true)
+  } else {
+    // use multi-style-tag mode in all other cases
+    styleElement = createStyleElement()
+    update = applyToTag.bind(null, styleElement)
+    remove = function () {
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  update(obj)
+
+  return function updateStyle (newObj /* StyleObjectPart */) {
+    if (newObj) {
+      if (newObj.css === obj.css &&
+          newObj.media === obj.media &&
+          newObj.sourceMap === obj.sourceMap) {
+        return
+      }
+      update(obj = newObj)
+    } else {
+      remove()
+    }
+  }
+}
+
+var replaceText = (function () {
+  var textStore = []
+
+  return function (index, replacement) {
+    textStore[index] = replacement
+    return textStore.filter(Boolean).join('\n')
+  }
+})()
+
+function applyToSingletonTag (styleElement, index, remove, obj) {
+  var css = remove ? '' : obj.css
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = replaceText(index, css)
+  } else {
+    var cssNode = document.createTextNode(css)
+    var childNodes = styleElement.childNodes
+    if (childNodes[index]) styleElement.removeChild(childNodes[index])
+    if (childNodes.length) {
+      styleElement.insertBefore(cssNode, childNodes[index])
+    } else {
+      styleElement.appendChild(cssNode)
+    }
+  }
+}
+
+function applyToTag (styleElement, obj) {
+  var css = obj.css
+  var media = obj.media
+  var sourceMap = obj.sourceMap
+
+  if (media) {
+    styleElement.setAttribute('media', media)
+  }
+  if (options.ssrId) {
+    styleElement.setAttribute(ssrIdKey, obj.id)
+  }
+
+  if (sourceMap) {
+    // https://developer.chrome.com/devtools/docs/javascript-debugging
+    // this makes source maps inside style tags work properly in Chrome
+    css += '\n/*# sourceURL=' + sourceMap.sources[0] + ' */'
+    // http://stackoverflow.com/a/26603875
+    css += '\n/*# sourceMappingURL=data:application/json;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + ' */'
+  }
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = css
+  } else {
+    while (styleElement.firstChild) {
+      styleElement.removeChild(styleElement.firstChild)
+    }
+    styleElement.appendChild(document.createTextNode(css))
+  }
+}
+
+
+/***/ }),
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -3094,7 +3463,7 @@ if (typeof window.define === 'function' && window.define.amd) {
 
 
 /***/ }),
-/* 3 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -3104,9 +3473,9 @@ if (typeof window.define === 'function' && window.define.amd) {
 /**
  * Dependencies
  */
-var util = __webpack_require__(4),
-    cmp = __webpack_require__(5),
-    bin = __webpack_require__(6);
+var util = __webpack_require__(7),
+    cmp = __webpack_require__(8),
+    bin = __webpack_require__(9);
 
 /**
  * Module interface definition
@@ -3318,7 +3687,7 @@ IndexedArray.prototype.getRange = function (begin, end) {
 
 
 /***/ }),
-/* 4 */
+/* 7 */
 /***/ (function(module, exports) {
 
 /**
@@ -3363,7 +3732,7 @@ module.exports.isSortableArrayLike = function (o) {
 
 
 /***/ }),
-/* 5 */
+/* 8 */
 /***/ (function(module, exports) {
 
 /**
@@ -3398,7 +3767,7 @@ module.exports = {
 
 
 /***/ }),
-/* 6 */
+/* 9 */
 /***/ (function(module, exports) {
 
 /**
@@ -3460,7 +3829,7 @@ module.exports.search = search;
 
 
 /***/ }),
-/* 7 */
+/* 10 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3470,108 +3839,37 @@ module.exports.search = search;
  /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Legend_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
-/* 8 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(9)(false);
+exports = module.exports = __webpack_require__(3)(false);
 // Module
-exports.push([module.i, "\n.trading-vue-legend {\n    position: absolute;\n    z-index: 100;\n    font-size: 1.25em;\n    top: 10px;\n    left: 10px;\n    pointer-events: none;\n}\n.trading-vue-ohlcv {\n    pointer-events: none;\n    margin-bottom: 0.5em;\n}\n.t-vue-lspan {\n    font-variant-numeric: tabular-nums;\n    font-weight: 100;\n    font-size: 0.95em;\n    color: #999999; /* TODO: move => params */\n    margin-left: 0.1em;\n    margin-right: 0.2em;\n}\n.t-vue-title {\n    margin-right: 0.25em;\n    font-size: 1.45em;\n    font-weight: 200;\n}\n.t-vue-ind {\n    margin-left: 0.2em;\n    margin-bottom: 0.5em;\n    font-weight: 200;\n    font-size: 1.0em;\n}\n.t-vue-ivalue {\n    margin-left: 0.5em;\n}\n.t-vue-unknown {\n    color: #999999; /* TODO: move => params */\n}\n", ""]);
+exports.push([module.i, "\n.trading-vue-legend {\n    position: relative;\n    z-index: 100;\n    font-size: 1.25em;\n    margin-left: 10px;\n    pointer-events: none;\n}\n.trading-vue-ohlcv {\n    pointer-events: none;\n    margin-bottom: 0.5em;\n}\n.t-vue-lspan {\n    font-variant-numeric: tabular-nums;\n    font-weight: 100;\n    font-size: 0.95em;\n    color: #999999; /* TODO: move => params */\n    margin-left: 0.1em;\n    margin-right: 0.2em;\n}\n.t-vue-title {\n    margin-right: 0.25em;\n    font-size: 1.45em;\n    font-weight: 200;\n}\n.t-vue-ind {\n    margin-left: 0.2em;\n    margin-bottom: 0.5em;\n    font-weight: 200;\n    font-size: 1.0em;\n}\n.t-vue-ivalue {\n    margin-left: 0.5em;\n}\n.t-vue-unknown {\n    color: #999999; /* TODO: move => params */\n}\n", ""]);
 
 
 
 /***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 12 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-
-
-/*
-  MIT License http://www.opensource.org/licenses/mit-license.php
-  Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-module.exports = function (useSourceMap) {
-  var list = []; // return the list of modules as css string
-
-  list.toString = function toString() {
-    return this.map(function (item) {
-      var content = cssWithMappingToString(item, useSourceMap);
-
-      if (item[2]) {
-        return '@media ' + item[2] + '{' + content + '}';
-      } else {
-        return content;
-      }
-    }).join('');
-  }; // import a list of modules into the list
-
-
-  list.i = function (modules, mediaQuery) {
-    if (typeof modules === 'string') {
-      modules = [[null, modules, '']];
-    }
-
-    var alreadyImportedModules = {};
-
-    for (var i = 0; i < this.length; i++) {
-      var id = this[i][0];
-
-      if (id != null) {
-        alreadyImportedModules[id] = true;
-      }
-    }
-
-    for (i = 0; i < modules.length; i++) {
-      var item = modules[i]; // skip already imported module
-      // this implementation is not 100% perfect for weird media query combinations
-      // when a module is imported multiple times with different media queries.
-      // I hope this will never occur (Hey this way we have smaller bundles)
-
-      if (item[0] == null || !alreadyImportedModules[item[0]]) {
-        if (mediaQuery && !item[2]) {
-          item[2] = mediaQuery;
-        } else if (mediaQuery) {
-          item[2] = '(' + item[2] + ') and (' + mediaQuery + ')';
-        }
-
-        list.push(item);
-      }
-    }
-  };
-
-  return list;
-};
-
-function cssWithMappingToString(item, useSourceMap) {
-  var content = item[1] || '';
-  var cssMapping = item[3];
-
-  if (!cssMapping) {
-    return content;
-  }
-
-  if (useSourceMap && typeof btoa === 'function') {
-    var sourceMapping = toComment(cssMapping);
-    var sourceURLs = cssMapping.sources.map(function (source) {
-      return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */';
-    });
-    return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
-  }
-
-  return [content].join('\n');
-} // Adapted from convert-source-map (MIT)
-
-
-function toComment(sourceMap) {
-  // eslint-disable-next-line no-undef
-  var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
-  var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
-  return '/*# ' + data + ' */';
-}
+/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Section_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Section_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Section_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* unused harmony reexport * */
+ /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Section_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
-/* 10 */
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(3)(false);
+// Module
+exports.push([module.i, "\n.trading-vue-section {\n    height: 0;\n}\n", ""]);
+
+
+
+/***/ }),
+/* 14 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3586,7 +3884,8 @@ var TradingVuevue_type_template_id_235c0ade_render = function() {
     "div",
     {
       staticClass: "trading-vue",
-      style: { color: this.colorText, font: this.font }
+      style: { color: this.colorText, font: this.font },
+      attrs: { id: _vm.id }
     },
     [_c("chart", _vm._b({}, "chart", _vm.chart_props, false))],
     1
@@ -3714,7 +4013,7 @@ function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.
 
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
-var IndexedArray = __webpack_require__(3);
+var IndexedArray = __webpack_require__(6);
 
 /* harmony default export */ var utils = ({
   clamp: function clamp(num, min, max) {
@@ -4452,7 +4751,7 @@ function () {
 var hammer = __webpack_require__(0);
 
 // EXTERNAL MODULE: ./node_modules/hamsterjs/hamster.js
-var hamsterjs_hamster = __webpack_require__(2);
+var hamsterjs_hamster = __webpack_require__(5);
 var hamster_default = /*#__PURE__*/__webpack_require__.n(hamsterjs_hamster);
 
 // CONCATENATED MODULE: ./src/components/js/candle.js
@@ -4598,7 +4897,10 @@ function grid_createClass(Constructor, protoProps, staticProps) { if (protoProps
 
 
 
-var grid_BOTBAR = constants.ChartConfig.BOTBAR;
+var grid_Const$ChartConfig = constants.ChartConfig,
+    grid_BOTBAR = grid_Const$ChartConfig.BOTBAR,
+    MIN_ZOOM = grid_Const$ChartConfig.MIN_ZOOM,
+    MAX_ZOOM = grid_Const$ChartConfig.MAX_ZOOM;
 
 var grid_Grid =
 /*#__PURE__*/
@@ -4615,6 +4917,8 @@ function () {
     this.id = this.$p.grid_id;
     this.layout = this.$p.layout.grids[this.id];
     this.interval = this.$p.interval;
+    this.offset_x = 0;
+    this.offset_y = 0;
     this.listeners();
     this.overlays = [];
   }
@@ -4637,8 +4941,8 @@ function () {
       });
       mc.on('panstart', function (event) {
         _this.drug = {
-          x: event.center.x,
-          y: event.center.y,
+          x: event.center.x + _this.offset_x,
+          y: event.center.y + _this.offset_y,
           r: _this.range.slice(),
           t: _this.range[1] - _this.range[0],
           o: _this.$p.y_transform ? _this.$p.y_transform.offset || 0 : 0,
@@ -4647,8 +4951,8 @@ function () {
 
         _this.comp.$emit('cursor-changed', {
           grid_id: _this.id,
-          x: event.center.x,
-          y: event.center.y
+          x: event.center.x + _this.offset_x,
+          y: event.center.y + _this.offset_y
         });
 
         _this.comp.$emit('cursor-locked', true);
@@ -4659,8 +4963,8 @@ function () {
 
           _this.comp.$emit('cursor-changed', {
             grid_id: _this.id,
-            x: event.center.x,
-            y: event.center.y
+            x: event.center.x + _this.offset_x,
+            y: event.center.y + _this.offset_y
           });
         }
       });
@@ -4672,8 +4976,8 @@ function () {
       mc.on('tap', function (event) {
         _this.comp.$emit('cursor-changed', {
           grid_id: _this.id,
-          x: event.center.x,
-          y: event.center.y
+          x: event.center.x + _this.offset_x,
+          y: event.center.y + _this.offset_y
         });
 
         _this.update();
@@ -4693,29 +4997,33 @@ function () {
     }
   }, {
     key: "mousemove",
-    value: function mousemove(e) {
+    value: function mousemove(event) {
       this.comp.$emit('cursor-changed', {
         grid_id: this.id,
-        x: event.pageX,
-        y: event.pageY
+        x: event.layerX,
+        y: event.layerY + this.layout.offset
       });
-      if (!this.drug) this.update();
+      if (!this.drug) this.update(); // TODO: Temp solution, need to implement
+      // a proper way to get the chart el offset
+
+      this.offset_x = event.layerX - event.pageX;
+      this.offset_y = event.layerY - event.pageY + this.layout.offset;
     }
   }, {
     key: "mouseout",
-    value: function mouseout(e) {
+    value: function mouseout(event) {
       this.comp.$emit('cursor-changed', {});
     }
   }, {
     key: "mouseup",
-    value: function mouseup(e) {
+    value: function mouseup(event) {
       this.drug = null; //    this.pinch = null
 
       this.comp.$emit('cursor-locked', false);
     }
   }, {
     key: "mousedown",
-    value: function mousedown(e) {
+    value: function mousedown(event) {
       this.comp.$emit('cursor-locked', true);
     }
   }, {
@@ -4906,8 +5214,8 @@ function () {
       // TODO: mouse zooming is a little jerky,
       // needs to follow f(mouse_wheel_speed) and
       // if speed is low, scroll shoud be slower
-      if (delta < 0 && this.data.length <= 25) return;
-      if (delta > 0 && this.data.length > 1000) return;
+      if (delta < 0 && this.data.length <= MIN_ZOOM) return;
+      if (delta > 0 && this.data.length > MAX_ZOOM) return;
       var k = this.interval / 1000;
       this.range[0] -= delta * k * this.data.length; // TODO: BUG: while scrolling you may notice that
       // the left part of the indicator data is not
@@ -4939,8 +5247,8 @@ function () {
   }, {
     key: "pinchzoom",
     value: function pinchzoom(scale) {
-      if (scale > 1 && this.data.length <= 25) return;
-      if (scale < 1 && this.data.length > 1000) return;
+      if (scale > 1 && this.data.length <= MIN_ZOOM) return;
+      if (scale < 1 && this.data.length > MAX_ZOOM) return;
       var t = this.pinch.t;
       var nt = t * 1 / scale;
       this.range[0] = this.pinch.r[0] - (nt - t) * 0.5;
@@ -5863,8 +6171,119 @@ var Trades_component = normalizeComponent(
 if (false) { var Trades_api; }
 Trades_component.options.__file = "src/components/overlays/Trades.vue"
 /* harmony default export */ var Trades = (Trades_component.exports);
+// CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/components/overlays/Channel.vue?vue&type=script&lang=js&
+// Channel renderer. (Keltner, Bollinger)
+
+/* harmony default export */ var Channelvue_type_script_lang_js_ = ({
+  name: 'Channel',
+  mixins: [overlay],
+  methods: {
+    meta_info: function meta_info() {
+      return {
+        author: 'C451',
+        version: '1.0.0'
+      };
+    },
+    draw: function draw(ctx) {
+      ctx.lineWidth = this.line_width;
+      ctx.strokeStyle = this.color;
+      ctx.fillStyle = this.back_color;
+
+      for (var i = 0; i < this.$props.data.length - 1; i++) {
+        var p1 = this.mapp(this.$props.data[i]);
+        var p2 = this.mapp(this.$props.data[i + 1]);
+        if (!p2) continue; // Background
+
+        ctx.beginPath();
+        ctx.moveTo(p1.x, p1.y1);
+        ctx.lineTo(p2.x + 0.1, p2.y1);
+        ctx.lineTo(p2.x + 0.1, p2.y3);
+        ctx.lineTo(p1.x, p1.y3);
+        ctx.fill(); // Lines
+
+        ctx.beginPath();
+        ctx.moveTo(p1.x, p1.y1);
+        ctx.lineTo(p2.x, p2.y1);
+
+        if (this.show_mid) {
+          ctx.moveTo(p1.x, p1.y2);
+          ctx.lineTo(p2.x, p2.y2);
+        }
+
+        ctx.moveTo(p1.x, p1.y3);
+        ctx.lineTo(p2.x, p2.y3);
+        ctx.stroke();
+      }
+    },
+    mapp: function mapp(p) {
+      var layout = this.$props.layout;
+      return p && {
+        x: layout.t2screen(p[0]),
+        y1: layout.$2screen(p[1]),
+        y2: layout.$2screen(p[2]),
+        y3: layout.$2screen(p[3])
+      };
+    },
+    use_for: function use_for() {
+      return ['Channel', 'KC', 'BB'];
+    },
+    data_colors: function data_colors() {
+      return [this.color, this.color, this.color];
+    }
+  },
+  // Define internal setting & constants here
+  computed: {
+    sett: function sett() {
+      return this.$props.settings;
+    },
+    line_width: function line_width() {
+      return this.sett.lineWidth || 0.75;
+    },
+    color: function color() {
+      var n = this.$props.num % 5;
+      return this.sett.color || this.COLORS[n];
+    },
+    show_mid: function show_mid() {
+      return 'showMid' in this.sett ? this.sett.showMid : true;
+    },
+    back_color: function back_color() {
+      return this.sett.backColor || this.color + '11';
+    }
+  },
+  data: function data() {
+    return {
+      COLORS: ['#42b28a', '#5691ce', '#612ff9', '#d50b90', '#ff2316']
+    };
+  }
+});
+// CONCATENATED MODULE: ./src/components/overlays/Channel.vue?vue&type=script&lang=js&
+ /* harmony default export */ var overlays_Channelvue_type_script_lang_js_ = (Channelvue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/components/overlays/Channel.vue
+var Channel_render, Channel_staticRenderFns
+
+
+
+
+/* normalize component */
+
+var Channel_component = normalizeComponent(
+  overlays_Channelvue_type_script_lang_js_,
+  Channel_render,
+  Channel_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var Channel_api; }
+Channel_component.options.__file = "src/components/overlays/Channel.vue"
+/* harmony default export */ var Channel = (Channel_component.exports);
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Grid.vue?vue&type=script&lang=js&
 // Sets up all layers/overlays for the grid with 'grid_id'
+
 
 
 
@@ -5883,7 +6302,7 @@ Trades_component.options.__file = "src/components/overlays/Trades.vue"
     var _this = this;
 
     // List of all possible overlays (builtin + custom)
-    this._list = [Spline, Splines, RSI, Trades].concat(this.$props.overlays);
+    this._list = [Spline, Splines, RSI, Trades, Channel].concat(this.$props.overlays);
     this._registry = {}; // We need to know which components we will use.
     // Custom overlay components overwrite built-ins:
 
@@ -6647,7 +7066,7 @@ Legendvue_type_template_id_34724886_render._withStripped = true
 // CONCATENATED MODULE: ./src/components/Legend.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_Legendvue_type_script_lang_js_ = (Legendvue_type_script_lang_js_); 
 // EXTERNAL MODULE: ./src/components/Legend.vue?vue&type=style&index=0&lang=css&
-var Legendvue_type_style_index_0_lang_css_ = __webpack_require__(7);
+var Legendvue_type_style_index_0_lang_css_ = __webpack_require__(10);
 
 // CONCATENATED MODULE: ./src/components/Legend.vue
 
@@ -6793,7 +7212,11 @@ Legend_component.options.__file = "src/components/Legend.vue"
 });
 // CONCATENATED MODULE: ./src/components/Section.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_Sectionvue_type_script_lang_js_ = (Sectionvue_type_script_lang_js_); 
+// EXTERNAL MODULE: ./src/components/Section.vue?vue&type=style&index=0&lang=css&
+var Sectionvue_type_style_index_0_lang_css_ = __webpack_require__(12);
+
 // CONCATENATED MODULE: ./src/components/Section.vue
+
 
 
 
@@ -7517,268 +7940,6 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 
 /* harmony default export */ var src = __webpack_exports__["default"] = (TradingVue);
-
-
-/***/ }),
-/* 11 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-
-// CONCATENATED MODULE: ./node_modules/vue-style-loader/lib/listToStyles.js
-/**
- * Translates the list format produced by css-loader into something
- * easier to manipulate.
- */
-function listToStyles (parentId, list) {
-  var styles = []
-  var newStyles = {}
-  for (var i = 0; i < list.length; i++) {
-    var item = list[i]
-    var id = item[0]
-    var css = item[1]
-    var media = item[2]
-    var sourceMap = item[3]
-    var part = {
-      id: parentId + ':' + i,
-      css: css,
-      media: media,
-      sourceMap: sourceMap
-    }
-    if (!newStyles[id]) {
-      styles.push(newStyles[id] = { id: id, parts: [part] })
-    } else {
-      newStyles[id].parts.push(part)
-    }
-  }
-  return styles
-}
-
-// CONCATENATED MODULE: ./node_modules/vue-style-loader/lib/addStylesClient.js
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return addStylesClient; });
-/*
-  MIT License http://www.opensource.org/licenses/mit-license.php
-  Author Tobias Koppers @sokra
-  Modified by Evan You @yyx990803
-*/
-
-
-
-var hasDocument = typeof document !== 'undefined'
-
-if (typeof DEBUG !== 'undefined' && DEBUG) {
-  if (!hasDocument) {
-    throw new Error(
-    'vue-style-loader cannot be used in a non-browser environment. ' +
-    "Use { target: 'node' } in your Webpack config to indicate a server-rendering environment."
-  ) }
-}
-
-/*
-type StyleObject = {
-  id: number;
-  parts: Array<StyleObjectPart>
-}
-
-type StyleObjectPart = {
-  css: string;
-  media: string;
-  sourceMap: ?string
-}
-*/
-
-var stylesInDom = {/*
-  [id: number]: {
-    id: number,
-    refs: number,
-    parts: Array<(obj?: StyleObjectPart) => void>
-  }
-*/}
-
-var head = hasDocument && (document.head || document.getElementsByTagName('head')[0])
-var singletonElement = null
-var singletonCounter = 0
-var isProduction = false
-var noop = function () {}
-var options = null
-var ssrIdKey = 'data-vue-ssr-id'
-
-// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
-// tags it will allow on a page
-var isOldIE = typeof navigator !== 'undefined' && /msie [6-9]\b/.test(navigator.userAgent.toLowerCase())
-
-function addStylesClient (parentId, list, _isProduction, _options) {
-  isProduction = _isProduction
-
-  options = _options || {}
-
-  var styles = listToStyles(parentId, list)
-  addStylesToDom(styles)
-
-  return function update (newList) {
-    var mayRemove = []
-    for (var i = 0; i < styles.length; i++) {
-      var item = styles[i]
-      var domStyle = stylesInDom[item.id]
-      domStyle.refs--
-      mayRemove.push(domStyle)
-    }
-    if (newList) {
-      styles = listToStyles(parentId, newList)
-      addStylesToDom(styles)
-    } else {
-      styles = []
-    }
-    for (var i = 0; i < mayRemove.length; i++) {
-      var domStyle = mayRemove[i]
-      if (domStyle.refs === 0) {
-        for (var j = 0; j < domStyle.parts.length; j++) {
-          domStyle.parts[j]()
-        }
-        delete stylesInDom[domStyle.id]
-      }
-    }
-  }
-}
-
-function addStylesToDom (styles /* Array<StyleObject> */) {
-  for (var i = 0; i < styles.length; i++) {
-    var item = styles[i]
-    var domStyle = stylesInDom[item.id]
-    if (domStyle) {
-      domStyle.refs++
-      for (var j = 0; j < domStyle.parts.length; j++) {
-        domStyle.parts[j](item.parts[j])
-      }
-      for (; j < item.parts.length; j++) {
-        domStyle.parts.push(addStyle(item.parts[j]))
-      }
-      if (domStyle.parts.length > item.parts.length) {
-        domStyle.parts.length = item.parts.length
-      }
-    } else {
-      var parts = []
-      for (var j = 0; j < item.parts.length; j++) {
-        parts.push(addStyle(item.parts[j]))
-      }
-      stylesInDom[item.id] = { id: item.id, refs: 1, parts: parts }
-    }
-  }
-}
-
-function createStyleElement () {
-  var styleElement = document.createElement('style')
-  styleElement.type = 'text/css'
-  head.appendChild(styleElement)
-  return styleElement
-}
-
-function addStyle (obj /* StyleObjectPart */) {
-  var update, remove
-  var styleElement = document.querySelector('style[' + ssrIdKey + '~="' + obj.id + '"]')
-
-  if (styleElement) {
-    if (isProduction) {
-      // has SSR styles and in production mode.
-      // simply do nothing.
-      return noop
-    } else {
-      // has SSR styles but in dev mode.
-      // for some reason Chrome can't handle source map in server-rendered
-      // style tags - source maps in <style> only works if the style tag is
-      // created and inserted dynamically. So we remove the server rendered
-      // styles and inject new ones.
-      styleElement.parentNode.removeChild(styleElement)
-    }
-  }
-
-  if (isOldIE) {
-    // use singleton mode for IE9.
-    var styleIndex = singletonCounter++
-    styleElement = singletonElement || (singletonElement = createStyleElement())
-    update = applyToSingletonTag.bind(null, styleElement, styleIndex, false)
-    remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true)
-  } else {
-    // use multi-style-tag mode in all other cases
-    styleElement = createStyleElement()
-    update = applyToTag.bind(null, styleElement)
-    remove = function () {
-      styleElement.parentNode.removeChild(styleElement)
-    }
-  }
-
-  update(obj)
-
-  return function updateStyle (newObj /* StyleObjectPart */) {
-    if (newObj) {
-      if (newObj.css === obj.css &&
-          newObj.media === obj.media &&
-          newObj.sourceMap === obj.sourceMap) {
-        return
-      }
-      update(obj = newObj)
-    } else {
-      remove()
-    }
-  }
-}
-
-var replaceText = (function () {
-  var textStore = []
-
-  return function (index, replacement) {
-    textStore[index] = replacement
-    return textStore.filter(Boolean).join('\n')
-  }
-})()
-
-function applyToSingletonTag (styleElement, index, remove, obj) {
-  var css = remove ? '' : obj.css
-
-  if (styleElement.styleSheet) {
-    styleElement.styleSheet.cssText = replaceText(index, css)
-  } else {
-    var cssNode = document.createTextNode(css)
-    var childNodes = styleElement.childNodes
-    if (childNodes[index]) styleElement.removeChild(childNodes[index])
-    if (childNodes.length) {
-      styleElement.insertBefore(cssNode, childNodes[index])
-    } else {
-      styleElement.appendChild(cssNode)
-    }
-  }
-}
-
-function applyToTag (styleElement, obj) {
-  var css = obj.css
-  var media = obj.media
-  var sourceMap = obj.sourceMap
-
-  if (media) {
-    styleElement.setAttribute('media', media)
-  }
-  if (options.ssrId) {
-    styleElement.setAttribute(ssrIdKey, obj.id)
-  }
-
-  if (sourceMap) {
-    // https://developer.chrome.com/devtools/docs/javascript-debugging
-    // this makes source maps inside style tags work properly in Chrome
-    css += '\n/*# sourceURL=' + sourceMap.sources[0] + ' */'
-    // http://stackoverflow.com/a/26603875
-    css += '\n/*# sourceMappingURL=data:application/json;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + ' */'
-  }
-
-  if (styleElement.styleSheet) {
-    styleElement.styleSheet.cssText = css
-  } else {
-    while (styleElement.firstChild) {
-      styleElement.removeChild(styleElement.firstChild)
-    }
-    styleElement.appendChild(document.createTextNode(css))
-  }
-}
 
 
 /***/ })
