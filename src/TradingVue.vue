@@ -2,7 +2,10 @@
 <template>
     <!-- Main component  -->
     <div class="trading-vue" v-bind:id="id"
-        :style="{ color: this.colorText, font: this.font }">
+        :style="{
+            color: this.colorText, font: this.font,
+            width: this.width+'px',
+            height: this.height+'px'}">
         <!-- <toolbar> </toolbar> TODO: add drawing tools -->
         <chart v-bind="chart_props"></chart>
     </div>
