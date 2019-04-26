@@ -10,7 +10,7 @@ import Volbar from './volbar.js'
 import Utils from '../../stuff/utils.js'
 import Layer from '../../stuff/layer.js'
 
-const { BOTBAR } = Const.ChartConfig
+const { BOTBAR, MIN_ZOOM, MAX_ZOOM } = Const.ChartConfig
 
 export default class Grid {
 
@@ -231,8 +231,8 @@ export default class Grid {
         // TODO: mouse zooming is a little jerky,
         // needs to follow f(mouse_wheel_speed) and
         // if speed is low, scroll shoud be slower
-        if (delta < 0 && this.data.length <= 25) return
-        if (delta > 0 && this.data.length > 1000) return
+        if (delta < 0 && this.data.length <= MIN_ZOOM) return
+        if (delta > 0 && this.data.length > MAX_ZOOM) return
 
         let k = this.interval / 1000
         this.range[0] -= delta * k * this.data.length
@@ -273,8 +273,8 @@ export default class Grid {
 
     pinchzoom(scale) {
 
-        if (scale > 1 && this.data.length <= 25) return
-        if (scale < 1 && this.data.length > 1000) return
+        if (scale > 1 && this.data.length <= MIN_ZOOM) return
+        if (scale < 1 && this.data.length > MAX_ZOOM) return
 
         let t = this.pinch.t
         let nt = t * 1 / scale
