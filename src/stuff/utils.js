@@ -98,7 +98,8 @@ export default {
         let l = ohlcv.length - 1;
         let i1 = ohlcv[1][0] - ohlcv[0][0]
         let i2 = ohlcv[l][0] - ohlcv[l-1][0]
-        return Math.min(i1, i2)
+        let r = Math.min(i1, i2)
+        return r || Math.max(i1, i2)
     },
 
     // Gets numberic part of overlay id (e.g 'EMA_1' = > 1)
