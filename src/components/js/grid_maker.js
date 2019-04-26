@@ -167,15 +167,13 @@ function GridMaker(id, params, master_grid = null) {
 
             self.t_step = time_step()
             self.xs = []
+            const dt = range[1] - range[0]
+            const r = self.spacex / dt
 
-            // TODO: IMPORTANT missing candles. Will not work
-            // Solution: use t2sreen() to convert timestamps
-            // to screen coordinates. Also need to check how
-            // the whole thing works with missing data points.
             for (var i = 0; i < sub.length; i++) {
                 let p = sub[i]
                 if (p[0] % self.t_step === 0) {
-                    let x = Math.floor(self.startx + i * self.px_step)
+                    let x = Math.floor((p[0] - range[0]) * r)
                     self.xs.push([x, p])
                 }
             }

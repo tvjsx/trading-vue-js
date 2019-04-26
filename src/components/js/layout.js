@@ -45,6 +45,12 @@ function Layout(params) {
 
     }
 
+    function t2screen(t) {
+        const dt = range[1] - range[0]
+        const r = self.spacex / dt
+        return Math.floor((t - range[0]) * r)
+    }
+
     function candles_n_vol() {
 
         self.candles = []
@@ -59,8 +65,9 @@ function Layout(params) {
 
         for (var i = 0; i < sub.length; i++) {
             let p = sub[i]
+            mid = t2screen(p[0])
             self.candles.push({
-                x: self.startx + i * self.px_step,
+                x: mid,
                 w: self.px_step * CANDLEW,
                 o: p[1] * self.A + self.B,
                 h: p[2] * self.A + self.B,
@@ -68,7 +75,10 @@ function Layout(params) {
                 c: p[4] * self.A + self.B,
                 sent: p
             })
-            mid = self.startx + i * self.px_step
+            // Clear volume bar if there is a time gap
+            if (sub[i-1] && p[0] - sub[i-1][0] > interval) {
+                prev = null
+            }
             x1 = prev || Math.floor(mid - self.px_step * 0.5)
             x2 = Math.floor(mid + self.px_step * 0.5) - 0.5
             self.volume.push({
