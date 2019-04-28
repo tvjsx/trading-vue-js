@@ -33,7 +33,7 @@ export default {
             console.warn('use_for() should be implemented')
             console.warn(
             `Format: use_for() {
-                  return ['tyep1', 'type2', ...]
+                  return ['type1', 'type2', ...]
             }`)
         },
         meta_info() {

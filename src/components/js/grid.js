@@ -119,20 +119,25 @@ export default class Grid {
         this.offset_x = event.layerX - event.pageX
         this.offset_y = event.layerY - event.pageY
             + this.layout.offset
+
+        this.propagate('mousemove', event)
     }
 
     mouseout(event) {
         this.comp.$emit('cursor-changed', {})
+        this.propagate('mouseout', event)
     }
 
     mouseup(event) {
         this.drug = null
     //    this.pinch = null
         this.comp.$emit('cursor-locked', false)
+        this.propagate('mouseup', event)
     }
 
     mousedown(event) {
         this.comp.$emit('cursor-locked', true)
+        this.propagate('mousedown', event)
     }
 
     new_layer(layer) {
@@ -321,4 +326,12 @@ export default class Grid {
         this.comp.$emit('range-changed', range)
     }
 
+    // Propagate mouse event to overlays
+    propagate(name, event) {
+        for (var layer of this.overlays) {
+            if (layer.renderer[name]) {
+                layer.renderer[name](event)
+            }
+        }
+    }
 }
