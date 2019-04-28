@@ -15,10 +15,12 @@
 </template>
 
 <script>
+
 import Simple from './tests/Simple.vue'
 import Stocks from './tests/Stocks.vue'
+import MouseEvents from './tests/MouseEvents.vue'
 
-const TESTS = { Simple, Stocks }
+const TESTS = { Simple, Stocks, MouseEvents }
 
 export default {
     name: 'app',
