@@ -41,10 +41,12 @@ function GridMaker(id, params, master_grid = null) {
             const dim = sub[0] ? sub[0].length : 0
             let arr = []
             for (var i = 1; i < dim; i++) {
-                arr.push(...sub.map(x => x[i]).filter(Number))
+                arr.push(...sub.map(x => x[i])
+                    .filter(x => typeof x !== 'string'))
             }
             var hi = Math.max(...arr)
             var lo = Math.min(...arr)
+
             if (y_range_fn) { [hi, lo] = y_range_fn(hi, lo) }
         }
 
