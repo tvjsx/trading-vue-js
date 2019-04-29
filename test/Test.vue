@@ -1,7 +1,7 @@
 <template>
     <div>
         <div id="test-title">
-            <h1>Simple.vue</h1>
+            <h1>{{current_test.name}}</h1>
             <p>{{current_test.description}} [{{test_index+1}}/{{len}}]</p>
             <a href="#" class="next-test-btn"
                 v-on:click="next_test">
