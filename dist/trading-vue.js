@@ -1,5 +1,5 @@
 /*!
- * TradingVue.JS - v0.2.8 - Fri Apr 26 2019
+ * TradingVue.JS - v0.2.9 - Mon Apr 29 2019
  * https://github.com/C451/trading-vue-js
  * Copyright (c) 2019 c451 Code's All Right;
  * Licensed under the MIT license
@@ -4106,7 +4106,8 @@ var IndexedArray = __webpack_require__(6);
     var l = ohlcv.length - 1;
     var i1 = ohlcv[1][0] - ohlcv[0][0];
     var i2 = ohlcv[l][0] - ohlcv[l - 1][0];
-    return Math.min(i1, i2);
+    var r = Math.min(i1, i2);
+    return r || Math.max(i1, i2);
   },
   // Gets numberic part of overlay id (e.g 'EMA_1' = > 1)
   get_num_id: function get_num_id(id) {
@@ -4147,7 +4148,7 @@ var IndexedArray = __webpack_require__(6);
     t_magnet: function t_magnet(t) {
       var cn = self.candles || self.master_grid.candles;
       var arr = cn.map(function (x) {
-        return x.sent[0];
+        return x.raw[0];
       });
       var i = utils.nearest_a(t, arr)[0];
       if (!cn[i]) return;
@@ -4170,8 +4171,13 @@ var IndexedArray = __webpack_require__(6);
     // $-axis nearest step
     $_magnet: function $_magnet(price) {},
     // Nearest candlestick
-    cs_magnet: function cs_magnet(t) {
-      /* TODO: implement */
+    c_magnet: function c_magnet(t) {
+      var cn = self.candles || self.master_grid.candles;
+      var arr = cn.map(function (x) {
+        return x.raw[0];
+      });
+      var i = utils.nearest_a(t, arr)[0];
+      return cn[i];
     },
     // Nearest data points
     data_magnet: function data_magnet(t) {
@@ -4251,7 +4257,9 @@ function GridMaker(id, params) {
       for (var i = 1; i < dim; i++) {
         arr.push.apply(arr, grid_maker_toConsumableArray(sub.map(function (x) {
           return x[i];
-        }).filter(Number)));
+        }).filter(function (x) {
+          return typeof x !== 'string';
+        })));
       }
 
       var hi = Math.max.apply(Math, arr);
@@ -4540,7 +4548,7 @@ function Layout(params) {
         h: p[2] * self.A + self.B,
         l: p[3] * self.A + self.B,
         c: p[4] * self.A + self.B,
-        sent: p
+        raw: p
       }); // Clear volume bar if there is a time gap
 
       if (sub[i - 1] && p[0] - sub[i - 1][0] > interval) {
@@ -4554,7 +4562,7 @@ function Layout(params) {
         x2: x2,
         h: p[5] * vs,
         green: p[4] > p[1],
-        sent: p
+        raw: p
       });
       prev = x2 + splitter;
     }
@@ -5022,11 +5030,13 @@ function () {
 
       this.offset_x = event.layerX - event.pageX;
       this.offset_y = event.layerY - event.pageY + this.layout.offset;
+      this.propagate('mousemove', event);
     }
   }, {
     key: "mouseout",
     value: function mouseout(event) {
       this.comp.$emit('cursor-changed', {});
+      this.propagate('mouseout', event);
     }
   }, {
     key: "mouseup",
@@ -5034,11 +5044,18 @@ function () {
       this.drug = null; //    this.pinch = null
 
       this.comp.$emit('cursor-locked', false);
+      this.propagate('mouseup', event);
     }
   }, {
     key: "mousedown",
     value: function mousedown(event) {
       this.comp.$emit('cursor-locked', true);
+      this.propagate('mousedown', event);
+    }
+  }, {
+    key: "click",
+    value: function click(event) {
+      this.propagate('click', event);
     }
   }, {
     key: "new_layer",
@@ -5292,6 +5309,37 @@ function () {
       // somewhere here. Still will hurt the sidebar & bottombar
 
       this.comp.$emit('range-changed', range);
+    } // Propagate mouse event to overlays
+
+  }, {
+    key: "propagate",
+    value: function propagate(name, event) {
+      var _iteratorNormalCompletion5 = true;
+      var _didIteratorError5 = false;
+      var _iteratorError5 = undefined;
+
+      try {
+        for (var _iterator5 = this.overlays[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+          var layer = _step5.value;
+
+          if (layer.renderer[name]) {
+            layer.renderer[name](event);
+          }
+        }
+      } catch (err) {
+        _didIteratorError5 = true;
+        _iteratorError5 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion5 && _iterator5.return != null) {
+            _iterator5.return();
+          }
+        } finally {
+          if (_didIteratorError5) {
+            throw _iteratorError5;
+          }
+        }
+      }
     }
   }]);
 
@@ -5301,7 +5349,7 @@ function () {
 
 // CONCATENATED MODULE: ./src/mixins/canvas.js
 // Interactive canvas-based component
-// Should implement: mousemove, mouseout, mouseup, mousedown
+// Should implement: mousemove, mouseout, mouseup, mousedown, click
 /* harmony default export */ var canvas = ({
   methods: {
     setup: function setup() {
@@ -5638,7 +5686,7 @@ component.options.__file = "src/components/Crosshair.vue"
     use_for: function use_for() {
       /* override it (mandatory) */
       console.warn('use_for() should be implemented');
-      console.warn("Format: use_for() {\n                  return ['tyep1', 'type2', ...]\n            }");
+      console.warn("Format: use_for() {\n                  return ['type1', 'type2', ...]\n            }");
     },
     meta_info: function meta_info() {
       /* override it (optional) */
