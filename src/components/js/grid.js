@@ -140,6 +140,10 @@ export default class Grid {
         this.propagate('mousedown', event)
     }
 
+    click(event) {
+        this.propagate('click', event)
+    }
+
     new_layer(layer) {
         if (layer.name === 'crosshair') {
             this.crosshair = layer
