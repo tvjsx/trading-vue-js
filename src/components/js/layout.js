@@ -73,7 +73,7 @@ function Layout(params) {
                 h: p[2] * self.A + self.B,
                 l: p[3] * self.A + self.B,
                 c: p[4] * self.A + self.B,
-                sent: p
+                raw: p
             })
             // Clear volume bar if there is a time gap
             if (sub[i-1] && p[0] - sub[i-1][0] > interval) {
@@ -86,7 +86,7 @@ function Layout(params) {
                 x2: x2,
                 h: p[5] * vs,
                 green: p[4] > p[1],
-                sent: p
+                raw: p
             })
             prev = x2 + splitter
         }

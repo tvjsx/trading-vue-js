@@ -18,7 +18,7 @@ export default function(self, range) {
         // Time-axis nearest step
         t_magnet: t => {
             const cn = self.candles || self.master_grid.candles
-            const arr = cn.map(x => x.sent[0])
+            const arr = cn.map(x => x.raw[0])
             const i = Utils.nearest_a(t, arr)[0]
             if (!cn[i]) return
             return Math.floor(cn[i].x) - 0.5
@@ -40,7 +40,12 @@ export default function(self, range) {
         // $-axis nearest step
         $_magnet: price => { },
         // Nearest candlestick
-        cs_magnet: t => {  /* TODO: implement */ },
+        c_magnet: t => {
+            const cn = self.candles || self.master_grid.candles
+            const arr = cn.map(x => x.raw[0])
+            const i = Utils.nearest_a(t, arr)[0]
+            return cn[i]
+        },
         // Nearest data points
         data_magnet: t => {  /* TODO: implement */ }
     })

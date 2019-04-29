@@ -17,7 +17,7 @@ export default {
                 ctx.beginPath()
                 let x = layout.t2screen(p[0]) // x - Mapping
                 // TODO: implement cs_magnet
-                let y = layout.$2screen(158) - 20  // y - Mapping
+                let y = layout.c_magnet(p[0]).h - 20  // y - Mapping
                 let is_hover = this.hover(x, y)
                 let h = (is_hover || this.selected)
                 this.highlighted = is_hover ? p : null
@@ -58,9 +58,11 @@ export default {
             if (this.highlighted) {
                 if (!this.selected) {
                     this.selected = this.highlighted
+                    // Pull candle data
+                    let y$ = this.layout.c_magnet(this.selected[0]).raw[2]
                     this.hint = new Hint(this, {
                         t: this.selected[0],
-                        y$: 158,
+                        y$: y$,
                         w: 150,
                         h: 65,
                         text:
