@@ -1,7 +1,7 @@
 # API Book
 
 ::: warning
-This library is in alpha stage, API may change. This guide version is **0.2.5**
+This library is in alpha stage, API may change. This guide version is **0.2.9**
 :::
 
 ![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=Current%20lib%20version)
@@ -197,6 +197,25 @@ Returns x-coordinate of nearest candle for given time
 * **Arguments**: time (Number)
 * **Returns**: pixels (Number)
 
+#### c_magnet(t)
+
+Returns nearest candle for given time
+
+* **Arguments**: time (Number)
+* **Returns**: candle (Object)
+
+```js
+Candle = {
+    x,  // c-coordinate (px)
+    w,  // width (px)
+    o,  // open (px)
+    h,  // high (px)
+    l,  // low (px)
+    c,  // close (px)
+    raw // Candle data e.g. [1553378400000, ...]
+}
+```
+<br>
 *Example:*
 
 ```js
@@ -306,3 +325,21 @@ legend(values) {
     ]
 }
 ```
+
+<br>
+
+#### mousemove(event)
+*Optional*
+* **Arguments**: event (Object) Vue mouse event
+
+#### mouseout(event)
+*Optional*
+* **Arguments**: event (Object) Vue mouse event
+
+#### mouseup(event)
+*Optional*
+* **Arguments**: event (Object) Vue mouse event
+
+#### mousedown(event)
+*Optional*
+* **Arguments**: event (Object) Vue mouse event
