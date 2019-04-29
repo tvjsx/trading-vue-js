@@ -1,5 +1,5 @@
 // Interactive canvas-based component
-// Should implement: mousemove, mouseout, mouseup, mousedown
+// Should implement: mousemove, mouseout, mouseup, mousedown, click
 
 export default {
     methods: {
@@ -31,7 +31,7 @@ export default {
                         mousemove: e => this.renderer.mousemove(e),
                         mouseout: e => this.renderer.mouseout(e),
                         mouseup: e => this.renderer.mouseup(e),
-                        mousedown: e => this.renderer.mousedown(e),
+                        mousedown: e => this.renderer.mousedown(e)
                     },
                     attrs: Object.assign({id: `${id}-canvas`}, props.attrs),
                     ref: 'canvas',
