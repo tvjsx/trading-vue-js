@@ -92,9 +92,9 @@ export default class Botbar {
 
         let d = new Date(t)
 
-        if (Utils.year_start(t)) return d.getFullYear()
-        if (Utils.month_start(t)) return MONTHMAP[d.getMonth()]
-        if (Utils.day_start(t)) return d.getDate()
+        if (Utils.year_start(t) === t) return d.getFullYear()
+        if (Utils.month_start(t) === t) return MONTHMAP[d.getMonth()]
+        if (Utils.day_start(t) === t) return d.getDate()
 
         let h = Utils.add_zero(d.getHours())
         let m = Utils.add_zero(d.getMinutes())
@@ -143,8 +143,8 @@ export default class Botbar {
         let ti = this.$p.interval
 
         if (t === 0) return true
-        if (Utils.month_start(t)) return true
-        if (Utils.day_start(t)) return true
+        if (Utils.month_start(t) === t) return true
+        if (Utils.day_start(t) === t) return true
         if (ti <= MINUTE15 && t % HOUR === 0) return true
 
         return false

@@ -172,6 +172,8 @@ function GridMaker(id, params, master_grid = null) {
             const dt = range[1] - range[0]
             const r = self.spacex / dt
 
+            let shift = 0
+
             for (var i = 0; i < sub.length; i++) {
                 let p = sub[i]
                 if (p[0] % self.t_step === 0) {

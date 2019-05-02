@@ -18,7 +18,7 @@ export default {
     day_start(t) {
         let start = new Date(t)
         start.setHours(0,0,0,0)
-        return start.getTime() === t
+        return start.getTime()
     },
 
     // Start of the month
@@ -28,13 +28,13 @@ export default {
             date.getFullYear(),
             date.getMonth(), 1
         )
-        return start.getTime() === t
+        return start.getTime()
     },
 
     // Start of the year
     year_start(t) {
         let start = new Date(new Date(t).getFullYear(), 0, 1)
-        return start.getTime() === t
+        return start.getTime()
     },
 
     // Nearest in array
