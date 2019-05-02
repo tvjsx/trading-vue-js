@@ -19,8 +19,9 @@
 import Simple from './tests/Simple.vue'
 import Stocks from './tests/Stocks.vue'
 import MouseEvents from './tests/MouseEvents.vue'
+import Timeframes from './tests/Timeframes.vue'
 
-const TESTS = { Simple, Stocks, MouseEvents }
+const TESTS = { Simple, Stocks, MouseEvents, Timeframes }
 
 export default {
     name: 'app',
