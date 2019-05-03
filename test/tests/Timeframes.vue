@@ -1,34 +1,40 @@
 <template>
-<trading-vue :data="chart" :width="this.width" :height="this.height"
-        :color-back="colors.colorBack"
-        :color-grid="colors.colorGrid"
-        :color-text="colors.colorText">
-</trading-vue>
+<div>
+    <trading-vue :data="chart" :width="this.width" :height="this.height"
+            :color-back="colors.colorBack"
+            :color-grid="colors.colorGrid"
+            :color-text="colors.colorText">
+    </trading-vue>
+    <tf-selector :charts="charts" v-on:selected="on_selected">
+    </tf-selector>
+</div>
 </template>
 
 <script>
 import TradingVue from '../../src/TradingVue.vue'
-import Data from '../data/data_btc.json'
+import TfSelector from './Timeframes/TFSelector.vue'
+import Data from '../data/data_tf.json'
 import Utils from '../../src/stuff/utils.js'
 
 export default {
     name: 'Timeframes',
     description: 'Should display correct dates for every timeframe',
     components: {
-        TradingVue
+        TradingVue, TfSelector
     },
     methods: {
         onResize(event) {
             this.width = window.innerWidth
             this.height = window.innerHeight - 50
+        },
+        on_selected(tf) {
+            this.chart = {
+                 ohlcv: this.charts[tf.name]
+            }
         }
     },
     mounted() {
         window.addEventListener('resize', this.onResize)
-        setTimeout(() => {
-            // Async data setup
-            this.$set(this, 'chart', Data)
-        }, 0)
         this.onResize()
     },
     beforeDestroy() {
@@ -36,7 +42,8 @@ export default {
     },
     data() {
         return {
-            chart: {}, // Data will be here,
+            charts: Data,
+            chart: {},
             width: window.innerWidth,
             height: window.innerHeight,
             colors: {
