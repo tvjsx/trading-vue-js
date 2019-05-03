@@ -46,7 +46,9 @@ export default {
                 this.$props.values.ohlcv[2].toFixed(prec),
                 this.$props.values.ohlcv[3].toFixed(prec),
                 this.$props.values.ohlcv[4].toFixed(prec),
-                this.$props.values.ohlcv[5].toFixed(2),
+                this.$props.values.ohlcv[5] ?
+                    this.$props.values.ohlcv[5].toFixed(2):
+                    'n/a'
             ]
         },
         indicators() {
