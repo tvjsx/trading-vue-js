@@ -147,6 +147,7 @@ export default {
             this.update_layout()
         },
         update_layout() {
+            this.calc_interval()
             const lay = new Layout(this)
             Utils.copy_layout(this._layout, lay)
         }
