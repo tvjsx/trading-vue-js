@@ -37,7 +37,7 @@ This library is in alpha stage, API may change. This guide version is **0.2.9**
 
 ### reset_chart()
 
-Resets the chart to default state. Use it if you for need to for reset the timerange.
+Resets the chart to the default state. Use it if you need to reset the time range.
 
 Example:
 
