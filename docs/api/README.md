@@ -33,6 +33,27 @@ This library is in alpha stage, API may change. This guide version is **0.2.9**
 | data | Object | Data object |
 | overlays | Array | List of custom overlay classes |
 
+## Methods
+
+### reset_chart()
+
+Resets the chart to default state. Use it if you for need to for reset the timerange.
+
+Example:
+
+```HTML
+<template>
+    <trading-vue ref="tradingVue"></trading-vue>
+</template>
+<script>
+export default {
+    mounted() {
+        this.$refs.tradingVue.reset_chart()
+    }
+}
+</script>
+```
+
 ## Data structure
 
 `Data structure v1.0`
