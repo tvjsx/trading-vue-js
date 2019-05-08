@@ -2,12 +2,12 @@
 <template>
     <!-- Main component  -->
     <div class="trading-vue" v-bind:id="id"
-        :style="{
+         :style="{
             color: this.colorText, font: this.font,
             width: this.width+'px',
             height: this.height+'px'}">
         <!-- <toolbar> </toolbar> TODO: add drawing tools -->
-        <chart v-bind="chart_props"></chart>
+        <chart :key="reset" v-bind="chart_props"></chart>
     </div>
 </template>
 
@@ -131,6 +131,12 @@ export default {
             }
             return chart_props
         }
+    },
+    data() {
+        return { reset: 0 }
+    },
+    methods: {
+        reset_chart() { this.reset++ }
     }
 }
 </script>
