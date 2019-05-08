@@ -3,7 +3,8 @@
     <trading-vue :data="chart" :width="this.width" :height="this.height"
             :color-back="colors.colorBack"
             :color-grid="colors.colorGrid"
-            :color-text="colors.colorText">
+            :color-text="colors.colorText"
+            ref="tradingVue">
     </trading-vue>
     <tf-selector :charts="charts" v-on:selected="on_selected">
     </tf-selector>
@@ -31,6 +32,7 @@ export default {
             this.chart = {
                  ohlcv: this.charts[tf.name]
             }
+            this.$refs.tradingVue.reset_chart()
         }
     },
     mounted() {
