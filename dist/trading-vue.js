@@ -1,5 +1,5 @@
 /*!
- * TradingVue.JS - v0.2.9 - Mon Apr 29 2019
+ * TradingVue.JS - v0.2.10 - Wed May 08 2019
  * https://github.com/C451/trading-vue-js
  * Copyright (c) 2019 c451 Code's All Right;
  * Licensed under the MIT license
@@ -3892,7 +3892,7 @@ var TradingVuevue_type_template_id_235c0ade_render = function() {
       },
       attrs: { id: _vm.id }
     },
-    [_c("chart", _vm._b({}, "chart", _vm.chart_props, false))],
+    [_c("chart", _vm._b({ key: _vm.reset }, "chart", _vm.chart_props, false))],
     1
   )
 }
@@ -4035,18 +4035,18 @@ var IndexedArray = __webpack_require__(6);
   day_start: function day_start(t) {
     var start = new Date(t);
     start.setHours(0, 0, 0, 0);
-    return start.getTime() === t;
+    return start.getTime();
   },
   // Start of the month
   month_start: function month_start(t) {
     var date = new Date(t);
     var start = new Date(date.getFullYear(), date.getMonth(), 1);
-    return start.getTime() === t;
+    return start.getTime();
   },
   // Start of the year
   year_start: function year_start(t) {
     var start = new Date(new Date(t).getFullYear(), 0, 1);
-    return start.getTime() === t;
+    return start.getTime();
   },
   // Nearest in array
   nearest_a: function nearest_a(x, array) {
@@ -4290,7 +4290,10 @@ function GridMaker(id, params) {
       self.prec = 0;
       self.sb = SBMIN;
       return;
-    } // Gets formated levels (their lengths),
+    } // TODO: improve sidebar width calculation
+    // at transition point, when one precision is
+    // replaced with another
+    // Gets formated levels (their lengths),
     // calculates max and measures the sidebar length
     // from it:
 
@@ -4390,6 +4393,7 @@ function GridMaker(id, params) {
       self.xs = [];
       var dt = range[1] - range[0];
       var r = self.spacex / dt;
+      var shift = 0;
 
       for (var i = 0; i < sub.length; i++) {
         var p = sub[i];
@@ -6868,7 +6872,7 @@ function () {
       },
       attrs: {
         rerender: this.$props.rerender,
-        width: layout.sb,
+        width: this.$props.width,
         height: layout.height
       },
       style: {
@@ -7062,7 +7066,7 @@ Legendvue_type_template_id_34724886_render._withStripped = true
       }
 
       var prec = this.layout.prec;
-      return [this.$props.values.ohlcv[1].toFixed(prec), this.$props.values.ohlcv[2].toFixed(prec), this.$props.values.ohlcv[3].toFixed(prec), this.$props.values.ohlcv[4].toFixed(prec), this.$props.values.ohlcv[5].toFixed(2)];
+      return [this.$props.values.ohlcv[1].toFixed(prec), this.$props.values.ohlcv[2].toFixed(prec), this.$props.values.ohlcv[3].toFixed(prec), this.$props.values.ohlcv[4].toFixed(prec), this.$props.values.ohlcv[5] ? this.$props.values.ohlcv[5].toFixed(2) : 'n/a'];
     },
     indicators: function indicators() {
       var _this = this;
@@ -7415,9 +7419,9 @@ function () {
     key: "format_date",
     value: function format_date(t) {
       var d = new Date(t);
-      if (utils.year_start(t)) return d.getFullYear();
-      if (utils.month_start(t)) return botbar_MONTHMAP[d.getMonth()];
-      if (utils.day_start(t)) return d.getDate();
+      if (utils.year_start(t) === t) return d.getFullYear();
+      if (utils.month_start(t) === t) return botbar_MONTHMAP[d.getMonth()];
+      if (utils.day_start(t) === t) return d.getDate();
       var h = utils.add_zero(d.getHours());
       var m = utils.add_zero(d.getMinutes());
       var s = utils.add_zero(d.getSeconds());
@@ -7434,7 +7438,7 @@ function () {
         return d.getFullYear();
       }
 
-      if (ti <= botbar_MONTH) {
+      if (ti < botbar_YEAR) {
         var yr = '`' + "".concat(d.getFullYear()).slice(-2);
         var mo = botbar_MONTHMAP[d.getMonth()];
         var dd = '01';
@@ -7462,8 +7466,8 @@ function () {
     value: function lbl_highlight(t) {
       var ti = this.$p.interval;
       if (t === 0) return true;
-      if (utils.month_start(t)) return true;
-      if (utils.day_start(t)) return true;
+      if (utils.month_start(t) === t) return true;
+      if (utils.day_start(t) === t) return true;
       if (ti <= botbar_MINUTE15 && t % botbar_HOUR === 0) return true;
       return false;
     } // Nearest data object (when locked)
@@ -7708,6 +7712,7 @@ Botbar_component.options.__file = "src/components/Botbar.vue"
       this.update_layout();
     },
     update_layout: function update_layout() {
+      this.calc_interval();
       var lay = new js_layout(this);
       utils.copy_layout(this._layout, lay);
     }
@@ -7952,6 +7957,16 @@ Chart_component.options.__file = "src/components/Chart.vue"
       }
 
       return chart_props;
+    }
+  },
+  data: function data() {
+    return {
+      reset: 0
+    };
+  },
+  methods: {
+    reset_chart: function reset_chart() {
+      this.reset++;
     }
   }
 });
