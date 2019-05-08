@@ -113,13 +113,12 @@ export default class Botbar {
             return d.getFullYear()
         }
 
-        if (ti <= MONTH) {
+        if (ti < YEAR) {
             var yr = '`' + `${d.getFullYear()}`.slice(-2)
             var mo = MONTHMAP[d.getMonth()]
             var dd = '01'
         }
         if (ti <= WEEK) dd = d.getDate()
-
         let date = `${dd} ${mo} ${yr}`
         let time = ''
 
