@@ -69,6 +69,10 @@ function GridMaker(id, params, master_grid = null) {
             return
         }
 
+        // TODO: improve sidebar width calculation
+        // at transition point, when one precision is
+        // replaced with another
+
         // Gets formated levels (their lengths),
         // calculates max and measures the sidebar length
         // from it:

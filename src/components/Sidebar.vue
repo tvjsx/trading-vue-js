@@ -27,7 +27,7 @@ export default {
             },
             attrs: {
                 rerender: this.$props.rerender,
-                width: layout.sb,
+                width: this.$props.width,
                 height: layout.height,
             },
             style: {
