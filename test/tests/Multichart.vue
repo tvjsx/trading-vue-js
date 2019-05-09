@@ -26,8 +26,8 @@ export default {
         }
     },
     computed: {
-        cbox_width() { return this.width / 2 - 1 },
-        cbox_height() { return this.height / 2 - 1 }
+        cbox_width() { return Math.floor(this.width / 2 - 1) },
+        cbox_height() { return Math.floor(this.height / 2 - 1) }
     },
     mounted() {
         window.addEventListener('resize', this.onResize)
