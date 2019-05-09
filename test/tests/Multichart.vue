@@ -13,6 +13,8 @@ import Chartbox from './Multichart/Chartbox.vue'
 import Data from '../data/data_tf.json'
 import Utils from '../../src/stuff/utils.js'
 
+// TODO: investigate chart-disappearing problem
+
 export default {
     name: 'Multichart',
     description: 'All charts must work correctly and independently',
