@@ -1,7 +1,7 @@
 <template>
     <div class="multi-chart">
         <chartbox v-for="(timeframe, id) in charts" :key="id"
-            :tf="id" v-bind:data="timeframe"
+            :id="id" :tf="id" v-bind:data="timeframe"
             :width="cbox_width" :height="cbox_height"
             >
         </chartbox>

@@ -7,7 +7,8 @@
             width: this.width+'px',
             height: this.height+'px'}">
         <!-- <toolbar> </toolbar> TODO: add drawing tools -->
-        <chart :key="reset" v-bind="chart_props"></chart>
+        <chart :key="reset" v-bind="chart_props"
+            v-bind:tv_id="id"></chart>
     </div>
 </template>
 
