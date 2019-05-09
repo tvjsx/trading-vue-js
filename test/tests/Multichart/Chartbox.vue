@@ -48,6 +48,6 @@ export default {
 
 <style>
 .chart-box {
-    border: 1px solid;
+    border: 0.5px solid transparent;
 }
 </style>

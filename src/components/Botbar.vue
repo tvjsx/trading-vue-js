@@ -50,3 +50,8 @@ export default {
 }
 
 </script>
+<style>
+.trading-vue-botbar {
+    position: relative !important;
+}
+</style>
