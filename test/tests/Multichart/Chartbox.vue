@@ -1,6 +1,6 @@
 <template>
 <div class="chart-box">
-    <trading-vue :data="chart" :titleTxt = "title"
+    <trading-vue :id="id" :data="chart" :titleTxt = "title"
             :width="width" :height="height"
             :color-title="colors.colorTitle"
             :color-back="colors.colorBack"
@@ -15,7 +15,7 @@ import TradingVue from '../../../src/TradingVue.vue'
 
 export default {
     name: 'Chartbox',
-    props: ['tf', 'data', 'width', 'height'],
+    props: ['id', 'tf', 'data', 'width', 'height'],
     components: {
         TradingVue
     },

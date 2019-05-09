@@ -8,7 +8,7 @@ export default {
     name: 'Sidebar',
     props: [
         'sub', 'layout', 'range', 'interval', 'cursor', 'colors', 'font',
-        'width', 'height', 'grid_id', 'rerender', 'y_transform'
+        'width', 'height', 'grid_id', 'rerender', 'y_transform', 'tv_id'
     ],
     mixins: [Canvas],
     mounted() {

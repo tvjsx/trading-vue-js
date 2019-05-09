@@ -4,7 +4,7 @@
 export default {
     methods: {
         setup() {
-            const id = `${this._id}-canvas`
+            const id = `${this.$props.tv_id}-${this._id}-canvas`
             const canvas = document.getElementById(id)
             // TODO: make dpi s**t work
             //const dpr = window.devicePixelRatio || 1
@@ -33,7 +33,9 @@ export default {
                         mouseup: e => this.renderer.mouseup(e),
                         mousedown: e => this.renderer.mousedown(e)
                     },
-                    attrs: Object.assign({id: `${id}-canvas`}, props.attrs),
+                    attrs: Object.assign({
+                        id: `${this.$props.tv_id}-${id}-canvas`
+                    }, props.attrs),
                     ref: 'canvas',
                     style: props.style,
                 })

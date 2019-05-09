@@ -15,7 +15,7 @@ export default {
     name: 'Grid',
     props: [
         'sub', 'layout', 'range', 'interval', 'cursor', 'colors', 'overlays',
-        'width', 'height', 'data', 'grid_id', 'y_transform', 'font'
+        'width', 'height', 'data', 'grid_id', 'y_transform', 'font', 'tv_id'
     ],
     mixins: [Canvas],
     components: { Crosshair },
