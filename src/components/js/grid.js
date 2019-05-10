@@ -36,7 +36,7 @@ export default class Grid {
     listeners() {
 
         var hamster = Hamster(this.canvas)
-        hamster.wheel((event, delta) => this.mousezoom(-delta * 50))
+        hamster.wheel((event, delta) => this.mousezoom(-delta * 50, event))
 
         var mc = new Hammer.Manager(this.canvas)
         mc.add(new Hammer.Pan())
@@ -235,7 +235,7 @@ export default class Grid {
         })
     }
 
-    mousezoom(delta) {
+    mousezoom(delta, event) {
 
         // TODO: mouse zooming is a little jerky,
         // needs to follow f(mouse_wheel_speed) and
@@ -252,6 +252,8 @@ export default class Grid {
         // Need to investigate. Solution: check reactivity,
         // it is probably lost.
         this.change_range()
+
+        event.preventDefault()
 
     }
 
