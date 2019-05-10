@@ -12,11 +12,11 @@ export default class Candle {
 
     draw(data) {
 
-        const body_color = data.c < data.o ?
+        const body_color = data.c <= data.o ?
             this.$p.colors.colorCandleUp :
             this.$p.colors.colorCandleDw
 
-        const wick_color = data.c < data.o ?
+        const wick_color = data.c <= data.o ?
             this.$p.colors.colorWickUp :
             this.$p.colors.colorWickDw
 
@@ -25,6 +25,8 @@ export default class Candle {
         let w = Math.max(data.w, 1)
         let hw = Math.max(Math.floor(w * 0.5), 1)
         let h = Math.abs(data.o - data.c)
+        let max_h = data.c === data.o ? 1 : 2
+
 
         this.ctx.strokeStyle = w > 1 ? wick_color : wick_color_sm
 
@@ -49,7 +51,7 @@ export default class Candle {
                 Math.floor(data.x - hw -1),
                 Math.floor(Math.min(data.o, data.c)),
                 Math.floor(hw * 2 + 1),
-                Math.floor(Math.max(h, 2))
+                Math.floor(Math.max(h, max_h))
             )
 
         } else {
