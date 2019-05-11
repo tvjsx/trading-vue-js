@@ -105,6 +105,30 @@ export default class Grid {
         mc.on('pinch', event => {
             if (this.pinch) this.pinchzoom(event.scale)
         })
+
+        window.addEventListener("gesturestart", event => {
+            event.preventDefault()
+            console.log('here')
+            /*startX = e.pageX - posX;
+            startY = e.pageY - posY;
+            gestureStartRotation = rotation;
+            gestureStartScale = scale;*/
+        });
+
+        window.addEventListener("gesturechange", event => {
+            event.preventDefault()
+
+            /*rotation = gestureStartRotation + e.rotation
+            scale = gestureStartScale * e.scale
+            posX = e.pageX - startX
+            posY = e.pageY - startY*/
+
+        })
+
+        window.addEventListener("gestureend", e => {
+            event.preventDefault()
+        })
+
     }
 
     mousemove(event) {
@@ -237,6 +261,17 @@ export default class Grid {
 
     mousezoom(delta, event) {
 
+        event.originalEvent.preventDefault()
+        event.preventDefault()
+
+        // Trackpad pinch zoom
+        if (event.originalEvent.ctrlKey) {
+            delta *= 0.5
+        }
+
+        // delta *= 0.025
+        if (Math.abs(event.deltaX) > 0.1) return
+
         // TODO: mouse zooming is a little jerky,
         // needs to follow f(mouse_wheel_speed) and
         // if speed is low, scroll shoud be slower
@@ -252,8 +287,6 @@ export default class Grid {
         // Need to investigate. Solution: check reactivity,
         // it is probably lost.
         this.change_range()
-
-        event.preventDefault()
 
     }
 
