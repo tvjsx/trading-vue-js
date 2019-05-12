@@ -75,11 +75,11 @@ export default class Botbar {
         this.ctx.fillStyle = this.$p.colors.colorPanel
 
         let measure = this.ctx.measureText(lbl + '    ')
-        let panwidth = measure.width
+        let panwidth = Math.floor(measure.width)
         let cursor = this.nearest()
-        let x = cursor - panwidth * 0.5 - 0.5
+        let x = Math.floor(cursor - panwidth * 0.5)
         let y = - 0.5
-        this.ctx.fillRect(x, y, panwidth, PANHEIGHT)
+        this.ctx.fillRect(x, y, panwidth, PANHEIGHT + 0.5)
 
         this.ctx.fillStyle = this.$p.colors.colorTextHL
         this.ctx.textAlign = 'center'
