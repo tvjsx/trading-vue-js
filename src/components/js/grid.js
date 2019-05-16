@@ -27,6 +27,7 @@ export default class Grid {
         this.interval = this.$p.interval
         this.offset_x = 0
         this.offset_y = 0
+        this.deltas = 0 // Wheel delta events
 
         this.listeners()
         this.overlays = []
@@ -269,8 +270,16 @@ export default class Grid {
             delta *= 0.5
         }
 
-        // delta *= 0.025
         if (Math.abs(event.deltaX) > 0.1) return
+
+        /*if (Utils.now() > this.wheel_t || !this.wheel_t) {
+            this.wheel_t = Utils.now() + 250
+            this.wheel_speed = this.deltas
+            this.deltas = 0
+            console.log(this.wheel_speed)
+        }*/
+
+        delta = Utils.smart_wheel(delta)
 
         // TODO: mouse zooming is a little jerky,
         // needs to follow f(mouse_wheel_speed) and

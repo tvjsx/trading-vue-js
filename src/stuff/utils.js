@@ -120,5 +120,16 @@ export default {
                 x[0] >= t1 && x[0] <= t2
             )
         }
+    },
+
+    now() { return (new Date()).getTime() },
+
+    smart_wheel(delta) {
+        let abs = Math.abs(delta)
+        if (abs > 500) {
+            return (200 + Math.log(abs)) * Math.sign(delta)
+        }
+        return delta
     }
+
 }
