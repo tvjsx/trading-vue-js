@@ -4,10 +4,6 @@ import Utils from '../../stuff/utils.js'
 
 const { MINUTE15, HOUR, DAY, WEEK, MONTH, YEAR, MONTHMAP } = Const
 
-const {
-    SIDEBAR, SBMIN, BOTBAR, PANWIDTH, PANHEIGHT
-} = Const.ChartConfig
-
 export default class Botbar {
 
     constructor(canvas, comp) {
@@ -79,7 +75,8 @@ export default class Botbar {
         let cursor = this.nearest()
         let x = Math.floor(cursor - panwidth * 0.5)
         let y = - 0.5
-        this.ctx.fillRect(x, y, panwidth, PANHEIGHT + 0.5)
+        let panheight = this.comp.config.PANHEIGHT
+        this.ctx.fillRect(x, y, panwidth, panheight + 0.5)
 
         this.ctx.fillStyle = this.$p.colors.colorTextHL
         this.ctx.textAlign = 'center'

@@ -17,7 +17,6 @@
 
 <script>
 
-import Const from '../stuff/constants.js'
 import Context from '../stuff/context.js'
 import Layout from './js/layout.js'
 import Utils from '../stuff/utils.js'
@@ -31,7 +30,7 @@ export default {
     name: 'Chart',
     props: [
         'title_txt', 'data', 'width', 'height', 'font', 'colors',
-        'overlays', 'tv_id'
+        'overlays', 'tv_id', 'config'
     ],
     components: {
         Grid,
@@ -79,8 +78,8 @@ export default {
             Utils.overwrite(this.range, this.range)
         },
         default_range() {
-            const dl = Const.ChartConfig.DEFAULT_LEN
-            const ml = Const.ChartConfig.MINIMUM_LEN + 0.5
+            const dl = this.$props.config.DEFAULT_LEN
+            const ml = this.$props.config.MINIMUM_LEN + 0.5
             const l = this.ohlcv.length - 1
 
             if (this.ohlcv.length < 2) return
@@ -113,7 +112,8 @@ export default {
                 colors: this.$props.colors,
                 font: this.$props.font,
                 y_ts: this.y_transforms,
-                tv_id: this.$props.tv_id
+                tv_id: this.$props.tv_id,
+                config: this.$props.config,
             }
         },
         overlay_subset(source) {
