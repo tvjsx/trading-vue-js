@@ -10,15 +10,6 @@ import Utils from '../../stuff/utils.js'
 import GridMaker from './grid_maker.js'
 
 const { DAY, WEEK, MONTH, TIMESCALES, $SCALES } = Const
-const {
-    SBMIN,
-    EXPAND,
-    CANDLEW,
-    GRIDX,
-    GRIDY,
-    BOTBAR,
-    VOLSCALE
-} = Const.ChartConfig
 
 function Layout(params) {
 
@@ -33,7 +24,7 @@ function Layout(params) {
 
         const n = offsub.length
         const off_h = (2 * Math.sqrt(n) / 7) / (n || 1)
-        const height = $p.height - BOTBAR
+        const height = $p.height - $p.config.BOTBAR
 
         // Offchart grid height
         const px = Math.floor(height * off_h)
@@ -57,7 +48,7 @@ function Layout(params) {
         self.volume = []
 
         let maxv = Math.max(...sub.map(x => x[5]))
-        let vs = VOLSCALE * $p.height / maxv
+        let vs = $p.config.VOLSCALE * $p.height / maxv
         var x1, x2, mid, prev = undefined
 
         let splitter = self.px_step > 5 ? 1 : 0
@@ -68,7 +59,7 @@ function Layout(params) {
             mid = t2screen(p[0])
             self.candles.push({
                 x: mid,
-                w: self.px_step * CANDLEW,
+                w: self.px_step * $p.config.CANDLEW,
                 o: p[1] * self.A + self.B,
                 h: p[2] * self.A + self.B,
                 l: p[3] * self.A + self.B,
@@ -129,7 +120,7 @@ function Layout(params) {
         grids: grids,
         botbar: {
             width: $p.width,
-            height: BOTBAR,
+            height: $p.config.BOTBAR,
             offset: offset,
             xs: grids[0] ? grids[0].xs : []
         }

@@ -4,18 +4,10 @@ import Utils from '../../stuff/utils.js'
 import layout_fn from './layout_fn.js'
 
 const { DAY, WEEK, MONTH, TIMESCALES, $SCALES } = Const
-const {
-    SBMIN,
-    EXPAND,
-    CANDLEW,
-    GRIDX,
-    GRIDY,
-    BOTBAR,
-    VOLSCALE
-} = Const.ChartConfig
 
 // master_grid - ref to the master grid
 function GridMaker(id, params, master_grid = null) {
+
 
     let {
         sub, interval, range, ctx, $p, layers_meta, height, y_t
@@ -55,8 +47,8 @@ function GridMaker(id, params, master_grid = null) {
             self.$_hi = y_t.range[0]
             self.$_lo = y_t.range[1]
         } else {
-            self.$_hi = hi + (hi - lo) * EXPAND
-            self.$_lo = lo - (hi - lo) * EXPAND
+            self.$_hi = hi + (hi - lo) * $p.config.EXPAND
+            self.$_lo = lo - (hi - lo) * $p.config.EXPAND
         }
 
     }
@@ -65,7 +57,7 @@ function GridMaker(id, params, master_grid = null) {
 
         if (sub.length < 2) {
             self.prec = 0
-            self.sb = SBMIN
+            self.sb = $p.config.SBMIN
             return
         }
 
@@ -83,7 +75,7 @@ function GridMaker(id, params, master_grid = null) {
         let str = '0'.repeat(Math.max(...lens)) + '    '
 
         self.sb = ctx.measureText(str).width
-        self.sb = Math.max(Math.floor(self.sb), SBMIN)
+        self.sb = Math.max(Math.floor(self.sb), $p.config.SBMIN)
 
     }
 
@@ -145,7 +137,7 @@ function GridMaker(id, params, master_grid = null) {
     // Select nearest good-loking t step (m is target scale)
     function time_step() {
         let xrange = range[1] - range[0]
-        let m = xrange * (GRIDX / $p.width)
+        let m = xrange * ($p.config.GRIDX / $p.width)
         let s = TIMESCALES
         return Utils.nearest_a(m, s)[1]
     }
@@ -153,7 +145,7 @@ function GridMaker(id, params, master_grid = null) {
     // Select nearest good-loking $ step (m is target scale)
     function dollar_step() {
         let yrange = self.$_hi - self.$_lo
-        let m = yrange * (GRIDY / height)
+        let m = yrange * ($p.config.GRIDY / height)
         let p = parseInt(yrange.toExponential().split('e')[1])
         let d = Math.pow(10, p)
         let s = $SCALES.map(x => x * d)

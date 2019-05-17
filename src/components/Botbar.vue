@@ -8,7 +8,7 @@ export default {
     name: 'Botbar',
     props: [
         'sub', 'layout', 'range', 'interval', 'cursor', 'colors', 'font',
-        'width', 'height', 'rerender', 'tv_id'
+        'width', 'height', 'rerender', 'tv_id', 'config'
     ],
     mixins: [Canvas],
     mounted() {
