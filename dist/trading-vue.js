@@ -1,5 +1,5 @@
 /*!
- * TradingVue.JS - v0.2.10 - Wed May 08 2019
+ * TradingVue.JS - v0.3.0 - Fri May 17 2019
  * https://github.com/C451/trading-vue-js
  * Copyright (c) 2019 c451 Code's All Right;
  * Licensed under the MIT license
@@ -98,7 +98,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 14);
+/******/ 	return __webpack_require__(__webpack_require__.s = 17);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -2754,11 +2754,11 @@ if (true) {
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(11);
+var content = __webpack_require__(12);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var add = __webpack_require__(4).default
+var add = __webpack_require__(5).default
 var update = add("1db01c0b", content, false, {});
 // Hot Module Replacement
 if(false) {}
@@ -2770,17 +2770,33 @@ if(false) {}
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(13);
+var content = __webpack_require__(14);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var add = __webpack_require__(4).default
+var add = __webpack_require__(5).default
 var update = add("12d2309d", content, false, {});
 // Hot Module Replacement
 if(false) {}
 
 /***/ }),
 /* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(16);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var add = __webpack_require__(5).default
+var update = add("1b34bfeb", content, false, {});
+// Hot Module Replacement
+if(false) {}
+
+/***/ }),
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2871,7 +2887,7 @@ function toComment(sourceMap) {
 }
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3133,7 +3149,7 @@ function applyToTag (styleElement, obj) {
 
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -3463,7 +3479,7 @@ if (typeof window.define === 'function' && window.define.amd) {
 
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -3473,9 +3489,9 @@ if (typeof window.define === 'function' && window.define.amd) {
 /**
  * Dependencies
  */
-var util = __webpack_require__(7),
-    cmp = __webpack_require__(8),
-    bin = __webpack_require__(9);
+var util = __webpack_require__(8),
+    cmp = __webpack_require__(9),
+    bin = __webpack_require__(10);
 
 /**
  * Module interface definition
@@ -3687,7 +3703,7 @@ IndexedArray.prototype.getRange = function (begin, end) {
 
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports) {
 
 /**
@@ -3732,7 +3748,7 @@ module.exports.isSortableArrayLike = function (o) {
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports) {
 
 /**
@@ -3767,7 +3783,7 @@ module.exports = {
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports) {
 
 /**
@@ -3829,7 +3845,7 @@ module.exports.search = search;
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3839,17 +3855,17 @@ module.exports.search = search;
  /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Legend_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)(false);
+exports = module.exports = __webpack_require__(4)(false);
 // Module
 exports.push([module.i, "\n.trading-vue-legend {\n    position: relative;\n    z-index: 100;\n    font-size: 1.25em;\n    margin-left: 10px;\n    pointer-events: none;\n}\n.trading-vue-ohlcv {\n    pointer-events: none;\n    margin-bottom: 0.5em;\n}\n.t-vue-lspan {\n    font-variant-numeric: tabular-nums;\n    font-weight: 100;\n    font-size: 0.95em;\n    color: #999999; /* TODO: move => params */\n    margin-left: 0.1em;\n    margin-right: 0.2em;\n}\n.t-vue-title {\n    margin-right: 0.25em;\n    font-size: 1.45em;\n    font-weight: 200;\n}\n.t-vue-ind {\n    margin-left: 0.2em;\n    margin-bottom: 0.5em;\n    font-weight: 200;\n    font-size: 1.0em;\n}\n.t-vue-ivalue {\n    margin-left: 0.5em;\n}\n.t-vue-unknown {\n    color: #999999; /* TODO: move => params */\n}\n", ""]);
 
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3859,17 +3875,37 @@ exports.push([module.i, "\n.trading-vue-legend {\n    position: relative;\n    z
  /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Section_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(3)(false);
+exports = module.exports = __webpack_require__(4)(false);
 // Module
 exports.push([module.i, "\n.trading-vue-section {\n    height: 0;\n    position: absolute;\n}\n", ""]);
 
 
 
 /***/ }),
-/* 14 */
+/* 15 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Botbar_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Botbar_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Botbar_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* unused harmony reexport * */
+ /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Botbar_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(4)(false);
+// Module
+exports.push([module.i, "\n.trading-vue-botbar {\n    position: relative !important;\n}\n", ""]);
+
+
+
+/***/ }),
+/* 17 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3892,7 +3928,20 @@ var TradingVuevue_type_template_id_235c0ade_render = function() {
       },
       attrs: { id: _vm.id }
     },
-    [_c("chart", _vm._b({ key: _vm.reset }, "chart", _vm.chart_props, false))],
+    [
+      _c(
+        "chart",
+        _vm._b(
+          {
+            key: _vm.reset,
+            attrs: { tv_id: _vm.id, config: _vm.chart_config }
+          },
+          "chart",
+          _vm.chart_props,
+          false
+        )
+      )
+    ],
     1
   )
 }
@@ -3932,8 +3981,6 @@ var ChartConfig = {
   // px
   BOTBAR: 28,
   // px
-  PANFWIDTH: 6,
-  // font width, px
   PANHEIGHT: 24,
   // px
   DEFAULT_LEN: 50,
@@ -4018,7 +4065,7 @@ function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.
 
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
-var IndexedArray = __webpack_require__(6);
+var IndexedArray = __webpack_require__(7);
 
 /* harmony default export */ var utils = ({
   clamp: function clamp(num, min, max) {
@@ -4210,15 +4257,7 @@ var grid_maker_DAY = constants.DAY,
     grid_maker_WEEK = constants.WEEK,
     grid_maker_MONTH = constants.MONTH,
     grid_maker_TIMESCALES = constants.TIMESCALES,
-    grid_maker_$SCALES = constants.$SCALES;
-var _Const$ChartConfig = constants.ChartConfig,
-    SBMIN = _Const$ChartConfig.SBMIN,
-    EXPAND = _Const$ChartConfig.EXPAND,
-    CANDLEW = _Const$ChartConfig.CANDLEW,
-    GRIDX = _Const$ChartConfig.GRIDX,
-    GRIDY = _Const$ChartConfig.GRIDY,
-    BOTBAR = _Const$ChartConfig.BOTBAR,
-    VOLSCALE = _Const$ChartConfig.VOLSCALE; // master_grid - ref to the master grid
+    grid_maker_$SCALES = constants.$SCALES; // master_grid - ref to the master grid
 
 function GridMaker(id, params) {
   var master_grid = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
@@ -4280,15 +4319,15 @@ function GridMaker(id, params) {
       self.$_hi = y_t.range[0];
       self.$_lo = y_t.range[1];
     } else {
-      self.$_hi = hi + (hi - lo) * EXPAND;
-      self.$_lo = lo - (hi - lo) * EXPAND;
+      self.$_hi = hi + (hi - lo) * $p.config.EXPAND;
+      self.$_lo = lo - (hi - lo) * $p.config.EXPAND;
     }
   }
 
   function calc_sidebar() {
     if (sub.length < 2) {
       self.prec = 0;
-      self.sb = SBMIN;
+      self.sb = $p.config.SBMIN;
       return;
     } // TODO: improve sidebar width calculation
     // at transition point, when one precision is
@@ -4307,7 +4346,7 @@ function GridMaker(id, params) {
     });
     var str = '0'.repeat(Math.max.apply(Math, grid_maker_toConsumableArray(lens))) + '    ';
     self.sb = ctx.measureText(str).width;
-    self.sb = Math.max(Math.floor(self.sb), SBMIN);
+    self.sb = Math.max(Math.floor(self.sb), $p.config.SBMIN);
   } // Calculate $ precision for the Y-axis
 
 
@@ -4364,7 +4403,7 @@ function GridMaker(id, params) {
 
   function time_step() {
     var xrange = range[1] - range[0];
-    var m = xrange * (GRIDX / $p.width);
+    var m = xrange * ($p.config.GRIDX / $p.width);
     var s = grid_maker_TIMESCALES;
     return utils.nearest_a(m, s)[1];
   } // Select nearest good-loking $ step (m is target scale)
@@ -4372,7 +4411,7 @@ function GridMaker(id, params) {
 
   function dollar_step() {
     var yrange = self.$_hi - self.$_lo;
-    var m = yrange * (GRIDY / height);
+    var m = yrange * ($p.config.GRIDY / height);
     var p = parseInt(yrange.toExponential().split('e')[1]);
     var d = Math.pow(10, p);
     var s = grid_maker_$SCALES.map(function (x) {
@@ -4492,14 +4531,6 @@ var layout_DAY = constants.DAY,
     layout_MONTH = constants.MONTH,
     layout_TIMESCALES = constants.TIMESCALES,
     layout_$SCALES = constants.$SCALES;
-var layout_Const$ChartConfig = constants.ChartConfig,
-    layout_SBMIN = layout_Const$ChartConfig.SBMIN,
-    layout_EXPAND = layout_Const$ChartConfig.EXPAND,
-    layout_CANDLEW = layout_Const$ChartConfig.CANDLEW,
-    layout_GRIDX = layout_Const$ChartConfig.GRIDX,
-    layout_GRIDY = layout_Const$ChartConfig.GRIDY,
-    layout_BOTBAR = layout_Const$ChartConfig.BOTBAR,
-    layout_VOLSCALE = layout_Const$ChartConfig.VOLSCALE;
 
 function Layout(params) {
   var sub = params.sub,
@@ -4515,7 +4546,7 @@ function Layout(params) {
   function grid_hs() {
     var n = offsub.length;
     var off_h = 2 * Math.sqrt(n) / 7 / (n || 1);
-    var height = $p.height - layout_BOTBAR; // Offchart grid height
+    var height = $p.height - $p.config.BOTBAR; // Offchart grid height
 
     var px = Math.floor(height * off_h); // Main grid height
 
@@ -4535,7 +4566,7 @@ function Layout(params) {
     var maxv = Math.max.apply(Math, layout_toConsumableArray(sub.map(function (x) {
       return x[5];
     })));
-    var vs = layout_VOLSCALE * $p.height / maxv;
+    var vs = $p.config.VOLSCALE * $p.height / maxv;
     var x1,
         x2,
         mid,
@@ -4547,7 +4578,7 @@ function Layout(params) {
       mid = t2screen(p[0]);
       self.candles.push({
         x: mid,
-        w: self.px_step * layout_CANDLEW,
+        w: self.px_step * $p.config.CANDLEW,
         o: p[1] * self.A + self.B,
         h: p[2] * self.A + self.B,
         l: p[3] * self.A + self.B,
@@ -4637,7 +4668,7 @@ function Layout(params) {
     grids: grids,
     botbar: {
       width: $p.width,
-      height: layout_BOTBAR,
+      height: $p.config.BOTBAR,
       offset: offset,
       xs: grids[0] ? grids[0].xs : []
     }
@@ -4777,7 +4808,7 @@ function () {
 var hammer = __webpack_require__(0);
 
 // EXTERNAL MODULE: ./node_modules/hamsterjs/hamster.js
-var hamsterjs_hamster = __webpack_require__(5);
+var hamsterjs_hamster = __webpack_require__(6);
 var hamster_default = /*#__PURE__*/__webpack_require__.n(hamsterjs_hamster);
 
 // CONCATENATED MODULE: ./src/components/js/candle.js
@@ -4804,12 +4835,13 @@ function () {
   candle_createClass(Candle, [{
     key: "draw",
     value: function draw(data) {
-      var body_color = data.c < data.o ? this.$p.colors.colorCandleUp : this.$p.colors.colorCandleDw;
-      var wick_color = data.c < data.o ? this.$p.colors.colorWickUp : this.$p.colors.colorWickDw;
+      var body_color = data.c <= data.o ? this.$p.colors.colorCandleUp : this.$p.colors.colorCandleDw;
+      var wick_color = data.c <= data.o ? this.$p.colors.colorWickUp : this.$p.colors.colorWickDw;
       var wick_color_sm = this.$p.colors.colorWickSm;
       var w = Math.max(data.w, 1);
       var hw = Math.max(Math.floor(w * 0.5), 1);
       var h = Math.abs(data.o - data.c);
+      var max_h = data.c === data.o ? 1 : 2;
       this.ctx.strokeStyle = w > 1 ? wick_color : wick_color_sm;
       this.ctx.beginPath();
       this.ctx.moveTo(Math.floor(data.x) - 0.5, Math.floor(data.h));
@@ -4819,7 +4851,7 @@ function () {
       if (data.w > 1.5) {
         this.ctx.fillStyle = body_color; // TODO: Move common calculations to layout.js
 
-        this.ctx.fillRect(Math.floor(data.x - hw - 1), Math.floor(Math.min(data.o, data.c)), Math.floor(hw * 2 + 1), Math.floor(Math.max(h, 2)));
+        this.ctx.fillRect(Math.floor(data.x - hw - 1), Math.floor(Math.min(data.o, data.c)), Math.floor(hw * 2 + 1), Math.floor(Math.max(h, max_h)));
       } else {
         this.ctx.strokeStyle = body_color;
         this.ctx.beginPath();
@@ -4923,10 +4955,6 @@ function grid_createClass(Constructor, protoProps, staticProps) { if (protoProps
 
 
 
-var grid_Const$ChartConfig = constants.ChartConfig,
-    grid_BOTBAR = grid_Const$ChartConfig.BOTBAR,
-    MIN_ZOOM = grid_Const$ChartConfig.MIN_ZOOM,
-    MAX_ZOOM = grid_Const$ChartConfig.MAX_ZOOM;
 
 var grid_Grid =
 /*#__PURE__*/
@@ -4934,6 +4962,8 @@ function () {
   function Grid(canvas, comp) {
     grid_classCallCheck(this, Grid);
 
+    this.MIN_ZOOM = comp.config.MIN_ZOOM;
+    this.MAX_ZOOM = comp.config.MAX_ZOOM;
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
     this.comp = comp;
@@ -4956,7 +4986,7 @@ function () {
 
       var hamster = hamster_default()(this.canvas);
       hamster.wheel(function (event, delta) {
-        return _this.mousezoom(-delta * 50);
+        return _this.mousezoom(-delta * 50, event);
       });
       var mc = new hammer["Manager"](this.canvas);
       mc.add(new hammer["Pan"]());
@@ -5245,12 +5275,12 @@ function () {
     }
   }, {
     key: "mousezoom",
-    value: function mousezoom(delta) {
+    value: function mousezoom(delta, event) {
       // TODO: mouse zooming is a little jerky,
       // needs to follow f(mouse_wheel_speed) and
       // if speed is low, scroll shoud be slower
-      if (delta < 0 && this.data.length <= MIN_ZOOM) return;
-      if (delta > 0 && this.data.length > MAX_ZOOM) return;
+      if (delta < 0 && this.data.length <= this.MIN_ZOOM) return;
+      if (delta > 0 && this.data.length > this.MAX_ZOOM) return;
       var k = this.interval / 1000;
       this.range[0] -= delta * k * this.data.length; // TODO: BUG: while scrolling you may notice that
       // the left part of the indicator data is not
@@ -5259,6 +5289,7 @@ function () {
       // it is probably lost.
 
       this.change_range();
+      event.preventDefault();
     }
   }, {
     key: "mousedrug",
@@ -5282,8 +5313,8 @@ function () {
   }, {
     key: "pinchzoom",
     value: function pinchzoom(scale) {
-      if (scale > 1 && this.data.length <= MIN_ZOOM) return;
-      if (scale < 1 && this.data.length > MAX_ZOOM) return;
+      if (scale > 1 && this.data.length <= this.MIN_ZOOM) return;
+      if (scale < 1 && this.data.length > this.MAX_ZOOM) return;
       var t = this.pinch.t;
       var nt = t * 1 / scale;
       this.range[0] = this.pinch.r[0] - (nt - t) * 0.5;
@@ -5357,7 +5388,7 @@ function () {
 /* harmony default export */ var canvas = ({
   methods: {
     setup: function setup() {
-      var id = "".concat(this._id, "-canvas");
+      var id = "".concat(this.$props.tv_id, "-").concat(this._id, "-canvas");
       var canvas = document.getElementById(id); // TODO: make dpi s**t work
       //const dpr = window.devicePixelRatio || 1
 
@@ -5395,7 +5426,7 @@ function () {
           }
         },
         attrs: Object.assign({
-          id: "".concat(id, "-canvas")
+          id: "".concat(this.$props.tv_id, "-").concat(id, "-canvas")
         }, props.attrs),
         ref: 'canvas',
         style: props.style
@@ -5945,12 +5976,12 @@ var Splines_component = normalizeComponent(
 if (false) { var Splines_api; }
 Splines_component.options.__file = "src/components/overlays/Splines.vue"
 /* harmony default export */ var Splines = (Splines_component.exports);
-// CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/components/overlays/RSI.vue?vue&type=script&lang=js&
+// CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/components/overlays/Range.vue?vue&type=script&lang=js&
 // R S I . Because we love it
 // Adds all necessary stuff for you.
 
-/* harmony default export */ var RSIvue_type_script_lang_js_ = ({
-  name: 'RSI',
+/* harmony default export */ var Rangevue_type_script_lang_js_ = ({
+  name: 'Range',
   mixins: [overlay],
   methods: {
     meta_info: function meta_info() {
@@ -5979,8 +6010,8 @@ Splines_component.options.__file = "src/components/overlays/Splines.vue"
     // Finally, let's make the canvas dirty!
     draw: function draw(ctx) {
       var layout = this.$props.layout;
-      var upper = layout.$2screen(this.sett.upper);
-      var lower = layout.$2screen(this.sett.lower); // RSI values
+      var upper = layout.$2screen(this.sett.upper || 70);
+      var lower = layout.$2screen(this.sett.lower || 30); // RSI values
 
       ctx.lineWidth = this.line_width;
       ctx.strokeStyle = this.color;
@@ -6035,7 +6066,7 @@ Splines_component.options.__file = "src/components/overlays/Splines.vue"
     // just create a new overlay with the same type:
     // e.g. use_for() { return ['EMA'] }.
     use_for: function use_for() {
-      return ['RSI'];
+      return ['Range', 'RSI'];
     },
     // Colors for the legend, should have the
     // same dimention as a data point (excl. timestamp)
@@ -6068,20 +6099,20 @@ Splines_component.options.__file = "src/components/overlays/Splines.vue"
     }
   }
 });
-// CONCATENATED MODULE: ./src/components/overlays/RSI.vue?vue&type=script&lang=js&
- /* harmony default export */ var overlays_RSIvue_type_script_lang_js_ = (RSIvue_type_script_lang_js_); 
-// CONCATENATED MODULE: ./src/components/overlays/RSI.vue
-var RSI_render, RSI_staticRenderFns
+// CONCATENATED MODULE: ./src/components/overlays/Range.vue?vue&type=script&lang=js&
+ /* harmony default export */ var overlays_Rangevue_type_script_lang_js_ = (Rangevue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/components/overlays/Range.vue
+var Range_render, Range_staticRenderFns
 
 
 
 
 /* normalize component */
 
-var RSI_component = normalizeComponent(
-  overlays_RSIvue_type_script_lang_js_,
-  RSI_render,
-  RSI_staticRenderFns,
+var Range_component = normalizeComponent(
+  overlays_Rangevue_type_script_lang_js_,
+  Range_render,
+  Range_staticRenderFns,
   false,
   null,
   null,
@@ -6090,9 +6121,9 @@ var RSI_component = normalizeComponent(
 )
 
 /* hot reload */
-if (false) { var RSI_api; }
-RSI_component.options.__file = "src/components/overlays/RSI.vue"
-/* harmony default export */ var RSI = (RSI_component.exports);
+if (false) { var Range_api; }
+Range_component.options.__file = "src/components/overlays/Range.vue"
+/* harmony default export */ var Range = (Range_component.exports);
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/components/overlays/Trades.vue?vue&type=script&lang=js&
 
 /* harmony default export */ var Tradesvue_type_script_lang_js_ = ({
@@ -6359,7 +6390,7 @@ Channel_component.options.__file = "src/components/overlays/Channel.vue"
 
 /* harmony default export */ var Gridvue_type_script_lang_js_ = ({
   name: 'Grid',
-  props: ['sub', 'layout', 'range', 'interval', 'cursor', 'colors', 'overlays', 'width', 'height', 'data', 'grid_id', 'y_transform', 'font'],
+  props: ['sub', 'layout', 'range', 'interval', 'cursor', 'colors', 'overlays', 'width', 'height', 'data', 'grid_id', 'y_transform', 'font', 'tv_id', 'config'],
   mixins: [canvas],
   components: {
     Crosshair: components_Crosshair
@@ -6368,7 +6399,7 @@ Channel_component.options.__file = "src/components/overlays/Channel.vue"
     var _this = this;
 
     // List of all possible overlays (builtin + custom)
-    this._list = [Spline, Splines, RSI, Trades, Channel].concat(this.$props.overlays);
+    this._list = [Spline, Splines, Range, Trades, Channel].concat(this.$props.overlays);
     this._registry = {}; // We need to know which components we will use.
     // Custom overlay components overwrite built-ins:
 
@@ -6611,10 +6642,7 @@ function sidebar_createClass(Constructor, protoProps, staticProps) { if (protoPr
 
 
 
-
-var sidebar_Const$ChartConfig = constants.ChartConfig,
-    PANHEIGHT = sidebar_Const$ChartConfig.PANHEIGHT,
-    sidebar_EXPAND = sidebar_Const$ChartConfig.EXPAND;
+var PANHEIGHT;
 
 var sidebar_Sidebar =
 /*#__PURE__*/
@@ -6624,6 +6652,7 @@ function () {
 
     sidebar_classCallCheck(this, Sidebar);
 
+    PANHEIGHT = comp.config.PANHEIGHT;
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
     this.comp = comp;
@@ -6854,7 +6883,7 @@ function () {
 
 /* harmony default export */ var Sidebarvue_type_script_lang_js_ = ({
   name: 'Sidebar',
-  props: ['sub', 'layout', 'range', 'interval', 'cursor', 'colors', 'font', 'width', 'height', 'grid_id', 'rerender', 'y_transform'],
+  props: ['sub', 'layout', 'range', 'interval', 'cursor', 'colors', 'font', 'width', 'height', 'grid_id', 'rerender', 'y_transform', 'tv_id', 'config'],
   mixins: [canvas],
   mounted: function mounted() {
     var el = this.$refs['canvas'];
@@ -7132,7 +7161,7 @@ Legendvue_type_template_id_34724886_render._withStripped = true
 // CONCATENATED MODULE: ./src/components/Legend.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_Legendvue_type_script_lang_js_ = (Legendvue_type_script_lang_js_); 
 // EXTERNAL MODULE: ./src/components/Legend.vue?vue&type=style&index=0&lang=css&
-var Legendvue_type_style_index_0_lang_css_ = __webpack_require__(10);
+var Legendvue_type_style_index_0_lang_css_ = __webpack_require__(11);
 
 // CONCATENATED MODULE: ./src/components/Legend.vue
 
@@ -7279,7 +7308,7 @@ Legend_component.options.__file = "src/components/Legend.vue"
 // CONCATENATED MODULE: ./src/components/Section.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_Sectionvue_type_script_lang_js_ = (Sectionvue_type_script_lang_js_); 
 // EXTERNAL MODULE: ./src/components/Section.vue?vue&type=style&index=0&lang=css&
-var Sectionvue_type_style_index_0_lang_css_ = __webpack_require__(12);
+var Sectionvue_type_style_index_0_lang_css_ = __webpack_require__(13);
 
 // CONCATENATED MODULE: ./src/components/Section.vue
 
@@ -7321,12 +7350,6 @@ var botbar_MINUTE15 = constants.MINUTE15,
     botbar_MONTH = constants.MONTH,
     botbar_YEAR = constants.YEAR,
     botbar_MONTHMAP = constants.MONTHMAP;
-var botbar_Const$ChartConfig = constants.ChartConfig,
-    SIDEBAR = botbar_Const$ChartConfig.SIDEBAR,
-    botbar_SBMIN = botbar_Const$ChartConfig.SBMIN,
-    botbar_BOTBAR = botbar_Const$ChartConfig.BOTBAR,
-    PANWIDTH = botbar_Const$ChartConfig.PANWIDTH,
-    botbar_PANHEIGHT = botbar_Const$ChartConfig.PANHEIGHT;
 
 var botbar_Botbar =
 /*#__PURE__*/
@@ -7405,11 +7428,12 @@ function () {
       var lbl = this.format_cursor_x();
       this.ctx.fillStyle = this.$p.colors.colorPanel;
       var measure = this.ctx.measureText(lbl + '    ');
-      var panwidth = measure.width;
+      var panwidth = Math.floor(measure.width);
       var cursor = this.nearest();
-      var x = cursor - panwidth * 0.5 - 0.5;
+      var x = Math.floor(cursor - panwidth * 0.5);
       var y = -0.5;
-      this.ctx.fillRect(x, y, panwidth, botbar_PANHEIGHT);
+      var panheight = this.comp.config.PANHEIGHT;
+      this.ctx.fillRect(x, y, panwidth, panheight + 0.5);
       this.ctx.fillStyle = this.$p.colors.colorTextHL;
       this.ctx.textAlign = 'center';
       this.ctx.fillText(lbl, cursor, y + 16);
@@ -7507,7 +7531,7 @@ function () {
 
 /* harmony default export */ var Botbarvue_type_script_lang_js_ = ({
   name: 'Botbar',
-  props: ['sub', 'layout', 'range', 'interval', 'cursor', 'colors', 'font', 'width', 'height', 'rerender'],
+  props: ['sub', 'layout', 'range', 'interval', 'cursor', 'colors', 'font', 'width', 'height', 'rerender', 'tv_id', 'config'],
   mixins: [canvas],
   mounted: function mounted() {
     var el = this.$refs['canvas'];
@@ -7556,8 +7580,12 @@ function () {
 });
 // CONCATENATED MODULE: ./src/components/Botbar.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_Botbarvue_type_script_lang_js_ = (Botbarvue_type_script_lang_js_); 
+// EXTERNAL MODULE: ./src/components/Botbar.vue?vue&type=style&index=0&lang=css&
+var Botbarvue_type_style_index_0_lang_css_ = __webpack_require__(15);
+
 // CONCATENATED MODULE: ./src/components/Botbar.vue
 var Botbar_render, Botbar_staticRenderFns
+
 
 
 
@@ -7605,10 +7633,9 @@ Botbar_component.options.__file = "src/components/Botbar.vue"
 
 
 
-
 /* harmony default export */ var Chartvue_type_script_lang_js_ = ({
   name: 'Chart',
-  props: ['title_txt', 'data', 'width', 'height', 'font', 'colors', 'overlays'],
+  props: ['title_txt', 'data', 'width', 'height', 'font', 'colors', 'overlays', 'tv_id', 'config'],
   components: {
     Grid: components_Grid,
     GridSection: Section,
@@ -7651,8 +7678,8 @@ Botbar_component.options.__file = "src/components/Botbar.vue"
       utils.overwrite(this.range, this.range);
     },
     default_range: function default_range() {
-      var dl = constants.ChartConfig.DEFAULT_LEN;
-      var ml = constants.ChartConfig.MINIMUM_LEN + 0.5;
+      var dl = this.$props.config.DEFAULT_LEN;
+      var ml = this.$props.config.MINIMUM_LEN + 0.5;
       var l = this.ohlcv.length - 1;
       if (this.ohlcv.length < 2) return;
 
@@ -7679,7 +7706,9 @@ Botbar_component.options.__file = "src/components/Botbar.vue"
         cursor: this.cursor,
         colors: this.$props.colors,
         font: this.$props.font,
-        y_ts: this.y_transforms
+        y_ts: this.y_transforms,
+        tv_id: this.$props.tv_id,
+        config: this.$props.config
       };
     },
     overlay_subset: function overlay_subset(source) {
@@ -7837,6 +7866,10 @@ Chart_component.options.__file = "src/components/Chart.vue"
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ var TradingVuevue_type_script_lang_js_ = ({
@@ -7935,6 +7968,14 @@ Chart_component.options.__file = "src/components/Chart.vue"
       default: function _default() {
         return [];
       }
+    },
+    // Overwrites ChartConfig values,
+    // see constants.js
+    chartConfig: {
+      type: Object,
+      default: function _default() {
+        return {};
+      }
     }
   },
   computed: {
@@ -7957,6 +7998,9 @@ Chart_component.options.__file = "src/components/Chart.vue"
       }
 
       return chart_props;
+    },
+    chart_config: function chart_config() {
+      return Object.assign(constants.ChartConfig, this.$props.chartConfig);
     }
   },
   data: function data() {
