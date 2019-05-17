@@ -1,7 +1,7 @@
 # API Book
 
 ::: warning
-This library is in alpha stage, API may change. This guide version is **0.2.10**
+This library is in alpha stage, API may change. This guide version is **0.3.0**
 :::
 
 ![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=Current%20lib%20version)
@@ -32,6 +32,7 @@ This library is in alpha stage, API may change. This guide version is **0.2.10**
 | font | String | Full font string, e.g. "11px Arial..." |
 | data | Object | Data object |
 | overlays | Array | List of custom overlay classes |
+| chartConfig | Object | Overwrites chart config values |
 
 ## Methods
 
