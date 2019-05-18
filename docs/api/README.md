@@ -136,7 +136,7 @@ values: {
 }
 ```
 
-*Example:*
+Example:
 
 ```js
 {
@@ -288,7 +288,7 @@ draw(ctx) {
 }
 ```
 
-#### use_for(ctx)
+#### use_for()
 
 * **Returns**: list of indicator types which this overlay can draw. **Required**
 The best practice is to include a generic type first and then a specific, e.g.
