@@ -40,7 +40,7 @@ This library is in alpha stage, API may change. This guide version is **0.3.0**
 
 Resets the chart to the default state. Use it if you need to reset the time range.
 
-Example:
+*Example:*
 
 ```HTML
 <template>
@@ -136,7 +136,7 @@ values: {
 }
 ```
 
-Example:
+*Example:*
 
 ```js
 {
@@ -238,6 +238,7 @@ Candle = {
 }
 ```
 <br>
+
 *Example:*
 
 ```js
