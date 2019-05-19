@@ -21,8 +21,12 @@ import Stocks from './tests/Stocks.vue'
 import MouseEvents from './tests/MouseEvents.vue'
 import Timeframes from './tests/Timeframes.vue'
 import Multichart from './tests/Multichart.vue'
+import LegendButtons from './tests/LegendButtons.vue'
 
-const TESTS = { Simple, Stocks, MouseEvents, Timeframes, Multichart }
+const TESTS = {
+    Simple, Stocks, MouseEvents, Timeframes, Multichart,
+    LegendButtons
+}
 
 export default {
     name: 'app',
