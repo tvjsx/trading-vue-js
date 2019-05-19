@@ -1,5 +1,6 @@
 <template>
 <trading-vue :data="chart" :width="this.width" :height="this.height"
+        :legend-buttons="buttons"
         :color-back="colors.colorBack"
         :color-grid="colors.colorGrid"
         :color-text="colors.colorText">
@@ -43,7 +44,10 @@ export default {
                 colorBack: '#fff',
                 colorGrid: '#eee',
                 colorText: '#333',
-            }
+            },
+            buttons: [
+                'display', 'moveUp', 'moveDown', 'settings', 'remove'
+            ]
         };
     }
 };

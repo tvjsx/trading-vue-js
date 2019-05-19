@@ -120,6 +120,10 @@ export default {
         chartConfig: {
             type: Object,
             default: function () { return {} }
+        },
+        legendButtons: {
+            type: Array,
+            default: function () { return [] }
         }
     },
     computed: {
