@@ -136,6 +136,7 @@ export default {
                 width: this.$props.width,
                 height: this.$props.height,
                 font: this.$props.font,
+                buttons: this.$props.legendButtons,
                 colors: {}
             }
             for (var k in this.$props) {

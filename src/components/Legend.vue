@@ -22,6 +22,11 @@
                 {{v.value}}
             </span>
         </span>
+        <button-group
+            v-bind:buttons="common.buttons"
+            v-bind:ov_id="ind.id"
+            v-bind:tv_id="common.tv_id">
+        </button-group>
         <span v-if="ind.unk" class="t-vue-unknown">
             (Unknown type)
         </span>
@@ -29,11 +34,15 @@
 </div>
 </template>
 <script>
+
+import ButtonGroup from './ButtonGroup.vue'
+
 export default {
     name: 'ChartLegend',
     props: [
         'common', 'values', 'grid_id', 'meta_props'
     ],
+    components: { ButtonGroup },
     computed: {
         ohlcv() {
             if (!this.$props.values || !this.$props.values.ohlcv) {
@@ -61,6 +70,7 @@ export default {
                     const id = x.type + `_${types[x.type]++}`
                     return {
                         name: x.name || id,
+                        id: id,
                         values: values ? f(id, values) : this.n_a(1),
                         unk: !(id in (this.$props.meta_props || {}))
                     }
