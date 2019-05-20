@@ -30,7 +30,7 @@ export default {
     name: 'Chart',
     props: [
         'title_txt', 'data', 'width', 'height', 'font', 'colors',
-        'overlays', 'tv_id', 'config'
+        'overlays', 'tv_id', 'config', 'buttons'
     ],
     components: {
         Grid,
@@ -114,6 +114,7 @@ export default {
                 y_ts: this.y_transforms,
                 tv_id: this.$props.tv_id,
                 config: this.$props.config,
+                buttons: this.$props.buttons
             }
         },
         overlay_subset(source) {

@@ -46,7 +46,7 @@ export default {
                 colorText: '#333',
             },
             buttons: [
-                'display', 'moveUp', 'moveDown', 'settings', 'remove'
+                'display', 'up', 'down', 'settings', 'remove'
             ]
         };
     }
