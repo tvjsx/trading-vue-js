@@ -1,5 +1,7 @@
 <template>
-    <img class="t-vue-lbtn" :src="base64"></img>
+    <img class="t-vue-lbtn" :src="base64"
+        @click="onclick"
+    ></img>
 </template>
 <script>
 
@@ -9,7 +11,7 @@ export default {
     name: 'LegendButton',
     props: ['id', 'uuid'],
     mounted() {
-        console.log(this.$props)
+        console.log(this.$props.uuid)
     },
     computed: {
         base64() {
@@ -22,6 +24,11 @@ export default {
             }
             return id + '.png'
         }
+    },
+    methods: {
+        onclick() {
+            console.log('here')
+        }
     }
 }
 </script>
@@ -31,5 +38,7 @@ export default {
     width: 21px;
     height: 21px;
     margin-bottom: -6px;
+    pointer-events: all;
+    cursor: pointer;
 }
 </style>

@@ -25,6 +25,7 @@
         <button-group
             v-bind:buttons="common.buttons"
             v-bind:ov_id="ind.id"
+            v-bind:grid_id="grid_id"
             v-bind:tv_id="common.tv_id">
         </button-group>
         <span v-if="ind.unk" class="t-vue-unknown">
