@@ -118,12 +118,6 @@ export default {
             },
             deep: true
         },
-        /*layout: {
-            handler: function() {
-                this.redraw()
-            },
-            deep: true
-        },*/
         cursor: {
             handler: function() {
                 this.redraw()
@@ -135,6 +129,10 @@ export default {
         return {
             layer_events: {
                 'new-grid-layer': this.new_layer,
+                'show-grid-layer': d => {
+                    this.renderer.show_hide_layer(d)
+                    this.redraw()
+                },
                 'redraw-grid': this.redraw,
                 'layer-meta-props': d =>
                     this.$emit('layer-meta-props', d)

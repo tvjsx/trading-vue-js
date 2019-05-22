@@ -10,7 +10,7 @@ import Icons from '../stuff/icons.json'
 
 export default {
     name: 'LegendButton',
-    props: ['id', 'tv_id', 'grid_id', 'ov_id', 'index'],
+    props: ['id', 'tv_id', 'grid_id', 'ov_id', 'index', 'display'],
     mounted() {
 
     },
@@ -21,7 +21,7 @@ export default {
         file_name() {
             let id = this.$props.id
             if (this.$props.id === 'display') {
-                id = 'display_on'
+                id = this.$props.display ? 'display_on' : 'display_off' 
             }
             return id + '.png'
         },
