@@ -38,9 +38,9 @@ This library is in alpha stage, API may change. This guide version is **0.3.0**
 
 ### Legend Button Types
 
-|add|remove|display|up|down|settings|
-|---|---|---|---|---|---|---|
-|![](assets/README-0487d08a.png)|![](assets/README-6ce736c2.png)|![](assets/README-cbe4028c.png)|![](assets/README-bc4359ae.png)|![](assets/README-ed2c9def.png)| ![](assets/README-b0d2d797.png)|   
+| add | remove | display | up | down | settings |
+|---|---|---|---|---|---|
+|![](assets/README-0487d08a.png)|![](assets/README-6ce736c2.png)|![](assets/README-cbe4028c.png)|![](assets/README-bc4359ae.png)|![](assets/README-ed2c9def.png)| ![](assets/README-b0d2d797.png)|
 
 ## Methods
 
