@@ -50407,7 +50407,9 @@
                     7782.864661666892
                 ]
             ],
-            "settings": {}
+            "settings": {
+                "display": true
+            }
         },
         {
             "name": "EMA, 43",
