@@ -24,7 +24,7 @@
             v-bind:tv_id="common.tv_id"
             v-on:legend-button-click="button_click">
         </button-group>
-        <span class="t-vue-ivalues">
+        <span class="t-vue-ivalues" v-if="ind.v">
             <span class="t-vue-lspan t-vue-ivalue"
                   v-for="v of ind.values" :style="{ color: v.color }">
                 {{v.value}}
@@ -72,6 +72,7 @@ export default {
                     if (!(x.type in types)) types[x.type] = 0
                     const id = x.type + `_${types[x.type]++}`
                     return {
+                        v: 'display' in x.settings ? x.settings.display : true,
                         name: x.name || id,
                         index: this.json_data.indexOf(x),
                         id: id,

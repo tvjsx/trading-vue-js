@@ -173,6 +173,7 @@ export default class Grid {
         overlays.sort((l1, l2) => l1.z - l2.z)
 
         overlays.forEach(l => {
+            if (!l.display) return
             this.ctx.save()
             l.renderer.draw(this.ctx)
             this.ctx.restore()

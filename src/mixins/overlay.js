@@ -14,6 +14,8 @@ export default {
         this.$emit('new-grid-layer', {
             name: this.$options.name,
             renderer: this,
+            display: 'display' in this.$props.settings ?
+               this.$props.settings['display'] : true,
             z: this.$props.settings['z-index'] ||
                this.$props.settings['zIndex'] || -1,
         })
