@@ -7,6 +7,7 @@
         :ov_id="ov_id"
         :grid_id="grid_id"
         :index="index"
+        :display="display"
         v-on:legend-button-click="button_click"
     >
     </legend-button>
@@ -18,7 +19,10 @@ import LegendButton from './LegendButton.vue'
 
 export default {
     name: 'ButtonGroup',
-    props: ['buttons', 'tv_id', 'ov_id', 'grid_id', 'index'],
+    props: [
+        'buttons', 'tv_id', 'ov_id', 'grid_id', 'index',
+        'display'
+    ],
     components: {
         LegendButton
     },

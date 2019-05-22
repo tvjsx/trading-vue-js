@@ -15,7 +15,7 @@ import Utils from '../../src/stuff/utils.js'
 
 export default {
     name: 'LegendButtons',
-    description: 'Legend buttons test (click the button!)',
+    description: 'Legend buttons test (click the button, see console)',
     components: {
         TradingVue
     },
@@ -25,7 +25,19 @@ export default {
             this.height = window.innerHeight - 50
         },
         on_button_click(event) {
-            alert(`${event.overlay}: ${event.button}`)
+            if (event.button === 'display') {
+                let d = this.chart[event.type][event.dataIndex]
+                if (d) {
+                    if (!('display' in d.settings)) {
+                        this.$set(
+                            d.settings, 'display', true
+                        )
+                    }
+                    this.$set(
+                        d.settings, 'display', !d.settings.display
+                    )
+                }
+            }
             console.log(event)
         }
     },

@@ -13,6 +13,7 @@ export default {
         this.meta_info()
         this.$emit('new-grid-layer', {
             name: this.$options.name,
+            id: this.$props.id,
             renderer: this,
             display: 'display' in this.$props.settings ?
                this.$props.settings['display'] : true,
@@ -52,6 +53,16 @@ export default {
             }`)
         }
     },
-
+    watch: {
+        settings: {
+            handler: function(val) {
+                this.$emit('show-grid-layer', {
+                    id: this.$props.id,
+                    display: this.$props.settings['display']
+                })
+            },
+            deep: true
+        }
+    },
     render(h) { return h() }
 }
