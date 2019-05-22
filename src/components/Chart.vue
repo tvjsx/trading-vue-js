@@ -9,7 +9,8 @@
             v-on:cursor-changed="cursor_changed"
             v-on:cursor-locked="cursor_locked"
             v-on:sidebar-transform="set_ytransform"
-            v-on:layer-meta-props="layer_meta_props">
+            v-on:layer-meta-props="layer_meta_props"
+            v-on:legend-button-click="legend_button_click">
         </grid-section>
         <botbar v-bind="botbar_props"></botbar>
     </div>
@@ -152,6 +153,9 @@ export default {
             this.calc_interval()
             const lay = new Layout(this)
             Utils.copy_layout(this._layout, lay)
+        },
+        legend_button_click(event) {
+            this.$emit('legend-button-click', event)
         }
     },
     computed: {
