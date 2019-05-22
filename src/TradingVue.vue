@@ -10,7 +10,8 @@
         <chart :key="reset"
             v-bind="chart_props"
             v-bind:tv_id="id"
-            v-bind:config="chart_config">
+            v-bind:config="chart_config"
+            v-on:legend-button-click="legend_button">
         </chart>
     </div>
 </template>
@@ -157,7 +158,10 @@ export default {
         return { reset: 0 }
     },
     methods: {
-        reset_chart() { this.reset++ }
+        reset_chart() { this.reset++ },
+        legend_button(event) {
+            this.$emit('legend-button-click', event)
+        }
     }
 }
 </script>

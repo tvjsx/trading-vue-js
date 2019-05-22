@@ -21,7 +21,8 @@
             v-bind:ov_id="ind.id"
             v-bind:grid_id="grid_id"
             v-bind:index="ind.index"
-            v-bind:tv_id="common.tv_id">
+            v-bind:tv_id="common.tv_id"
+            v-on:legend-button-click="button_click">
         </button-group>
         <span class="t-vue-ivalues">
             <span class="t-vue-lspan t-vue-ivalue"
@@ -117,6 +118,9 @@ export default {
         },
         n_a(len) {
             return Array(len).fill({ value: 'n/a' })
+        },
+        button_click(event) {
+            this.$emit('legend-button-click', event)
         }
     }
 }

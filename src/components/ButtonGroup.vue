@@ -7,6 +7,7 @@
         :ov_id="ov_id"
         :grid_id="grid_id"
         :index="index"
+        v-on:legend-button-click="button_click"
     >
     </legend-button>
 </span>
@@ -21,7 +22,10 @@ export default {
     components: {
         LegendButton
     },
-    mounted() {
+    methods: {
+        button_click(event) {
+            this.$emit('legend-button-click', event)
+        }
     }
 }
 </script>

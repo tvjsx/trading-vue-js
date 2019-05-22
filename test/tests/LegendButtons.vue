@@ -1,6 +1,7 @@
 <template>
 <trading-vue :data="chart" :width="this.width" :height="this.height"
         :legend-buttons="buttons"
+        v-on:legend-button-click="on_button_click"
         :color-back="colors.colorBack"
         :color-grid="colors.colorGrid"
         :color-text="colors.colorText">
@@ -14,7 +15,7 @@ import Utils from '../../src/stuff/utils.js'
 
 export default {
     name: 'LegendButtons',
-    description: 'Legend buttons test',
+    description: 'Legend buttons test (click the button!)',
     components: {
         TradingVue
     },
@@ -22,6 +23,10 @@ export default {
         onResize(event) {
             this.width = window.innerWidth
             this.height = window.innerHeight - 50
+        },
+        on_button_click(event) {
+            alert(`${event.overlay}: ${event.button}`)
+            console.log(event)
         }
     },
     mounted() {
