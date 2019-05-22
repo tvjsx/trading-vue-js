@@ -1,5 +1,6 @@
 <template>
     <img class="t-vue-lbtn" :src="base64"
+        :id="uuid"
         @click="onclick"
     ></img>
 </template>
@@ -9,9 +10,9 @@ import Icons from '../stuff/icons.json'
 
 export default {
     name: 'LegendButton',
-    props: ['id', 'uuid'],
+    props: ['id', 'tv_id', 'grid_id', 'ov_id', 'index'],
     mounted() {
-        console.log(this.$props.uuid)
+
     },
     computed: {
         base64() {
@@ -23,11 +24,31 @@ export default {
                 id = 'display_on'
             }
             return id + '.png'
+        },
+        uuid() {
+            let tv = this.$props.tv_id
+            let gr = this.$props.grid_id
+            let ov = this.$props.ov_id
+            return `${tv}-btn-g${gr}-${ov}`
+        },
+        data_type() {
+            return this.$props.grid_id === 0 ?
+                "onchart" : "offchart"
+        },
+        data_index() {
+            return this.$props.grid_id === 0 ?
+                this.$props.index : this.$props.grid_id - 1
         }
     },
     methods: {
         onclick() {
-            console.log('here')
+            this.$emit('legend-button-click', {
+                button: this.$props.id,
+                type: this.data_type,
+                dataIndex: this.data_index,
+                grid: this.$props.grid_id,
+                overlay: this.$props.ov_id,
+            })
         }
     }
 }

@@ -16,18 +16,19 @@
     </div>
     <div class="t-vue-ind" v-for="ind of this.indicators">
         <span class="t-vue-iname">{{ind.name}}</span>
+        <button-group
+            v-bind:buttons="common.buttons"
+            v-bind:ov_id="ind.id"
+            v-bind:grid_id="grid_id"
+            v-bind:index="ind.index"
+            v-bind:tv_id="common.tv_id">
+        </button-group>
         <span class="t-vue-ivalues">
             <span class="t-vue-lspan t-vue-ivalue"
                   v-for="v of ind.values" :style="{ color: v.color }">
                 {{v.value}}
             </span>
         </span>
-        <button-group
-            v-bind:buttons="common.buttons"
-            v-bind:ov_id="ind.id"
-            v-bind:grid_id="grid_id"
-            v-bind:tv_id="common.tv_id">
-        </button-group>
         <span v-if="ind.unk" class="t-vue-unknown">
             (Unknown type)
         </span>
@@ -66,11 +67,12 @@ export default {
             const f = this.format
             var types = {}
             return this.json_data
-                .filter(x =>  x.settings.legend !== false).map(x => {
+                .filter(x => x.settings.legend !== false).map(x => {
                     if (!(x.type in types)) types[x.type] = 0
                     const id = x.type + `_${types[x.type]++}`
                     return {
                         name: x.name || id,
+                        index: this.json_data.indexOf(x),
                         id: id,
                         values: values ? f(id, values) : this.n_a(1),
                         unk: !(id in (this.$props.meta_props || {}))
