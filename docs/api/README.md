@@ -33,10 +33,10 @@ This library is in alpha stage, API may change. This guide version is **0.3.0**
 | data | Object | Data object |
 | overlays | Array | List of custom overlay classes |
 | chartConfig | Object | Overwrites chart config values |
-| legendButtons | Array | Array of legend buttons ids |
+| legendButtons | Array | Array of legend buttons ids (in 0.3.1) |
 
 
-### Legend Button Types
+### Legend Button Types (in 0.3.1)
 
 | add | remove | display | up | down | settings |
 |---|---|---|---|---|---|
