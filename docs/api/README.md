@@ -1,7 +1,7 @@
 # API Book
 
 ::: warning
-This library is in alpha stage, API may change. This guide version is **0.3.0**
+This library is in alpha stage, API may change. This guide version is **0.3.1**
 :::
 
 ![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=Current%20lib%20version)
@@ -33,10 +33,10 @@ This library is in alpha stage, API may change. This guide version is **0.3.0**
 | data | Object | Data object |
 | overlays | Array | List of custom overlay classes |
 | chartConfig | Object | Overwrites chart config values |
-| legendButtons | Array | Array of legend buttons ids (in 0.3.1) |
+| legendButtons | Array | Array of legend buttons ids |
 
 
-### Legend Button Types (in 0.3.1)
+### Legend Button Types
 
 | add | remove | display | up | down | settings |
 |---|---|---|---|---|---|
@@ -58,6 +58,38 @@ Resets the chart to the default state. Use it if you need to reset the time rang
 export default {
     mounted() {
         this.$refs.tradingVue.reset_chart()
+    }
+}
+</script>
+```
+
+## Events
+
+### legend-button-click
+
+Emitted when user clicks on the legend button. Event format:
+
+| Prop | Type | Description |
+|---|---|---|
+| button  | String |  Button type, e.g. 'display' |
+| dataIndex  | Number  | Data index in onchart/offchart array |
+| grid  |  Number | Grid id (0 is the main grid) |
+| overlay |  String |  Overlay id, e.g. EMA_0 |
+| type  |  String  | Indicator type (onchart/offchart) |
+
+*Example:*
+
+```html
+<trading-vue
+    :legend-buttons="['display']"
+    v-on:legend-button-click="on_button_click">
+</trading-vue>
+<script>
+export default {
+    methods: {
+        on_button_click(event) {
+            // ...
+        }
     }
 }
 </script>
