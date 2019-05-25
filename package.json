@@ -5,6 +5,7 @@
   "main": "./dist/trading-vue.js",
   "scripts": {
     "test": "webpack-dev-server --config webpack/test.config.js --mode development --progress --hot",
+    "eslint": "./node_modules/.bin/eslint src",
     "dev": "webpack-dev-server --config webpack/dev.config.js --mode development --progress --hot",
     "build": "webpack  --config webpack/build.config.js --mode production --progress"
   },
@@ -29,6 +30,9 @@
     "@babel/preset-env": "^7.4.4",
     "babel-loader": "^8.0.6",
     "css-loader": "^2.1.1",
+    "eslint": "^5.16.0",
+    "eslint-config-eslint": "^5.0.1",
+    "eslint-plugin-vue": "^5.2.2",
     "html-webpack-plugin": "^3.2.0",
     "request": "^2.88.0",
     "tulind": "^0.8.15",
