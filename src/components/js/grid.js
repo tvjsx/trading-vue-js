@@ -4,7 +4,6 @@
 
 import * as Hammer from 'hammerjs'
 import Hamster from 'hamsterjs'
-import Const from '../../stuff/constants.js'
 import Candle from './candle.js'
 import Volbar from './volbar.js'
 import Utils from '../../stuff/utils.js'
@@ -78,7 +77,7 @@ export default class Grid {
             }
         })
 
-        mc.on('panend', event => {
+        mc.on('panend', () => {
             this.drug = null
             this.comp.$emit('cursor-locked', false)
         })
@@ -92,14 +91,14 @@ export default class Grid {
             this.update()
         })
 
-        mc.on('pinchstart', event =>  {
+        mc.on('pinchstart', () =>  {
             this.pinch = {
-                t: range[1] - range[0],
-                r: range.slice()
+                t: this.range[1] - this.range[0],
+                r: this.range.slice()
             }
         })
 
-        mc.on('pinchend', event =>  {
+        mc.on('pinchend', () =>  {
             this.pinch = null
         })
 
@@ -230,14 +229,14 @@ export default class Grid {
     c_layer() {
         return new Layer('Candles', 0, () => {
             for (var c of this.layout.candles) {
-                let candle = new Candle(this, c)
+                new Candle(this, c)
             }
         })
     }
     v_layer() {
         return new Layer('Volume', -100, () => {
             for (var c of this.layout.volume) {
-                let volbar = new Volbar(this, c)
+                new Volbar(this, c)
             }
         })
     }

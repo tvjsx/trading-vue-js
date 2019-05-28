@@ -2,7 +2,7 @@
 import Const from '../../stuff/constants.js'
 import Utils from '../../stuff/utils.js'
 
-const { MINUTE15, HOUR, DAY, WEEK, MONTH, YEAR, MONTHMAP } = Const
+const { MINUTE15, HOUR, DAY, WEEK, YEAR, MONTHMAP } = Const
 
 export default class Botbar {
 
@@ -25,7 +25,6 @@ export default class Botbar {
         const width = this.layout.botbar.width
         const height = this.layout.botbar.height
 
-        const h = height - 0.5
         const sb = this.layout.grids[0].sb
 
         this.ctx.fillStyle = this.$p.colors.colorBack
@@ -95,7 +94,6 @@ export default class Botbar {
 
         let h = Utils.add_zero(d.getHours())
         let m = Utils.add_zero(d.getMinutes())
-        let s = Utils.add_zero(d.getSeconds())
         return h + ":" + m
 
     }
@@ -158,9 +156,9 @@ export default class Botbar {
     }
 
 
-    mousemove(e) { }
-    mouseout(e) { }
-    mouseup(e) { }
-    mousedown(e) { }
+    mousemove() { }
+    mouseout() { }
+    mouseup() { }
+    mousedown() { }
 
 }
