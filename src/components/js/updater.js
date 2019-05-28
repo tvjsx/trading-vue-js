@@ -54,7 +54,7 @@ class CursorUpdater {
 
         const data = this.comp.main_section.sub
 
-        let xs = data.map((x, i) => grid.t2screen(x[0]) + 0.5)
+        let xs = data.map(x => grid.t2screen(x[0]) + 0.5)
         let i = Utils.nearest_a(e.x, xs)[0]
         if (!xs[i]) return {}
         return {

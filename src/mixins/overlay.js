@@ -55,7 +55,7 @@ export default {
     },
     watch: {
         settings: {
-            handler: function(val) {
+            handler: function() {
                 this.$emit('show-grid-layer', {
                     id: this.$props.id,
                     display: this.$props.settings['display']

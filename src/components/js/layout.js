@@ -6,10 +6,7 @@
 // So it's better to calc all in one place.
 
 import Const from '../../stuff/constants.js'
-import Utils from '../../stuff/utils.js'
 import GridMaker from './grid_maker.js'
-
-const { DAY, WEEK, MONTH, TIMESCALES, $SCALES } = Const
 
 function Layout(params) {
 
@@ -104,7 +101,7 @@ function Layout(params) {
 
     let grids = [], offset = 0
 
-    for (var i = 0; i < gms.length; i++) {
+    for (i = 0; i < gms.length; i++) {
         gms[i].set_sidebar(sb)
         grids.push(gms[i].create())
         grids[i].id = i

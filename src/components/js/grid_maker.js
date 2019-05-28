@@ -3,7 +3,7 @@ import Utils from '../../stuff/utils.js'
 
 import layout_fn from './layout_fn.js'
 
-const { DAY, WEEK, MONTH, TIMESCALES, $SCALES } = Const
+const { TIMESCALES, $SCALES } = Const
 
 // master_grid - ref to the master grid
 function GridMaker(id, params, master_grid = null) {
@@ -36,8 +36,8 @@ function GridMaker(id, params, master_grid = null) {
                 arr.push(...sub.map(x => x[i])
                     .filter(x => typeof x !== 'string'))
             }
-            var hi = Math.max(...arr)
-            var lo = Math.min(...arr)
+            hi = Math.max(...arr)
+            lo = Math.min(...arr)
 
             if (y_range_fn) { [hi, lo] = y_range_fn(hi, lo) }
         }
@@ -167,8 +167,6 @@ function GridMaker(id, params, master_grid = null) {
             self.xs = []
             const dt = range[1] - range[0]
             const r = self.spacex / dt
-
-            let shift = 0
 
             for (var i = 0; i < sub.length; i++) {
                 let p = sub[i]

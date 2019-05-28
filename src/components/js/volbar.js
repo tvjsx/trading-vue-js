@@ -1,6 +1,4 @@
 
-import Const from '../../stuff/constants.js'
-
 export default class Volbar {
 
     constructor(grid, data) {

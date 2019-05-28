@@ -12,7 +12,7 @@ export default {
             canvas.height = this._attrs.height
             canvas.style.width = `${this._attrs.width}px`;
             canvas.style.height = `${this._attrs.height}px`;
-            const ctx = canvas.getContext('2d')
+            //const ctx = canvas.getContext('2d')
             //ctx.scale(dpr, dpr)
         },
         create_canvas(h, id, props) {
