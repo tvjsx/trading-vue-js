@@ -22,10 +22,8 @@ import Context from '../stuff/context.js'
 import Layout from './js/layout.js'
 import Utils from '../stuff/utils.js'
 import CursorUpdater from './js/updater.js'
-import Grid from './Grid.vue'
 import GridSection from './Section.vue'
 import Botbar from './Botbar.vue'
-import Sidebar from './Sidebar.vue'
 
 export default {
     name: 'Chart',
@@ -34,10 +32,8 @@ export default {
         'overlays', 'tv_id', 'config', 'buttons'
     ],
     components: {
-        Grid,
         GridSection,
-        Botbar,
-        Sidebar,
+        Botbar
     },
     created() {
 
@@ -87,7 +83,7 @@ export default {
             if (this.ohlcv.length < dl) {
                 var s = 0, d = ml
             } else {
-                var s = l - dl, d = 0.5
+                s = l - dl, d = 0.5
             }
 
             Utils.overwrite(this.range, [

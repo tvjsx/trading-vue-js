@@ -1,8 +1,7 @@
 <template>
     <img class="t-vue-lbtn" :src="base64"
         :id="uuid"
-        @click="onclick"
-    ></img>
+        @click="onclick">
 </template>
 <script>
 
@@ -21,7 +20,7 @@ export default {
         file_name() {
             let id = this.$props.id
             if (this.$props.id === 'display') {
-                id = this.$props.display ? 'display_on' : 'display_off' 
+                id = this.$props.display ? 'display_on' : 'display_off'
             }
             return id + '.png'
         },
