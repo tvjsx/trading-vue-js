@@ -109,21 +109,10 @@ export default class Grid {
 
         window.addEventListener("gesturestart", event => {
             event.preventDefault()
-            console.log('here')
-            /*startX = e.pageX - posX;
-            startY = e.pageY - posY;
-            gestureStartRotation = rotation;
-            gestureStartScale = scale;*/
-        });
+        })
 
         window.addEventListener("gesturechange", event => {
             event.preventDefault()
-
-            /*rotation = gestureStartRotation + e.rotation
-            scale = gestureStartScale * e.scale
-            posX = e.pageX - startX
-            posY = e.pageY - startY*/
-
         })
 
         window.addEventListener("gestureend", e => {
@@ -272,18 +261,16 @@ export default class Grid {
         event.preventDefault()
 
         // Trackpad pinch zoom
-        if (event.originalEvent.ctrlKey) {
-            delta *= 0.5
+        //if (event.originalEvent.ctrlKey) {
+            //delta *= 0.025
+        //}
+
+        if (Math.abs(event.deltaX) > 0.1) {
+            this.trackpad = true
+            this.trackpad_scroll(event)
         }
 
-        if (Math.abs(event.deltaX) > 0.1) return
-
-        /*if (Utils.now() > this.wheel_t || !this.wheel_t) {
-            this.wheel_t = Utils.now() + 250
-            this.wheel_speed = this.deltas
-            this.deltas = 0
-            console.log(this.wheel_speed)
-        }*/
+        if (this.trackpad) delta *= 0.032
 
         delta = Utils.smart_wheel(delta)
 
@@ -343,6 +330,10 @@ export default class Grid {
 
         this.change_range()
 
+    }
+
+    trackpad_scroll(event) {
+        
     }
 
     change_range() {
