@@ -2,11 +2,7 @@
 import Const from '../../stuff/constants.js'
 import Utils from '../../stuff/utils.js'
 
-const { MINUTE15, HOUR, DAY, WEEK, MONTH, YEAR, MONTHMAP } = Const
-
-const {
-    SIDEBAR, SBMIN, BOTBAR, PANWIDTH, PANHEIGHT
-} = Const.ChartConfig
+const { MINUTE15, HOUR, DAY, WEEK, YEAR, MONTHMAP } = Const
 
 export default class Botbar {
 
@@ -29,7 +25,6 @@ export default class Botbar {
         const width = this.layout.botbar.width
         const height = this.layout.botbar.height
 
-        const h = height - 0.5
         const sb = this.layout.grids[0].sb
 
         this.ctx.fillStyle = this.$p.colors.colorBack
@@ -75,11 +70,12 @@ export default class Botbar {
         this.ctx.fillStyle = this.$p.colors.colorPanel
 
         let measure = this.ctx.measureText(lbl + '    ')
-        let panwidth = measure.width
+        let panwidth = Math.floor(measure.width)
         let cursor = this.nearest()
-        let x = cursor - panwidth * 0.5 - 0.5
+        let x = Math.floor(cursor - panwidth * 0.5)
         let y = - 0.5
-        this.ctx.fillRect(x, y, panwidth, PANHEIGHT)
+        let panheight = this.comp.config.PANHEIGHT
+        this.ctx.fillRect(x, y, panwidth, panheight + 0.5)
 
         this.ctx.fillStyle = this.$p.colors.colorTextHL
         this.ctx.textAlign = 'center'
@@ -98,7 +94,6 @@ export default class Botbar {
 
         let h = Utils.add_zero(d.getHours())
         let m = Utils.add_zero(d.getMinutes())
-        let s = Utils.add_zero(d.getSeconds())
         return h + ":" + m
 
     }
@@ -161,9 +156,9 @@ export default class Botbar {
     }
 
 
-    mousemove(e) { }
-    mouseout(e) { }
-    mouseup(e) { }
-    mousedown(e) { }
+    mousemove() { }
+    mouseout() { }
+    mouseup() { }
+    mousedown() { }
 
 }

@@ -36,7 +36,6 @@ const ChartConfig = {
     GRIDX: 100,     // px
     GRIDY: 47,      // px
     BOTBAR: 28,     // px
-    PANFWIDTH: 6,   // font width, px
     PANHEIGHT: 24,  // px
     DEFAULT_LEN: 50,// candles
     MINIMUM_LEN: 5, // candles,

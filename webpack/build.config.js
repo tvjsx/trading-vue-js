@@ -19,6 +19,10 @@ let common = {
         libraryTarget: 'umd',
         //libraryExport: "default"
     },
+    performance: {
+        maxEntrypointSize: 512000,
+        maxAssetSize: 512000
+    },
     module: {
         rules: [{
                 test: /\.vue$/,

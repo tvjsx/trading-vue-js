@@ -197,7 +197,7 @@ That's why the title doesn't lie: you can draw ANYTHING.
 ## Roadmap
 
 * ~~Docs~~
-* Tests
+* ~~Tests~~
 * Solve known issues (marked as 'TODO: IMPORTANT')
 * Performance improvements
 * Data-manipulation helpers

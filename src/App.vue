@@ -9,7 +9,6 @@
 <script>
 import TradingVue from './TradingVue.vue'
 import Data from '../data/data.json'
-import Utils from './stuff/utils.js'
 
 export default {
     name: 'app',
@@ -17,7 +16,7 @@ export default {
         TradingVue
     },
     methods: {
-        onResize(event) {
+        onResize() {
             this.width = window.innerWidth
             this.height = window.innerHeight
         }

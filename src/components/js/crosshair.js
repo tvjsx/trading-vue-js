@@ -1,6 +1,4 @@
 
-import Utils from '../../stuff/utils.js'
-import Const from '../../stuff/constants.js'
 
 export default class Crosshair {
 

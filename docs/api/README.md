@@ -1,7 +1,7 @@
 # API Book
 
 ::: warning
-This library is in alpha stage, API may change. This guide version is **0.2.10**
+This library is in alpha stage, API may change. This guide version is **0.3.1**
 :::
 
 ![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=Current%20lib%20version)
@@ -32,6 +32,15 @@ This library is in alpha stage, API may change. This guide version is **0.2.10**
 | font | String | Full font string, e.g. "11px Arial..." |
 | data | Object | Data object |
 | overlays | Array | List of custom overlay classes |
+| chartConfig | Object | Overwrites chart config values |
+| legendButtons | Array | Array of legend buttons ids |
+
+
+### Legend Button Types
+
+| add | remove | display | up | down | settings |
+|---|---|---|---|---|---|
+|![](assets/README-0487d08a.png)|![](assets/README-6ce736c2.png)|![](assets/README-cbe4028c.png)|![](assets/README-bc4359ae.png)|![](assets/README-ed2c9def.png)| ![](assets/README-b0d2d797.png)|
 
 ## Methods
 
@@ -39,7 +48,7 @@ This library is in alpha stage, API may change. This guide version is **0.2.10**
 
 Resets the chart to the default state. Use it if you need to reset the time range.
 
-Example:
+*Example:*
 
 ```HTML
 <template>
@@ -49,6 +58,38 @@ Example:
 export default {
     mounted() {
         this.$refs.tradingVue.reset_chart()
+    }
+}
+</script>
+```
+
+## Events
+
+### legend-button-click
+
+Emitted when user clicks on the legend button. Event format:
+
+| Prop | Type | Description |
+|---|---|---|
+| button  | String |  Button type, e.g. 'display' |
+| dataIndex  | Number  | Data index in onchart/offchart array |
+| grid  |  Number | Grid id (0 is the main grid) |
+| overlay |  String |  Overlay id, e.g. EMA_0 |
+| type  |  String  | Indicator type (onchart/offchart) |
+
+*Example:*
+
+```html
+<trading-vue
+    :legend-buttons="['display']"
+    v-on:legend-button-click="on_button_click">
+</trading-vue>
+<script>
+export default {
+    methods: {
+        on_button_click(event) {
+            // ...
+        }
     }
 }
 </script>
@@ -237,6 +278,7 @@ Candle = {
 }
 ```
 <br>
+
 *Example:*
 
 ```js
@@ -287,7 +329,7 @@ draw(ctx) {
 }
 ```
 
-#### use_for(ctx)
+#### use_for()
 
 * **Returns**: list of indicator types which this overlay can draw. **Required**
 The best practice is to include a generic type first and then a specific, e.g.

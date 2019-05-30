@@ -1,13 +1,13 @@
 import * as Hammer from 'hammerjs'
-import Const from '../../stuff/constants.js'
 import Utils from '../../stuff/utils.js'
 
-
-const { PANHEIGHT, EXPAND } = Const.ChartConfig
+var PANHEIGHT
 
 export default class Sidebar {
 
     constructor(canvas, comp, side = 'right') {
+
+        PANHEIGHT = comp.config.PANHEIGHT
 
         this.canvas = canvas
         this.ctx = canvas.getContext('2d')
@@ -62,7 +62,7 @@ export default class Sidebar {
             }
         })
 
-        mc.on('panend', event => {
+        mc.on('panend', () => {
             this.drug = null
             this.comp.$emit('sidebar-transform', {
                 grid_id: this.id,
@@ -70,7 +70,7 @@ export default class Sidebar {
             })
         })
 
-        mc.on('doubletap', event => {
+        mc.on('doubletap', () => {
             this.comp.$emit('sidebar-transform', {
                 grid_id: this.id,
                 zoom: 1.0,
@@ -207,9 +207,9 @@ export default class Sidebar {
         return range
     }
 
-    mousemove(e) { }
-    mouseout(e) { }
-    mouseup(e) { }
-    mousedown(e) { }
+    mousemove() { }
+    mouseout() { }
+    mouseup() { }
+    mousedown() { }
 
 }
