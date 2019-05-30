@@ -5,7 +5,6 @@
 // data formatting (e.g. grid width depends on sidebar precision)
 // So it's better to calc all in one place.
 
-import Const from '../../stuff/constants.js'
 import GridMaker from './grid_maker.js'
 
 function Layout(params) {

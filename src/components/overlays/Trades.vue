@@ -45,13 +45,13 @@ export default {
                     var pos = 'Short'
                     break
                 case 0:
-                    var pos = 'Closed'
+                    pos = 'Closed'
                     break
                 case 1:
-                    var pos = 'Long'
+                    pos = 'Long'
                     break
                 default:
-                    var pos = 'Unknown'
+                    pos = 'Unknown'
             }
 
             return [

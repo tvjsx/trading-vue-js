@@ -101,7 +101,6 @@ export default {
             return p
         },
         get_meta_props() {
-            const id = this.$props.grid_id
             return this.meta_props
         }
     },
