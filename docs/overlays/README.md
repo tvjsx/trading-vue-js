@@ -1,7 +1,7 @@
 # Built-in Overlays
 
 ::: warning
-This library is in alpha stage, API may change. This guide version is **0.2.5**
+This library is in alpha stage, API may change. This guide's version is **0.3.0**
 :::
 
 ![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=Current%20lib%20version)
@@ -102,18 +102,18 @@ This library is in alpha stage, API may change. This guide version is **0.2.5**
 | backColor | String | Channel body color, hex |
 | showMid  | Boolean | Show/hide middle line, default = true |
 
-## RSI
+## Range
 
 | Type name | Aliases | Description |
 |---|---|---|
-| RSI  | - | Relative strength index |
+| Range  | RSI | Fixed range indicator (e.g. oscillator) |
 
 ### Data format
 
 ```
 {
     "name": "Indicator name",
-    "type": "RSI",
+    "type": "Range",
     "data": [
         [ <timestamp>, <Number> ],
         ...

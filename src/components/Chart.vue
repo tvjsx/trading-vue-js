@@ -9,7 +9,8 @@
             v-on:cursor-changed="cursor_changed"
             v-on:cursor-locked="cursor_locked"
             v-on:sidebar-transform="set_ytransform"
-            v-on:layer-meta-props="layer_meta_props">
+            v-on:layer-meta-props="layer_meta_props"
+            v-on:legend-button-click="legend_button_click">
         </grid-section>
         <botbar v-bind="botbar_props"></botbar>
     </div>
@@ -17,27 +18,22 @@
 
 <script>
 
-import Const from '../stuff/constants.js'
 import Context from '../stuff/context.js'
 import Layout from './js/layout.js'
 import Utils from '../stuff/utils.js'
 import CursorUpdater from './js/updater.js'
-import Grid from './Grid.vue'
 import GridSection from './Section.vue'
 import Botbar from './Botbar.vue'
-import Sidebar from './Sidebar.vue'
 
 export default {
     name: 'Chart',
     props: [
         'title_txt', 'data', 'width', 'height', 'font', 'colors',
-        'overlays', 'tv_id'
+        'overlays', 'tv_id', 'config', 'buttons'
     ],
     components: {
-        Grid,
         GridSection,
-        Botbar,
-        Sidebar,
+        Botbar
     },
     created() {
 
@@ -79,15 +75,15 @@ export default {
             Utils.overwrite(this.range, this.range)
         },
         default_range() {
-            const dl = Const.ChartConfig.DEFAULT_LEN
-            const ml = Const.ChartConfig.MINIMUM_LEN + 0.5
+            const dl = this.$props.config.DEFAULT_LEN
+            const ml = this.$props.config.MINIMUM_LEN + 0.5
             const l = this.ohlcv.length - 1
 
             if (this.ohlcv.length < 2) return
             if (this.ohlcv.length < dl) {
                 var s = 0, d = ml
             } else {
-                var s = l - dl, d = 0.5
+                s = l - dl, d = 0.5
             }
 
             Utils.overwrite(this.range, [
@@ -113,7 +109,9 @@ export default {
                 colors: this.$props.colors,
                 font: this.$props.font,
                 y_ts: this.y_transforms,
-                tv_id: this.$props.tv_id
+                tv_id: this.$props.tv_id,
+                config: this.$props.config,
+                buttons: this.$props.buttons
             }
         },
         overlay_subset(source) {
@@ -151,6 +149,9 @@ export default {
             this.calc_interval()
             const lay = new Layout(this)
             Utils.copy_layout(this._layout, lay)
+        },
+        legend_button_click(event) {
+            this.$emit('legend-button-click', event)
         }
     },
     computed: {

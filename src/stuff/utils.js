@@ -1,5 +1,5 @@
 
-var IndexedArray = require("arrayslicer");
+import IndexedArray from 'arrayslicer'
 
 export default {
 

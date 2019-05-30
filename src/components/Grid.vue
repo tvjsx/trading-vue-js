@@ -7,7 +7,7 @@ import Crosshair from './Crosshair.vue'
 
 import Spline from "./overlays/Spline.vue";
 import Splines from "./overlays/Splines.vue";
-import RSI from "./overlays/RSI.vue";
+import Range from "./overlays/Range.vue";
 import Trades from "./overlays/Trades.vue";
 import Channel from "./overlays/Channel.vue";
 
@@ -15,13 +15,14 @@ export default {
     name: 'Grid',
     props: [
         'sub', 'layout', 'range', 'interval', 'cursor', 'colors', 'overlays',
-        'width', 'height', 'data', 'grid_id', 'y_transform', 'font', 'tv_id'
+        'width', 'height', 'data', 'grid_id', 'y_transform', 'font', 'tv_id',
+        'config'
     ],
     mixins: [Canvas],
     components: { Crosshair },
     created() {
         // List of all possible overlays (builtin + custom)
-        this._list = [Spline, Splines, RSI, Trades, Channel]
+        this._list = [Spline, Splines, Range, Trades, Channel]
             .concat(this.$props.overlays)
         this._registry = {}
 
@@ -117,12 +118,6 @@ export default {
             },
             deep: true
         },
-        /*layout: {
-            handler: function() {
-                this.redraw()
-            },
-            deep: true
-        },*/
         cursor: {
             handler: function() {
                 this.redraw()
@@ -134,6 +129,10 @@ export default {
         return {
             layer_events: {
                 'new-grid-layer': this.new_layer,
+                'show-grid-layer': d => {
+                    this.renderer.show_hide_layer(d)
+                    this.redraw()
+                },
                 'redraw-grid': this.redraw,
                 'layer-meta-props': d =>
                     this.$emit('layer-meta-props', d)

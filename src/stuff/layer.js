@@ -12,6 +12,7 @@ class Layer {
         }
         this.name = name
         this.z = z
+        this.display = true
     }
 }
 

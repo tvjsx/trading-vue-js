@@ -4,17 +4,17 @@
 
 import * as Hammer from 'hammerjs'
 import Hamster from 'hamsterjs'
-import Const from '../../stuff/constants.js'
 import Candle from './candle.js'
 import Volbar from './volbar.js'
 import Utils from '../../stuff/utils.js'
 import Layer from '../../stuff/layer.js'
 
-const { BOTBAR, MIN_ZOOM, MAX_ZOOM } = Const.ChartConfig
-
 export default class Grid {
 
     constructor(canvas, comp) {
+
+        this.MIN_ZOOM = comp.config.MIN_ZOOM
+        this.MAX_ZOOM = comp.config.MAX_ZOOM
 
         this.canvas = canvas
         this.ctx = canvas.getContext('2d')
@@ -78,7 +78,7 @@ export default class Grid {
             }
         })
 
-        mc.on('panend', event => {
+        mc.on('panend', () => {
             this.drug = null
             this.comp.$emit('cursor-locked', false)
         })
@@ -92,14 +92,14 @@ export default class Grid {
             this.update()
         })
 
-        mc.on('pinchstart', event =>  {
+        mc.on('pinchstart', () =>  {
             this.pinch = {
-                t: range[1] - range[0],
-                r: range.slice()
+                t: this.range[1] - this.range[0],
+                r: this.range.slice()
             }
         })
 
-        mc.on('pinchend', event =>  {
+        mc.on('pinchend', () =>  {
             this.pinch = null
         })
 
@@ -178,6 +178,11 @@ export default class Grid {
         this.update()
     }
 
+    show_hide_layer(event) {
+        let l = this.overlays.filter(x => x.id === event.id)
+        if (l.length) l[0].display = event.display
+    }
+
     update() {
 
         // Update reference to the grid
@@ -197,6 +202,7 @@ export default class Grid {
         overlays.sort((l1, l2) => l1.z - l2.z)
 
         overlays.forEach(l => {
+            if (!l.display) return
             this.ctx.save()
             l.renderer.draw(this.ctx)
             this.ctx.restore()
@@ -248,14 +254,14 @@ export default class Grid {
     c_layer() {
         return new Layer('Candles', 0, () => {
             for (var c of this.layout.candles) {
-                let candle = new Candle(this, c)
+                new Candle(this, c)
             }
         })
     }
     v_layer() {
         return new Layer('Volume', -100, () => {
             for (var c of this.layout.volume) {
-                let volbar = new Volbar(this, c)
+                new Volbar(this, c)
             }
         })
     }
@@ -284,8 +290,8 @@ export default class Grid {
         // TODO: mouse zooming is a little jerky,
         // needs to follow f(mouse_wheel_speed) and
         // if speed is low, scroll shoud be slower
-        if (delta < 0 && this.data.length <= MIN_ZOOM) return
-        if (delta > 0 && this.data.length > MAX_ZOOM) return
+        if (delta < 0 && this.data.length <= this.MIN_ZOOM) return
+        if (delta > 0 && this.data.length > this.MAX_ZOOM) return
 
         let k = this.interval / 1000
         this.range[0] -= delta * k * this.data.length
@@ -326,8 +332,8 @@ export default class Grid {
 
     pinchzoom(scale) {
 
-        if (scale > 1 && this.data.length <= MIN_ZOOM) return
-        if (scale < 1 && this.data.length > MAX_ZOOM) return
+        if (scale > 1 && this.data.length <= this.MIN_ZOOM) return
+        if (scale < 1 && this.data.length > this.MAX_ZOOM) return
 
         let t = this.pinch.t
         let nt = t * 1 / scale

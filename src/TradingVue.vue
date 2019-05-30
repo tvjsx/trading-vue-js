@@ -7,8 +7,12 @@
             width: this.width+'px',
             height: this.height+'px'}">
         <!-- <toolbar> </toolbar> TODO: add drawing tools -->
-        <chart :key="reset" v-bind="chart_props"
-            v-bind:tv_id="id"></chart>
+        <chart :key="reset"
+            v-bind="chart_props"
+            v-bind:tv_id="id"
+            v-bind:config="chart_config"
+            v-on:legend-button-click="legend_button">
+        </chart>
     </div>
 </template>
 
@@ -111,6 +115,16 @@ export default {
         overlays: {
             type: Array,
             default: function () { return [] }
+        },
+        // Overwrites ChartConfig values,
+        // see constants.js
+        chartConfig: {
+            type: Object,
+            default: function () { return {} }
+        },
+        legendButtons: {
+            type: Array,
+            default: function () { return [] }
         }
     },
     computed: {
@@ -123,6 +137,7 @@ export default {
                 width: this.$props.width,
                 height: this.$props.height,
                 font: this.$props.font,
+                buttons: this.$props.legendButtons,
                 colors: {}
             }
             for (var k in this.$props) {
@@ -131,13 +146,22 @@ export default {
                 }
             }
             return chart_props
+        },
+        chart_config() {
+            return Object.assign(
+                Const.ChartConfig,
+                this.$props.chartConfig,
+            )
         }
     },
     data() {
         return { reset: 0 }
     },
     methods: {
-        reset_chart() { this.reset++ }
+        reset_chart() { this.reset++ },
+        legend_button(event) {
+            this.$emit('legend-button-click', event)
+        }
     }
 }
 </script>

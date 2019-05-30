@@ -5,7 +5,7 @@
 import Overlay from '../../mixins/overlay.js'
 
 export default {
-    name: 'RSI',
+    name: 'Range',
     mixins: [Overlay],
     methods: {
         meta_info() {
@@ -32,8 +32,8 @@ export default {
         draw(ctx) {
 
             const layout = this.$props.layout
-            const upper = layout.$2screen(this.sett.upper)
-            const lower = layout.$2screen(this.sett.lower)
+            const upper = layout.$2screen(this.sett.upper || 70)
+            const lower = layout.$2screen(this.sett.lower || 30)
 
             // RSI values
 
@@ -75,7 +75,7 @@ export default {
         // indicator (let's say EMA),
         // just create a new overlay with the same type:
         // e.g. use_for() { return ['EMA'] }.
-        use_for() { return ['RSI'] },
+        use_for() { return ['Range', 'RSI'] },
 
         // Colors for the legend, should have the
         // same dimention as a data point (excl. timestamp)

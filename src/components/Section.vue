@@ -5,7 +5,8 @@
             v-bind:values="section_values"
             v-bind:grid_id="grid_id"
             v-bind:common="legend_props"
-            v-bind:meta_props="get_meta_props">
+            v-bind:meta_props="get_meta_props"
+            v-on:legend-button-click="button_click">
         </chart-legend>
         <grid v-bind="grid_props" v-bind:grid_id="grid_id"
              v-on:range-changed="range_changed"
@@ -54,6 +55,9 @@ export default {
         emit_meta_props(d) {
             this.$set(this.meta_props, d.layer_id, d)
             this.$emit('layer-meta-props', d)
+        },
+        button_click(event) {
+            this.$emit('legend-button-click', event)
         }
     },
     computed: {
@@ -97,7 +101,6 @@ export default {
             return p
         },
         get_meta_props() {
-            const id = this.$props.grid_id
             return this.meta_props
         }
     },

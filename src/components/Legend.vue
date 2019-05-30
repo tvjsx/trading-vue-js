@@ -14,11 +14,20 @@
         C<span class="t-vue-lspan" >{{ohlcv[3]}}</span>
         V<span class="t-vue-lspan" >{{ohlcv[4]}}</span>
     </div>
-    <div class="t-vue-ind" v-for="ind of this.indicators">
+    <div class="t-vue-ind" v-for="ind in this.indicators">
         <span class="t-vue-iname">{{ind.name}}</span>
-        <span class="t-vue-ivalues">
+        <button-group
+            v-bind:buttons="common.buttons"
+            v-bind:ov_id="ind.id"
+            v-bind:grid_id="grid_id"
+            v-bind:index="ind.index"
+            v-bind:tv_id="common.tv_id"
+            v-bind:display="ind.v"
+            v-on:legend-button-click="button_click">
+        </button-group>
+        <span class="t-vue-ivalues" v-if="ind.v">
             <span class="t-vue-lspan t-vue-ivalue"
-                  v-for="v of ind.values" :style="{ color: v.color }">
+                  v-for="v in ind.values" :style="{ color: v.color }">
                 {{v.value}}
             </span>
         </span>
@@ -29,11 +38,15 @@
 </div>
 </template>
 <script>
+
+import ButtonGroup from './ButtonGroup.vue'
+
 export default {
     name: 'ChartLegend',
     props: [
         'common', 'values', 'grid_id', 'meta_props'
     ],
+    components: { ButtonGroup },
     computed: {
         ohlcv() {
             if (!this.$props.values || !this.$props.values.ohlcv) {
@@ -56,11 +69,14 @@ export default {
             const f = this.format
             var types = {}
             return this.json_data
-                .filter(x =>  x.settings.legend !== false).map(x => {
+                .filter(x => x.settings.legend !== false).map(x => {
                     if (!(x.type in types)) types[x.type] = 0
                     const id = x.type + `_${types[x.type]++}`
                     return {
+                        v: 'display' in x.settings ? x.settings.display : true,
                         name: x.name || id,
+                        index: this.json_data.indexOf(x),
+                        id: id,
                         values: values ? f(id, values) : this.n_a(1),
                         unk: !(id in (this.$props.meta_props || {}))
                     }
@@ -104,6 +120,9 @@ export default {
         },
         n_a(len) {
             return Array(len).fill({ value: 'n/a' })
+        },
+        button_click(event) {
+            this.$emit('legend-button-click', event)
         }
     }
 }
