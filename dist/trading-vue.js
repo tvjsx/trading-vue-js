@@ -1,5 +1,5 @@
 /*!
- * TradingVue.JS - v0.3.1 - Fri May 24 2019
+ * TradingVue.JS - v0.3.2 - Sat Jun 01 2019
  * https://github.com/C451/trading-vue-js
  * Copyright (c) 2019 c451 Code's All Right;
  * Licensed under the MIT license
@@ -3184,6 +3184,230 @@ if(false) {}
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
+/**
+ * Indexed Array Binary Search module
+ */
+
+/**
+ * Dependencies
+ */
+var util = __webpack_require__(11),
+    cmp = __webpack_require__(12),
+    bin = __webpack_require__(13);
+
+/**
+ * Module interface definition
+ */
+module.exports = IndexedArray;
+
+/**
+ * Indexed Array constructor
+ *
+ * It loads the array data, defines the index field and the comparison function
+ * to be used.
+ *
+ * @param {Array} data is an array of objects
+ * @param {String} index is the object's property used to search the array
+ */
+function IndexedArray(data, index) {
+
+    // is data sortable array or array-like object?
+    if (!util.isSortableArrayLike(data))
+        throw new Error("Invalid data");
+
+    // is index a valid property?
+    if (!index || data.length > 0 && !(index in data[0]))
+        throw new Error("Invalid index");
+
+    // data array
+    this.data = data;
+
+    // name of the index property
+    this.index = index;
+
+    // set index boundary values
+    this.setBoundaries();
+
+    // default comparison function
+    this.compare = typeof this.minv === "number" ? cmp.numcmp : cmp.strcmp;
+
+    // default search function
+    this.search = bin.search;
+
+    // cache of index values to array positions
+    // each value stores an object as { found: true|false, index: array-index }
+    this.valpos = {};
+
+    // cursor and adjacent positions
+    this.cursor = null;
+    this.nextlow = null;
+    this.nexthigh = null;
+}
+
+/**
+ * Set the comparison function
+ *
+ * @param {Function} fn to compare index values that returnes 1, 0, -1
+ */
+IndexedArray.prototype.setCompare = function (fn) {
+    if (typeof fn !== "function")
+        throw new Error("Invalid argument");
+
+    this.compare = fn;
+    return this;
+};
+
+/**
+ * Set the search function
+ *
+ * @param {Function} fn to search index values in the array of objects
+ */
+IndexedArray.prototype.setSearch = function (fn) {
+    if (typeof fn !== "function")
+        throw new Error("Invalid argument");
+
+    this.search = fn;
+    return this;
+};
+
+/**
+ * Sort the data array by its index property
+ */
+IndexedArray.prototype.sort = function () {
+    var self = this,
+        index = this.index;
+
+    // sort the array
+    this.data.sort(function (a, b) {
+        return self.compare(a[index], b[index]);
+    });
+
+    // recalculate boundary values
+    this.setBoundaries();
+
+    return this;
+};
+
+/**
+ * Inspect and set the boundaries of the internal data array
+ */
+IndexedArray.prototype.setBoundaries = function () {
+    var data = this.data,
+        index = this.index;
+
+    this.minv = data.length && data[0][index];
+    this.maxv = data.length && data[data.length - 1][index];
+
+    return this;
+};
+
+/**
+ * Get the position of the object corresponding to the given index
+ *
+ * @param {Number|String} index is the id of the requested object
+ * @returns {Number} the position of the object in the array
+ */
+IndexedArray.prototype.fetch = function (value) {
+    // check data has objects
+    if (this.data.length === 0) {
+        this.cursor = null;
+        this.nextlow = null;
+        this.nexthigh = null;
+        return this;
+    }
+
+    // check the request is within range
+    if (this.compare(value, this.minv) === -1) {
+        this.cursor = null;
+        this.nextlow = null;
+        this.nexthigh = 0;
+        return this;
+    }
+    if (this.compare(value, this.maxv) === 1) {
+        this.cursor = null;
+        this.nextlow = this.data.length - 1;
+        this.nexthigh = null;
+        return this;
+    }
+
+    var valpos = this.valpos,
+        pos = valpos[value];
+
+    // if the request is memorized, just give it back
+    if (pos) {
+        if (pos.found) {
+            this.cursor = pos.index;
+            this.nextlow = null;
+            this.nexthigh = null;
+        } else {
+            this.cursor = null;
+            this.nextlow = pos.prev;
+            this.nexthigh = pos.next;
+        }
+        return this;
+    }
+
+    // if not, do the search
+    var result = this.search.call(this, value);
+    this.cursor = result.index;
+    this.nextlow = result.prev;
+    this.nexthigh = result.next;
+    return this;
+};
+
+/**
+ * Get the object corresponding to the given index
+ *
+ * When no value is given, the function will default to the last fetched item.
+ *
+ * @param {Number|String} [optional] index is the id of the requested object
+ * @returns {Object} the found object or null
+ */
+IndexedArray.prototype.get = function (value) {
+    if (value)
+        this.fetch(value);
+
+    var pos = this.cursor;
+    return pos !== null ? this.data[pos] : null;
+};
+
+/**
+ * Get an slice of the data array
+ *
+ * Boundaries have to be in order.
+ *
+ * @param {Number|String} begin index is the id of the requested object
+ * @param {Number|String} end index is the id of the requested object
+ * @returns {Object} the slice of data array or []
+ */
+IndexedArray.prototype.getRange = function (begin, end) {
+    // check if boundaries are in order
+    if (this.compare(begin, end) === 1) {
+        return [];
+    }
+
+    // fetch start and default to the next index above
+    this.fetch(begin);
+    var start = this.cursor || this.nexthigh;
+
+    // fetch finish and default to the next index below
+    this.fetch(end);
+    var finish = this.cursor || this.nextlow;
+
+    // if any boundary is not set, return no range
+    if (start === null || finish === null) {
+        return [];
+    }
+
+    // return range
+    return this.data.slice(start, finish + 1);
+};
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
 /*
  * Hamster.js v1.1.2
  * (c) 2013 Monospaced http://monospaced.com
@@ -3511,234 +3735,10 @@ if (typeof window.define === 'function' && window.define.amd) {
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module) {
 
 module.exports = {"add.png":"iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAMAAADyHTlpAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAH5QTFRFAAAAAAAAAAAAAAAAAAAAAAAAAAAACgoKBgYGGxsbKioqPz8/Pj4+BQUFCQkJAQEBZGRkh4eHAgICEBAQNjY2g4ODgYGBAAAAAwMDeXl5d3d3GBgYERERgICAgICANDQ0PDw8Y2NjCAgIhYWFGhoaJycnOjo6YWFhgICAdXV14Y16sQAAACp0Uk5TAAILDxIKESEnJiYoKCgTKSkpKCAnKSkFKCkpJiDl/ycpKSA2JyYpKSkpOkQ+xgAAARdJREFUeJzllNt2gyAQRTWiRsHLoDU0GpPYmMv//2BMS+sgl6Z9bM8bi73gnJkBz/sn8lcBIUHofwtG8TpJKUuTLI6cYF7QEqRKynP71VX9AkhNXVlsbMQrLLQVGyPZLsGHWgPrCxMJwHUPlXa79NBp2et5d9f3u3m1XxatQNn7SagOXCUjCjYUDuqxcWlHj4MSfw12FDJchFViRN8+1qcQoUH6lR1L1mEMEErofB6WzEUwylzomfzOQGiOJdXiWH7mQoUyMa4WXJQWOBvLFvPCGxt6FSr5kyH0qi0YddNG2/pgCsOjff4ZTizXPNwKIzl56OoGg9d9Z/+5cs6On+CFCfevFQ3ZaTycx1YMbvDdRvjkp/lHdAcPXzokxcwfDwAAAABJRU5ErkJggg==","display_off.png":"iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAMAAADyHTlpAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAU1QTFRFAAAAh4eHh4eHAAAAAAAAAAAAAwMDAAAAAAAAhoaGGBgYgYGBAAAAPz8/AgICg4ODCQkJhISEh4eHh4eHPj4+NjY2gYGBg4ODgYGBgYGBgoKCAQEBJycngoKChYWFEBAQg4ODCAgIKioqZGRkCgoKBQUFERERd3d3gYGBGxsbNDQ0hISEgYGBPDw8gYGBgYGBh4eHh4eHhYWFh4eHgoKChYWFgYGBgYGBg4ODhoaGg4ODYWFhgoKCBgYGdXV1goKCg4ODgYGBgICAgYGBAAAAg4ODhYWFhISEh4eHgoKChYWFOjo6goKCGhoah4eHh4eHh4eHgoKCh4eHeXl5hoaGgoKChISEgYGBgYGBgoKCY2NjgYGBgoKCh4eHgoKCgYGBhoaGg4ODhoaGhYWFh4eHgYGBhoaGhoaGhoaGg4ODgoKChISEgoKChYWFh4eHfKktUwAAAG90Uk5TACn/AhEFKA8SLCbxCigoVBNKUTYoJ/lh3PyAKSaTNiBtICYpISggKSkmJ0LEKef3lGxA8rn//+pcMSkpnCcptHPJKe0LUjnx5LzKKaMnX73hl64pLnhkzNSgKeLv17LQ+liIzaLe7PfTw5tFpz3K1fXR/gAAAgBJREFUeJzllNdXwjAUxknB0lIoCKVsGTIFQRAZ7r333nuv///R3LZ4mlDQZ/0ekp7b37n5bnITk+mfyDxv5Tir3fwjaElO5BIOKZFLJS1dQVfI0Y809TtEV+elo95RpFPWG+1go4fdQ5QybI8haaNBkM2ANbM09bnrwaPY7iFKrz7EMBdu7CHdVruXIt0M1hb+GKA3LTRKkp5lTA6Dg6xIkhaHhvQ1IlW/UCouQdJNJTRIpk1qO7+wUpcfpl537oBc7VNip3Gi/AmVPBAC1UrL6HXtSGVT+k2Yz0Focad07OMRf3P5BEbd63PFQx7HN+w61JoAm+uBlV48O/0jkLSMmtPCmQ8HwlYdykFV4/LJPp7e3hVyFdapHNehLk6PSjhSkBvwu/cFyJGIYvOyhoc1jjYQFGbygD4CWjoAMla/og3YoSw+KPhjPNoFcim4iFD+pFYA8zZ9WeYU5OBjZ3ORWyCfG03E+47kKpCIJTpGO4KP8XMgtw990xG/PBNTgmPEEXwf7P42oOdFIRAoBCtqTKL6Rcwq4Xsgh5xYC/mmSs6yJKk1YbnVeTq1NaEpmlHbmVn2EORkW2trF2ZzmHGTSUMGl1a9hp4ySRpdQ8yKGURpMmRIYg9pb1YPzg6kO79cLlE6bYFjEtv91bLEUxvhwbWwjY13BxUb9l8+mn9EX8x3Nki8ff5wAAAAAElFTkSuQmCC","display_on.png":"iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAMAAADyHTlpAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAR1QTFRFAAAAh4eHgYGBAAAAAAAAgYGBAAAAAwMDAAAAAAAAgYGBg4ODGBgYgYGBhISEAAAAPz8/AgIChoaGCQkJhYWFPj4+NjY2goKCgYGBAQEBJycngYGBgoKCEBAQCAgIhISEKioqZGRkCgoKBQUFERERd3d3gYGBg4ODgYGBGxsbNDQ0hISEgoKCgoKChYWFPDw8gYGBgYGBhoaGgoKCg4ODgoKCgYGBgoKCgoKCgoKCg4ODgoKChoaGgoKCgYGBhoaGg4ODYWFhBgYGdXV1gYGBg4ODgoKCgICAg4ODg4ODhISEAAAAg4ODOjo6gYGBGhoaeXl5goKCgYGBgoKChYWFgoKChISEgoKCY2NjgYGBg4ODgYGBgYGBg4ODgYGBo8n54AAAAF90Uk5TACn/AhH3BSgPEuhUJvFACigoLBM2KCeA6ykm+pMgIEkmKSEoICn9XCkmJ0u6nDop4sUypGuEzLZ6vmCYLZ/dLykpJynUYa8pcllCC1Ip2ycpisl1PadFsintbsPQZdi/bTW7AAAB4UlEQVR4nOWUZ1fCMBSGSSGWFiq0UDbIkr2XbBwMxS0b1P//M0xK9XSiftX7oel585zkvfcmMRj+SRhvzRRlthm/BU3Ry3TYzofTsajpIOjw2iNAjIiddehvHXSdA0mkXEEdG0fkE1DEKXmkSVqVIA6rBmsktUgAWLWHoGp30UNclbtLmwQgoyya91wPTbFy0mQXJ5zJQO6BgXRjfH0iSkX5stHIXr5r0bB/lu8syjR8rzsFbR2SpX+5J2eMP3csLtYsEY2K8BeTFuE2jaVCBw7bHOBuxq16AXmpbui3LtIfbRLUHMY2q4lcFo2WB4KA1SUAlWumNEKCzyxBKZxVHvYGaFguCBx1vM/x0IPzoqQoj5SdP4mns2cCGhBsrgj0uaeUBtzMyxQN8w4mYROTW8+r0oANp8W5mf6WQw5aCYJ2o7ymPaKMi2uVpmWM4TW6tdImgGo1bT4nK6DbbsCc0AZSdmLEFszzHrh6riVvRrNA3/9SE8QLWQu+Gjto9+gE9NBMwr9zi83gFeeFTe11zpm1CHE3HeyVCSknf3MIDcFTbfJKdbR1L4xX49L+/BoillV5uPJqkshD3JWSgpNMXP/lcrD8+hO84MnDr5YpFHv0Fe99VjJ0GBRs2H74aP6R+ACr+TFvZNAQ1wAAAABJRU5ErkJggg==","down.png":"iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAMAAADyHTlpAAAAAXNSR0IB2cksfwAAAKVQTFRFAAAAg4ODgICAAAAAAAAAAAAACAgIAAAAAAAAAAAAAAAAOTk5hYWFEBAQfHx8ODg4dnZ2NDQ0XV1dGxsbKCgogICAFBQUIiIiZGRkgICAgICAFRUVAAAAgICAgICAgICAf39/Li4ugICAcHBwgoKCgICAgoKCgICAg4ODgYGBPj4+goKCgICAhISEgYGBgICAgoKCgICAgYGBgYGBf39/gICAgICAIdPQHAAAADd0Uk5TACn/KAIRIBMFDwooKyApKSknKSYmzCcmKfL7JRCUi2L3J7IpcLUrr0VbKXntNEnkMbxrUcG56CMpi50AAAFZSURBVHic5ZRpf4MgDIeFKFatWm/tfW091u7evv9Hm1Acoujm2y0vFPH5Jf+EEE37J6bblmlatv4jaBCI4rMfR0CMXtAEJ0fccgfM7tAkQHXzArdDxggmqGETGCnJWROkNlOwOqhIhKCtgbSicw1uK/dATSK0aRatIzytA8ik4XSiyJnLSm+VPxULgeyLI3uHRJH+qcB4WZGrKb4c20WwI7b3iUt74OS6XD+xZWrXUCtme0uKTvfcJ65CZFa9VOebqwXmft+oT8yF+/VymT4XeGB+Xx8L+j4gBcoFIDT+oMz6Qp93Y74pCeBpUXaLuW0rUk6r1iv3nP322ewYkgv2nZIvgpSPQDrY5wTjRJDNg9XAE/+uSXIVX812GdKEmtvR2rtWaw+5MAOuofJy79SXu9TgBl4d9DZdI0NjgyiswNCB/qk1J5Bmvp+lQOa9IJNhW4bxm6H5R+wLQYMSQXZNzbcAAAAASUVORK5CYII=","remove.png":"iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAMAAADyHTlpAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAK5QTFRFAAAAh4eHgICAAAAAAAAAh4eHAAAAAwMDAAAAAAAAgICAGBgYAAAAPz8/AgICgICACQkJhoaGhoaGgICAPj4+NjY2gYGBg4ODgYGBAQEBJycngoKCEBAQgICAgICACAgIKioqZGRkCgoKBQUFERERd3d3gYGBGxsbNDQ0gICAPDw8YWFhBgYGdXV1gICAg4ODgICAAAAAOjo6GhoaeXl5gICAhYWFY2NjhYWFgICA9O0oCgAAADp0Uk5TACn/AhErBSgPEvEmCigowxMuMcgoJ7hWrCkmdCD6vSAmKSEoICkpJie6KSknKSkp0wspJynCMik11rrLte8AAAFwSURBVHic5ZTXkoIwFIZNAAPSpKkoRQV7Wcva3v/FFiRmEwise7t7bs7MP98k/ylJq/VPQjjKiiJrwo+gON0uxro7XiRTsRHs+voE4JjoRrf+6sD7AFTMvaDGRht9glLMUJtLqmUwD5XDCohHAmBUPQSV27GHtFK7xycBWJab5uPaR+Hlmue7GfZxHwyWFHVMQghXFgD2A8IOZtfssdNJIXcyFEaSfchzp9BuMVP+Fhvr5Qh0nGfqYTGhm3BcYFUaQBKOhMWzRqHyGFRY03ppQ5lCFZ30RloVZGQTaa3QqEt0OyrQnkSkk8I1YJkvAwPCMgY0UpbzXRZhVbosIWGbZTLNQszGMCM42FJEjWDDjIAMtp+xj6x2K+/DqNDc0r4Yc8yGl3uer2aIyT1iyd8sYSuY8cldZbVrH4zPebTvP8OMNSoedj6XzDyk3pwG98u0/ufqGu7tBW5c1PxriXFyHq5PQxXFzeDThvbmp/lH4gt6WxfZ03H8DwAAAABJRU5ErkJggg==","settings.png":"iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAMAAADyHTlpAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAW5QTFRFAAAAAAAAAAAAAAAAAAAAAAAAAAAACgoKBgYGGxsbKioqQEBAPj4+BQUFCAgIAQEBPz8/ZWVlh4eHZGRkAgICCQkJDw8PNjY2g4ODgoKCNTU1EBAQAAAAAwMDeXl5d3d3AAAAGBgYAAAAERERioqKgoKCgoKCgoKCgYGBgoKChISEhoaGNDQ0g4ODgICAgICAgICAgYGBgYGBhYWFgICAgICAPT09AAAAgYGBgICAgICAgICAgICAY2NjCAgIgICAgICAhYWFhYWFgYGBHBwcgICAhYWFGhoagYGBgYGBg4ODhoaGJycnAAAAhISEgICAg4ODPDw8AAAAgoKCgICAhISEOjo6h4eHgoKCgYGBgICAf39/gYGBgoKCgICAGBgYgYGBg4ODg4ODgICACwsLgYGBgICAgYGBgYGBgYGBgICAgYGBYWFhf39/g4ODPj4+gYGBg4ODgICAhYWFgoKCgYGBgICAgYGBgoKCdXV1T0kC9QAAAHp0Uk5TAAILDxMKESEnJiYpKSgTKSgpKSkoEyAnKSknIAYoKSkFJQEgKl94jYVvVC4nU9f/+K8pOu71KBCi3NPq/ikg0e01Nokm1UUnsZVqQSYOT9lrKRJz5lIpK12jyu+sesgnhGVLxCG55a6Um+GaKfJCKKRgKUt8ocergymDQ9knAAABsElEQVR4nOWUV1vCMBSGg1AQpBZrcVdE3KJxo4LgnuCoe4F7orjHv7doTk3bgF7rd5OnX94nZ+SkCP0TWQqsNpuVs/wI2h2FTleR2+XkHfa8YLHgKRGJSj2SN3fosvIKkVJlVXWONGrkWtEgn1zHJP1GMCs/g7XILFIUpXoTWmaKTnIImGovh72Gxqbmlta2dvgOGpsmQO0dnfhTXd3E6JH0pN1DNnr7MFE/HDsQ0qEO6Pxg9sCh4XDkGx2J6sovBD+G8eiYuo5PxLTKeLoJBZNgT2EcnjY0YYajUKsL7Fk1gcjU3PwChcYTFGorAnsRqlpa1tAVhUbdmr+6RtjIOlgbCjMBUdzc2t7ZzbJ7zAQ4p6GSfRVNwkeKLsvCg31w2JBdjlT0GDxZNzEnpcQ+xWfnFxeXVyp6Tay07gq+L/YUOoBvbomV0V8skiq//DutWfeEfJD1JPLCED4+Pb8kX986tApNQ4iqfSJT76bRzvlgBPODQXW/foYqK5lyeBeYJEL1gaoeGnwIBhjRoQ9SZgTAdEbO/9cKRfmZ+MpGPCVHQ3nBzzS4hKIkuNyh/5g+ALiAXSSas9hwAAAAAElFTkSuQmCC","up.png":"iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAMAAADyHTlpAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAMZQTFRFAAAAh4eHgICAAAAAAAAAAAAAAwMDAAAAAAAAGBgYAAAAPz8/AgICCQkJgICAh4eHPj4+NjY2AQEBJycnEBAQgICAgICACAgIKioqZGRkCgoKBQUFgYGBERERd3d3gYGBGxsbNDQ0gICAgYGBPDw8gYGBh4eHgICAYWFhBgYGgYGBdXV1goKCg4ODhYWFgICAgoKCAAAAhISEOjo6gICAGhoagYGBeXl5hoaGgICAY2Njg4ODgoKCgoKCgYGBgoKCg4ODgoKC64uw1gAAAEJ0Uk5TACn/AhEFKA8SJgooKBP7KignKSYg9c0gJikhKLQgKSkmJ7ywKY8s5SknlClxKTMpXwtFKe0neiku8ClKWmSbbFFjM5GHSgAAAW5JREFUeJzllGd/gjAQxk3AMFWWOHDvVa2rVbu//5cqhJWQQO3b9nkVjv/v7rnLKJX+iYS9JMuSKvwIiu3loKkZzYHXFgvBiqW1QKSWplfySzvmAyDUN50cG2X0DDLqoTKXVLJgIIXDCohHAqCzHhymeuShy/Ru8kkAhtmhWUTvW9fdEnPQaVLU0n8XF0L3kn5P6LTtZPKgNoK+RrUkcGtQ7S9TsgOxxinrkUPYD+LwLCIh7CTsWSVQqRmTuPqpitlZFLQlApXjrsYBc335wOw47ksmUSMMrgKi/gnAE/awCqNHmTUwDf5X34LlBuedsgbUsK15kPMxTIXzzvFSIdsSPBw7nGD1K+7bL3F9xStEnZhoCw71TbpL71GBBbUF1MZmZWTOi97PI3eIJn9zCEtOj0+umaOde2EszqW9/xr6rM54WFtc0vfQNak57Ibd/Jerohu3GFwYqPjVEhve2Z4cbQU1ikFsQ73z0fwj+ga3VBezGuggFQAAAABJRU5ErkJggg=="};
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/**
- * Indexed Array Binary Search module
- */
-
-/**
- * Dependencies
- */
-var util = __webpack_require__(11),
-    cmp = __webpack_require__(12),
-    bin = __webpack_require__(13);
-
-/**
- * Module interface definition
- */
-module.exports = IndexedArray;
-
-/**
- * Indexed Array constructor
- *
- * It loads the array data, defines the index field and the comparison function
- * to be used.
- *
- * @param {Array} data is an array of objects
- * @param {String} index is the object's property used to search the array
- */
-function IndexedArray(data, index) {
-
-    // is data sortable array or array-like object?
-    if (!util.isSortableArrayLike(data))
-        throw new Error("Invalid data");
-
-    // is index a valid property?
-    if (!index || data.length > 0 && !(index in data[0]))
-        throw new Error("Invalid index");
-
-    // data array
-    this.data = data;
-
-    // name of the index property
-    this.index = index;
-
-    // set index boundary values
-    this.setBoundaries();
-
-    // default comparison function
-    this.compare = typeof this.minv === "number" ? cmp.numcmp : cmp.strcmp;
-
-    // default search function
-    this.search = bin.search;
-
-    // cache of index values to array positions
-    // each value stores an object as { found: true|false, index: array-index }
-    this.valpos = {};
-
-    // cursor and adjacent positions
-    this.cursor = null;
-    this.nextlow = null;
-    this.nexthigh = null;
-}
-
-/**
- * Set the comparison function
- *
- * @param {Function} fn to compare index values that returnes 1, 0, -1
- */
-IndexedArray.prototype.setCompare = function (fn) {
-    if (typeof fn !== "function")
-        throw new Error("Invalid argument");
-
-    this.compare = fn;
-    return this;
-};
-
-/**
- * Set the search function
- *
- * @param {Function} fn to search index values in the array of objects
- */
-IndexedArray.prototype.setSearch = function (fn) {
-    if (typeof fn !== "function")
-        throw new Error("Invalid argument");
-
-    this.search = fn;
-    return this;
-};
-
-/**
- * Sort the data array by its index property
- */
-IndexedArray.prototype.sort = function () {
-    var self = this,
-        index = this.index;
-
-    // sort the array
-    this.data.sort(function (a, b) {
-        return self.compare(a[index], b[index]);
-    });
-
-    // recalculate boundary values
-    this.setBoundaries();
-
-    return this;
-};
-
-/**
- * Inspect and set the boundaries of the internal data array
- */
-IndexedArray.prototype.setBoundaries = function () {
-    var data = this.data,
-        index = this.index;
-
-    this.minv = data.length && data[0][index];
-    this.maxv = data.length && data[data.length - 1][index];
-
-    return this;
-};
-
-/**
- * Get the position of the object corresponding to the given index
- *
- * @param {Number|String} index is the id of the requested object
- * @returns {Number} the position of the object in the array
- */
-IndexedArray.prototype.fetch = function (value) {
-    // check data has objects
-    if (this.data.length === 0) {
-        this.cursor = null;
-        this.nextlow = null;
-        this.nexthigh = null;
-        return this;
-    }
-
-    // check the request is within range
-    if (this.compare(value, this.minv) === -1) {
-        this.cursor = null;
-        this.nextlow = null;
-        this.nexthigh = 0;
-        return this;
-    }
-    if (this.compare(value, this.maxv) === 1) {
-        this.cursor = null;
-        this.nextlow = this.data.length - 1;
-        this.nexthigh = null;
-        return this;
-    }
-
-    var valpos = this.valpos,
-        pos = valpos[value];
-
-    // if the request is memorized, just give it back
-    if (pos) {
-        if (pos.found) {
-            this.cursor = pos.index;
-            this.nextlow = null;
-            this.nexthigh = null;
-        } else {
-            this.cursor = null;
-            this.nextlow = pos.prev;
-            this.nexthigh = pos.next;
-        }
-        return this;
-    }
-
-    // if not, do the search
-    var result = this.search.call(this, value);
-    this.cursor = result.index;
-    this.nextlow = result.prev;
-    this.nexthigh = result.next;
-    return this;
-};
-
-/**
- * Get the object corresponding to the given index
- *
- * When no value is given, the function will default to the last fetched item.
- *
- * @param {Number|String} [optional] index is the id of the requested object
- * @returns {Object} the found object or null
- */
-IndexedArray.prototype.get = function (value) {
-    if (value)
-        this.fetch(value);
-
-    var pos = this.cursor;
-    return pos !== null ? this.data[pos] : null;
-};
-
-/**
- * Get an slice of the data array
- *
- * Boundaries have to be in order.
- *
- * @param {Number|String} begin index is the id of the requested object
- * @param {Number|String} end index is the id of the requested object
- * @returns {Object} the slice of data array or []
- */
-IndexedArray.prototype.getRange = function (begin, end) {
-    // check if boundaries are in order
-    if (this.compare(begin, end) === 1) {
-        return [];
-    }
-
-    // fetch start and default to the next index above
-    this.fetch(begin);
-    var start = this.cursor || this.nexthigh;
-
-    // fetch finish and default to the next index below
-    this.fetch(end);
-    var finish = this.cursor || this.nextlow;
-
-    // if any boundary is not set, return no range
-    if (start === null || finish === null) {
-        return [];
-    }
-
-    // return range
-    return this.data.slice(start, finish + 1);
-};
-
 
 /***/ }),
 /* 11 */
@@ -4136,6 +4136,10 @@ function Context($p) {
 }
 
 /* harmony default export */ var context = (Context);
+// EXTERNAL MODULE: ./node_modules/arrayslicer/lib/index.js
+var lib = __webpack_require__(8);
+var lib_default = /*#__PURE__*/__webpack_require__.n(lib);
+
 // CONCATENATED MODULE: ./src/stuff/utils.js
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
@@ -4145,7 +4149,6 @@ function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.
 
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
-var IndexedArray = __webpack_require__(10);
 
 /* harmony default export */ var utils = ({
   clamp: function clamp(num, min, max) {
@@ -4245,7 +4248,7 @@ var IndexedArray = __webpack_require__(10);
     if (!arr.length) return arr;
 
     try {
-      var ia = new IndexedArray(arr, "0");
+      var ia = new lib_default.a(arr, "0");
       return ia.getRange(t1, t2);
     } catch (e) {
       // Something wrong with fancy slice lib
@@ -4333,10 +4336,7 @@ function grid_maker_arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var 
 
 
 
-var grid_maker_DAY = constants.DAY,
-    grid_maker_WEEK = constants.WEEK,
-    grid_maker_MONTH = constants.MONTH,
-    grid_maker_TIMESCALES = constants.TIMESCALES,
+var grid_maker_TIMESCALES = constants.TIMESCALES,
     grid_maker_$SCALES = constants.$SCALES; // master_grid - ref to the master grid
 
 function GridMaker(id, params) {
@@ -4381,8 +4381,8 @@ function GridMaker(id, params) {
         })));
       }
 
-      var hi = Math.max.apply(Math, arr);
-      var lo = Math.min.apply(Math, arr);
+      hi = Math.max.apply(Math, arr);
+      lo = Math.min.apply(Math, arr);
 
       if (y_range_fn) {
         var _y_range_fn = y_range_fn(hi, lo);
@@ -4512,7 +4512,6 @@ function GridMaker(id, params) {
       self.xs = [];
       var dt = range[1] - range[0];
       var r = self.spacex / dt;
-      var shift = 0;
 
       for (var i = 0; i < sub.length; i++) {
         var p = sub[i];
@@ -4604,13 +4603,6 @@ function layout_arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 
 // data formatting (e.g. grid width depends on sidebar precision)
 // So it's better to calc all in one place.
 
-
-
-var layout_DAY = constants.DAY,
-    layout_WEEK = constants.WEEK,
-    layout_MONTH = constants.MONTH,
-    layout_TIMESCALES = constants.TIMESCALES,
-    layout_$SCALES = constants.$SCALES;
 
 function Layout(params) {
   var sub = params.sub,
@@ -4734,7 +4726,7 @@ function Layout(params) {
   var grids = [],
       offset = 0;
 
-  for (var i = 0; i < gms.length; i++) {
+  for (i = 0; i < gms.length; i++) {
     gms[i].set_sidebar(sb);
     grids.push(gms[i].create());
     grids[i].id = i;
@@ -4863,7 +4855,7 @@ function () {
     key: "cursor_data",
     value: function cursor_data(grid, e) {
       var data = this.comp.main_section.sub;
-      var xs = data.map(function (x, i) {
+      var xs = data.map(function (x) {
         return grid.t2screen(x[0]) + 0.5;
       });
       var i = utils.nearest_a(e.x, xs)[0];
@@ -4884,11 +4876,71 @@ function () {
 }();
 
 /* harmony default export */ var updater = (updater_CursorUpdater);
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Section.vue?vue&type=template&id=8fbe9336&
+var Sectionvue_type_template_id_8fbe9336_render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "trading-vue-section" },
+    [
+      _c("chart-legend", {
+        attrs: {
+          values: _vm.section_values,
+          grid_id: _vm.grid_id,
+          common: _vm.legend_props,
+          meta_props: _vm.get_meta_props
+        },
+        on: { "legend-button-click": _vm.button_click }
+      }),
+      _vm._v(" "),
+      _c(
+        "grid",
+        _vm._b(
+          {
+            attrs: { grid_id: _vm.grid_id },
+            on: {
+              "range-changed": _vm.range_changed,
+              "cursor-changed": _vm.cursor_changed,
+              "cursor-locked": _vm.cursor_locked,
+              "layer-meta-props": _vm.emit_meta_props,
+              "sidebar-transform": _vm.sidebar_transform
+            }
+          },
+          "grid",
+          _vm.grid_props,
+          false
+        )
+      ),
+      _vm._v(" "),
+      _c(
+        "sidebar",
+        _vm._b(
+          {
+            attrs: { grid_id: _vm.grid_id, rerender: _vm.rerender },
+            on: { "sidebar-transform": _vm.sidebar_transform }
+          },
+          "sidebar",
+          _vm.sidebar_props,
+          false
+        )
+      )
+    ],
+    1
+  )
+}
+var Sectionvue_type_template_id_8fbe9336_staticRenderFns = []
+Sectionvue_type_template_id_8fbe9336_render._withStripped = true
+
+
+// CONCATENATED MODULE: ./src/components/Section.vue?vue&type=template&id=8fbe9336&
+
 // EXTERNAL MODULE: ./node_modules/hammerjs/hammer.js
 var hammer = __webpack_require__(0);
 
 // EXTERNAL MODULE: ./node_modules/hamsterjs/hamster.js
-var hamsterjs_hamster = __webpack_require__(8);
+var hamsterjs_hamster = __webpack_require__(9);
 var hamster_default = /*#__PURE__*/__webpack_require__.n(hamsterjs_hamster);
 
 // CONCATENATED MODULE: ./src/components/js/candle.js
@@ -4897,8 +4949,6 @@ function candle_classCallCheck(instance, Constructor) { if (!(instance instanceo
 function candle_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function candle_createClass(Constructor, protoProps, staticProps) { if (protoProps) candle_defineProperties(Constructor.prototype, protoProps); if (staticProps) candle_defineProperties(Constructor, staticProps); return Constructor; }
-
-
 
 var Candle =
 /*#__PURE__*/
@@ -4952,8 +5002,6 @@ function volbar_classCallCheck(instance, Constructor) { if (!(instance instanceo
 function volbar_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function volbar_createClass(Constructor, protoProps, staticProps) { if (protoProps) volbar_defineProperties(Constructor.prototype, protoProps); if (staticProps) volbar_defineProperties(Constructor, staticProps); return Constructor; }
-
-
 
 var Volbar =
 /*#__PURE__*/
@@ -5036,7 +5084,6 @@ function grid_createClass(Constructor, protoProps, staticProps) { if (protoProps
 
 
 
-
 var grid_Grid =
 /*#__PURE__*/
 function () {
@@ -5105,7 +5152,7 @@ function () {
           });
         }
       });
-      mc.on('panend', function (event) {
+      mc.on('panend', function () {
         _this.drug = null;
 
         _this.comp.$emit('cursor-locked', false);
@@ -5119,13 +5166,13 @@ function () {
 
         _this.update();
       });
-      mc.on('pinchstart', function (event) {
+      mc.on('pinchstart', function () {
         _this.pinch = {
-          t: range[1] - range[0],
-          r: range.slice()
+          t: _this.range[1] - _this.range[0],
+          r: _this.range.slice()
         };
       });
-      mc.on('pinchend', function (event) {
+      mc.on('pinchend', function () {
         _this.pinch = null;
       });
       mc.on('pinch', function (event) {
@@ -5143,8 +5190,8 @@ function () {
       if (!this.drug) this.update(); // TODO: Temp solution, need to implement
       // a proper way to get the chart el offset
 
-      this.offset_x = event.layerX - event.pageX;
-      this.offset_y = event.layerY - event.pageY + this.layout.offset;
+      this.offset_x = event.layerX - event.pageX + window.scrollX;
+      this.offset_y = event.layerY - event.pageY + this.layout.offset + window.scrollY;
       this.propagate('mousemove', event);
     }
   }, {
@@ -5315,7 +5362,7 @@ function () {
         try {
           for (var _iterator3 = _this3.layout.candles[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
             var c = _step3.value;
-            var candle = new Candle(_this3, c);
+            new Candle(_this3, c);
           }
         } catch (err) {
           _didIteratorError3 = true;
@@ -5346,7 +5393,7 @@ function () {
         try {
           for (var _iterator4 = _this4.layout.volume[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
             var c = _step4.value;
-            var volbar = new Volbar(_this4, c);
+            new Volbar(_this4, c);
           }
         } catch (err) {
           _didIteratorError4 = true;
@@ -5486,8 +5533,8 @@ function () {
       canvas.width = this._attrs.width;
       canvas.height = this._attrs.height;
       canvas.style.width = "".concat(this._attrs.width, "px");
-      canvas.style.height = "".concat(this._attrs.height, "px");
-      var ctx = canvas.getContext('2d'); //ctx.scale(dpr, dpr)
+      canvas.style.height = "".concat(this._attrs.height, "px"); //const ctx = canvas.getContext('2d')
+      //ctx.scale(dpr, dpr)
     },
     create_canvas: function create_canvas(h, id, props) {
       var _this = this;
@@ -5547,9 +5594,6 @@ function crosshair_classCallCheck(instance, Constructor) { if (!(instance instan
 function crosshair_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function crosshair_createClass(Constructor, protoProps, staticProps) { if (protoProps) crosshair_defineProperties(Constructor.prototype, protoProps); if (staticProps) crosshair_defineProperties(Constructor, staticProps); return Constructor; }
-
-
-
 
 var Crosshair =
 /*#__PURE__*/
@@ -5825,7 +5869,7 @@ component.options.__file = "src/components/Crosshair.vue"
   },
   watch: {
     settings: {
-      handler: function handler(val) {
+      handler: function handler() {
         this.$emit('show-grid-layer', {
           id: this.$props.id,
           display: this.$props.settings['display']
@@ -6297,15 +6341,15 @@ Range_component.options.__file = "src/components/overlays/Range.vue"
           break;
 
         case 0:
-          var pos = 'Closed';
+          pos = 'Closed';
           break;
 
         case 1:
-          var pos = 'Long';
+          pos = 'Long';
           break;
 
         default:
-          var pos = 'Unknown';
+          pos = 'Unknown';
       }
 
       return [{
@@ -6482,8 +6526,93 @@ var Channel_component = normalizeComponent(
 if (false) { var Channel_api; }
 Channel_component.options.__file = "src/components/overlays/Channel.vue"
 /* harmony default export */ var Channel = (Channel_component.exports);
+// CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/components/overlays/Segment.vue?vue&type=script&lang=js&
+// Segment renderer.
+
+/* harmony default export */ var Segmentvue_type_script_lang_js_ = ({
+  name: 'Segment',
+  mixins: [overlay],
+  methods: {
+    meta_info: function meta_info() {
+      return {
+        author: 'C451',
+        version: '1.0.0'
+      };
+    },
+    draw: function draw(ctx) {
+      if (!this.p1 || !this.p2) return;
+      ctx.lineWidth = this.line_width;
+      ctx.strokeStyle = this.color;
+      ctx.beginPath();
+      var layout = this.$props.layout;
+      var x1 = layout.t2screen(this.p1[0]);
+      var y1 = layout.$2screen(this.p1[1]);
+      ctx.moveTo(x1, y1);
+      var x2 = layout.t2screen(this.p2[0]);
+      var y2 = layout.$2screen(this.p2[1]);
+      ctx.lineTo(x2, y2);
+      ctx.stroke();
+    },
+    use_for: function use_for() {
+      return ['Segment'];
+    },
+    data_colors: function data_colors() {
+      return [this.color];
+    }
+  },
+  // Define internal setting & constants here
+  computed: {
+    sett: function sett() {
+      return this.$props.settings;
+    },
+    p1: function p1() {
+      return this.$props.settings.p1;
+    },
+    p2: function p2() {
+      return this.$props.settings.p2;
+    },
+    line_width: function line_width() {
+      return this.sett.lineWidth || 0.9;
+    },
+    color: function color() {
+      var n = this.$props.num % 5;
+      return this.sett.color || this.COLORS[n];
+    }
+  },
+  data: function data() {
+    return {
+      COLORS: ['#42b28a', '#5691ce', '#612ff9', '#d50b90', '#ff2316']
+    };
+  }
+});
+// CONCATENATED MODULE: ./src/components/overlays/Segment.vue?vue&type=script&lang=js&
+ /* harmony default export */ var overlays_Segmentvue_type_script_lang_js_ = (Segmentvue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/components/overlays/Segment.vue
+var Segment_render, Segment_staticRenderFns
+
+
+
+
+/* normalize component */
+
+var Segment_component = normalizeComponent(
+  overlays_Segmentvue_type_script_lang_js_,
+  Segment_render,
+  Segment_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var Segment_api; }
+Segment_component.options.__file = "src/components/overlays/Segment.vue"
+/* harmony default export */ var Segment = (Segment_component.exports);
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Grid.vue?vue&type=script&lang=js&
 // Sets up all layers/overlays for the grid with 'grid_id'
+
 
 
 
@@ -6503,7 +6632,7 @@ Channel_component.options.__file = "src/components/overlays/Channel.vue"
     var _this = this;
 
     // List of all possible overlays (builtin + custom)
-    this._list = [Spline, Splines, Range, Trades, Channel].concat(this.$props.overlays);
+    this._list = [Spline, Splines, Range, Trades, Channel, Segment].concat(this.$props.overlays);
     this._registry = {}; // We need to know which components we will use.
     // Custom overlay components overwrite built-ins:
 
@@ -6676,66 +6805,6 @@ var Grid_component = normalizeComponent(
 if (false) { var Grid_api; }
 Grid_component.options.__file = "src/components/Grid.vue"
 /* harmony default export */ var components_Grid = (Grid_component.exports);
-// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Section.vue?vue&type=template&id=8fbe9336&
-var Sectionvue_type_template_id_8fbe9336_render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "trading-vue-section" },
-    [
-      _c("chart-legend", {
-        attrs: {
-          values: _vm.section_values,
-          grid_id: _vm.grid_id,
-          common: _vm.legend_props,
-          meta_props: _vm.get_meta_props
-        },
-        on: { "legend-button-click": _vm.button_click }
-      }),
-      _vm._v(" "),
-      _c(
-        "grid",
-        _vm._b(
-          {
-            attrs: { grid_id: _vm.grid_id },
-            on: {
-              "range-changed": _vm.range_changed,
-              "cursor-changed": _vm.cursor_changed,
-              "cursor-locked": _vm.cursor_locked,
-              "layer-meta-props": _vm.emit_meta_props,
-              "sidebar-transform": _vm.sidebar_transform
-            }
-          },
-          "grid",
-          _vm.grid_props,
-          false
-        )
-      ),
-      _vm._v(" "),
-      _c(
-        "sidebar",
-        _vm._b(
-          {
-            attrs: { grid_id: _vm.grid_id, rerender: _vm.rerender },
-            on: { "sidebar-transform": _vm.sidebar_transform }
-          },
-          "sidebar",
-          _vm.sidebar_props,
-          false
-        )
-      )
-    ],
-    1
-  )
-}
-var Sectionvue_type_template_id_8fbe9336_staticRenderFns = []
-Sectionvue_type_template_id_8fbe9336_render._withStripped = true
-
-
-// CONCATENATED MODULE: ./src/components/Section.vue?vue&type=template&id=8fbe9336&
-
 // CONCATENATED MODULE: ./src/components/js/sidebar.js
 function sidebar_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -6810,7 +6879,7 @@ function () {
           _this.update();
         }
       });
-      mc.on('panend', function (event) {
+      mc.on('panend', function () {
         _this.drug = null;
 
         _this.comp.$emit('sidebar-transform', {
@@ -6818,7 +6887,7 @@ function () {
           drugging: false
         });
       });
-      mc.on('doubletap', function (event) {
+      mc.on('doubletap', function () {
         _this.comp.$emit('sidebar-transform', {
           grid_id: _this.id,
           zoom: 1.0,
@@ -6964,16 +7033,16 @@ function () {
     }
   }, {
     key: "mousemove",
-    value: function mousemove(e) {}
+    value: function mousemove() {}
   }, {
     key: "mouseout",
-    value: function mouseout(e) {}
+    value: function mouseout() {}
   }, {
     key: "mouseup",
-    value: function mouseup(e) {}
+    value: function mouseup() {}
   }, {
     key: "mousedown",
-    value: function mousedown(e) {}
+    value: function mousedown() {}
   }]);
 
   return Sidebar;
@@ -7227,10 +7296,9 @@ LegendButtonvue_type_template_id_1ad87362_render._withStripped = true
 // CONCATENATED MODULE: ./src/components/LegendButton.vue?vue&type=template&id=1ad87362&
 
 // EXTERNAL MODULE: ./src/stuff/icons.json
-var icons = __webpack_require__(9);
+var icons = __webpack_require__(10);
 
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/components/LegendButton.vue?vue&type=script&lang=js&
-//
 //
 //
 //
@@ -7618,7 +7686,6 @@ Legend_component.options.__file = "src/components/Legend.vue"
       return p;
     },
     get_meta_props: function get_meta_props() {
-      var id = this.$props.grid_id;
       return this.meta_props;
     }
   },
@@ -7682,7 +7749,6 @@ var botbar_MINUTE15 = constants.MINUTE15,
     botbar_HOUR = constants.HOUR,
     botbar_DAY = constants.DAY,
     botbar_WEEK = constants.WEEK,
-    botbar_MONTH = constants.MONTH,
     botbar_YEAR = constants.YEAR,
     botbar_MONTHMAP = constants.MONTHMAP;
 
@@ -7707,7 +7773,6 @@ function () {
       this.grid_0 = this.layout.grids[0];
       var width = this.layout.botbar.width;
       var height = this.layout.botbar.height;
-      var h = height - 0.5;
       var sb = this.layout.grids[0].sb;
       this.ctx.fillStyle = this.$p.colors.colorBack;
       this.ctx.font = this.$p.font;
@@ -7783,7 +7848,6 @@ function () {
       if (utils.day_start(t) === t) return d.getDate();
       var h = utils.add_zero(d.getHours());
       var m = utils.add_zero(d.getMinutes());
-      var s = utils.add_zero(d.getSeconds());
       return h + ":" + m;
     }
   }, {
@@ -7844,16 +7908,16 @@ function () {
     }
   }, {
     key: "mousemove",
-    value: function mousemove(e) {}
+    value: function mousemove() {}
   }, {
     key: "mouseout",
-    value: function mouseout(e) {}
+    value: function mouseout() {}
   }, {
     key: "mouseup",
-    value: function mouseup(e) {}
+    value: function mouseup() {}
   }, {
     key: "mousedown",
-    value: function mousedown(e) {}
+    value: function mousedown() {}
   }]);
 
   return Botbar;
@@ -7967,16 +8031,12 @@ Botbar_component.options.__file = "src/components/Botbar.vue"
 
 
 
-
-
 /* harmony default export */ var Chartvue_type_script_lang_js_ = ({
   name: 'Chart',
   props: ['title_txt', 'data', 'width', 'height', 'font', 'colors', 'overlays', 'tv_id', 'config', 'buttons'],
   components: {
-    Grid: components_Grid,
     GridSection: Section,
-    Botbar: components_Botbar,
-    Sidebar: components_Sidebar
+    Botbar: components_Botbar
   },
   created: function created() {
     // Context for text measurements
@@ -8023,8 +8083,7 @@ Botbar_component.options.__file = "src/components/Botbar.vue"
         var s = 0,
             d = ml;
       } else {
-        var s = l - dl,
-            d = 0.5;
+        s = l - dl, d = 0.5;
       }
 
       utils.overwrite(this.range, [this.ohlcv[s][0] - this.interval * d, this.ohlcv[l][0] + this.interval * ml]);
