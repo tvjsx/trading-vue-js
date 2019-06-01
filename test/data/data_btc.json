@@ -58694,6 +58694,17 @@
                 ]
             ],
             "settings": {}
+        },
+        {
+            "name": "Line1",
+            "type": "Segment",
+            "data": [],
+            "settings": {
+                "p1": [1555732800000, 5405],
+                "p2": [1555948800000, 5306],
+                "lineWidth": 1.0,
+                "legend": false
+            }
         }
     ],
     "offchart": [
