@@ -5,11 +5,12 @@ import Grid from './js/grid.js'
 import Canvas from '../mixins/canvas.js'
 import Crosshair from './Crosshair.vue'
 
-import Spline from "./overlays/Spline.vue";
-import Splines from "./overlays/Splines.vue";
-import Range from "./overlays/Range.vue";
-import Trades from "./overlays/Trades.vue";
-import Channel from "./overlays/Channel.vue";
+import Spline from "./overlays/Spline.vue"
+import Splines from "./overlays/Splines.vue"
+import Range from "./overlays/Range.vue"
+import Trades from "./overlays/Trades.vue"
+import Channel from "./overlays/Channel.vue"
+import Segment from "./overlays/Segment.vue"
 
 export default {
     name: 'Grid',
@@ -22,8 +23,10 @@ export default {
     components: { Crosshair },
     created() {
         // List of all possible overlays (builtin + custom)
-        this._list = [Spline, Splines, Range, Trades, Channel]
-            .concat(this.$props.overlays)
+        this._list = [
+            Spline, Splines, Range, Trades, Channel, Segment
+        ]
+        .concat(this.$props.overlays)
         this._registry = {}
 
         // We need to know which components we will use.
