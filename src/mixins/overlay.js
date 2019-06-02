@@ -58,7 +58,8 @@ export default {
             handler: function() {
                 this.$emit('show-grid-layer', {
                     id: this.$props.id,
-                    display: this.$props.settings['display']
+                    display: 'display' in this.$props.settings ?
+                        this.$props.settings['display'] : true,
                 })
             },
             deep: true
