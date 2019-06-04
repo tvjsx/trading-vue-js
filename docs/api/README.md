@@ -97,7 +97,44 @@ export default {
 
 ## Data structure
 
-`Data structure v1.0`
+Data structure v1.1
+
+```js
+{
+    "chart": [   // Mandatory
+        "type": "<Chart Type, e.g. Candles>",
+        "data": [timestamp, ... ],
+        "settings": { } // Settings (depending on Chart Type)
+    ],
+    "onchart": [ // Displayed ON the chart
+        {
+            "name": "<Indicator name>",
+            "type": "<e.g. EMA, SMA>",
+            "data": [
+                [timestamp, ... ], // Arbitrary length
+                ...
+            ],
+            "settings": { } // Arbitrary settings format
+        },
+        ...
+    ],
+    "offchart": [ // Displayed BELOW the chart
+        {
+            "name": "<Indicator name>",
+            "type": "<e.g. RSI, Stoch>",
+            "data": [
+                [timestamp, ... ], // Arbitrary length
+                ...
+            ],
+            "settings": { } // Arbitrary settings format
+        },
+        ...
+    ]
+}
+```
+
+<details><summary>Data structure v1.0</summary>
+<p>
 
 ```js
 {
@@ -131,6 +168,10 @@ export default {
     ]
 }
 ```
+
+</p>
+</details>
+
 
 ## Overlay api
 
