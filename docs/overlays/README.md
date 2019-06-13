@@ -1,7 +1,7 @@
 # Built-in Overlays
 
 ::: warning
-This library is in alpha stage, API may change. This guide's version is **0.3.0**
+This library is in alpha stage, API may change. This guide's version is **0.3.2**
 :::
 
 ![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=Current%20lib%20version)
@@ -177,3 +177,35 @@ Type:
 | markerSize | Number | Marker size, px |
 | showLabel | Boolean | Show/hide label, default = true |
 | font | Strung | Label font string, e.g '11x Arial...'|
+
+## Segment
+
+| Type name | Aliases | Description |
+|---|---|---|
+| Segment  | - | Line segment |
+
+### Data format
+
+```
+{
+    "name": "Indicator name",
+    "type": "Segment",
+    "data": [],
+    "settings": {
+        "p1": [<timestamp>, <Price>],
+        "p2": [<timestamp>, <Price>],
+        ...
+    }
+}
+```
+
+### Settings
+
+| Prop | Type | Description |
+|---|---|---|
+| **z-index** | Number | 0 = candlestick layer, default = -1 |
+| **legend**  | Boolean  | Show legend, default = true |
+|  p1 | Array |  Coordinate of the first point  |
+|  p2 | Array |  Coordinate of the second point  |
+| lineWidth | Number | Line width, px |
+| color | String | Line color, hex |
