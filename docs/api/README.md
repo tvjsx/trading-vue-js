@@ -1,7 +1,7 @@
 # API Book
 
 ::: warning
-This library is in alpha stage, API may change. This guide version is **0.3.1**
+This library is in alpha stage, API may change. This guide version is **0.3.2**
 :::
 
 ![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=Current%20lib%20version)
@@ -97,7 +97,45 @@ export default {
 
 ## Data structure
 
-Data structure v1.1
+
+
+Data structure v1.0
+
+```js
+{
+    "ohlcv": [   // Mandatory
+        [timestamp, open, high, low, close, volume],
+        ...
+    ],
+    "onchart": [ // Displayed ON the chart
+        {
+            "name": "<Indicator name>",
+            "type": "<e.g. EMA, SMA>",
+            "data": [
+                [timestamp, ... ], // Arbitrary length
+                ...
+            ],
+            "settings": { } // Arbitrary settings format
+        },
+        ...
+    ],
+    "offchart": [ // Displayed BELOW the chart
+        {
+            "name": "<Indicator name>",
+            "type": "<e.g. RSI, Stoch>",
+            "data": [
+                [timestamp, ... ], // Arbitrary length
+                ...
+            ],
+            "settings": { } // Arbitrary settings format
+        },
+        ...
+    ]
+}
+```
+
+<details><summary>Data structure v1.1 (development in progress)</summary>
+<p>
 
 ```js
 {
@@ -133,45 +171,8 @@ Data structure v1.1
 }
 ```
 
-<details><summary>Data structure v1.0</summary>
-<p>
-
-```js
-{
-    "ohlcv": [   // Mandatory
-        [timestamp, open, high, low, close, volume],
-        ...
-    ],
-    "onchart": [ // Displayed ON the chart
-        {
-            "name": "<Indicator name>",
-            "type": "<e.g. EMA, SMA>",
-            "data": [
-                [timestamp, ... ], // Arbitrary length
-                ...
-            ],
-            "settings": { } // Arbitrary settings format
-        },
-        ...
-    ],
-    "offchart": [ // Displayed BELOW the chart
-        {
-            "name": "<Indicator name>",
-            "type": "<e.g. RSI, Stoch>",
-            "data": [
-                [timestamp, ... ], // Arbitrary length
-                ...
-            ],
-            "settings": { } // Arbitrary settings format
-        },
-        ...
-    ]
-}
-```
-
 </p>
 </details>
-
 
 ## Overlay api
 
