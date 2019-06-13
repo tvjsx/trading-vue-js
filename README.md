@@ -31,7 +31,7 @@ If you create trading software - this lib is probably for you. If you like to ma
 
 ## Demo & Docs
 
-### [Demo](https://c451.github.io/trading-vue-demo/) | [Getting Started](https://github.com/C451/trading-vue-js/tree/master/docs/guide#getting-started) | [API Book](https://github.com/C451/trading-vue-js/tree/master/docs/api#api-book) | [Built-in Overlays](https://github.com/C451/trading-vue-js/tree/master/docs/overlays#built-in-overlays) | [Examples](https://github.com/C451/trading-vue-js/tree/master/test/tests)
+### [Demo](https://c451.github.io/trading-vue-demo/) | [Getting Started](https://github.com/C451/trading-vue-js/tree/master/docs/guide#getting-started) | [API Book](https://github.com/C451/trading-vue-js/tree/master/docs/api#api-book) | [Built-in Overlays](https://github.com/C451/trading-vue-js/tree/master/docs/overlays#built-in-overlays) | [Examples](https://github.com/C451/trading-vue-js/tree/master/test/tests) | [101 Project](https://github.com/C451/trading-vue-101)
 
 ## Install
 
