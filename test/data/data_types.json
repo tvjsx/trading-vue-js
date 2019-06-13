@@ -33603,7 +33603,7 @@
     ],
     "onchart": [
         {
-            "name": "Candlesticks",
+            "name": "Shifted chart",
             "type": "Candles",
             "data": [
                 [
@@ -67207,7 +67207,14 @@
                     173.28647568
                 ]
             ],
-            "settings": {}
+            "settings": {
+                "colorCandleUp": "#79999e42",
+                "colorCandleDw": "#ef535042",
+                "colorWickUp": "#00000000",
+                "colorWickDw": "#00000000",
+                "showVolume": false,
+                "z-index": 1
+            }
         }
 
     ]

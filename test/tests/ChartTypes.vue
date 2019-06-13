@@ -11,6 +11,15 @@ import TradingVue from '../../src/TradingVue.vue'
 import Data from '../data/data_types.json'
 import Utils from '../../src/stuff/utils.js'
 
+// Shift the chart for demonstration purposes
+Data.onchart[0].data.forEach(x => {
+    x[1] += 100
+    x[2] += 100
+    x[3] += 100
+    x[4] += 100
+})
+
+
 export default {
     name: 'ChartTypes',
     description: 'Should allow you to switch between different chart types',
@@ -32,7 +41,7 @@ export default {
     },
     data() {
         return {
-            chart: Data, // Uses data structure v1.1
+            chart: Data, // TODO: Use data structure v1.1
             width: window.innerWidth,
             height: window.innerHeight,
             colors: {

@@ -11,6 +11,7 @@ import Range from "./overlays/Range.vue"
 import Trades from "./overlays/Trades.vue"
 import Channel from "./overlays/Channel.vue"
 import Segment from "./overlays/Segment.vue"
+import Candles from "./overlays/Candles.vue"
 
 export default {
     name: 'Grid',
@@ -24,7 +25,8 @@ export default {
     created() {
         // List of all possible overlays (builtin + custom)
         this._list = [
-            Spline, Splines, Range, Trades, Channel, Segment
+            Spline, Splines, Range, Trades, Channel, Segment,
+            Candles
         ]
         .concat(this.$props.overlays)
         this._registry = {}
@@ -110,7 +112,8 @@ export default {
                 colors: this.$props.colors,
                 layout: this.$props.layout.grids[this.$props.grid_id],
                 sub:    this.$props.sub,
-                font:   this.$props.font
+                font:   this.$props.font,
+                config: this.$props.config,
             }
         }
     },
