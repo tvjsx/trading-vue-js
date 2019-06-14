@@ -17,17 +17,26 @@ export default {
 
         draw(ctx) {
 
-            // Candles & Volume layouts
-            let cnv = layout_cnv(this.$props)
+            // If data === main candlestick data
+            // render as main chart:
+            if (this.$props.sub === this.$props.data) {
+                var cnv = {
+                    candles: this.$props.layout.candles,
+                    volume: this.$props.layout.volume,
+                }
+            // Else, as offchart / onchart indicator:
+            } else {
+                cnv = layout_cnv(this.$props)
+            }
+
+            if (this.show_volume) {
+                for (var v of cnv.volume) {
+                    new Volbar(this, ctx, v)
+                }
+            }
 
             for (var c of cnv.candles) {
                 new Candle(this, ctx, c)
-            }
-
-            if (!this.show_volume) return
-
-            for (var v of cnv.volume) {
-                new Volbar(this, ctx, v)
             }
 
         },
