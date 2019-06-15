@@ -161,6 +161,7 @@ export default {
             p.data = this.overlay_subset(this.onchart)
             p.data.push({
                 type: this.chart.type || 'Candles',
+                main: true,
                 data: this.sub,
                 settings: this.chart.settings || {}
             })
