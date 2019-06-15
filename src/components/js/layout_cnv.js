@@ -2,7 +2,7 @@
 // and volume bars for the given subset of data
 
 export function layout_cnv($p) {
-console.log('here')
+
     let sub = $p.data
     let t2screen = $p.layout.t2screen
     let layout = $p.layout
