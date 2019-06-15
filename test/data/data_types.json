@@ -67212,7 +67212,7 @@
                 "colorCandleDw": "#ef535042",
                 "colorWickUp": "#00000000",
                 "colorWickDw": "#00000000",
-                "showVolume": false,
+                "showVolume": true,
                 "z-index": 1
             }
         }
