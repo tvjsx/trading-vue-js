@@ -6,20 +6,21 @@ export default class CandleExt {
     constructor(overlay, ctx, data) {
         this.ctx = ctx
         this.self = overlay
+        this.style = data.raw[6] || this.self
         this.draw(data)
     }
 
     draw(data) {
 
         const body_color = data.c <= data.o ?
-            this.self.colorCandleUp :
-            this.self.colorCandleDw
+            this.style.colorCandleUp :
+            this.style.colorCandleDw
 
         const wick_color = data.c <= data.o ?
-            this.self.colorWickUp :
-            this.self.colorWickDw
+            this.style.colorWickUp :
+            this.style.colorWickDw
 
-        const wick_color_sm = this.self.colorWickSm
+        const wick_color_sm = this.style.colorWickSm
 
         let w = Math.max(data.w, 1)
         let hw = Math.max(Math.floor(w * 0.5), 1)
