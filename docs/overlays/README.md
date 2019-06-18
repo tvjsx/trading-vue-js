@@ -1,10 +1,97 @@
 # Built-in Overlays
 
 ::: warning
-This library is in alpha stage, API may change. This guide's version is **0.3.2**
+This library is in alpha stage, API may change. This guide's version is **0.3.3**
 :::
 
 ![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=Current%20lib%20version)
+
+## Candles
+
+| Type name | Aliases | Description |
+|---|---|---|
+| Candles  | - | Candlestick chart, colud be used as main chart or overlay |
+
+### Data format
+
+```
+{
+    "name": "Indicator name",
+    "type": "Candles",
+    "data": [
+        [ <timestamp>, <Open>, <High>, <Low>, <Close>, <Volume>, <Style> (optional) ],
+        ...
+    ],
+    "settings": {
+        ...
+    }
+}
+```
+
+### Settings
+
+| Prop | Type | Description |
+|---|---|---|
+| *z-index* | Number | 0 = candlestick layer, default = -1 |
+| *legend* | Boolean  | Show legend, default = true |
+| showVolume | Boolean | Show volume below the chart, default **true** |
+| colorCandleUp | String | Green candles color, hex |
+| colorCandleDw | String | Red candles color, hex |
+| colorWickUp | String | Green wick color, hex |
+| colorWickDw | String | Red wick color, hex |
+| colorWickSm | String | Scaled down wick color, hex |
+| colorVolUp | String | Green volume color, hex |
+| colorVolDw | String | Red volume color, hex |
+
+The Style object, if defined, overwrites all the color settings of a particular candle:
+
+#### Style object format:
+```
+{
+    colorCandleUp,
+    colorCandleDw,
+    colorWickUp,
+    colorWickDw,
+    colorWickSm,
+    colorVolUp,
+    colorVolDw
+}
+```
+
+## Volume
+
+| Type name | Aliases | Description |
+|---|---|---|
+| Volume  | - | Standalone volume, colud be used onchart or offchart |
+
+### Data format
+
+```
+{
+    "name": "Indicator name",
+    "type": "Volume",
+    "data": [
+        [ <timestamp>, <Value>, <Green or not?> ],
+        ...
+    ],
+    "settings": {
+        ...
+    }
+}
+```
+
+### Settings
+
+| Prop | Type | Description |
+|---|---|---|
+| *z-index* | Number | 0 = candlestick layer, default = -1 |
+| *legend* | Boolean  | Show legend, default = true |
+| colorVolUp | String | Green volume color, hex |
+| colorVolDw | String | Red volume color, hex |
+| colorVolUpLegend | String | Legend green bar color, hex |
+| colorVolDwLegend | String | Legend red bar color, hex |
+| volscale | Number | Volume bar max height, default = 0.85 |
+
 
 ## Spline
 
@@ -32,8 +119,8 @@ This library is in alpha stage, API may change. This guide's version is **0.3.2*
 
 | Prop | Type | Description |
 |---|---|---|
-| **z-index** | Number | 0 = candlestick layer, default = -1 |
-| **legend**  | Boolean  | Show legend, default = true |
+| *z-index* | Number | 0 = candlestick layer, default = -1 |
+| *legend* | Boolean  | Show legend, default = true |
 | lineWidth | Number | Line width, px |
 | color | String | Line color, hex |
 
@@ -63,8 +150,8 @@ This library is in alpha stage, API may change. This guide's version is **0.3.2*
 
 | Prop | Type | Description |
 |---|---|---|
-| **z-index** | Number | 0 = candlestick layer, default = -1 |
-| **legend**  | Boolean  | Show legend, default = true |
+| *z-index* | Number | 0 = candlestick layer, default = -1 |
+| *legend* | Boolean  | Show legend, default = true |
 | lineWidth | Number | General line width, px |
 | lineWidths | Array of Numbers | Line widths, [px]|
 | colors | Array of Strings | Line colors, [hex] |
@@ -95,8 +182,8 @@ This library is in alpha stage, API may change. This guide's version is **0.3.2*
 
 | Prop | Type | Description |
 |---|---|---|
-| **z-index** | Number | 0 = candlestick layer, default = -1 |
-| **legend**  | Boolean  | Show legend, default = true |
+| *z-index* | Number | 0 = candlestick layer, default = -1 |
+| *legend* | Boolean  | Show legend, default = true |
 | lineWidth | Number | Line width, px |
 | color | String | Lines color, hex |
 | backColor | String | Channel body color, hex |
@@ -128,8 +215,8 @@ This library is in alpha stage, API may change. This guide's version is **0.3.2*
 
 | Prop | Type | Description |
 |---|---|---|
-| **z-index** | Number | 0 = candlestick layer, default = -1 |
-| **legend**  | Boolean  | Show legend, default = true |
+| *z-index* | Number | 0 = candlestick layer, default = -1 |
+| *legend* | Boolean  | Show legend, default = true |
 | lineWidth | Number | Line width, px |
 | color | String | Lines color, hex |
 | backColor  | String | Background color, hex |
@@ -169,8 +256,8 @@ Type:
 
 | Prop | Type | Description |
 |---|---|---|
-| **z-index** | Number | 0 = candlestick layer, default = -1 |
-| **legend**  | Boolean  | Show legend, default = true |
+| *z-index* | Number | 0 = candlestick layer, default = -1 |
+| *legend* | Boolean  | Show legend, default = true |
 | buyColor | String | Buy marker color, hex |
 | sellColor | String | Sell marker color, hex  |
 | labelColor | String | Marker label color, hex  |
@@ -203,8 +290,8 @@ Type:
 
 | Prop | Type | Description |
 |---|---|---|
-| **z-index** | Number | 0 = candlestick layer, default = -1 |
-| **legend**  | Boolean  | Show legend, default = true |
+| *z-index* | Number | 0 = candlestick layer, default = -1 |
+| *legend* | Boolean  | Show legend, default = true |
 |  p1 | Array |  Coordinate of the first point  |
 |  p2 | Array |  Coordinate of the second point  |
 | lineWidth | Number | Line width, px |
