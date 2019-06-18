@@ -1,5 +1,5 @@
 /*!
- * TradingVue.JS - v0.3.2 - Sat Jun 01 2019
+ * TradingVue.JS - v0.3.3 - Tue Jun 18 2019
  * https://github.com/C451/trading-vue-js
  * Copyright (c) 2019 c451 Code's All Right;
  * Licensed under the MIT license
@@ -4643,7 +4643,7 @@ function Layout(params) {
         x2,
         mid,
         prev = undefined;
-    var splitter = self.px_step > 5 ? 1 : 0; //let candlew = self.px_step > 5 ? CANDLEW
+    var splitter = self.px_step > 5 ? 1 : 0;
 
     for (var i = 0; i < sub.length; i++) {
       var p = sub[i];
@@ -5250,8 +5250,6 @@ function () {
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       this.grid();
       var overlays = [];
-      if (this.layout.volume) overlays.push(this.v_layer());
-      if (this.layout.candles) overlays.push(this.c_layer());
       overlays.push.apply(overlays, grid_toConsumableArray(this.overlays)); // z-index sorting
 
       overlays.sort(function (l1, l2) {
@@ -5345,71 +5343,6 @@ function () {
       this.ctx.moveTo(0, 0.5);
       this.ctx.lineTo(this.layout.width, 0.5);
       this.ctx.stroke();
-    } // Actually draws candles
-    // TODO: let user to overwrite. Let them create Mountain Dew
-    // candles and Snoop-dogg volume bars! (see. BitmexRekt)
-
-  }, {
-    key: "c_layer",
-    value: function c_layer() {
-      var _this3 = this;
-
-      return new stuff_layer('Candles', 0, function () {
-        var _iteratorNormalCompletion3 = true;
-        var _didIteratorError3 = false;
-        var _iteratorError3 = undefined;
-
-        try {
-          for (var _iterator3 = _this3.layout.candles[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-            var c = _step3.value;
-            new Candle(_this3, c);
-          }
-        } catch (err) {
-          _didIteratorError3 = true;
-          _iteratorError3 = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion3 && _iterator3["return"] != null) {
-              _iterator3["return"]();
-            }
-          } finally {
-            if (_didIteratorError3) {
-              throw _iteratorError3;
-            }
-          }
-        }
-      });
-    }
-  }, {
-    key: "v_layer",
-    value: function v_layer() {
-      var _this4 = this;
-
-      return new stuff_layer('Volume', -100, function () {
-        var _iteratorNormalCompletion4 = true;
-        var _didIteratorError4 = false;
-        var _iteratorError4 = undefined;
-
-        try {
-          for (var _iterator4 = _this4.layout.volume[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-            var c = _step4.value;
-            new Volbar(_this4, c);
-          }
-        } catch (err) {
-          _didIteratorError4 = true;
-          _iteratorError4 = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion4 && _iterator4["return"] != null) {
-              _iterator4["return"]();
-            }
-          } finally {
-            if (_didIteratorError4) {
-              throw _iteratorError4;
-            }
-          }
-        }
-      });
     }
   }, {
     key: "mousezoom",
@@ -5487,29 +5420,29 @@ function () {
   }, {
     key: "propagate",
     value: function propagate(name, event) {
-      var _iteratorNormalCompletion5 = true;
-      var _didIteratorError5 = false;
-      var _iteratorError5 = undefined;
+      var _iteratorNormalCompletion3 = true;
+      var _didIteratorError3 = false;
+      var _iteratorError3 = undefined;
 
       try {
-        for (var _iterator5 = this.overlays[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
-          var layer = _step5.value;
+        for (var _iterator3 = this.overlays[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+          var layer = _step3.value;
 
           if (layer.renderer[name]) {
             layer.renderer[name](event);
           }
         }
       } catch (err) {
-        _didIteratorError5 = true;
-        _iteratorError5 = err;
+        _didIteratorError3 = true;
+        _iteratorError3 = err;
       } finally {
         try {
-          if (!_iteratorNormalCompletion5 && _iterator5["return"] != null) {
-            _iterator5["return"]();
+          if (!_iteratorNormalCompletion3 && _iterator3["return"] != null) {
+            _iterator3["return"]();
           }
         } finally {
-          if (_didIteratorError5) {
-            throw _iteratorError5;
+          if (_didIteratorError3) {
+            throw _iteratorError3;
           }
         }
       }
@@ -5835,15 +5768,17 @@ component.options.__file = "src/components/Crosshair.vue"
 // Usuful stuff for creating overlays. Include as mixin
 // TODO: Add mouse events
 /* harmony default export */ var overlay = ({
-  props: ['id', 'num', 'interval', 'cursor', 'colors', 'layout', 'sub', 'data', 'settings', 'grid_id', 'font'],
+  props: ['id', 'num', 'interval', 'cursor', 'colors', 'layout', 'sub', 'data', 'settings', 'grid_id', 'font', 'config'],
   mounted: function mounted() {
+    // Main chart?
+    var main = this.$props.sub === this.$props.data;
     this.meta_info();
     this.$emit('new-grid-layer', {
       name: this.$options.name,
       id: this.$props.id,
       renderer: this,
       display: 'display' in this.$props.settings ? this.$props.settings['display'] : true,
-      z: this.$props.settings['z-index'] || this.$props.settings['zIndex'] || -1
+      z: this.$props.settings['z-index'] || this.$props.settings['zIndex'] || (main ? 0 : -1)
     }); // Overlay meta-props (adjusting behaviour)
 
     this.$emit('layer-meta-props', {
@@ -5872,7 +5807,7 @@ component.options.__file = "src/components/Crosshair.vue"
       handler: function handler() {
         this.$emit('show-grid-layer', {
           id: this.$props.id,
-          display: this.$props.settings['display']
+          display: 'display' in this.$props.settings ? this.$props.settings['display'] : true
         });
       },
       deep: true
@@ -5921,6 +5856,7 @@ component.options.__file = "src/components/Crosshair.vue"
       ctx.strokeStyle = this.color;
       ctx.beginPath();
       var layout = this.$props.layout;
+      var i = this.data_index;
       var _iteratorNormalCompletion = true;
       var _didIteratorError = false;
       var _iteratorError = undefined;
@@ -5929,7 +5865,7 @@ component.options.__file = "src/components/Crosshair.vue"
         for (var _iterator = this.$props.data[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
           var p = _step.value;
           var x = layout.t2screen(p[0]);
-          var y = layout.$2screen(p[1]);
+          var y = layout.$2screen(p[i]);
           ctx.lineTo(x, y);
         }
       } catch (err) {
@@ -5976,6 +5912,9 @@ component.options.__file = "src/components/Crosshair.vue"
     color: function color() {
       var n = this.$props.num % 5;
       return this.sett.color || this.COLORS[n];
+    },
+    data_index: function data_index() {
+      return this.sett.dataIndex || 1;
     }
   },
   data: function data() {
@@ -6610,8 +6549,451 @@ var Segment_component = normalizeComponent(
 if (false) { var Segment_api; }
 Segment_component.options.__file = "src/components/overlays/Segment.vue"
 /* harmony default export */ var Segment = (Segment_component.exports);
+// CONCATENATED MODULE: ./src/components/js/layout_cnv.js
+function layout_cnv_toConsumableArray(arr) { return layout_cnv_arrayWithoutHoles(arr) || layout_cnv_iterableToArray(arr) || layout_cnv_nonIterableSpread(); }
+
+function layout_cnv_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function layout_cnv_iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function layout_cnv_arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+// Claculates postions and sizes for candlestick
+// and volume bars for the given subset of data
+function layout_cnv(self) {
+  var $p = self.$props;
+  var sub = $p.data;
+  var t2screen = $p.layout.t2screen;
+  var layout = $p.layout;
+  var candles = [];
+  var volume = []; // The volume bar height is determined as a percentage of
+  // the chart's height (VOLSCALE)
+
+  var maxv = Math.max.apply(Math, layout_cnv_toConsumableArray(sub.map(function (x) {
+    return x[5];
+  })));
+  var vs = $p.config.VOLSCALE * layout.height / maxv;
+  var x1,
+      x2,
+      mid,
+      prev = undefined;
+  var splitter = layout.px_step > 5 ? 1 : 0; // A & B are current chart tranformations:
+  // A === scale,  B === Y-axis shift
+
+  for (var i = 0; i < sub.length; i++) {
+    var p = sub[i];
+    mid = t2screen(p[0]) + 1;
+    candles.push({
+      x: mid,
+      w: layout.px_step * $p.config.CANDLEW,
+      o: p[1] * layout.A + layout.B,
+      h: p[2] * layout.A + layout.B,
+      l: p[3] * layout.A + layout.B,
+      c: p[4] * layout.A + layout.B,
+      raw: p
+    }); // Clear volume bar if there is a time gap
+
+    if (sub[i - 1] && p[0] - sub[i - 1][0] > $p.interval) {
+      prev = null;
+    }
+
+    x1 = prev || Math.floor(mid - layout.px_step * 0.5);
+    x2 = Math.floor(mid + layout.px_step * 0.5) - 0.5;
+    volume.push({
+      x1: x1,
+      x2: x2,
+      h: p[5] * vs,
+      green: p[4] >= p[1],
+      raw: p
+    });
+    prev = x2 + splitter;
+  }
+
+  return {
+    candles: candles,
+    volume: volume
+  };
+}
+function layout_vol(self) {
+  var $p = self.$props;
+  var sub = $p.data;
+  var t2screen = $p.layout.t2screen;
+  var layout = $p.layout;
+  var volume = [];
+  var maxv = Math.max.apply(Math, layout_cnv_toConsumableArray(sub.map(function (x) {
+    return x[1];
+  })));
+  var volscale = self.volscale || $p.config.VOLSCALE;
+  var vs = volscale * layout.height / maxv;
+  var x1,
+      x2,
+      mid,
+      prev = undefined;
+  var splitter = layout.px_step > 5 ? 1 : 0; // A & B are current chart tranformations:
+  // A === scale,  B === Y-axis shift
+
+  for (var i = 0; i < sub.length; i++) {
+    var p = sub[i];
+    mid = t2screen(p[0]) + 1; // Clear volume bar if there is a time gap
+
+    if (sub[i - 1] && p[0] - sub[i - 1][0] > $p.interval) {
+      prev = null;
+    }
+
+    x1 = prev || Math.floor(mid - layout.px_step * 0.5);
+    x2 = Math.floor(mid + layout.px_step * 0.5) - 0.5;
+    volume.push({
+      x1: x1,
+      x2: x2,
+      h: p[1] * vs,
+      green: p[2],
+      raw: p
+    });
+    prev = x2 + splitter;
+  }
+
+  return volume;
+}
+// CONCATENATED MODULE: ./src/components/js/candle_ext.js
+function candle_ext_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function candle_ext_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function candle_ext_createClass(Constructor, protoProps, staticProps) { if (protoProps) candle_ext_defineProperties(Constructor.prototype, protoProps); if (staticProps) candle_ext_defineProperties(Constructor, staticProps); return Constructor; }
+
+// Candle object for Candles overlay
+var CandleExt =
+/*#__PURE__*/
+function () {
+  function CandleExt(overlay, ctx, data) {
+    candle_ext_classCallCheck(this, CandleExt);
+
+    this.ctx = ctx;
+    this.self = overlay;
+    this.style = data.raw[6] || this.self;
+    this.draw(data);
+  }
+
+  candle_ext_createClass(CandleExt, [{
+    key: "draw",
+    value: function draw(data) {
+      var body_color = data.c <= data.o ? this.style.colorCandleUp : this.style.colorCandleDw;
+      var wick_color = data.c <= data.o ? this.style.colorWickUp : this.style.colorWickDw;
+      var wick_color_sm = this.style.colorWickSm;
+      var w = Math.max(data.w, 1);
+      var hw = Math.max(Math.floor(w * 0.5), 1);
+      var h = Math.abs(data.o - data.c);
+      var max_h = data.c === data.o ? 1 : 2;
+      this.ctx.strokeStyle = w > 1 ? wick_color : wick_color_sm;
+      this.ctx.beginPath();
+      this.ctx.moveTo(Math.floor(data.x) - 0.5, Math.floor(data.h));
+      this.ctx.lineTo(Math.floor(data.x) - 0.5, Math.floor(data.l));
+      this.ctx.stroke();
+
+      if (data.w > 1.5) {
+        this.ctx.fillStyle = body_color; // TODO: Move common calculations to layout.js
+
+        this.ctx.fillRect(Math.floor(data.x - hw - 1), Math.floor(Math.min(data.o, data.c)), Math.floor(hw * 2 + 1), Math.floor(Math.max(h, max_h)));
+      } else {
+        this.ctx.strokeStyle = body_color;
+        this.ctx.beginPath();
+        this.ctx.moveTo(Math.floor(data.x) - 0.5, Math.floor(Math.min(data.o, data.c)));
+        this.ctx.lineTo(Math.floor(data.x) - 0.5, Math.floor(Math.max(data.o, data.c)));
+        this.ctx.stroke();
+      }
+    }
+  }]);
+
+  return CandleExt;
+}();
+
+
+// CONCATENATED MODULE: ./src/components/js/volbar_ext.js
+function volbar_ext_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function volbar_ext_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function volbar_ext_createClass(Constructor, protoProps, staticProps) { if (protoProps) volbar_ext_defineProperties(Constructor.prototype, protoProps); if (staticProps) volbar_ext_defineProperties(Constructor, staticProps); return Constructor; }
+
+var VolbarExt =
+/*#__PURE__*/
+function () {
+  function VolbarExt(overlay, ctx, data) {
+    volbar_ext_classCallCheck(this, VolbarExt);
+
+    this.ctx = ctx;
+    this.$p = overlay.$props;
+    this.self = overlay;
+    this.style = data.raw[6] || this.self;
+    this.draw(data);
+  }
+
+  volbar_ext_createClass(VolbarExt, [{
+    key: "draw",
+    value: function draw(data) {
+      var y0 = this.$p.layout.height;
+      var w = data.x2 - data.x1;
+      var h = Math.floor(data.h);
+      this.ctx.fillStyle = data.green ? this.style.colorVolUp : this.style.colorVolDw;
+      this.ctx.fillRect(Math.floor(data.x1), Math.floor(y0 - h - 0.5), Math.floor(w), Math.floor(h + 1));
+    }
+  }]);
+
+  return VolbarExt;
+}();
+
+
+// CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/components/overlays/Candles.vue?vue&type=script&lang=js&
+// Renedrer for candlesticks + volume (optional)
+// It can be used as the main chart or an indicator
+
+
+
+
+/* harmony default export */ var Candlesvue_type_script_lang_js_ = ({
+  name: 'Candles',
+  mixins: [overlay],
+  methods: {
+    meta_info: function meta_info() {
+      return {
+        author: 'C451',
+        version: '1.0.0'
+      };
+    },
+    draw: function draw(ctx) {
+      // If data === main candlestick data
+      // render as main chart:
+      if (this.$props.sub === this.$props.data) {
+        var cnv = {
+          candles: this.$props.layout.candles,
+          volume: this.$props.layout.volume // Else, as offchart / onchart indicator:
+
+        };
+      } else {
+        cnv = layout_cnv(this);
+      }
+
+      if (this.show_volume) {
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+          for (var _iterator = cnv.volume[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var v = _step.value;
+            new VolbarExt(this, ctx, v);
+          }
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+              _iterator["return"]();
+            }
+          } finally {
+            if (_didIteratorError) {
+              throw _iteratorError;
+            }
+          }
+        }
+      }
+
+      var _iteratorNormalCompletion2 = true;
+      var _didIteratorError2 = false;
+      var _iteratorError2 = undefined;
+
+      try {
+        for (var _iterator2 = cnv.candles[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+          var c = _step2.value;
+          new CandleExt(this, ctx, c);
+        }
+      } catch (err) {
+        _didIteratorError2 = true;
+        _iteratorError2 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
+            _iterator2["return"]();
+          }
+        } finally {
+          if (_didIteratorError2) {
+            throw _iteratorError2;
+          }
+        }
+      }
+    },
+    use_for: function use_for() {
+      return ['Candles'];
+    }
+  },
+  // Define internal setting & constants here
+  computed: {
+    sett: function sett() {
+      return this.$props.settings;
+    },
+    show_volume: function show_volume() {
+      return 'showVolume' in this.sett ? this.sett.showVolume : true;
+    },
+    colorCandleUp: function colorCandleUp() {
+      return this.sett.colorCandleUp || this.$props.colors.colorCandleUp;
+    },
+    colorCandleDw: function colorCandleDw() {
+      return this.sett.colorCandleDw || this.$props.colors.colorCandleDw;
+    },
+    colorWickUp: function colorWickUp() {
+      return this.sett.colorWickUp || this.$props.colors.colorWickUp;
+    },
+    colorWickDw: function colorWickDw() {
+      return this.sett.colorWickDw || this.$props.colors.colorWickDw;
+    },
+    colorWickSm: function colorWickSm() {
+      return this.sett.colorWickSm || this.$props.colors.colorWickSm;
+    },
+    colorVolUp: function colorVolUp() {
+      return this.sett.colorVolUp || this.$props.colors.colorVolUp;
+    },
+    colorVolDw: function colorVolDw() {
+      return this.sett.colorVolDw || this.$props.colors.colorVolDw;
+    }
+  },
+  data: function data() {
+    return {};
+  }
+});
+// CONCATENATED MODULE: ./src/components/overlays/Candles.vue?vue&type=script&lang=js&
+ /* harmony default export */ var overlays_Candlesvue_type_script_lang_js_ = (Candlesvue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/components/overlays/Candles.vue
+var Candles_render, Candles_staticRenderFns
+
+
+
+
+/* normalize component */
+
+var Candles_component = normalizeComponent(
+  overlays_Candlesvue_type_script_lang_js_,
+  Candles_render,
+  Candles_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var Candles_api; }
+Candles_component.options.__file = "src/components/overlays/Candles.vue"
+/* harmony default export */ var Candles = (Candles_component.exports);
+// CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/components/overlays/Volume.vue?vue&type=script&lang=js&
+// Standalone renedrer for the volume
+
+
+
+/* harmony default export */ var Volumevue_type_script_lang_js_ = ({
+  name: 'Volume',
+  mixins: [overlay],
+  methods: {
+    meta_info: function meta_info() {
+      return {
+        author: 'C451',
+        version: '1.0.0'
+      };
+    },
+    draw: function draw(ctx) {
+      // TODO: volume average
+      // TODO: Y-axis scaling
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = layout_vol(this)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var v = _step.value;
+          new VolbarExt(this, ctx, v);
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+            _iterator["return"]();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+    },
+    use_for: function use_for() {
+      return ['Volume'];
+    },
+    // Defines legend format (values & colors)
+    legend: function legend(values) {
+      var color = values[2] ? this.colorVolUpLegend : this.colorVolDwLegend;
+      return [{
+        value: values[1],
+        color: color
+      }];
+    }
+  },
+  // Define internal setting & constants here
+  computed: {
+    sett: function sett() {
+      return this.$props.settings;
+    },
+    colorVolUp: function colorVolUp() {
+      return this.sett.colorVolUp || this.$props.colors.colorVolUp;
+    },
+    colorVolDw: function colorVolDw() {
+      return this.sett.colorVolDw || this.$props.colors.colorVolDw;
+    },
+    colorVolUpLegend: function colorVolUpLegend() {
+      return this.sett.colorVolUpLegend || this.$props.colors.colorCandleUp;
+    },
+    colorVolDwLegend: function colorVolDwLegend() {
+      return this.sett.colorVolDwLegend || this.$props.colors.colorCandleDw;
+    },
+    volscale: function volscale() {
+      return this.sett.volscale || this.$props.grid_id > 0 ? 0.85 : this.$props.config.VOLSCALE;
+    }
+  },
+  data: function data() {
+    return {};
+  }
+});
+// CONCATENATED MODULE: ./src/components/overlays/Volume.vue?vue&type=script&lang=js&
+ /* harmony default export */ var overlays_Volumevue_type_script_lang_js_ = (Volumevue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/components/overlays/Volume.vue
+var Volume_render, Volume_staticRenderFns
+
+
+
+
+/* normalize component */
+
+var Volume_component = normalizeComponent(
+  overlays_Volumevue_type_script_lang_js_,
+  Volume_render,
+  Volume_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var Volume_api; }
+Volume_component.options.__file = "src/components/overlays/Volume.vue"
+/* harmony default export */ var Volume = (Volume_component.exports);
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Grid.vue?vue&type=script&lang=js&
 // Sets up all layers/overlays for the grid with 'grid_id'
+
+
 
 
 
@@ -6632,7 +7014,7 @@ Segment_component.options.__file = "src/components/overlays/Segment.vue"
     var _this = this;
 
     // List of all possible overlays (builtin + custom)
-    this._list = [Spline, Splines, Range, Trades, Channel, Segment].concat(this.$props.overlays);
+    this._list = [Spline, Splines, Range, Trades, Channel, Segment, Candles, Volume].concat(this.$props.overlays);
     this._registry = {}; // We need to know which components we will use.
     // Custom overlay components overwrite built-ins:
 
@@ -6743,7 +7125,8 @@ Segment_component.options.__file = "src/components/overlays/Segment.vue"
         colors: this.$props.colors,
         layout: this.$props.layout.grids[this.$props.grid_id],
         sub: this.$props.sub,
-        font: this.$props.font
+        font: this.$props.font,
+        config: this.$props.config
       };
     }
   },
@@ -7497,7 +7880,7 @@ ButtonGroup_component.options.__file = "src/components/ButtonGroup.vue"
       var f = this.format;
       var types = {};
       return this.json_data.filter(function (x) {
-        return x.settings.legend !== false;
+        return x.settings.legend !== false && !x.main;
       }).map(function (x) {
         if (!(x.type in types)) types[x.type] = 0;
         var id = x.type + "_".concat(types[x.type]++);
@@ -8150,6 +8533,12 @@ Botbar_component.options.__file = "src/components/Botbar.vue"
     main_section: function main_section() {
       var p = Object.assign({}, this.common_props());
       p.data = this.overlay_subset(this.onchart);
+      p.data.push({
+        type: this.chart.type || 'Candles',
+        main: true,
+        data: this.sub,
+        settings: this.chart.settings || {}
+      });
       p.overlays = this.$props.overlays;
       return p;
     },
@@ -8171,7 +8560,10 @@ Botbar_component.options.__file = "src/components/Botbar.vue"
     },
     // Datasets: candles, onchart, offchart indicators
     ohlcv: function ohlcv() {
-      return this.$props.data.ohlcv || [];
+      return this.$props.data.ohlcv || this.chart.data || [];
+    },
+    chart: function chart() {
+      return this.$props.data.chart || {};
     },
     onchart: function onchart() {
       return this.$props.data.onchart || [];
@@ -8454,6 +8846,13 @@ TradingVue_component.options.__file = "src/TradingVue.vue"
 /* concated harmony reexport Overlay */__webpack_require__.d(__webpack_exports__, "Overlay", function() { return overlay; });
 /* concated harmony reexport Utils */__webpack_require__.d(__webpack_exports__, "Utils", function() { return utils; });
 /* concated harmony reexport Constants */__webpack_require__.d(__webpack_exports__, "Constants", function() { return constants; });
+/* concated harmony reexport Candle */__webpack_require__.d(__webpack_exports__, "Candle", function() { return CandleExt; });
+/* concated harmony reexport Volbar */__webpack_require__.d(__webpack_exports__, "Volbar", function() { return VolbarExt; });
+/* concated harmony reexport layout_cnv */__webpack_require__.d(__webpack_exports__, "layout_cnv", function() { return layout_cnv; });
+/* concated harmony reexport layout_vol */__webpack_require__.d(__webpack_exports__, "layout_vol", function() { return layout_vol; });
+
+
+
 
 
 
@@ -8469,7 +8868,11 @@ if (typeof window !== 'undefined' && window.Vue) {
     TradingVue: TradingVue,
     Overlay: overlay,
     Utils: utils,
-    Constants: constants
+    Constants: constants,
+    Candle: CandleExt,
+    Volbar: VolbarExt,
+    layout_cnv: layout_cnv,
+    layout_vol: layout_vol
   };
 }
 
