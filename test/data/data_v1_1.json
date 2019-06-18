@@ -1,6 +1,6 @@
 {
     "chart": {
-        "type": "Candles",
+        "type": "Spline",
         "data": [
         [
             1543572000000,
@@ -33603,6 +33603,8 @@
             173.28647568
         ]
     ],
-        "settings": {}
+        "settings": {
+            "dataIndex": 4
+        }
     }
 }
