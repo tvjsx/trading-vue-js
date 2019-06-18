@@ -26,7 +26,7 @@ export default {
                 }
             // Else, as offchart / onchart indicator:
             } else {
-                cnv = layout_cnv(this.$props)
+                cnv = layout_cnv(this)
             }
 
             if (this.show_volume) {
