@@ -1,7 +1,7 @@
 # API Book
 
 ::: warning
-This library is in alpha stage, API may change. This guide version is **0.3.2**
+This library is in alpha stage, API may change. This guide version is **0.3.3**
 :::
 
 ![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=Current%20lib%20version)
@@ -97,15 +97,17 @@ export default {
 
 ## Data structure
 
-
-
-Data structure v1.0
+Data structure v1.1
 
 ```js
 {
-    "ohlcv": [   // Mandatory
-        [timestamp, open, high, low, close, volume],
-        ...
+    "chart": [   // Mandatory
+        "type": "<Candles|Spline>",
+        "data": [
+            [timestamp, open, high, low, close, volume],
+            ...
+        ],
+        "settings": { } // Settings (depending on "type")
     ],
     "onchart": [ // Displayed ON the chart
         {
@@ -134,15 +136,14 @@ Data structure v1.0
 }
 ```
 
-<details><summary>Data structure v1.1 (development in progress)</summary>
+<details><summary>Data structure v1.0</summary>
 <p>
 
 ```js
 {
-    "chart": [   // Mandatory
-        "type": "<Chart Type, e.g. Candles>",
-        "data": [timestamp, ... ],
-        "settings": { } // Settings (depending on Chart Type)
+    "ohlcv": [   // Mandatory
+        [timestamp, open, high, low, close, volume],
+        ...
     ],
     "onchart": [ // Displayed ON the chart
         {

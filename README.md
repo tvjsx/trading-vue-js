@@ -92,13 +92,17 @@ The core philosophy is **Data -> Screen Mapping (DSM)**. The library provides yo
 
 ## Data structure
 
-PRO TIP: **ohlcv** is mandatory if you want to see something other than a white screen
+PRO TIP: **chart** is mandatory if you want to see something other than a white screen
 
 ```js
 {
-    "ohlcv": [
-        [timestamp, open, high, low, close, volume],
-        ...
+    "chart": [   // Mandatory
+        "type": "<Chart Type, e.g. Candles>",
+        "data": [
+            [timestamp, open, high, low, close, volume],
+            ...
+        ],
+        "settings": { } // Settings (depending on Chart Type)
     ],
     "onchart": [ // Displayed ON the chart
         {
