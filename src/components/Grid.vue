@@ -14,6 +14,7 @@ import Segment from "./overlays/Segment.vue"
 import Candles from "./overlays/Candles.vue"
 import Volume from "./overlays/Volume.vue"
 
+
 export default {
     name: 'Grid',
     props: [

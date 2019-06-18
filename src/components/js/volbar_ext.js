@@ -5,6 +5,7 @@ export default class VolbarExt {
         this.ctx = ctx
         this.$p = overlay.$props
         this.self = overlay
+        this.style = data.raw[6] || this.self
         this.draw(data)
     }
 
@@ -14,8 +15,8 @@ export default class VolbarExt {
         let h = Math.floor(data.h)
 
         this.ctx.fillStyle = data.green ?
-            this.self.colorVolUp :
-            this.self.colorVolDw
+            this.style.colorVolUp :
+            this.style.colorVolDw
 
         this.ctx.fillRect(
             Math.floor(data.x1),
