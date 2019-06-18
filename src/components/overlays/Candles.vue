@@ -72,12 +72,18 @@ export default {
         colorWickSm() {
             return this.sett.colorWickSm ||
             this.$props.colors.colorWickSm
+        },
+        colorVolUp() {
+            return this.sett.colorVolUp ||
+            this.$props.colors.colorVolUp
+        },
+        colorVolDw() {
+            return this.sett.colorVolDw ||
+            this.$props.colors.colorVolDw
         }
     },
     data() {
-        return {
-
-        }
+        return {}
     }
 
 }

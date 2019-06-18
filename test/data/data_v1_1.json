@@ -1,6 +1,6 @@
 {
     "chart": {
-        "type": "Spline",
+        "type": "Candles",
         "data": [
         [
             1543572000000,
