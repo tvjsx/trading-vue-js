@@ -37,10 +37,11 @@ export default {
             ctx.beginPath()
 
             const layout = this.$props.layout
+            const i = this.data_index
 
             for (var p of this.$props.data) {
                 let x = layout.t2screen(p[0])
-                let y = layout.$2screen(p[1])
+                let y = layout.$2screen(p[i])
                 ctx.lineTo(x, y)
             }
             ctx.stroke()
@@ -70,6 +71,9 @@ export default {
         color() {
             const n = this.$props.num % 5
             return this.sett.color || this.COLORS[n]
+        },
+        data_index() {
+            return this.sett.dataIndex || 1
         }
     },
     data() {
