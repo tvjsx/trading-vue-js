@@ -242,6 +242,9 @@ export default class Grid {
         event.originalEvent.preventDefault()
         event.preventDefault()
 
+        event.deltaX = event.deltaX || Utils.get_deltaX(event)
+        event.deltaY = event.deltaY || Utils.get_deltaY(event)
+
         if (Math.abs(event.deltaX) > 0) {
             this.trackpad = true
             if (Math.abs(event.deltaX) >= Math.abs(event.deltaY)) {
