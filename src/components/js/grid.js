@@ -242,13 +242,11 @@ export default class Grid {
         event.originalEvent.preventDefault()
         event.preventDefault()
 
-        // Trackpad pinch zoom
-        //if (event.originalEvent.ctrlKey) {
-            //delta *= 0.025
-        //}
-
-        if (Math.abs(event.deltaX) > 0.1) {
+        if (Math.abs(event.deltaX) > 0) {
             this.trackpad = true
+            if (Math.abs(event.deltaX) >= Math.abs(event.deltaY)) {
+                delta *= 0.1
+            }
             this.trackpad_scroll(event)
         }
 
@@ -315,7 +313,15 @@ export default class Grid {
     }
 
     trackpad_scroll(event) {
-        
+
+        let dt = this.range[1] - this.range[0]
+
+        this.range[0] += event.deltaX * dt * 0.011
+        this.range[1] += event.deltaX * dt * 0.011
+
+        this.change_range()
+
+
     }
 
     change_range() {
