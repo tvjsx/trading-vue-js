@@ -7,9 +7,12 @@ export default {
     props: [
         'id', 'num', 'interval', 'cursor', 'colors',
         'layout', 'sub', 'data', 'settings', 'grid_id',
-        'font'
+        'font', 'config'
     ],
     mounted() {
+        // Main chart?
+        let main = this.$props.sub === this.$props.data
+
         this.meta_info()
         this.$emit('new-grid-layer', {
             name: this.$options.name,
@@ -18,7 +21,7 @@ export default {
             display: 'display' in this.$props.settings ?
                this.$props.settings['display'] : true,
             z: this.$props.settings['z-index'] ||
-               this.$props.settings['zIndex'] || -1,
+               this.$props.settings['zIndex'] || (main ? 0 : -1),
         })
 
         // Overlay meta-props (adjusting behaviour)
@@ -58,7 +61,8 @@ export default {
             handler: function() {
                 this.$emit('show-grid-layer', {
                     id: this.$props.id,
-                    display: this.$props.settings['display']
+                    display: 'display' in this.$props.settings ?
+                        this.$props.settings['display'] : true,
                 })
             },
             deep: true
