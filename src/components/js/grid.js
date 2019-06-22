@@ -131,8 +131,10 @@ export default class Grid {
         // TODO: Temp solution, need to implement
         // a proper way to get the chart el offset
         this.offset_x = event.layerX - event.pageX
+            + window.scrollX
         this.offset_y = event.layerY - event.pageY
             + this.layout.offset
+            + window.scrollY
 
         this.propagate('mousemove', event)
     }
@@ -183,8 +185,6 @@ export default class Grid {
         this.grid()
 
         let overlays = []
-        if (this.layout.volume) overlays.push(this.v_layer())
-        if (this.layout.candles) overlays.push(this.c_layer())
         overlays.push(...this.overlays)
 
         // z-index sorting
@@ -235,24 +235,6 @@ export default class Grid {
         this.ctx.moveTo(0, 0.5)
         this.ctx.lineTo(this.layout.width, 0.5)
         this.ctx.stroke()
-    }
-
-    // Actually draws candles
-    // TODO: let user to overwrite. Let them create Mountain Dew
-    // candles and Snoop-dogg volume bars! (see. BitmexRekt)
-    c_layer() {
-        return new Layer('Candles', 0, () => {
-            for (var c of this.layout.candles) {
-                new Candle(this, c)
-            }
-        })
-    }
-    v_layer() {
-        return new Layer('Volume', -100, () => {
-            for (var c of this.layout.volume) {
-                new Volbar(this, c)
-            }
-        })
     }
 
     mousezoom(delta, event) {
