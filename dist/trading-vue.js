@@ -1,5 +1,5 @@
 /*!
- * TradingVue.JS - v0.3.3 - Tue Jun 18 2019
+ * TradingVue.JS - v0.3.4 - Tue Jun 25 2019
  * https://github.com/C451/trading-vue-js
  * Copyright (c) 2019 c451 Code's All Right;
  * Licensed under the MIT license
@@ -4257,6 +4257,27 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
         return x[0] >= t1 && x[0] <= t2;
       });
     }
+  },
+  now: function now() {
+    return new Date().getTime();
+  },
+  // Limit crazy wheel delta values
+  smart_wheel: function smart_wheel(delta) {
+    var abs = Math.abs(delta);
+
+    if (abs > 500) {
+      return (200 + Math.log(abs)) * Math.sign(delta);
+    }
+
+    return delta;
+  },
+  // Parse the original mouse event to find deltaX
+  get_deltaX: function get_deltaX(event) {
+    return event.originalEvent.deltaX / 12;
+  },
+  // Parse the original mouse event to find deltaY
+  get_deltaY: function get_deltaY(event) {
+    return event.originalEvent.deltaY / 12;
   }
 });
 // CONCATENATED MODULE: ./src/components/js/layout_fn.js
@@ -4943,114 +4964,6 @@ var hammer = __webpack_require__(0);
 var hamsterjs_hamster = __webpack_require__(9);
 var hamster_default = /*#__PURE__*/__webpack_require__.n(hamsterjs_hamster);
 
-// CONCATENATED MODULE: ./src/components/js/candle.js
-function candle_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function candle_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function candle_createClass(Constructor, protoProps, staticProps) { if (protoProps) candle_defineProperties(Constructor.prototype, protoProps); if (staticProps) candle_defineProperties(Constructor, staticProps); return Constructor; }
-
-var Candle =
-/*#__PURE__*/
-function () {
-  function Candle(grid, data) {
-    candle_classCallCheck(this, Candle);
-
-    this.grid = grid;
-    this.ctx = grid.ctx;
-    this.$p = grid.$p;
-    this.draw(data);
-  }
-
-  candle_createClass(Candle, [{
-    key: "draw",
-    value: function draw(data) {
-      var body_color = data.c <= data.o ? this.$p.colors.colorCandleUp : this.$p.colors.colorCandleDw;
-      var wick_color = data.c <= data.o ? this.$p.colors.colorWickUp : this.$p.colors.colorWickDw;
-      var wick_color_sm = this.$p.colors.colorWickSm;
-      var w = Math.max(data.w, 1);
-      var hw = Math.max(Math.floor(w * 0.5), 1);
-      var h = Math.abs(data.o - data.c);
-      var max_h = data.c === data.o ? 1 : 2;
-      this.ctx.strokeStyle = w > 1 ? wick_color : wick_color_sm;
-      this.ctx.beginPath();
-      this.ctx.moveTo(Math.floor(data.x) - 0.5, Math.floor(data.h));
-      this.ctx.lineTo(Math.floor(data.x) - 0.5, Math.floor(data.l));
-      this.ctx.stroke();
-
-      if (data.w > 1.5) {
-        this.ctx.fillStyle = body_color; // TODO: Move common calculations to layout.js
-
-        this.ctx.fillRect(Math.floor(data.x - hw - 1), Math.floor(Math.min(data.o, data.c)), Math.floor(hw * 2 + 1), Math.floor(Math.max(h, max_h)));
-      } else {
-        this.ctx.strokeStyle = body_color;
-        this.ctx.beginPath();
-        this.ctx.moveTo(Math.floor(data.x) - 0.5, Math.floor(Math.min(data.o, data.c)));
-        this.ctx.lineTo(Math.floor(data.x) - 0.5, Math.floor(Math.max(data.o, data.c)));
-        this.ctx.stroke();
-      }
-    }
-  }]);
-
-  return Candle;
-}();
-
-
-// CONCATENATED MODULE: ./src/components/js/volbar.js
-function volbar_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function volbar_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function volbar_createClass(Constructor, protoProps, staticProps) { if (protoProps) volbar_defineProperties(Constructor.prototype, protoProps); if (staticProps) volbar_defineProperties(Constructor, staticProps); return Constructor; }
-
-var Volbar =
-/*#__PURE__*/
-function () {
-  function Volbar(grid, data) {
-    volbar_classCallCheck(this, Volbar);
-
-    this.grid = grid;
-    this.ctx = grid.ctx;
-    this.$p = grid.$p;
-    this.draw(data);
-  }
-
-  volbar_createClass(Volbar, [{
-    key: "draw",
-    value: function draw(data) {
-      var y0 = this.grid.layout.height;
-      var w = data.x2 - data.x1;
-      var h = Math.floor(data.h);
-      this.ctx.fillStyle = data.green ? this.$p.colors.colorVolUp : this.$p.colors.colorVolDw;
-      this.ctx.fillRect(Math.floor(data.x1), Math.floor(y0 - h - 0.5), Math.floor(w), Math.floor(h + 1));
-    }
-  }]);
-
-  return Volbar;
-}();
-
-
-// CONCATENATED MODULE: ./src/stuff/layer.js
-function layer_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-// Layer constructor, helper class
-var Layer = function Layer(name, z, renderer) {
-  layer_classCallCheck(this, Layer);
-
-  if (typeof renderer === 'function') {
-    this.renderer = {
-      draw: renderer
-    };
-  } else {
-    this.renderer = renderer;
-  }
-
-  this.name = name;
-  this.z = z;
-  this.display = true;
-};
-
-/* harmony default export */ var stuff_layer = (Layer);
 // CONCATENATED MODULE: ./src/components/js/grid.js
 function grid_slicedToArray(arr, i) { return grid_arrayWithHoles(arr) || grid_iterableToArrayLimit(arr, i) || grid_nonIterableRest(); }
 
@@ -5081,9 +4994,6 @@ function grid_createClass(Constructor, protoProps, staticProps) { if (protoProps
 
 
 
-
-
-
 var grid_Grid =
 /*#__PURE__*/
 function () {
@@ -5103,6 +5013,8 @@ function () {
     this.interval = this.$p.interval;
     this.offset_x = 0;
     this.offset_y = 0;
+    this.deltas = 0; // Wheel delta events
+
     this.listeners();
     this.overlays = [];
   }
@@ -5177,6 +5089,15 @@ function () {
       });
       mc.on('pinch', function (event) {
         if (_this.pinch) _this.pinchzoom(event.scale);
+      });
+      window.addEventListener("gesturestart", function (event) {
+        event.preventDefault();
+      });
+      window.addEventListener("gesturechange", function (event) {
+        event.preventDefault();
+      });
+      window.addEventListener("gestureend", function (event) {
+        event.preventDefault();
       });
     }
   }, {
@@ -5347,9 +5268,26 @@ function () {
   }, {
     key: "mousezoom",
     value: function mousezoom(delta, event) {
-      // TODO: mouse zooming is a little jerky,
+      event.originalEvent.preventDefault();
+      event.preventDefault();
+      event.deltaX = event.deltaX || utils.get_deltaX(event);
+      event.deltaY = event.deltaY || utils.get_deltaY(event);
+
+      if (Math.abs(event.deltaX) > 0) {
+        this.trackpad = true;
+
+        if (Math.abs(event.deltaX) >= Math.abs(event.deltaY)) {
+          delta *= 0.1;
+        }
+
+        this.trackpad_scroll(event);
+      }
+
+      if (this.trackpad) delta *= 0.032;
+      delta = utils.smart_wheel(delta); // TODO: mouse zooming is a little jerky,
       // needs to follow f(mouse_wheel_speed) and
       // if speed is low, scroll shoud be slower
+
       if (delta < 0 && this.data.length <= this.MIN_ZOOM) return;
       if (delta > 0 && this.data.length > this.MAX_ZOOM) return;
       var k = this.interval / 1000;
@@ -5360,7 +5298,6 @@ function () {
       // it is probably lost.
 
       this.change_range();
-      event.preventDefault();
     }
   }, {
     key: "mousedrug",
@@ -5390,6 +5327,14 @@ function () {
       var nt = t * 1 / scale;
       this.range[0] = this.pinch.r[0] - (nt - t) * 0.5;
       this.range[1] = this.pinch.r[1] + (nt - t) * 0.5;
+      this.change_range();
+    }
+  }, {
+    key: "trackpad_scroll",
+    value: function trackpad_scroll(event) {
+      var dt = this.range[1] - this.range[0];
+      this.range[0] += event.deltaX * dt * 0.011;
+      this.range[1] += event.deltaX * dt * 0.011;
       this.change_range();
     }
   }, {
@@ -5459,18 +5404,25 @@ function () {
 /* harmony default export */ var canvas = ({
   methods: {
     setup: function setup() {
-      var id = "".concat(this.$props.tv_id, "-").concat(this._id, "-canvas");
-      var canvas = document.getElementById(id); // TODO: make dpi s**t work
-      //const dpr = window.devicePixelRatio || 1
+      var _this = this;
 
-      canvas.width = this._attrs.width;
-      canvas.height = this._attrs.height;
+      var id = "".concat(this.$props.tv_id, "-").concat(this._id, "-canvas");
+      var canvas = document.getElementById(id);
+      var dpr = window.devicePixelRatio || 1;
       canvas.style.width = "".concat(this._attrs.width, "px");
-      canvas.style.height = "".concat(this._attrs.height, "px"); //const ctx = canvas.getContext('2d')
-      //ctx.scale(dpr, dpr)
+      canvas.style.height = "".concat(this._attrs.height, "px");
+      this.$nextTick(function () {
+        var rect = canvas.getBoundingClientRect();
+        canvas.width = rect.width * dpr;
+        canvas.height = rect.height * dpr;
+        var ctx = canvas.getContext('2d');
+        ctx.scale(dpr, dpr);
+
+        _this.redraw();
+      });
     },
     create_canvas: function create_canvas(h, id, props) {
-      var _this = this;
+      var _this2 = this;
 
       this._id = id;
       this._attrs = props.attrs;
@@ -5484,16 +5436,16 @@ function () {
       }, [h('canvas', {
         on: {
           mousemove: function mousemove(e) {
-            return _this.renderer.mousemove(e);
+            return _this2.renderer.mousemove(e);
           },
           mouseout: function mouseout(e) {
-            return _this.renderer.mouseout(e);
+            return _this2.renderer.mouseout(e);
           },
           mouseup: function mouseup(e) {
-            return _this.renderer.mouseup(e);
+            return _this2.renderer.mouseup(e);
           },
           mousedown: function mousedown(e) {
-            return _this.renderer.mousedown(e);
+            return _this2.renderer.mousedown(e);
           }
         },
         attrs: Object.assign({
@@ -5512,12 +5464,10 @@ function () {
     width: function width(val) {
       this._attrs.width = val;
       this.setup();
-      this.$nextTick(this.redraw);
     },
     height: function height(val) {
       this._attrs.height = val;
       this.setup();
-      this.$nextTick(this.redraw);
     }
   }
 });
