@@ -6,14 +6,17 @@ export default {
         setup() {
             const id = `${this.$props.tv_id}-${this._id}-canvas`
             const canvas = document.getElementById(id)
-            // TODO: make dpi s**t work
-            //const dpr = window.devicePixelRatio || 1
-            canvas.width = this._attrs.width
-            canvas.height = this._attrs.height
-            canvas.style.width = `${this._attrs.width}px`;
-            canvas.style.height = `${this._attrs.height}px`;
-            //const ctx = canvas.getContext('2d')
-            //ctx.scale(dpr, dpr)
+            const dpr = window.devicePixelRatio || 1
+            canvas.style.width = `${this._attrs.width}px`
+            canvas.style.height = `${this._attrs.height}px`
+            this.$nextTick(() => {
+                var rect = canvas.getBoundingClientRect()
+                canvas.width = rect.width * dpr
+                canvas.height = rect.height * dpr
+                const ctx = canvas.getContext('2d')
+                ctx.scale(dpr, dpr)
+                this.redraw()
+            })
         },
         create_canvas(h, id, props) {
             this._id = id
@@ -50,12 +53,10 @@ export default {
         width(val) {
             this._attrs.width = val
             this.setup()
-            this.$nextTick(this.redraw)
         },
         height(val) {
             this._attrs.height = val
             this.setup()
-            this.$nextTick(this.redraw)
         }
     }
 }
