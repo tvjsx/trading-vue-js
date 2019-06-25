@@ -4,10 +4,7 @@
 
 import * as Hammer from 'hammerjs'
 import Hamster from 'hamsterjs'
-import Candle from './candle.js'
-import Volbar from './volbar.js'
 import Utils from '../../stuff/utils.js'
-import Layer from '../../stuff/layer.js'
 
 export default class Grid {
 
@@ -115,7 +112,7 @@ export default class Grid {
             event.preventDefault()
         })
 
-        window.addEventListener("gestureend", e => {
+        window.addEventListener("gestureend", event => {
             event.preventDefault()
         })
 
