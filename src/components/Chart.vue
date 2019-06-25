@@ -159,6 +159,12 @@ export default {
         main_section() {
             let p = Object.assign({}, this.common_props())
             p.data = this.overlay_subset(this.onchart)
+            p.data.push({
+                type: this.chart.type || 'Candles',
+                main: true,
+                data: this.sub,
+                settings: this.chart.settings || {}
+            })
             p.overlays = this.$props.overlays
             return p
         },
@@ -180,7 +186,10 @@ export default {
         },
         // Datasets: candles, onchart, offchart indicators
         ohlcv() {
-            return this.$props.data.ohlcv || []
+            return this.$props.data.ohlcv || this.chart.data || []
+        },
+        chart() {
+            return this.$props.data.chart || {}
         },
         onchart() {
             return this.$props.data.onchart || []

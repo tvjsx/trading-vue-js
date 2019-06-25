@@ -48,7 +48,6 @@ function Layout(params) {
         var x1, x2, mid, prev = undefined
 
         let splitter = self.px_step > 5 ? 1 : 0
-        //let candlew = self.px_step > 5 ? CANDLEW
 
         for (var i = 0; i < sub.length; i++) {
             let p = sub[i]

@@ -120,5 +120,27 @@ export default {
                 x[0] >= t1 && x[0] <= t2
             )
         }
+    },
+
+    now() { return (new Date()).getTime() },
+
+    // Limit crazy wheel delta values
+    smart_wheel(delta) {
+        let abs = Math.abs(delta)
+        if (abs > 500) {
+            return (200 + Math.log(abs)) * Math.sign(delta)
+        }
+        return delta
+    },
+
+    // Parse the original mouse event to find deltaX
+    get_deltaX(event) {
+        return event.originalEvent.deltaX / 12
+    },
+
+    // Parse the original mouse event to find deltaY
+    get_deltaY(event) {
+        return event.originalEvent.deltaY / 12
     }
+
 }

@@ -27,6 +27,7 @@ export default class Grid {
         this.interval = this.$p.interval
         this.offset_x = 0
         this.offset_y = 0
+        this.deltas = 0 // Wheel delta events
 
         this.listeners()
         this.overlays = []
@@ -105,6 +106,19 @@ export default class Grid {
         mc.on('pinch', event => {
             if (this.pinch) this.pinchzoom(event.scale)
         })
+
+        window.addEventListener("gesturestart", event => {
+            event.preventDefault()
+        })
+
+        window.addEventListener("gesturechange", event => {
+            event.preventDefault()
+        })
+
+        window.addEventListener("gestureend", e => {
+            event.preventDefault()
+        })
+
     }
 
     mousemove(event) {
@@ -171,8 +185,6 @@ export default class Grid {
         this.grid()
 
         let overlays = []
-        if (this.layout.volume) overlays.push(this.v_layer())
-        if (this.layout.candles) overlays.push(this.c_layer())
         overlays.push(...this.overlays)
 
         // z-index sorting
@@ -225,25 +237,25 @@ export default class Grid {
         this.ctx.stroke()
     }
 
-    // Actually draws candles
-    // TODO: let user to overwrite. Let them create Mountain Dew
-    // candles and Snoop-dogg volume bars! (see. BitmexRekt)
-    c_layer() {
-        return new Layer('Candles', 0, () => {
-            for (var c of this.layout.candles) {
-                new Candle(this, c)
-            }
-        })
-    }
-    v_layer() {
-        return new Layer('Volume', -100, () => {
-            for (var c of this.layout.volume) {
-                new Volbar(this, c)
-            }
-        })
-    }
-
     mousezoom(delta, event) {
+
+        event.originalEvent.preventDefault()
+        event.preventDefault()
+
+        event.deltaX = event.deltaX || Utils.get_deltaX(event)
+        event.deltaY = event.deltaY || Utils.get_deltaY(event)
+
+        if (Math.abs(event.deltaX) > 0) {
+            this.trackpad = true
+            if (Math.abs(event.deltaX) >= Math.abs(event.deltaY)) {
+                delta *= 0.1
+            }
+            this.trackpad_scroll(event)
+        }
+
+        if (this.trackpad) delta *= 0.032
+
+        delta = Utils.smart_wheel(delta)
 
         // TODO: mouse zooming is a little jerky,
         // needs to follow f(mouse_wheel_speed) and
@@ -260,8 +272,6 @@ export default class Grid {
         // Need to investigate. Solution: check reactivity,
         // it is probably lost.
         this.change_range()
-
-        event.preventDefault()
 
     }
 
@@ -302,6 +312,18 @@ export default class Grid {
         this.range[1] = this.pinch.r[1] + (nt - t) * 0.5
 
         this.change_range()
+
+    }
+
+    trackpad_scroll(event) {
+
+        let dt = this.range[1] - this.range[0]
+
+        this.range[0] += event.deltaX * dt * 0.011
+        this.range[1] += event.deltaX * dt * 0.011
+
+        this.change_range()
+
 
     }
 
