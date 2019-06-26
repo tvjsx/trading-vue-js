@@ -32,7 +32,7 @@ export default {
             this.chart = {
                  ohlcv: this.charts[tf.name]
             }
-            this.$refs.tradingVue.reset_chart()
+            this.$refs.tradingVue.resetChart()
         }
     },
     mounted() {
