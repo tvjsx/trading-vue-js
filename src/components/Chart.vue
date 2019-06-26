@@ -57,6 +57,10 @@ export default {
             Utils.overwrite(this.sub, sub)
             this.update_layout()
         },
+        goto(t) {
+            const dt = this.range[1] - this.range[0]
+            this.range_changed([t - dt, t])
+        },
         cursor_changed(e) {
             this.updater.sync(e)
         },
