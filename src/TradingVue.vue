@@ -8,6 +8,7 @@
             height: this.height+'px'}">
         <!-- <toolbar> </toolbar> TODO: add drawing tools -->
         <chart :key="reset"
+            ref="chart"
             v-bind="chart_props"
             v-bind:tv_id="id"
             v-bind:config="chart_config"
@@ -159,6 +160,12 @@ export default {
     },
     methods: {
         resetChart() { this.reset++ },
+        goto(t) {
+            this.$refs.chart.goto(t)
+        },
+        getCursor() {
+            return this.$refs.chart.cursor
+        },
         legend_button(event) {
             this.$emit('legend-button-click', event)
         }
