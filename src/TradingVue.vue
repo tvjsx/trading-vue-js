@@ -158,7 +158,7 @@ export default {
         return { reset: 0 }
     },
     methods: {
-        reset_chart() { this.reset++ },
+        resetChart() { this.reset++ },
         legend_button(event) {
             this.$emit('legend-button-click', event)
         }

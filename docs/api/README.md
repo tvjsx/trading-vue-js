@@ -44,7 +44,7 @@ This library is in alpha stage, API may change. This guide version is **0.3.3**
 
 ## Methods
 
-### reset_chart()
+### resetChart()
 
 Resets the chart to the default state. Use it if you need to reset the time range.
 
@@ -57,7 +57,7 @@ Resets the chart to the default state. Use it if you need to reset the time rang
 <script>
 export default {
     mounted() {
-        this.$refs.tradingVue.reset_chart()
+        this.$refs.tradingVue.resetChart()
     }
 }
 </script>
