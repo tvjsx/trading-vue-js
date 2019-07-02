@@ -61,6 +61,9 @@ export default {
             const dt = this.range[1] - this.range[0]
             this.range_changed([t - dt, t])
         },
+        setRange(t1, t2) {
+            this.range_changed([t1, t2])
+        },
         cursor_changed(e) {
             this.updater.sync(e)
         },
