@@ -163,6 +163,12 @@ export default {
         goto(t) {
             this.$refs.chart.goto(t)
         },
+        setRange(t1, t2) {
+            this.$refs.chart.setRange(t1, t2)
+        },
+        getRange() {
+            return this.$refs.chart.range
+        },
         getCursor() {
             return this.$refs.chart.cursor
         },
