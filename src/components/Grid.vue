@@ -13,6 +13,7 @@ import Channel from "./overlays/Channel.vue"
 import Segment from "./overlays/Segment.vue"
 import Candles from "./overlays/Candles.vue"
 import Volume from "./overlays/Volume.vue"
+import Splitters from "./overlays/Splitters.vue"
 
 
 export default {
@@ -28,7 +29,7 @@ export default {
         // List of all possible overlays (builtin + custom)
         this._list = [
             Spline, Splines, Range, Trades, Channel, Segment,
-            Candles, Volume
+            Candles, Volume, Splitters
         ]
         .concat(this.$props.overlays)
         this._registry = {}

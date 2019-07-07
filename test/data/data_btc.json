@@ -58705,6 +58705,20 @@
                 "lineWidth": 1.0,
                 "legend": false
             }
+        },
+        {
+            "name": "Data sections",
+            "type": "Splitters",
+            "data": [
+                [1555912800000],
+                [1555952400000, "Pump"],
+                [1555992000000, "Pump more", 0, "#34a853"],
+                [1556031600000, "Hindsight 🦆", 1, "#f4c20d", 0.75],
+                [1556031600000, "20/20 😎", 1, "#777", 0.7]
+            ],
+            "settings": {
+                "legend": false
+            }
         }
     ],
     "offchart": [
