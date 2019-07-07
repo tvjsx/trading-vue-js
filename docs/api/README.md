@@ -1,7 +1,7 @@
 # API Book
 
 ::: warning
-This library is in alpha stage, API may change. This guide version is **0.3.3**
+This library is in alpha stage, API may change. This guide version is **0.3.5**
 :::
 
 ![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=Current%20lib%20version)
@@ -62,6 +62,44 @@ export default {
 }
 </script>
 ```
+
+### setRange(t1, t2)
+
+Sets custom time range.
+
+* **Arguments**: t1 (Number) Left-bound of the range
+* **Arguments**: t2 (Number) Right-bound of the range
+
+*Example:*
+
+```HTML
+<template>
+    <trading-vue ref="tradingVue"></trading-vue>
+</template>
+<script>
+export default {
+    mounted() {
+        // Wait until chart is fully loaded
+        this.$nextTick(() =>
+            this.$refs.tradingVue.setRange(t1, t2)
+        )
+    }
+}
+</script>
+```
+
+### getRange()
+
+Gets current timerange.
+
+* **Returns**: [t1, t2] (Array) Current timerange
+
+### goto(t)
+
+Goto to a specific timestamp
+
+* **Arguments**: t (Number) Target timestamp
+
 
 ## Events
 

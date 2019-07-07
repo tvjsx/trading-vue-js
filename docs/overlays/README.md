@@ -1,7 +1,7 @@
 # Built-in Overlays
 
 ::: warning
-This library is in alpha stage, API may change. This guide's version is **0.3.3**
+This library is in alpha stage, API may change. This guide's version is **0.3.5**
 :::
 
 ![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=Current%20lib%20version)
@@ -296,3 +296,36 @@ Type:
 |  p2 | Array |  Coordinate of the second point  |
 | lineWidth | Number | Line width, px |
 | color | String | Line color, hex |
+
+## Splitters
+
+| Type name | Aliases | Description |
+|---|---|---|
+| Splitters  | - | Data section splitters |
+
+### Data format
+
+```
+{
+    "name": "Data sections",
+    "type": "Splitters",
+    "data": [
+        [ <timestamp>, (opt)<Text>, (opt)<Side>, (opt)<Color>, (opt)<Y-pos> ],
+    ],
+    "settings": {
+        ...
+    }
+}
+```
+
+### Settings
+
+| Prop | Type | Description |
+|---|---|---|
+| *z-index* | Number | 0 = candlestick layer, default = -1 |
+| *legend* | Boolean  | Show legend, default = true |
+| lineWidth | Number | Line width, px |
+| yPosition | Number | Label y-postion [0,1], default = 0.9 |
+| lineColor | String | Line color, hex |
+| labelColor | String | Label color, hex |
+| font | Strung | Label font string, e.g '11x Arial...'|
