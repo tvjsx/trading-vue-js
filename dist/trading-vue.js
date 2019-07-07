@@ -1,5 +1,5 @@
 /*!
- * TradingVue.JS - v0.3.4 - Tue Jun 25 2019
+ * TradingVue.JS - v0.3.5 - Sun Jul 07 2019
  * https://github.com/C451/trading-vue-js
  * Copyright (c) 2019 c451 Code's All Right;
  * Licensed under the MIT license
@@ -4012,6 +4012,7 @@ var TradingVuevue_type_template_id_235c0ade_render = function() {
         _vm._b(
           {
             key: _vm.reset,
+            ref: "chart",
             attrs: { tv_id: _vm.id, config: _vm.chart_config },
             on: { "legend-button-click": _vm.legend_button }
           },
@@ -6940,8 +6941,114 @@ var Volume_component = normalizeComponent(
 if (false) { var Volume_api; }
 Volume_component.options.__file = "src/components/overlays/Volume.vue"
 /* harmony default export */ var Volume = (Volume_component.exports);
+// CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/components/overlays/Splitters.vue?vue&type=script&lang=js&
+// Data section splitters (with labels)
+
+/* harmony default export */ var Splittersvue_type_script_lang_js_ = ({
+  name: 'Splitters',
+  mixins: [overlay],
+  methods: {
+    meta_info: function meta_info() {
+      return {
+        author: 'C451',
+        version: '1.0.0'
+      };
+    },
+    draw: function draw(ctx) {
+      var _this = this;
+
+      var layout = this.$props.layout;
+      ctx.lineWidth = this.line_width;
+      ctx.strokeStyle = this.line_color;
+      this.$props.data.forEach(function (p, i) {
+        ctx.beginPath();
+        var x = layout.t2screen(p[0]); // x - Mapping
+
+        ctx.setLineDash([10, 10]);
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, _this.layout.height);
+        ctx.stroke();
+        if (p[1]) _this.draw_label(ctx, x, p);
+      });
+    },
+    draw_label: function draw_label(ctx, x, p) {
+      var side = p[2] ? 1 : -1;
+      x += 2.5 * side;
+      ctx.font = this.new_font;
+      var pos = p[4] || this.y_position;
+      var w = ctx.measureText(p[1]).width + 10;
+      var y = this.layout.height * (1.0 - pos);
+      y = Math.floor(y);
+      ctx.fillStyle = p[3] || this.label_color;
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(x + 10 * side, y - 10 * side);
+      ctx.lineTo(x + (w + 10) * side, y - 10 * side);
+      ctx.lineTo(x + (w + 10) * side, y + 10 * side);
+      ctx.lineTo(x + 10 * side, y + 10 * side);
+      ctx.closePath();
+      ctx.fill();
+      ctx.fillStyle = '#fff';
+      ctx.textAlign = side < 0 ? 'right' : 'left';
+      ctx.fillText(p[1], x + 15 * side, y + 4);
+    },
+    use_for: function use_for() {
+      return ['Splitters'];
+    }
+  },
+  // Define internal setting & constants here
+  computed: {
+    sett: function sett() {
+      return this.$props.settings;
+    },
+    new_font: function new_font() {
+      return this.sett.font || '12px ' + this.$props.font.split('px').pop();
+    },
+    label_color: function label_color() {
+      return this.sett.labelColor || '#4285f4';
+    },
+    line_color: function line_color() {
+      return this.sett.lineColor || '#4285f4';
+    },
+    line_width: function line_width() {
+      return this.sett.lineWidth || 1.0;
+    },
+    y_position: function y_position() {
+      return this.sett.yPosition || 0.9;
+    }
+  },
+  data: function data() {
+    return {};
+  }
+});
+// CONCATENATED MODULE: ./src/components/overlays/Splitters.vue?vue&type=script&lang=js&
+ /* harmony default export */ var overlays_Splittersvue_type_script_lang_js_ = (Splittersvue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/components/overlays/Splitters.vue
+var Splitters_render, Splitters_staticRenderFns
+
+
+
+
+/* normalize component */
+
+var Splitters_component = normalizeComponent(
+  overlays_Splittersvue_type_script_lang_js_,
+  Splitters_render,
+  Splitters_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var Splitters_api; }
+Splitters_component.options.__file = "src/components/overlays/Splitters.vue"
+/* harmony default export */ var Splitters = (Splitters_component.exports);
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Grid.vue?vue&type=script&lang=js&
 // Sets up all layers/overlays for the grid with 'grid_id'
+
 
 
 
@@ -6964,7 +7071,7 @@ Volume_component.options.__file = "src/components/overlays/Volume.vue"
     var _this = this;
 
     // List of all possible overlays (builtin + custom)
-    this._list = [Spline, Splines, Range, Trades, Channel, Segment, Candles, Volume].concat(this.$props.overlays);
+    this._list = [Spline, Splines, Range, Trades, Channel, Segment, Candles, Volume, Splitters].concat(this.$props.overlays);
     this._registry = {}; // We need to know which components we will use.
     // Custom overlay components overwrite built-ins:
 
@@ -8389,6 +8496,13 @@ Botbar_component.options.__file = "src/components/Botbar.vue"
       utils.overwrite(this.sub, sub);
       this.update_layout();
     },
+    "goto": function goto(t) {
+      var dt = this.range[1] - this.range[0];
+      this.range_changed([t - dt, t]);
+    },
+    setRange: function setRange(t1, t2) {
+      this.range_changed([t1, t2]);
+    },
     cursor_changed: function cursor_changed(e) {
       this.updater.sync(e);
     },
@@ -8612,6 +8726,7 @@ Chart_component.options.__file = "src/components/Chart.vue"
 //
 //
 //
+//
 
 
 /* harmony default export */ var TradingVuevue_type_script_lang_js_ = ({
@@ -8758,8 +8873,20 @@ Chart_component.options.__file = "src/components/Chart.vue"
     };
   },
   methods: {
-    reset_chart: function reset_chart() {
+    resetChart: function resetChart() {
       this.reset++;
+    },
+    "goto": function goto(t) {
+      this.$refs.chart["goto"](t);
+    },
+    setRange: function setRange(t1, t2) {
+      this.$refs.chart.setRange(t1, t2);
+    },
+    getRange: function getRange() {
+      return this.$refs.chart.range;
+    },
+    getCursor: function getCursor() {
+      return this.$refs.chart.cursor;
     },
     legend_button: function legend_button(event) {
       this.$emit('legend-button-click', event);
