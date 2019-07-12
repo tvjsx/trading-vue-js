@@ -4,6 +4,7 @@
 import Grid from './js/grid.js'
 import Canvas from '../mixins/canvas.js'
 import Crosshair from './Crosshair.vue'
+import KeyboardListener from './KeyboardListener.vue'
 
 import Spline from "./overlays/Spline.vue"
 import Splines from "./overlays/Splines.vue"
@@ -24,7 +25,7 @@ export default {
         'config'
     ],
     mixins: [Canvas],
-    components: { Crosshair },
+    components: { Crosshair, KeyboardListener },
     created() {
         // List of all possible overlays (builtin + custom)
         this._list = [
@@ -68,7 +69,10 @@ export default {
                 h(Crosshair, {
                     props: this.common_props(),
                     on: this.layer_events
-                })
+                }),
+                h(KeyboardListener, {
+                    on: this.keyboard_events
+                }),
             ].concat(this.get_overlays(h))
         })
     },
@@ -120,6 +124,11 @@ export default {
             }
         }
     },
+    computed: {
+        is_active() {
+            return this.$props.cursor.t !== undefined
+        }
+    },
     watch: {
         range: {
             handler: function() {
@@ -145,6 +154,26 @@ export default {
                 'redraw-grid': this.redraw,
                 'layer-meta-props': d =>
                     this.$emit('layer-meta-props', d)
+            },
+            keyboard_events: {
+                'register-kb-listener': event => {
+                    this.$emit('register-kb-listener', event)
+                },
+                'remove-kb-listener': event => {
+                    this.$emit('remove-kb-listener', event)
+                },
+                'keyup': event => {
+                    if (!this.is_active) return
+                    this.renderer.propagate('keyup', event)
+                },
+                'keydown': event => {
+                    if (!this.is_active) return
+                    this.renderer.propagate('keydown', event)
+                },
+                'keypress': event => {
+                    if (!this.is_active) return
+                    this.renderer.propagate('keypress', event)
+                },
             }
         }
     }

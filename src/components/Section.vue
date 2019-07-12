@@ -9,6 +9,8 @@
             v-on:legend-button-click="button_click">
         </chart-legend>
         <grid v-bind="grid_props" v-bind:grid_id="grid_id"
+             v-on:register-kb-listener="register_kb"
+             v-on:remove-kb-listener="remove_kb"
              v-on:range-changed="range_changed"
              v-on:cursor-changed="cursor_changed"
              v-on:cursor-locked="cursor_locked"
@@ -58,6 +60,12 @@ export default {
         },
         button_click(event) {
             this.$emit('legend-button-click', event)
+        },
+        register_kb(event) {
+            this.$emit('register-kb-listener', event)
+        },
+        remove_kb(event) {
+            this.$emit('remove-kb-listener', event)
         }
     },
     computed: {
