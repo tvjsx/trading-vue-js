@@ -1,16 +1,20 @@
 <template>
     <!-- Chart components combined together -->
     <div class="trading-vue-chart">
+        <keyboard ref="keyboard"></keyboard>
         <grid-section v-for="(grid, i) in this._layout.grids"
             :key="grid.id"
             v-bind:common="section_props(i)"
             v-bind:grid_id="i"
+            v-on:register-kb-listener="register_kb"
+            v-on:remove-kb-listener="remove_kb"
             v-on:range-changed="range_changed"
             v-on:cursor-changed="cursor_changed"
             v-on:cursor-locked="cursor_locked"
             v-on:sidebar-transform="set_ytransform"
             v-on:layer-meta-props="layer_meta_props"
-            v-on:legend-button-click="legend_button_click">
+            v-on:legend-button-click="legend_button_click"
+            >
         </grid-section>
         <botbar v-bind="botbar_props"></botbar>
     </div>
@@ -24,6 +28,7 @@ import Utils from '../stuff/utils.js'
 import CursorUpdater from './js/updater.js'
 import GridSection from './Section.vue'
 import Botbar from './Botbar.vue'
+import Keyboard from './Keyboard.vue'
 
 export default {
     name: 'Chart',
@@ -33,7 +38,8 @@ export default {
     ],
     components: {
         GridSection,
-        Botbar
+        Botbar,
+        Keyboard
     },
     created() {
 
@@ -159,6 +165,14 @@ export default {
         },
         legend_button_click(event) {
             this.$emit('legend-button-click', event)
+        },
+        register_kb(event) {
+            if (!this.$refs.keyboard) return
+            this.$refs.keyboard.register(event)
+        },
+        remove_kb(event) {
+            if (!this.$refs.keyboard) return
+            this.$refs.keyboard.remove(event)
         }
     },
     computed: {

@@ -78,6 +78,13 @@ export default {
             this.time_stamp = event.timeStamp
         },
 
+        keydown(event) {
+            if (event.key === "Escape") {
+                this.selected = null
+                this.hint = null
+            }
+        },
+
         hover(x, y) {
             return (
                 (x - this.mouse.x) * (x - this.mouse.x) +
