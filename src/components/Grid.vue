@@ -126,7 +126,8 @@ export default {
     },
     computed: {
         is_active() {
-            return this.$props.cursor.t !== undefined
+            return this.$props.cursor.t !== undefined &&
+            this.$props.cursor.grid_id === this.$props.grid_id
         }
     },
     watch: {
