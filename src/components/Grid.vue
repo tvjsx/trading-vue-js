@@ -139,7 +139,7 @@ export default {
         },
         cursor: {
             handler: function() {
-                this.redraw()
+                if (!this.$props.cursor.locked) this.redraw()
             },
             deep: true
         }

@@ -119,12 +119,12 @@ export default class Grid {
     }
 
     mousemove(event) {
+
         this.comp.$emit('cursor-changed', {
             grid_id: this.id,
             x: event.layerX,
             y: event.layerY + this.layout.offset
         })
-        if (!this.drug) this.update()
         // TODO: Temp solution, need to implement
         // a proper way to get the chart el offset
         this.offset_x = event.layerX - event.pageX
@@ -172,7 +172,6 @@ export default class Grid {
     }
 
     update() {
-
         // Update reference to the grid
         // TODO: check what happens if data changes interval
         this.layout = this.$p.layout.grids[this.id]
