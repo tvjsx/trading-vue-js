@@ -184,7 +184,7 @@ export default {
                 type: this.chart.type || 'Candles',
                 main: true,
                 data: this.sub,
-                settings: this.chart.settings || {}
+                settings: this.chart.settings || this.settings_ohlcv
             })
             p.overlays = this.$props.overlays
             return p
@@ -243,7 +243,10 @@ export default {
             layers_meta: {},
 
             // Y-transforms (for y-zoom and -shift)
-            y_transforms: {}
+            y_transforms: {},
+
+            // Default OHLCV settings (when using DataStructure v1.0)
+            settings_ohlcv: {}
         }
     },
     watch: {
