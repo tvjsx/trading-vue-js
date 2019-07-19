@@ -3,7 +3,7 @@ import Utils from '../../stuff/utils.js'
 
 import layout_fn from './layout_fn.js'
 
-const { TIMESCALES, $SCALES } = Const
+const { TIMESCALES, $SCALES, WEEK } = Const
 
 // master_grid - ref to the master grid
 function GridMaker(id, params, master_grid = null) {
@@ -176,6 +176,12 @@ function GridMaker(id, params, master_grid = null) {
                 }
             }
 
+            // TODO: fix grid extention for bigger timeframes
+            if (interval < WEEK) {
+                extend_left(dt, r)
+                extend_right(dt, r)
+            }
+
         } else {
 
             self.t_step = master_grid.t_step
@@ -183,6 +189,36 @@ function GridMaker(id, params, master_grid = null) {
             self.startx = master_grid.startx
             self.xs = master_grid.xs
 
+        }
+    }
+
+    function extend_left(dt, r) {
+
+        if (!self.xs.length) return
+
+        let t = self.xs[self.xs.length - 1][1][0]
+        while (true) {
+            t -= self.t_step
+            let x = Math.floor((t  - range[0]) * r)
+            if (x < 0) break
+            if (t % interval === 0) {
+                self.xs.push([x,[t]])
+            }
+        }
+    }
+
+    function extend_right(dt, r) {
+
+        if (!self.xs.length) return
+
+        let t = self.xs[self.xs.length - 1][1][0]
+        while (true) {
+            t += self.t_step
+            let x = Math.floor((t  - range[0]) * r)
+            if (x > self.spacex) break
+            if (t % interval === 0) {
+                self.xs.push([x,[t]])
+            }
         }
     }
 
