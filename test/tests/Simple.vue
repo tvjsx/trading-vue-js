@@ -8,7 +8,7 @@
 
 <script>
 import TradingVue from '../../src/TradingVue.vue'
-import Data from '../data/data_btc.json'
+import Data from '../data/data_expand.json'
 import Utils from '../../src/stuff/utils.js'
 
 export default {

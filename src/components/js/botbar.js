@@ -147,11 +147,11 @@ export default class Botbar {
 
     // Nearest data object (when locked)
     nearest() {
-        if (this.$p.cursor.locked) {
+        /*if (this.$p.cursor.locked) {
             let t = this.$p.cursor.values[0].ohlcv[0]
             let x = Math.floor(this.grid_0.t_magnet(t))
             return x
-        }
+        }*/
         return this.$p.cursor.x
     }
 

@@ -17,13 +17,13 @@ class CursorUpdater {
         for (var grid of this.grids) {
             const c = this.cursor_data(grid, e)
             if (!this.cursor.locked) {
-                this.cursor.t = c.t
+                this.cursor.t = this.cursor_time(grid, e, c)
                 if(c.values) {
                     this.comp.$set(this.cursor.values, grid.id, c.values)
                 }
             }
             if (grid.id !== e.grid_id) continue
-            this.cursor.x = c.x
+            this.cursor.x = grid.t2screen(this.cursor.t)
             this.cursor.y = c.y
             this.cursor.y$ = c.y$
         }
@@ -67,6 +67,20 @@ class CursorUpdater {
             },
             this.overlay_data(grid, e))
         }
+    }
+
+    // Get cursor t-position (extended)
+    cursor_time(grid, mouse, candle) {
+        let t = grid.screen2t(mouse.x)
+        let r = Math.abs((t - candle.t) / this.comp.interval)
+        let sign = Math.sign(t - candle.t)
+        if (r >= 0.5) {
+            // Outside the data range
+            let n = Math.round(r)
+            return candle.t + n * this.comp.interval * sign
+        }
+        // Inside the data range
+        return candle.t
     }
 
 }
