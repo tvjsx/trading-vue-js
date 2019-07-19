@@ -64,11 +64,11 @@ export default class Crosshair {
 
     // Nearest data object (when locked)
     nearest() {
-        if (this.$p.cursor.locked) {
+        /*if (this.$p.cursor.locked) {
             let t = this.$p.cursor.t
             let x = this.layout.t_magnet(t)
             return x
-        }
+        }*/
         return this.$p.cursor.x
     }
 
