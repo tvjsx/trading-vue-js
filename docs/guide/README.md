@@ -1,7 +1,7 @@
 # Getting Started
 
 ::: warning
-This library is in alpha stage, API may change. This guide's version is **0.3.0**
+This library is in alpha stage, API may change. This guide's version is **0.3.6**
 :::
 
 ![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=Current%20lib%20version)
@@ -473,16 +473,16 @@ export default {
             return this.$props.settings
         },
         buy_color() {
-            return this.sett['buy-color'] || '#bfff00' // default value
+            return this.sett['buyColor'] || '#bfff00' // default value
         },
         sell_color() {
-            return this.sett['sell-color'] || '#ec4662'
+            return this.sett['sellColor'] || '#ec4662'
         },
         marker_size() {
-            return this.sett['marker-size'] || 5
+            return this.sett['markerSize'] || 5
         },
         show_label() {
-            return this.sett['show-label'] !== false
+            return this.sett['showLabel'] !== false
         }
     }
 }
@@ -499,8 +499,8 @@ meta_info() {
     return {
         author: 'Satoshi Smith',
         version: '1.0.0',
-        contact (opt) '<email>'
-        github: (opt) '<GitHub Page>',
+        contact: /*opt*/ '<email>',
+        github: /*opt*/ '<GitHub Page>',
     }
 },
 use_for() {return ['<YourOverlayId>'] }
