@@ -23,10 +23,11 @@ import Timeframes from './tests/Timeframes.vue'
 import Multichart from './tests/Multichart.vue'
 import LegendButtons from './tests/LegendButtons.vue'
 import ChartTypes from './tests/ChartTypes.vue'
+import DataHelper from './tests/DataHelper.vue'
 
 const TESTS = {
     Simple, Stocks, MouseEvents, Timeframes, Multichart,
-    LegendButtons, ChartTypes
+    LegendButtons, ChartTypes, DataHelper
 }
 
 export default {
