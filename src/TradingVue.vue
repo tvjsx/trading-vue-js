@@ -159,10 +159,10 @@ export default {
         return { reset: 0 }
     },
     methods: {
-        resetChart(saveRange = false) {
+        resetChart(resetRange = false) {
             this.reset++
             let range = this.getRange()
-            if (saveRange && range[0] && range[1]) {
+            if (!resetRange && range[0] && range[1]) {
                 this.$nextTick(() => this.setRange(...range))
             }
         },
