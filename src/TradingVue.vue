@@ -170,7 +170,6 @@ export default {
             this.$refs.chart.goto(t)
         },
         setRange(t1, t2) {
-            console.log(t1, t2)
             this.$refs.chart.setRange(t1, t2)
         },
         getRange() {

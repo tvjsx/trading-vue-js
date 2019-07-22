@@ -71,7 +71,7 @@ export default class Botbar {
 
         let measure = this.ctx.measureText(lbl + '    ')
         let panwidth = Math.floor(measure.width)
-        let cursor = this.nearest()
+        let cursor = this.$p.cursor.x
         let x = Math.floor(cursor - panwidth * 0.5)
         let y = - 0.5
         let panheight = this.comp.config.PANHEIGHT
@@ -144,17 +144,6 @@ export default class Botbar {
         return false
 
     }
-
-    // Nearest data object (when locked)
-    nearest() {
-        /*if (this.$p.cursor.locked) {
-            let t = this.$p.cursor.values[0].ohlcv[0]
-            let x = Math.floor(this.grid_0.t_magnet(t))
-            return x
-        }*/
-        return this.$p.cursor.x
-    }
-
 
     mousemove() { }
     mouseout() { }
