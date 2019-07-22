@@ -78,9 +78,10 @@ export default {
     },
     methods: {
         new_layer(layer) {
-            this.$nextTick(() =>
-                this.renderer.new_layer(layer)
-            )
+            this.$nextTick(() => this.renderer.new_layer(layer))
+        },
+        del_layer(layer) {
+            this.$nextTick(() => this.renderer.del_layer(layer))
         },
         get_overlays(h) {
             // Distributes overlay data & settings according
@@ -148,6 +149,7 @@ export default {
         return {
             layer_events: {
                 'new-grid-layer': this.new_layer,
+                'delete-grid-layer': this.del_layer,
                 'show-grid-layer': d => {
                     this.renderer.show_hide_layer(d)
                     this.redraw()

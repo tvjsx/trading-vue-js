@@ -166,6 +166,11 @@ export default class Grid {
         this.update()
     }
 
+    del_layer(id) {
+        this.overlays = this.overlays.filter(x => x.id !== id)
+        this.update()
+    }
+
     show_hide_layer(event) {
         let l = this.overlays.filter(x => x.id === event.id)
         if (l.length) l[0].display = event.display
