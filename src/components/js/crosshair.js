@@ -14,7 +14,7 @@ export default class Crosshair {
     }
 
     update(x, y) {
-        this.x = this.nearest()
+        this.x = this.$p.cursor.x
         this.y = y
     }
 
@@ -27,7 +27,7 @@ export default class Crosshair {
 
         // Adjust x here cuz there is a delay between
         // update() and draw()
-        this.x = this.nearest()
+        this.x = this.$p.cursor.x
 
         ctx.save()
         ctx.strokeStyle = this.$p.colors.colorCross
@@ -61,17 +61,5 @@ export default class Crosshair {
     set visible(val) {
         this._visible = val
     }
-
-    // Nearest data object (when locked)
-    nearest() {
-        /*if (this.$p.cursor.locked) {
-            let t = this.$p.cursor.t
-            let x = this.layout.t_magnet(t)
-            return x
-        }*/
-        return this.$p.cursor.x
-    }
-
-
 
 }
