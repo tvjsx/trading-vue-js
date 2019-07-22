@@ -3,7 +3,7 @@
   <img width="318" heigth="256" src="https://raw.githubusercontent.com/C451/trading-vue-js/master/assets/README-c8a97eb7.png?raw=true" alt="trading-vue logo">
 </div>
 
-# TradingVue.js ![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=version) ![license](https://img.shields.io/badge/license-MIT-blue.svg) ![GRUGLIKE](https://img.shields.io/badge/GRUG-LIKE-yellow.svg) ![build](https://img.shields.io/badge/build-passing-brightgreen.svg) ![size](https://img.shields.io/github/size/C451/trading-vue-js/dist/trading-vue.min.js.svg) ![yes](https://img.shields.io/badge/by%20traders-for%20traders-lightgray.svg) [![Gitter](https://badges.gitter.im/Trading-Vue-js/community.svg)](https://gitter.im/Trading-Vue-js/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+# TradingVue.js ![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=version) ![license](https://img.shields.io/badge/license-MIT-blue.svg) ![GRUGLIKE](https://img.shields.io/badge/GRUG-LIKE-yellow.svg) ![build](https://img.shields.io/badge/build-passing-brightgreen.svg) ![size](https://img.shields.io/github/size/C451/trading-vue-js/dist/trading-vue.min.js.svg) [![Gitter](https://badges.gitter.im/Trading-Vue-js/community.svg)](https://gitter.im/Trading-Vue-js/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 **TradingVue.js** is a hackable charting lib for traders. You can draw literally ANYTHING on top of candlestick charts.
 
