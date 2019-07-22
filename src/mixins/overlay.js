@@ -33,6 +33,9 @@ export default {
             y_range: this.y_range
         })
     },
+    beforeDestroy() {
+        this.$emit('delete-grid-layer', this.$props.id)
+    },
     methods: {
         use_for() {
             /* override it (mandatory) */
