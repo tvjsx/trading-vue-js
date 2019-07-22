@@ -136,7 +136,7 @@ export default {
                     this.range[0] - this.interval,
                     this.range[1]
                 ),
-                settings: d.settings
+                settings: d.settings || this.settings_ov
             }))
         },
         section_props(i) {
@@ -246,7 +246,10 @@ export default {
             y_transforms: {},
 
             // Default OHLCV settings (when using DataStructure v1.0)
-            settings_ohlcv: {}
+            settings_ohlcv: {},
+
+            // Default overlay settings
+            settings_ov: {}
         }
     },
     watch: {
