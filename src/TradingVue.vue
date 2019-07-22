@@ -159,11 +159,18 @@ export default {
         return { reset: 0 }
     },
     methods: {
-        resetChart() { this.reset++ },
+        resetChart(saveRange = false) {
+            this.reset++
+            let range = this.getRange()
+            if (saveRange && range[0] && range[1]) {
+                this.$nextTick(() => this.setRange(...range))
+            }
+        },
         goto(t) {
             this.$refs.chart.goto(t)
         },
         setRange(t1, t2) {
+            console.log(t1, t2)
             this.$refs.chart.setRange(t1, t2)
         },
         getRange() {
