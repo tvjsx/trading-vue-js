@@ -159,7 +159,7 @@ export default {
         return { reset: 0 }
     },
     methods: {
-        resetChart(resetRange = false) {
+        resetChart(resetRange = true) {
             this.reset++
             let range = this.getRange()
             if (!resetRange && range[0] && range[1]) {
