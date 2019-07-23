@@ -10,6 +10,9 @@
 import TradingVue from '../../src/TradingVue.vue'
 import Data from '../data/data_btc.json'
 import Utils from '../../src/stuff/utils.js'
+import Datacube from '../../src/helpers/datacube.js'
+
+// Names: Datacube, Slickbox, Databox?
 
 export default {
     name: 'DataHelper',
@@ -32,7 +35,7 @@ export default {
     },
     data() {
         return {
-            chart: Data,
+            chart: new Datacube(Data),
             width: window.innerWidth,
             height: window.innerHeight,
             colors: {
