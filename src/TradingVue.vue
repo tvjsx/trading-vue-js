@@ -134,7 +134,7 @@ export default {
             let chart_props = {
                 title_txt: this.$props.titleTxt,
                 overlays: this.$props.overlays,
-                data : this.$props.data,
+                data: this.decubed,
                 width: this.$props.width,
                 height: this.$props.height,
                 font: this.$props.font,
@@ -153,6 +153,15 @@ export default {
                 Const.ChartConfig,
                 this.$props.chartConfig,
             )
+        },
+        decubed() {
+            let data = this.$props.data
+            if (data.data !== undefined) {
+                // DataCube detected
+                return data.data
+            } else {
+                return data
+            }
         }
     },
     data() {
