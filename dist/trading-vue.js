@@ -1,5 +1,5 @@
 /*!
- * TradingVue.JS - v0.3.6 - Sat Jul 20 2019
+ * TradingVue.JS - v0.3.7 - Sat Jul 27 2019
  * https://github.com/C451/trading-vue-js
  * Copyright (c) 2019 c451 Code's All Right;
  * Licensed under the MIT license
@@ -4564,7 +4564,7 @@ function GridMaker(id, params) {
 
   function extend_left(dt, r) {
     if (!self.xs.length) return;
-    var t = self.xs[self.xs.length - 1][1][0];
+    var t = self.xs[0][1][0];
 
     while (true) {
       t -= self.t_step;
@@ -5212,6 +5212,14 @@ function () {
       this.update();
     }
   }, {
+    key: "del_layer",
+    value: function del_layer(id) {
+      this.overlays = this.overlays.filter(function (x) {
+        return x.id !== id;
+      });
+      this.update();
+    }
+  }, {
     key: "show_hide_layer",
     value: function show_hide_layer(event) {
       var l = this.overlays.filter(function (x) {
@@ -5555,7 +5563,7 @@ function () {
   crosshair_createClass(Crosshair, [{
     key: "update",
     value: function update(x, y) {
-      this.x = this.nearest();
+      this.x = this.$p.cursor.x;
       this.y = y;
     }
   }, {
@@ -5566,7 +5574,7 @@ function () {
       if (!this.visible) return; // Adjust x here cuz there is a delay between
       // update() and draw()
 
-      this.x = this.nearest();
+      this.x = this.$p.cursor.x;
       ctx.save();
       ctx.strokeStyle = this.$p.colors.colorCross;
       ctx.beginPath();
@@ -5589,17 +5597,6 @@ function () {
       this.visible = false;
       this.x = undefined;
       this.y = undefined;
-    }
-  }, {
-    key: "nearest",
-    // Nearest data object (when locked)
-    value: function nearest() {
-      /*if (this.$p.cursor.locked) {
-          let t = this.$p.cursor.t
-          let x = this.layout.t_magnet(t)
-          return x
-      }*/
-      return this.$p.cursor.x;
     }
   }, {
     key: "visible",
@@ -5857,6 +5854,9 @@ KeyboardListener_component.options.__file = "src/components/KeyboardListener.vue
       data_colors: this.data_colors,
       y_range: this.y_range
     });
+  },
+  beforeDestroy: function beforeDestroy() {
+    this.$emit('delete-grid-layer', this.$props.id);
   },
   methods: {
     use_for: function use_for() {
@@ -7243,8 +7243,15 @@ Splitters_component.options.__file = "src/components/overlays/Splitters.vue"
         return _this3.renderer.new_layer(layer);
       });
     },
-    get_overlays: function get_overlays(h) {
+    del_layer: function del_layer(layer) {
       var _this4 = this;
+
+      this.$nextTick(function () {
+        return _this4.renderer.del_layer(layer);
+      });
+    },
+    get_overlays: function get_overlays(h) {
+      var _this5 = this;
 
       // Distributes overlay data & settings according
       // to this._registry; returns compo list
@@ -7286,14 +7293,14 @@ Splitters_component.options.__file = "src/components/overlays/Splitters.vue"
 
       return comp_list.map(function (x, i) {
         return h(x.cls, {
-          on: _this4.layer_events,
-          attrs: Object.assign(_this4.common_props(), {
+          on: _this5.layer_events,
+          attrs: Object.assign(_this5.common_props(), {
             id: "".concat(x.type, "_").concat(count[x.type]++),
             type: x.type,
             data: x.data,
             settings: x.settings,
             num: i,
-            grid_id: _this4.$props.grid_id
+            grid_id: _this5.$props.grid_id
           })
         });
       });
@@ -7329,42 +7336,43 @@ Splitters_component.options.__file = "src/components/overlays/Splitters.vue"
     }
   },
   data: function data() {
-    var _this5 = this;
+    var _this6 = this;
 
     return {
       layer_events: {
         'new-grid-layer': this.new_layer,
+        'delete-grid-layer': this.del_layer,
         'show-grid-layer': function showGridLayer(d) {
-          _this5.renderer.show_hide_layer(d);
+          _this6.renderer.show_hide_layer(d);
 
-          _this5.redraw();
+          _this6.redraw();
         },
         'redraw-grid': this.redraw,
         'layer-meta-props': function layerMetaProps(d) {
-          return _this5.$emit('layer-meta-props', d);
+          return _this6.$emit('layer-meta-props', d);
         }
       },
       keyboard_events: {
         'register-kb-listener': function registerKbListener(event) {
-          _this5.$emit('register-kb-listener', event);
+          _this6.$emit('register-kb-listener', event);
         },
         'remove-kb-listener': function removeKbListener(event) {
-          _this5.$emit('remove-kb-listener', event);
+          _this6.$emit('remove-kb-listener', event);
         },
         'keyup': function keyup(event) {
-          if (!_this5.is_active) return;
+          if (!_this6.is_active) return;
 
-          _this5.renderer.propagate('keyup', event);
+          _this6.renderer.propagate('keyup', event);
         },
         'keydown': function keydown(event) {
-          if (!_this5.is_active) return;
+          if (!_this6.is_active) return;
 
-          _this5.renderer.propagate('keydown', event);
+          _this6.renderer.propagate('keydown', event);
         },
         'keypress': function keypress(event) {
-          if (!_this5.is_active) return;
+          if (!_this6.is_active) return;
 
-          _this5.renderer.propagate('keypress', event);
+          _this6.renderer.propagate('keypress', event);
         }
       }
     };
@@ -8427,7 +8435,7 @@ function () {
       this.ctx.fillStyle = this.$p.colors.colorPanel;
       var measure = this.ctx.measureText(lbl + '    ');
       var panwidth = Math.floor(measure.width);
-      var cursor = this.nearest();
+      var cursor = this.$p.cursor.x;
       var x = Math.floor(cursor - panwidth * 0.5);
       var y = -0.5;
       var panheight = this.comp.config.PANHEIGHT;
@@ -8491,17 +8499,6 @@ function () {
       if (utils.day_start(t) === t) return true;
       if (ti <= botbar_MINUTE15 && t % botbar_HOUR === 0) return true;
       return false;
-    } // Nearest data object (when locked)
-
-  }, {
-    key: "nearest",
-    value: function nearest() {
-      /*if (this.$p.cursor.locked) {
-          let t = this.$p.cursor.values[0].ohlcv[0]
-          let x = Math.floor(this.grid_0.t_magnet(t))
-          return x
-      }*/
-      return this.$p.cursor.x;
     }
   }, {
     key: "mousemove",
@@ -8813,7 +8810,7 @@ Keyboard_component.options.__file = "src/components/Keyboard.vue"
           type: d.type,
           name: d.name,
           data: utils.fast_filter(d.data, _this.range[0] - _this.interval, _this.range[1]),
-          settings: d.settings
+          settings: d.settings || _this.settings_ov
         };
       });
     },
@@ -8920,7 +8917,9 @@ Keyboard_component.options.__file = "src/components/Keyboard.vue"
       // Y-transforms (for y-zoom and -shift)
       y_transforms: {},
       // Default OHLCV settings (when using DataStructure v1.0)
-      settings_ohlcv: {}
+      settings_ohlcv: {},
+      // Default overlay settings
+      settings_ov: {}
     };
   },
   watch: {
@@ -8969,6 +8968,14 @@ if (false) { var Chart_api; }
 Chart_component.options.__file = "src/components/Chart.vue"
 /* harmony default export */ var Chart = (Chart_component.exports);
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/TradingVue.vue?vue&type=script&lang=js&
+function TradingVuevue_type_script_lang_js_toConsumableArray(arr) { return TradingVuevue_type_script_lang_js_arrayWithoutHoles(arr) || TradingVuevue_type_script_lang_js_iterableToArray(arr) || TradingVuevue_type_script_lang_js_nonIterableSpread(); }
+
+function TradingVuevue_type_script_lang_js_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function TradingVuevue_type_script_lang_js_iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function TradingVuevue_type_script_lang_js_arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 //
 //
 //
@@ -9135,7 +9142,17 @@ Chart_component.options.__file = "src/components/Chart.vue"
   },
   methods: {
     resetChart: function resetChart() {
+      var _this = this;
+
+      var resetRange = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
       this.reset++;
+      var range = this.getRange();
+
+      if (!resetRange && range[0] && range[1]) {
+        this.$nextTick(function () {
+          return _this.setRange.apply(_this, TradingVuevue_type_script_lang_js_toConsumableArray(range));
+        });
+      }
     },
     "goto": function goto(t) {
       this.$refs.chart["goto"](t);
