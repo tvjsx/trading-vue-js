@@ -196,7 +196,7 @@ function GridMaker(id, params, master_grid = null) {
 
         if (!self.xs.length) return
 
-        let t = self.xs[self.xs.length - 1][1][0]
+        let t = self.xs[0][1][0]
         while (true) {
             t -= self.t_step
             let x = Math.floor((t  - range[0]) * r)
