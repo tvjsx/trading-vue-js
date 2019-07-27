@@ -182,6 +182,8 @@ export default class Grid {
         this.layout = this.$p.layout.grids[this.id]
         this.interval = this.$p.interval
 
+        if (!this.layout) return
+
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
         this.grid()
 
