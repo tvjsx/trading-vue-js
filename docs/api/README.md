@@ -1,7 +1,7 @@
 # API Book
 
 ::: warning
-This library is in alpha stage, API may change. This guide version is **0.3.6**
+This library is in alpha stage, API may change. This guide version is **0.3.7**
 :::
 
 ![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=Current%20lib%20version)
@@ -48,7 +48,7 @@ This library is in alpha stage, API may change. This guide version is **0.3.6**
 
 Resets the chart to the default state. Use it if you need to reset the time range.
 
-* **Arguments**: resetRange (Boolean, default = **true**) Reset current time range 
+* **Arguments**: resetRange (Boolean, default = **true**) Reset current time range
 
 *Example:*
 
