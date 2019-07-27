@@ -44,9 +44,11 @@ This library is in alpha stage, API may change. This guide version is **0.3.6**
 
 ## Methods
 
-### resetChart()
+### resetChart(...)
 
 Resets the chart to the default state. Use it if you need to reset the time range.
+
+* **Arguments**: resetRange (Boolean, default = **true**) Reset current time range 
 
 *Example:*
 
