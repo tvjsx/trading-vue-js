@@ -194,7 +194,7 @@ function GridMaker(id, params, master_grid = null) {
 
     function extend_left(dt, r) {
 
-        if (!self.xs.length) return
+        if (!self.xs.length || !isFinite(r)) return
 
         let t = self.xs[0][1][0]
         while (true) {
@@ -209,7 +209,7 @@ function GridMaker(id, params, master_grid = null) {
 
     function extend_right(dt, r) {
 
-        if (!self.xs.length) return
+        if (!self.xs.length || !isFinite(r)) return
 
         let t = self.xs[self.xs.length - 1][1][0]
         while (true) {
