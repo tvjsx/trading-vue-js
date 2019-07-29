@@ -119,8 +119,9 @@ export default {
                 cursor: this.$props.cursor,
                 colors: this.$props.colors,
                 layout: this.$props.layout.grids[this.$props.grid_id],
-                sub:    this.$props.sub,
-                font:   this.$props.font,
+                interval: this.$props.interval,
+                sub: this.$props.sub,
+                font: this.$props.font,
                 config: this.$props.config,
             }
         }

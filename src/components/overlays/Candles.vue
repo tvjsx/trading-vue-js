@@ -12,7 +12,7 @@ export default {
     mixins: [Overlay],
     methods: {
         meta_info() {
-            return { author: 'C451', version: '1.0.0' }
+            return { author: 'C451', version: '1.1.0' }
         },
 
         draw(ctx) {
@@ -41,7 +41,14 @@ export default {
 
         },
         use_for() { return ['Candles'] },
-        //data_colors() { return [this.color] }
+
+        // When added as offchart overlay
+        y_range() {
+            return [
+                Math.max(...this.$props.sub.map(x => x[2])),
+                Math.min(...this.$props.sub.map(x => x[3]))
+            ]
+        }
     },
 
     // Define internal setting & constants here
