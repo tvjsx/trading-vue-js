@@ -29,9 +29,10 @@ export default {
         // _i2 - detetected data index (see layout_cnv)
         legend(values) {
 
-            let i2 = this._i2 ? this._i2(values) : 0
-            
-            const color = values[i2 || 2] ?
+            let flag = this._i2 ?
+                this._i2(values) : values[2]
+
+            const color = flag ?
                 this.colorVolUpLegend :
                 this.colorVolDwLegend
 
@@ -40,9 +41,9 @@ export default {
             }]
         },
         // When added as offchart overlay
+        // If data is OHLCV => recalc y-range
+        // _i1 - detetected data index (see layout_cnv)
         y_range(hi, lo) {
-            // If data is OHLCV => recalc y-range
-            // _i1 - detetected data index (see layout_cnv)
             if (this._i1 === 5) {
                 let sub = this.$props.sub
                 return [
