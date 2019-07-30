@@ -211,6 +211,8 @@ That's why the title doesn't lie: you can draw ANYTHING.
 * Fix and improve mobile version
 * **Version 1.0.0 here**
 
+Progress in details: https://github.com/C451/trading-vue-js/projects/1
+
 ## Changelog
 
 See CHANGELOG.md
