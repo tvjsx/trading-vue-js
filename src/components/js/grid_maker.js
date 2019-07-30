@@ -155,8 +155,6 @@ function GridMaker(id, params, master_grid = null) {
         return Utils.strip(Utils.nearest_a(m, s)[1])
     }
 
-    // TODO: build several grid lines outside of
-    // the data area (to fill the space)
     function grid_x() {
 
         // If this is a subgrid, no need to calc a timeline,
