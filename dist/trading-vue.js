@@ -1,5 +1,5 @@
 /*!
- * TradingVue.JS - v0.3.7 - Sat Jul 27 2019
+ * TradingVue.JS - v0.3.8 - Sat Aug 03 2019
  * https://github.com/C451/trading-vue-js
  * Copyright (c) 2019 c451 Code's All Right;
  * Licensed under the MIT license
@@ -4527,9 +4527,7 @@ function GridMaker(id, params) {
     // it looks ugly when "80" is near the top)
 
     return utils.strip(utils.nearest_a(m, s)[1]);
-  } // TODO: build several grid lines outside of
-  // the data area (to fill the space)
-
+  }
 
   function grid_x() {
     // If this is a subgrid, no need to calc a timeline,
@@ -4563,7 +4561,7 @@ function GridMaker(id, params) {
   }
 
   function extend_left(dt, r) {
-    if (!self.xs.length) return;
+    if (!self.xs.length || !isFinite(r)) return;
     var t = self.xs[0][1][0];
 
     while (true) {
@@ -4578,7 +4576,7 @@ function GridMaker(id, params) {
   }
 
   function extend_right(dt, r) {
-    if (!self.xs.length) return;
+    if (!self.xs.length || !isFinite(r)) return;
     var t = self.xs[self.xs.length - 1][1][0];
 
     while (true) {
@@ -5236,6 +5234,7 @@ function () {
       // TODO: check what happens if data changes interval
       this.layout = this.$p.layout.grids[this.id];
       this.interval = this.$p.interval;
+      if (!this.layout) return;
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       this.grid();
       var overlays = [];
@@ -5359,12 +5358,7 @@ function () {
       if (delta < 0 && this.data.length <= this.MIN_ZOOM) return;
       if (delta > 0 && this.data.length > this.MAX_ZOOM) return;
       var k = this.interval / 1000;
-      this.range[0] -= delta * k * this.data.length; // TODO: BUG: while scrolling you may notice that
-      // the left part of the indicator data is not
-      // loaded immediately. (until you move the cursor)
-      // Need to investigate. Solution: check reactivity,
-      // it is probably lost.
-
+      this.range[0] -= delta * k * this.data.length;
       this.change_range();
     }
   }, {
@@ -5832,7 +5826,6 @@ KeyboardListener_component.options.__file = "src/components/KeyboardListener.vue
 /* harmony default export */ var KeyboardListener = (KeyboardListener_component.exports);
 // CONCATENATED MODULE: ./src/mixins/overlay.js
 // Usuful stuff for creating overlays. Include as mixin
-// TODO: Add mouse events
 /* harmony default export */ var overlay = ({
   props: ['id', 'num', 'interval', 'cursor', 'colors', 'layout', 'sub', 'data', 'settings', 'grid_id', 'font', 'config'],
   mounted: function mounted() {
@@ -6629,6 +6622,7 @@ function layout_cnv_arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var 
 
 // Claculates postions and sizes for candlestick
 // and volume bars for the given subset of data
+
 function layout_cnv(self) {
   var $p = self.$props;
   var sub = $p.data;
@@ -6644,30 +6638,36 @@ function layout_cnv(self) {
   var vs = $p.config.VOLSCALE * layout.height / maxv;
   var x1,
       x2,
+      w,
+      avg_w,
       mid,
-      prev = undefined;
-  var splitter = layout.px_step > 5 ? 1 : 0; // A & B are current chart tranformations:
+      prev = undefined; // Subset interval against main interval
+
+  var interval2 = utils.detect_interval(sub);
+  var ratio = interval2 / $p.interval;
+  var px_step2 = layout.px_step * ratio;
+  var splitter = px_step2 > 5 ? 1 : 0; // A & B are current chart tranformations:
   // A === scale,  B === Y-axis shift
 
   for (var i = 0; i < sub.length; i++) {
     var p = sub[i];
-    mid = t2screen(p[0]) + 1;
+    mid = t2screen(p[0]) + 1; // Clear volume bar if there is a time gap
+
+    if (sub[i - 1] && p[0] - sub[i - 1][0] > interval2) {
+      prev = null;
+    }
+
+    x1 = prev || Math.floor(mid - px_step2 * 0.5);
+    x2 = Math.floor(mid + px_step2 * 0.5) - 0.5;
     candles.push({
       x: mid,
-      w: layout.px_step * $p.config.CANDLEW,
+      w: layout.px_step * $p.config.CANDLEW * ratio,
       o: p[1] * layout.A + layout.B,
       h: p[2] * layout.A + layout.B,
       l: p[3] * layout.A + layout.B,
       c: p[4] * layout.A + layout.B,
       raw: p
-    }); // Clear volume bar if there is a time gap
-
-    if (sub[i - 1] && p[0] - sub[i - 1][0] > $p.interval) {
-      prev = null;
-    }
-
-    x1 = prev || Math.floor(mid - layout.px_step * 0.5);
-    x2 = Math.floor(mid + layout.px_step * 0.5) - 0.5;
+    });
     volume.push({
       x1: x1,
       x2: x2,
@@ -6688,34 +6688,48 @@ function layout_vol(self) {
   var sub = $p.data;
   var t2screen = $p.layout.t2screen;
   var layout = $p.layout;
-  var volume = [];
+  var volume = []; // Detect data second dimention size:
+
+  var dim = sub[0] ? sub[0].length : 0; // Support special volume data (see API book), or OHLCV
+  // Data indices:
+
+  self._i1 = dim < 6 ? 1 : 5;
+  self._i2 = dim < 6 ? function (p) {
+    return p[2];
+  } : function (p) {
+    return p[4] > p[1];
+  };
   var maxv = Math.max.apply(Math, layout_cnv_toConsumableArray(sub.map(function (x) {
-    return x[1];
+    return x[self._i1];
   })));
   var volscale = self.volscale || $p.config.VOLSCALE;
   var vs = volscale * layout.height / maxv;
   var x1,
       x2,
       mid,
-      prev = undefined;
-  var splitter = layout.px_step > 5 ? 1 : 0; // A & B are current chart tranformations:
+      prev = undefined; // Subset interval against main interval
+
+  var interval2 = utils.detect_interval(sub);
+  var ratio = interval2 / $p.interval;
+  var px_step2 = layout.px_step * ratio;
+  var splitter = px_step2 > 5 ? 1 : 0; // A & B are current chart tranformations:
   // A === scale,  B === Y-axis shift
 
   for (var i = 0; i < sub.length; i++) {
     var p = sub[i];
     mid = t2screen(p[0]) + 1; // Clear volume bar if there is a time gap
 
-    if (sub[i - 1] && p[0] - sub[i - 1][0] > $p.interval) {
+    if (sub[i - 1] && p[0] - sub[i - 1][0] > interval2) {
       prev = null;
     }
 
-    x1 = prev || Math.floor(mid - layout.px_step * 0.5);
-    x2 = Math.floor(mid + layout.px_step * 0.5) - 0.5;
+    x1 = prev || Math.floor(mid - px_step2 * 0.5);
+    x2 = Math.floor(mid + px_step2 * 0.5) - 0.5;
     volume.push({
       x1: x1,
       x2: x2,
-      h: p[1] * vs,
-      green: p[2],
+      h: p[self._i1] * vs,
+      green: self._i2(p),
       raw: p
     });
     prev = x2 + splitter;
@@ -6813,6 +6827,14 @@ function () {
 
 
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/components/overlays/Candles.vue?vue&type=script&lang=js&
+function Candlesvue_type_script_lang_js_toConsumableArray(arr) { return Candlesvue_type_script_lang_js_arrayWithoutHoles(arr) || Candlesvue_type_script_lang_js_iterableToArray(arr) || Candlesvue_type_script_lang_js_nonIterableSpread(); }
+
+function Candlesvue_type_script_lang_js_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function Candlesvue_type_script_lang_js_iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function Candlesvue_type_script_lang_js_arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 // Renedrer for candlesticks + volume (optional)
 // It can be used as the main chart or an indicator
 
@@ -6826,7 +6848,7 @@ function () {
     meta_info: function meta_info() {
       return {
         author: 'C451',
-        version: '1.0.0'
+        version: '1.1.0'
       };
     },
     draw: function draw(ctx) {
@@ -6894,6 +6916,14 @@ function () {
     },
     use_for: function use_for() {
       return ['Candles'];
+    },
+    // When added as offchart overlay
+    y_range: function y_range() {
+      return [Math.max.apply(Math, Candlesvue_type_script_lang_js_toConsumableArray(this.$props.sub.map(function (x) {
+        return x[2];
+      }))), Math.min.apply(Math, Candlesvue_type_script_lang_js_toConsumableArray(this.$props.sub.map(function (x) {
+        return x[3];
+      })))];
     }
   },
   // Define internal setting & constants here
@@ -6956,6 +6986,14 @@ if (false) { var Candles_api; }
 Candles_component.options.__file = "src/components/overlays/Candles.vue"
 /* harmony default export */ var Candles = (Candles_component.exports);
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/components/overlays/Volume.vue?vue&type=script&lang=js&
+function Volumevue_type_script_lang_js_toConsumableArray(arr) { return Volumevue_type_script_lang_js_arrayWithoutHoles(arr) || Volumevue_type_script_lang_js_iterableToArray(arr) || Volumevue_type_script_lang_js_nonIterableSpread(); }
+
+function Volumevue_type_script_lang_js_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function Volumevue_type_script_lang_js_iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function Volumevue_type_script_lang_js_arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 // Standalone renedrer for the volume
 
 
@@ -6967,7 +7005,7 @@ Candles_component.options.__file = "src/components/overlays/Candles.vue"
     meta_info: function meta_info() {
       return {
         author: 'C451',
-        version: '1.0.0'
+        version: '1.1.0'
       };
     },
     draw: function draw(ctx) {
@@ -7001,12 +7039,31 @@ Candles_component.options.__file = "src/components/overlays/Candles.vue"
       return ['Volume'];
     },
     // Defines legend format (values & colors)
+    // _i2 - detetected data index (see layout_cnv)
     legend: function legend(values) {
-      var color = values[2] ? this.colorVolUpLegend : this.colorVolDwLegend;
+      var flag = this._i2 ? this._i2(values) : values[2];
+      var color = flag ? this.colorVolUpLegend : this.colorVolDwLegend;
       return [{
-        value: values[1],
+        value: values[this._i1 || 1],
         color: color
       }];
+    },
+    // When added as offchart overlay
+    // If data is OHLCV => recalc y-range
+    // _i1 - detetected data index (see layout_cnv)
+    y_range: function y_range(hi, lo) {
+      var _this = this;
+
+      if (this._i1 === 5) {
+        var sub = this.$props.sub;
+        return [Math.max.apply(Math, Volumevue_type_script_lang_js_toConsumableArray(sub.map(function (x) {
+          return x[_this._i1];
+        }))), Math.min.apply(Math, Volumevue_type_script_lang_js_toConsumableArray(sub.map(function (x) {
+          return x[_this._i1];
+        })))];
+      } else {
+        return [hi, lo];
+      }
     }
   },
   // Define internal setting & constants here
@@ -7310,6 +7367,7 @@ Splitters_component.options.__file = "src/components/overlays/Splitters.vue"
         cursor: this.$props.cursor,
         colors: this.$props.colors,
         layout: this.$props.layout.grids[this.$props.grid_id],
+        interval: this.$props.interval,
         sub: this.$props.sub,
         font: this.$props.font,
         config: this.$props.config
@@ -7324,7 +7382,16 @@ Splitters_component.options.__file = "src/components/overlays/Splitters.vue"
   watch: {
     range: {
       handler: function handler() {
-        this.redraw();
+        var _this6 = this;
+
+        // TODO: Left-side render lag fix:
+        // Overlay data is updated one tick later than
+        // the main sub. Fast fix is to delay redraw()
+        // call. It will be a solution until a better
+        // one comes by.
+        this.$nextTick(function () {
+          return _this6.redraw();
+        });
       },
       deep: true
     },
@@ -7336,43 +7403,43 @@ Splitters_component.options.__file = "src/components/overlays/Splitters.vue"
     }
   },
   data: function data() {
-    var _this6 = this;
+    var _this7 = this;
 
     return {
       layer_events: {
         'new-grid-layer': this.new_layer,
         'delete-grid-layer': this.del_layer,
         'show-grid-layer': function showGridLayer(d) {
-          _this6.renderer.show_hide_layer(d);
+          _this7.renderer.show_hide_layer(d);
 
-          _this6.redraw();
+          _this7.redraw();
         },
         'redraw-grid': this.redraw,
         'layer-meta-props': function layerMetaProps(d) {
-          return _this6.$emit('layer-meta-props', d);
+          return _this7.$emit('layer-meta-props', d);
         }
       },
       keyboard_events: {
         'register-kb-listener': function registerKbListener(event) {
-          _this6.$emit('register-kb-listener', event);
+          _this7.$emit('register-kb-listener', event);
         },
         'remove-kb-listener': function removeKbListener(event) {
-          _this6.$emit('remove-kb-listener', event);
+          _this7.$emit('remove-kb-listener', event);
         },
         'keyup': function keyup(event) {
-          if (!_this6.is_active) return;
+          if (!_this7.is_active) return;
 
-          _this6.renderer.propagate('keyup', event);
+          _this7.renderer.propagate('keyup', event);
         },
         'keydown': function keydown(event) {
-          if (!_this6.is_active) return;
+          if (!_this7.is_active) return;
 
-          _this6.renderer.propagate('keydown', event);
+          _this7.renderer.propagate('keydown', event);
         },
         'keypress': function keypress(event) {
-          if (!_this6.is_active) return;
+          if (!_this7.is_active) return;
 
-          _this6.renderer.propagate('keypress', event);
+          _this7.renderer.propagate('keypress', event);
         }
       }
     };
