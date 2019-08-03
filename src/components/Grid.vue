@@ -135,7 +135,12 @@ export default {
     watch: {
         range: {
             handler: function() {
-                this.redraw()
+                // TODO: Left-side render lag fix:
+                // Overlay data is updated one tick later than
+                // the main sub. Fast fix is to delay redraw()
+                // call. It will be a solution until a better
+                // one comes by.
+                this.$nextTick(() => this.redraw())
             },
             deep: true
         },
