@@ -155,8 +155,6 @@ function GridMaker(id, params, master_grid = null) {
         return Utils.strip(Utils.nearest_a(m, s)[1])
     }
 
-    // TODO: build several grid lines outside of
-    // the data area (to fill the space)
     function grid_x() {
 
         // If this is a subgrid, no need to calc a timeline,
@@ -194,9 +192,9 @@ function GridMaker(id, params, master_grid = null) {
 
     function extend_left(dt, r) {
 
-        if (!self.xs.length) return
+        if (!self.xs.length || !isFinite(r)) return
 
-        let t = self.xs[self.xs.length - 1][1][0]
+        let t = self.xs[0][1][0]
         while (true) {
             t -= self.t_step
             let x = Math.floor((t  - range[0]) * r)
@@ -209,7 +207,7 @@ function GridMaker(id, params, master_grid = null) {
 
     function extend_right(dt, r) {
 
-        if (!self.xs.length) return
+        if (!self.xs.length || !isFinite(r)) return
 
         let t = self.xs[self.xs.length - 1][1][0]
         while (true) {

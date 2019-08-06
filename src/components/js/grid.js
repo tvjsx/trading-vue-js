@@ -182,6 +182,8 @@ export default class Grid {
         this.layout = this.$p.layout.grids[this.id]
         this.interval = this.$p.interval
 
+        if (!this.layout) return
+
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
         this.grid()
 
@@ -267,11 +269,6 @@ export default class Grid {
         let k = this.interval / 1000
         this.range[0] -= delta * k * this.data.length
 
-        // TODO: BUG: while scrolling you may notice that
-        // the left part of the indicator data is not
-        // loaded immediately. (until you move the cursor)
-        // Need to investigate. Solution: check reactivity,
-        // it is probably lost.
         this.change_range()
 
     }

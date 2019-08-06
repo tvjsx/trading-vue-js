@@ -119,8 +119,9 @@ export default {
                 cursor: this.$props.cursor,
                 colors: this.$props.colors,
                 layout: this.$props.layout.grids[this.$props.grid_id],
-                sub:    this.$props.sub,
-                font:   this.$props.font,
+                interval: this.$props.interval,
+                sub: this.$props.sub,
+                font: this.$props.font,
                 config: this.$props.config,
             }
         }
@@ -134,7 +135,12 @@ export default {
     watch: {
         range: {
             handler: function() {
-                this.redraw()
+                // TODO: Left-side render lag fix:
+                // Overlay data is updated one tick later than
+                // the main sub. Fast fix is to delay redraw()
+                // call. It will be a solution until a better
+                // one comes by.
+                this.$nextTick(() => this.redraw())
             },
             deep: true
         },
