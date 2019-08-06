@@ -11,14 +11,19 @@ export default class DataCube {
         this.init()
         this.update_ids()
 
-        console.log(this.get_by_query('onchart.EMA0'))
+
+        /*console.log(this.get_by_query('onchart.EMA0'))
         console.log(this.get_by_query('Keltner'))
         console.log(this.get_by_query('chart.data'))
         console.log(this.get_by_query('offchart.RSI'))
         console.log(this.get_by_query('offchart.RSI.data'))
         console.log(this.get_by_query('DI'))
         console.log(this.get_by_query('Splines0.data'))
-        console.log(this.get_by_query('Segment.settings'))
+        console.log(this.get_by_query('Segment.settings'))*/
+
+        // DEBUG
+        window.DataCube = this
+
     }
 
     // Init Data Structure v1.1
@@ -60,10 +65,11 @@ export default class DataCube {
         }
     }
 
+
     // Add new overlay
     add(side, overlay) {
 
-        if (side !== 'onchart' || side !== 'offchart') {
+        if (side !== 'onchart' && side !== 'offchart') {
             return
         }
 
@@ -75,8 +81,23 @@ export default class DataCube {
 
     // Remove an overlay by query (id/type/name/...)
     remove(query) {
-        let objects = get_by_query(query)
 
+        let objects = this.get_by_query(query)
+
+        for (var obj of objects) {
+            if (!obj || !obj.id) continue
+            let side = obj.id.split('.')[0]
+
+            switch (side) {
+                case 'onchart':
+                case 'offchart':
+                    let i = this.data[side].indexOf(obj)
+                    if (i >= 0) {
+                        Vue.delete(this.data[side], i)
+                    }
+                    break;
+            }
+        }
     }
 
     // Update data points (update or push
@@ -84,6 +105,16 @@ export default class DataCube {
     update(query, data) {
 
 
+
+    }
+
+    // Show indicator
+    show() {
+
+    }
+
+    // Hide indicator
+    hide() {
 
     }
 
@@ -121,7 +152,7 @@ export default class DataCube {
     query_search(query, tuple) {
 
         let side = tuple[0]
-        let path = tuple[1]
+        let path = tuple[1] || ''
         let field = tuple[2]
 
         let arr = this.data[side].filter(
