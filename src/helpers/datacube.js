@@ -23,7 +23,7 @@ export default class DataCube {
             DataCube.get('Splines0.data') // By index
             DataCube.get('Segment.settings')
             ...
-            DataCube.merge('.settings', { lineWidth: 2 })
+            DataCube.set('.settings', { lineWidth: 2 })
             DataCube.add('offchart', { type: 'New', data: [] })
             DataCube.del('.')  // Fun !
         */
