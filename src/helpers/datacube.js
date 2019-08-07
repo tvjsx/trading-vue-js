@@ -64,6 +64,8 @@ export default class DataCube {
             }
             let i = count[ov.type]++
             ov.id = `onchart.${ov.type}${i}`
+            if (!ov.name) ov.name = ov.id
+
         }
         count = {}
         for (var ov of this.data.offchart) {
@@ -72,6 +74,7 @@ export default class DataCube {
             }
             let i = count[ov.type]++
             ov.id = `offchart.${ov.type}${i}`
+            if (!ov.name) ov.name = ov.id
         }
     }
 
