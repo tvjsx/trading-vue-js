@@ -26,6 +26,10 @@ export default class DataCube {
             DataCube.set('.settings', { lineWidth: 2 })
             DataCube.add('offchart', { type: 'New', data: [] })
             DataCube.del('.')  // Fun !
+            ...
+            DataCube.hide('.')
+            DataCube.show('offchart')
+            DataCube.merge('RSI.settings', { color: 'green' })
         */
 
         // DEBUG
@@ -50,6 +54,10 @@ export default class DataCube {
             Vue.set(this.data, 'offchart', [])
         }
 
+        if (!this.data.chart.settings) {
+            Vue.set(this.data.chart,'settings', {})
+        }
+
         // Remove ohlcv cuz we have Data v1.1
         delete this.data.ohlcv
     }
@@ -65,6 +73,7 @@ export default class DataCube {
             let i = count[ov.type]++
             ov.id = `onchart.${ov.type}${i}`
             if (!ov.name) ov.name = ov.id
+            if (!ov.settings) ov.settings = {}
 
         }
         count = {}
@@ -75,6 +84,7 @@ export default class DataCube {
             let i = count[ov.type]++
             ov.id = `offchart.${ov.type}${i}`
             if (!ov.name) ov.name = ov.id
+            if (!ov.settings) ov.settings = {}
         }
     }
 
@@ -109,18 +119,12 @@ export default class DataCube {
 
         for (var obj of objects) {
 
-            if (typeof obj.i === 'string') {
+            let i = obj.i !== undefined ?
+                obj.i :
+                obj.p.indexOf(obj.v)
 
-                Vue.set(obj.p, obj.i, data)
-
-            } else {
-
-                let i = obj.i !== undefined ?
-                    i : obj.p.indexOf(obj.v)
-
-                if (i >= 0) {
-                    Vue.set(obj.p, i, data)
-                }
+            if (i !== -1) {
+                Vue.set(obj.p, i, data)
             }
         }
 
@@ -128,9 +132,36 @@ export default class DataCube {
 
     }
 
-    // Merge(or array) object or array (reactively)
+    // Merge object or array (reactively)
     merge(query, data) {
-        // ...
+
+        let objects = this.get_by_query(query)
+
+        for (var obj of objects) {
+            if (Array.isArray(obj.v)) {
+
+                if (!Array.isArray(data)) continue
+
+                // If array is timeseries, merge it by timestamp
+                // else merge by item index
+
+                // ...
+
+            } else if (typeof obj.v === 'object') {
+
+                // The only way to get Vue to update all stuff
+                // reactively is to create a brand new object.
+                // TODO: Is there a simpler approach?
+                let new_obj = {}
+                Object.assign(new_obj, obj.v)
+                Object.assign(new_obj, data)
+                Vue.set(obj.p, obj.i, new_obj)
+
+            }
+        }
+
+        this.update_ids()
+
     }
 
     // Remove an overlay by query (id/type/name/...)
@@ -142,7 +173,7 @@ export default class DataCube {
 
             // Find current index of the field (if not defined)
             let i = obj.i !== undefined ?
-                i : obj.p.indexOf(obj.v)
+                obj.i : obj.p.indexOf(obj.v)
 
             if (i >= 0) {
                 Vue.delete(obj.p, i)
@@ -155,13 +186,23 @@ export default class DataCube {
 
 
     // Show indicator
-    show() {
-        // ...
+    show(query) {
+        if (query === 'offchart' || query === 'onchart') {
+             query += '.'
+        } else if (query === '.') {
+            query = ''
+        }
+        this.merge(query + '.settings', { display: true })
     }
 
     // Hide indicator
-    hide() {
-        // ...
+    hide(query) {
+        if (query === 'offchart' || query === 'onchart') {
+             query += '.'
+        } else if (query === '.') {
+             query = ''
+        }
+        this.merge(query + '.settings', { display: false })
     }
 
     // Returns array of objects matching query.
@@ -173,21 +214,16 @@ export default class DataCube {
 
         switch (tuple[0]) {
             case 'chart':
-                let field = tuple[1]
-                if (field) return [{
-                    p: this.data.chart,
-                    i: field,
-                    v: this.data.chart[field]
-                }]
-                else return [{
-                    p: this.data,
-                    i: 'chart',
-                    v: this.data.chart
-                }]
+                return this.chart_as_piv(tuple)
             case 'onchart':
             case 'offchart':
-                return this.query_search(query,tuple)
+                return this.query_search(query, tuple)
             default:
+                /* Should get('.') return also the chart? */
+                /*let ch = this.chart_as_query([
+                    'chart',
+                    tuple[1]
+                ])*/
                 let on = this.query_search(query, [
                     'onchart',
                     tuple[0],
@@ -198,10 +234,24 @@ export default class DataCube {
                     tuple[0],
                     tuple[1]
                 ])
-                return [...on, ...off]
+                return [/*ch[0],*/ ...on, ...off]
 
         }
 
+    }
+
+    chart_as_piv(tuple) {
+        let field = tuple[1]
+        if (field) return [{
+            p: this.data.chart,
+            i: field,
+            v: this.data.chart[field]
+        }]
+        else return [{
+            p: this.data,
+            i: 'chart',
+            v: this.data.chart
+        }]
     }
 
     query_search(query, tuple) {
