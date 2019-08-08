@@ -14,7 +14,7 @@ import DataCube from '../../src/helpers/datacube.js'
 
 export default {
     name: 'DataHelper',
-    description: '',
+    description: 'Play with DataCube in console',
     components: {
         TradingVue
     },

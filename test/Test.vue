@@ -3,7 +3,11 @@
         <div id="test-title">
             <h1>{{current_test.name}}</h1>
             <p>{{current_test.description}} [{{test_index+1}}/{{len}}]</p>
-            <a href="#" class="next-test-btn"
+            <a href="#" class="test-btn prev-test"
+                v-on:click="prev_test">
+                Prev test
+            </a>
+            <a href="#" class="test-btn next-test"
                 v-on:click="next_test">
                 Next test
             </a>
@@ -44,6 +48,14 @@ export default {
         }
     },
     methods: {
+        prev_test() {
+            let list = Object.values(TESTS)
+
+            if (--this.test_index < 0) {
+                this.test_index = list.length - 1
+            }
+            this.current_test = list[this.test_index]
+        },
         next_test() {
             let list = Object.values(TESTS)
 
@@ -91,15 +103,15 @@ body {
     font-weight: 200;
 }
 
-.next-test-btn {
-    top: 10px;
+.test-btn {
+    top: 12px;
     position: absolute;
     right: 10px;
 	background-color:#44c767;
 	-moz-border-radius:28px;
 	-webkit-border-radius:28px;
 	border-radius:28px;
-	border:1px solid #18ab29;
+	//border:1px solid #18ab29;
 	display:inline-block;
 	cursor:pointer;
 	color:#ffffff;
@@ -109,11 +121,22 @@ body {
 	text-decoration:none;
     text-shadow:0px 1px 0px #2f6627;
 }
-.next-test-btn:hover {
+
+.test-btn:active {
+	top: 13px;
+}
+
+.prev-test {
+    right: 115px;
+    background-color:#4285f4;
+}
+
+.test-btn .prev-test:hover {
 	background-color:#44c767;
 }
-.next-test-btn:active {
-	top: 11px;
+
+.test-btn .next-test:hover {
+	background-color:#44c767;
 }
 
 
