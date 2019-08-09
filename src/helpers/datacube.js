@@ -184,6 +184,27 @@ export default class DataCube {
         this.update_ids()
     }
 
+    // Lock overlays from being pulled by query_search
+    // TODO: subject to review
+    lock(query) {
+        let objects = this.get_by_query(query)
+        objects.forEach(x => {
+            if (x.v && x.v.id && x.v.type) {
+                x.v.locked = true
+            }
+        })
+    }
+
+    // Unlock overlays from being pulled by query_search
+    //
+    unlock(query) {
+        let objects = this.get_by_query(query, true)
+        objects.forEach(x => {
+            if (x.v && x.v.id && x.v.type) {
+                x.v.locked = false
+            }
+        })
+    }
 
     // Show indicator
     show(query) {
@@ -208,16 +229,18 @@ export default class DataCube {
     // Returns array of objects matching query.
     // Object contains { parent, index, value }
     // TODO: query caching
-    get_by_query(query) {
+    get_by_query(query, chuck) {
 
         let tuple = query.split('.')
 
         switch (tuple[0]) {
             case 'chart':
-                return this.chart_as_piv(tuple)
+                var result = this.chart_as_piv(tuple)
+                break
             case 'onchart':
             case 'offchart':
-                return this.query_search(query, tuple)
+                result = this.query_search(query, tuple)
+                break
             default:
                 /* Should get('.') return also the chart? */
                 /*let ch = this.chart_as_query([
@@ -234,10 +257,11 @@ export default class DataCube {
                     tuple[0],
                     tuple[1]
                 ])
-                return [/*ch[0],*/ ...on, ...off]
-
+                result = [/*ch[0],*/ ...on, ...off]
+                break
         }
 
+        return result.filter(x => !x.v.locked || chuck)
     }
 
     chart_as_piv(tuple) {
