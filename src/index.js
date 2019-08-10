@@ -17,7 +17,8 @@ if (typeof window !== 'undefined' && window.Vue) {
     window.Vue.use(TradingVue)
     window.TradingVueLib = {
         TradingVue, Overlay, Utils, Constants,
-        Candle, Volbar, layout_cnv, layout_vol
+        Candle, Volbar, layout_cnv, layout_vol,
+        DataCube
     }
 }
 

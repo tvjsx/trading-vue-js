@@ -1,5 +1,5 @@
 /*!
- * TradingVue.JS - v0.3.8 - Sat Aug 03 2019
+ * TradingVue.JS - v0.3.9 - Sat Aug 10 2019
  * https://github.com/C451/trading-vue-js
  * Copyright (c) 2019 c451 Code's All Right;
  * Licensed under the MIT license
@@ -9182,7 +9182,7 @@ function TradingVuevue_type_script_lang_js_arrayWithoutHoles(arr) { if (Array.is
       var chart_props = {
         title_txt: this.$props.titleTxt,
         overlays: this.$props.overlays,
-        data: this.$props.data,
+        data: this.decubed,
         width: this.$props.width,
         height: this.$props.height,
         font: this.$props.font,
@@ -9200,6 +9200,17 @@ function TradingVuevue_type_script_lang_js_arrayWithoutHoles(arr) { if (Array.is
     },
     chart_config: function chart_config() {
       return Object.assign(constants.ChartConfig, this.$props.chartConfig);
+    },
+    decubed: function decubed() {
+      var data = this.$props.data;
+
+      if (data.data !== undefined) {
+        // DataCube detected
+        data.init_vue(this.$root);
+        return data.data;
+      } else {
+        return data;
+      }
     }
   },
   data: function data() {
@@ -9263,6 +9274,447 @@ var TradingVue_component = normalizeComponent(
 if (false) { var TradingVue_api; }
 TradingVue_component.options.__file = "src/TradingVue.vue"
 /* harmony default export */ var TradingVue = (TradingVue_component.exports);
+// CONCATENATED MODULE: ./src/helpers/datacube.js
+function datacube_toConsumableArray(arr) { return datacube_arrayWithoutHoles(arr) || datacube_iterableToArray(arr) || datacube_nonIterableSpread(); }
+
+function datacube_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function datacube_iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function datacube_arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function datacube_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function datacube_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function datacube_createClass(Constructor, protoProps, staticProps) { if (protoProps) datacube_defineProperties(Constructor.prototype, protoProps); if (staticProps) datacube_defineProperties(Constructor, staticProps); return Constructor; }
+
+// Main DataHelper class. A container for data,
+// which works as a proxy and CRUD interface
+var DataCube =
+/*#__PURE__*/
+function () {
+  function DataCube() {
+    var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+    datacube_classCallCheck(this, DataCube);
+
+    this.data = data;
+    /* Examples of queries: (go to test #8) */
+
+    /* Type in devtools:
+        DataCube.get('onchart.EMA0') // Nope!
+        DataCube.get('Keltner')      // By name
+        DataCube.get_one('chart.data')
+        DataCube.get('offchart.RSI')
+        DataCube.get('offchart.RSI.data')
+        DataCube.get('DI')
+        DataCube.get('Splines0.data') // By index
+        DataCube.get('Segment.settings')
+        ...
+        DataCube.set('.settings', { lineWidth: 2 })
+        DataCube.add('offchart', { type: 'New', data: [] })
+        DataCube.del('.')  // Fun !
+        ...
+        DataCube.hide('.')
+        DataCube.show('offchart')
+        DataCube.merge('RSI.settings', { color: 'green' })
+    */
+    // DEBUG
+
+    window.DataCube = this;
+  } // Init Data Structure v1.1
+
+
+  datacube_createClass(DataCube, [{
+    key: "init_data",
+    value: function init_data($root) {
+      if (!('chart' in this.data)) {
+        this.Vue.$set(this.data, 'chart', {
+          type: 'Candles',
+          data: this.data.ohlcv || []
+        });
+      }
+
+      if (!('onchart' in this.data)) {
+        this.Vue.$set(this.data, 'onchart', []);
+      }
+
+      if (!('offchart' in this.data)) {
+        this.Vue.$set(this.data, 'offchart', []);
+      }
+
+      if (!this.data.chart.settings) {
+        this.Vue.$set(this.data.chart, 'settings', {});
+      } // Remove ohlcv cuz we have Data v1.1
+
+
+      delete this.data.ohlcv;
+    } // Set vue instance (once)
+
+  }, {
+    key: "init_vue",
+    value: function init_vue($root) {
+      if (!this.Vue) {
+        this.Vue = $root;
+        this.init_data();
+        this.update_ids();
+      }
+    } // Update ids for all overlays
+
+  }, {
+    key: "update_ids",
+    value: function update_ids() {
+      this.data.chart.id = "chart.".concat(this.data.chart.type);
+      var count = {};
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = this.data.onchart[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var ov = _step.value;
+
+          if (count[ov.type] === undefined) {
+            count[ov.type] = 0;
+          }
+
+          var i = count[ov.type]++;
+          ov.id = "onchart.".concat(ov.type).concat(i);
+          if (!ov.name) ov.name = ov.id;
+          if (!ov.settings) ov.settings = {};
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+            _iterator["return"]();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+
+      count = {};
+      var _iteratorNormalCompletion2 = true;
+      var _didIteratorError2 = false;
+      var _iteratorError2 = undefined;
+
+      try {
+        for (var _iterator2 = this.data.offchart[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+          var ov = _step2.value;
+
+          if (count[ov.type] === undefined) {
+            count[ov.type] = 0;
+          }
+
+          var _i = count[ov.type]++;
+
+          ov.id = "offchart.".concat(ov.type).concat(_i);
+          if (!ov.name) ov.name = ov.id;
+          if (!ov.settings) ov.settings = {};
+        }
+      } catch (err) {
+        _didIteratorError2 = true;
+        _iteratorError2 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
+            _iterator2["return"]();
+          }
+        } finally {
+          if (_didIteratorError2) {
+            throw _iteratorError2;
+          }
+        }
+      }
+    } // Add new overlay
+
+  }, {
+    key: "add",
+    value: function add(side, overlay) {
+      if (side !== 'onchart' && side !== 'offchart') {
+        return;
+      }
+
+      this.data[side].push(overlay);
+      this.update_ids();
+      return overlay.id;
+    } // Get all objects matching the query
+
+  }, {
+    key: "get",
+    value: function get(query) {
+      return this.get_by_query(query).map(function (x) {
+        return x.v;
+      });
+    } // Get first object matching the query
+
+  }, {
+    key: "get_one",
+    value: function get_one(query) {
+      return this.get_by_query(query).map(function (x) {
+        return x.v;
+      })[0];
+    } // Set data (reactively)
+
+  }, {
+    key: "set",
+    value: function set(query, data) {
+      var objects = this.get_by_query(query);
+      var _iteratorNormalCompletion3 = true;
+      var _didIteratorError3 = false;
+      var _iteratorError3 = undefined;
+
+      try {
+        for (var _iterator3 = objects[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+          var obj = _step3.value;
+          var i = obj.i !== undefined ? obj.i : obj.p.indexOf(obj.v);
+
+          if (i !== -1) {
+            this.Vue.$set(obj.p, i, data);
+          }
+        }
+      } catch (err) {
+        _didIteratorError3 = true;
+        _iteratorError3 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion3 && _iterator3["return"] != null) {
+            _iterator3["return"]();
+          }
+        } finally {
+          if (_didIteratorError3) {
+            throw _iteratorError3;
+          }
+        }
+      }
+
+      this.update_ids();
+    } // Merge object or array (reactively)
+
+  }, {
+    key: "merge",
+    value: function merge(query, data) {
+      var objects = this.get_by_query(query);
+      var _iteratorNormalCompletion4 = true;
+      var _didIteratorError4 = false;
+      var _iteratorError4 = undefined;
+
+      try {
+        for (var _iterator4 = objects[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+          var obj = _step4.value;
+
+          if (Array.isArray(obj.v)) {
+            if (!Array.isArray(data)) continue; // If array is timeseries, merge it by timestamp
+            // else merge by item index
+            // ...
+          } else if (_typeof(obj.v) === 'object') {
+            // The only way to get Vue to update all stuff
+            // reactively is to create a brand new object.
+            // TODO: Is there a simpler approach?
+            var new_obj = {};
+            Object.assign(new_obj, obj.v);
+            Object.assign(new_obj, data);
+            this.Vue.$set(obj.p, obj.i, new_obj);
+          }
+        }
+      } catch (err) {
+        _didIteratorError4 = true;
+        _iteratorError4 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion4 && _iterator4["return"] != null) {
+            _iterator4["return"]();
+          }
+        } finally {
+          if (_didIteratorError4) {
+            throw _iteratorError4;
+          }
+        }
+      }
+
+      this.update_ids();
+    } // Remove an overlay by query (id/type/name/...)
+
+  }, {
+    key: "del",
+    value: function del(query) {
+      var objects = this.get_by_query(query);
+      var _iteratorNormalCompletion5 = true;
+      var _didIteratorError5 = false;
+      var _iteratorError5 = undefined;
+
+      try {
+        for (var _iterator5 = objects[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+          var obj = _step5.value;
+          // Find current index of the field (if not defined)
+          var i = obj.i !== undefined ? obj.i : obj.p.indexOf(obj.v);
+
+          if (i !== -1) {
+            this.Vue.$delete(obj.p, i);
+          }
+        }
+      } catch (err) {
+        _didIteratorError5 = true;
+        _iteratorError5 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion5 && _iterator5["return"] != null) {
+            _iterator5["return"]();
+          }
+        } finally {
+          if (_didIteratorError5) {
+            throw _iteratorError5;
+          }
+        }
+      }
+
+      this.update_ids();
+    } // Lock overlays from being pulled by query_search
+    // TODO: subject to review
+
+  }, {
+    key: "lock",
+    value: function lock(query) {
+      var objects = this.get_by_query(query);
+      objects.forEach(function (x) {
+        if (x.v && x.v.id && x.v.type) {
+          x.v.locked = true;
+        }
+      });
+    } // Unlock overlays from being pulled by query_search
+    //
+
+  }, {
+    key: "unlock",
+    value: function unlock(query) {
+      var objects = this.get_by_query(query, true);
+      objects.forEach(function (x) {
+        if (x.v && x.v.id && x.v.type) {
+          x.v.locked = false;
+        }
+      });
+    } // Show indicator
+
+  }, {
+    key: "show",
+    value: function show(query) {
+      if (query === 'offchart' || query === 'onchart') {
+        query += '.';
+      } else if (query === '.') {
+        query = '';
+      }
+
+      this.merge(query + '.settings', {
+        display: true
+      });
+    } // Hide indicator
+
+  }, {
+    key: "hide",
+    value: function hide(query) {
+      if (query === 'offchart' || query === 'onchart') {
+        query += '.';
+      } else if (query === '.') {
+        query = '';
+      }
+
+      this.merge(query + '.settings', {
+        display: false
+      });
+    } // Returns array of objects matching query.
+    // Object contains { parent, index, value }
+    // TODO: query caching
+
+  }, {
+    key: "get_by_query",
+    value: function get_by_query(query, chuck) {
+      var tuple = query.split('.');
+
+      switch (tuple[0]) {
+        case 'chart':
+          var result = this.chart_as_piv(tuple);
+          break;
+
+        case 'onchart':
+        case 'offchart':
+          result = this.query_search(query, tuple);
+          break;
+
+        default:
+          /* Should get('.') return also the chart? */
+
+          /*let ch = this.chart_as_query([
+              'chart',
+              tuple[1]
+          ])*/
+          var on = this.query_search(query, ['onchart', tuple[0], tuple[1]]);
+          var off = this.query_search(query, ['offchart', tuple[0], tuple[1]]);
+          result = [].concat(datacube_toConsumableArray(on), datacube_toConsumableArray(off));
+          break;
+      }
+
+      return result.filter(function (x) {
+        return !x.v.locked || chuck;
+      });
+    }
+  }, {
+    key: "chart_as_piv",
+    value: function chart_as_piv(tuple) {
+      var field = tuple[1];
+      if (field) return [{
+        p: this.data.chart,
+        i: field,
+        v: this.data.chart[field]
+      }];else return [{
+        p: this.data,
+        i: 'chart',
+        v: this.data.chart
+      }];
+    }
+  }, {
+    key: "query_search",
+    value: function query_search(query, tuple) {
+      var _this = this;
+
+      var side = tuple[0];
+      var path = tuple[1] || '';
+      var field = tuple[2];
+      var arr = this.data[side].filter(function (x) {
+        return x.id && x.name && (x.id === query || x.id.includes(path) || x.name === query || x.name.includes(path));
+      });
+
+      if (field) {
+        return arr.map(function (x) {
+          return {
+            p: x,
+            i: field,
+            v: x[field]
+          };
+        });
+      }
+
+      return arr.map(function (x) {
+        return {
+          p: _this.data[side],
+          i: undefined,
+          v: x
+        };
+      });
+    }
+  }]);
+
+  return DataCube;
+}();
+
+
 // CONCATENATED MODULE: ./src/index.js
 /* concated harmony reexport TradingVue */__webpack_require__.d(__webpack_exports__, "TradingVue", function() { return TradingVue; });
 /* concated harmony reexport Overlay */__webpack_require__.d(__webpack_exports__, "Overlay", function() { return overlay; });
@@ -9272,6 +9724,8 @@ TradingVue_component.options.__file = "src/TradingVue.vue"
 /* concated harmony reexport Volbar */__webpack_require__.d(__webpack_exports__, "Volbar", function() { return VolbarExt; });
 /* concated harmony reexport layout_cnv */__webpack_require__.d(__webpack_exports__, "layout_cnv", function() { return layout_cnv; });
 /* concated harmony reexport layout_vol */__webpack_require__.d(__webpack_exports__, "layout_vol", function() { return layout_vol; });
+/* concated harmony reexport DataCube */__webpack_require__.d(__webpack_exports__, "DataCube", function() { return DataCube; });
+
 
 
 
@@ -9294,7 +9748,8 @@ if (typeof window !== 'undefined' && window.Vue) {
     Candle: CandleExt,
     Volbar: VolbarExt,
     layout_cnv: layout_cnv,
-    layout_vol: layout_vol
+    layout_vol: layout_vol,
+    DataCube: DataCube
   };
 }
 

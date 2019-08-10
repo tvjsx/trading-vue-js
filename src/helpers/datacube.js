@@ -2,15 +2,11 @@
 // Main DataHelper class. A container for data,
 // which works as a proxy and CRUD interface
 
-import Vue from 'vue'
-
 export default class DataCube {
 
     constructor(data = {}) {
-        this.data = data
-        this.init()
-        this.update_ids()
 
+        this.data = data
 
         /* Examples of queries: (go to test #8) */
         /* Type in devtools:
@@ -38,28 +34,39 @@ export default class DataCube {
     }
 
     // Init Data Structure v1.1
-    init() {
+    init_data($root) {
+
         if (!('chart' in this.data)) {
-            Vue.set(this.data, 'chart', {
+            this.Vue.$set(this.data, 'chart', {
                 type: 'Candles',
                 data: this.data.ohlcv || []
             })
         }
 
         if (!('onchart' in this.data)) {
-            Vue.set(this.data, 'onchart', [])
+            this.Vue.$set(this.data, 'onchart', [])
         }
 
         if (!('offchart' in this.data)) {
-            Vue.set(this.data, 'offchart', [])
+            this.Vue.$set(this.data, 'offchart', [])
         }
 
         if (!this.data.chart.settings) {
-            Vue.set(this.data.chart,'settings', {})
+            this.Vue.$set(this.data.chart,'settings', {})
         }
 
         // Remove ohlcv cuz we have Data v1.1
         delete this.data.ohlcv
+
+    }
+
+    // Set vue instance (once)
+    init_vue($root) {
+        if (!this.Vue) {
+            this.Vue = $root
+            this.init_data()
+            this.update_ids()
+        }
     }
 
     // Update ids for all overlays
@@ -124,7 +131,7 @@ export default class DataCube {
                 obj.p.indexOf(obj.v)
 
             if (i !== -1) {
-                Vue.set(obj.p, i, data)
+                this.Vue.$set(obj.p, i, data)
             }
         }
 
@@ -155,7 +162,7 @@ export default class DataCube {
                 let new_obj = {}
                 Object.assign(new_obj, obj.v)
                 Object.assign(new_obj, data)
-                Vue.set(obj.p, obj.i, new_obj)
+                this.Vue.$set(obj.p, obj.i, new_obj)
 
             }
         }
@@ -176,7 +183,7 @@ export default class DataCube {
                 obj.i : obj.p.indexOf(obj.v)
 
             if (i !== -1) {
-                Vue.delete(obj.p, i)
+                this.Vue.$delete(obj.p, i)
             }
 
         }
