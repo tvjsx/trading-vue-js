@@ -175,7 +175,7 @@ export default class DataCube {
             let i = obj.i !== undefined ?
                 obj.i : obj.p.indexOf(obj.v)
 
-            if (i >= 0) {
+            if (i !== -1) {
                 Vue.delete(obj.p, i)
             }
 
