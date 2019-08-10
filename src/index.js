@@ -1,4 +1,5 @@
 import TradingVue from './TradingVue.vue'
+import DataCube from './helpers/datacube.js'
 import Overlay from './mixins/overlay.js'
 import Utils from './stuff/utils.js'
 import Constants from './stuff/constants.js'
@@ -24,5 +25,6 @@ export default TradingVue
 
 export {
     TradingVue, Overlay, Utils, Constants,
-    Candle, Volbar, layout_cnv, layout_vol
+    Candle, Volbar, layout_cnv, layout_vol,
+    DataCube
 }
