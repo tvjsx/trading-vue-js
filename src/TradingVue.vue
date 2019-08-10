@@ -158,6 +158,7 @@ export default {
             let data = this.$props.data
             if (data.data !== undefined) {
                 // DataCube detected
+                data.init_vue(this.$root)
                 return data.data
             } else {
                 return data
