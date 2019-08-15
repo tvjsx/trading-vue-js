@@ -152,10 +152,10 @@ export default class DataCube {
                 if (obj.v[0] && obj.v[0].length >= 2) {
                     this.merge_ts(obj, data)
                 } else {
-                    this.medge_objects(obj, data, [])
+                    this.merge_objects(obj, data, [])
                 }
             } else if (typeof obj.v === 'object') {
-                this.medge_objects(obj, data)
+                this.merge_objects(obj, data)
             }
         }
 
