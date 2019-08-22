@@ -37,15 +37,6 @@ export default class DataCube extends DCCore {
 
     }
 
-    // Set vue instance (once)
-    init_vue($root) {
-        if (!this.Vue) {
-            this.Vue = $root
-            this.init_data()
-            this.update_ids()
-        }
-    }
-
     // Add new overlay
     add(side, overlay) {
 
@@ -81,7 +72,7 @@ export default class DataCube extends DCCore {
                 obj.p.indexOf(obj.v)
 
             if (i !== -1) {
-                this.Vue.$set(obj.p, i, data)
+                this.tv.$set(obj.p, i, data)
             }
         }
 
@@ -125,7 +116,7 @@ export default class DataCube extends DCCore {
                 obj.i : obj.p.indexOf(obj.v)
 
             if (i !== -1) {
-                this.Vue.$delete(obj.p, i)
+                this.tv.$delete(obj.p, i)
             }
 
         }
@@ -173,6 +164,12 @@ export default class DataCube extends DCCore {
              query = ''
         }
         this.merge(query + '.settings', { display: false })
+    }
+
+    // Set data loader callback
+    onrange(callback) {
+        this.loader = callback
+        this.tv.set_loader(callback ? this : null)
     }
 
 }

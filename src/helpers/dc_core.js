@@ -3,31 +3,48 @@
 
 export default class DCCore {
 
+    // Set TV instance (once). Called by TradingVue itself
+    init_tvjs($root) {
+        if (!this.tv) {
+            this.tv = $root
+            this.init_data()
+            this.update_ids()
+        }
+    }
+
     // Init Data Structure v1.1
     init_data($root) {
 
         if (!('chart' in this.data)) {
-            this.Vue.$set(this.data, 'chart', {
+            this.tv.$set(this.data, 'chart', {
                 type: 'Candles',
                 data: this.data.ohlcv || []
             })
         }
 
         if (!('onchart' in this.data)) {
-            this.Vue.$set(this.data, 'onchart', [])
+            this.tv.$set(this.data, 'onchart', [])
         }
 
         if (!('offchart' in this.data)) {
-            this.Vue.$set(this.data, 'offchart', [])
+            this.tv.$set(this.data, 'offchart', [])
         }
 
         if (!this.data.chart.settings) {
-            this.Vue.$set(this.data.chart,'settings', {})
+            this.tv.$set(this.data.chart,'settings', {})
         }
 
         // Remove ohlcv cuz we have Data v1.1
         delete this.data.ohlcv
 
+    }
+
+    // Range change callback (called by TradingVue)
+    range_changed(range) {
+        if (this.loader) {
+            // TODO: check data boundaries and call loader
+            //this.loader(range[0], range[1])
+        }
     }
 
     // Update ids for all overlays
@@ -144,7 +161,7 @@ export default class DCCore {
         // TODO: Is there a simpler approach?
         Object.assign(new_obj, obj.v)
         Object.assign(new_obj, data)
-        this.Vue.$set(obj.p, obj.i, new_obj)
+        this.tv.$set(obj.p, obj.i, new_obj)
 
     }
 

@@ -158,7 +158,7 @@ export default {
             let data = this.$props.data
             if (data.data !== undefined) {
                 // DataCube detected
-                data.init_vue(this.$root)
+                data.init_tvjs(this)
                 return data.data
             } else {
                 return data
@@ -190,6 +190,12 @@ export default {
         },
         legend_button(event) {
             this.$emit('legend-button-click', event)
+        },
+        set_loader(dc) {
+            this.$refs.chart.$off('range-changed')
+            if (dc) this.$refs.chart.$on('range-changed',
+                r => dc.range_changed(r)
+            )
         }
     }
 }
