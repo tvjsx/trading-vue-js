@@ -62,6 +62,7 @@ export default {
             const sub = this.subset()
             Utils.overwrite(this.sub, sub)
             this.update_layout()
+            this.$emit('range-changed', r)
         },
         goto(t) {
             const dt = this.range[1] - this.range[0]
