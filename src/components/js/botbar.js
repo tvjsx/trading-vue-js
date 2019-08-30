@@ -2,7 +2,7 @@
 import Const from '../../stuff/constants.js'
 import Utils from '../../stuff/utils.js'
 
-const { MINUTE15, HOUR, DAY, WEEK, YEAR, MONTHMAP } = Const
+const { MINUTE15, MINUTE, HOUR, DAY, WEEK, YEAR, MONTHMAP } = Const
 
 export default class Botbar {
 
@@ -85,7 +85,7 @@ export default class Botbar {
 
     // TODO: implement time zones
     format_date(t) {
-
+        t += new Date().getTimezoneOffset() * MINUTE
         let d = new Date(t)
 
         if (Utils.year_start(t) === t) return d.getFullYear()
@@ -102,6 +102,8 @@ export default class Botbar {
 
         let t = this.$p.cursor.t
         let ti = this.$p.interval
+
+        t += new Date().getTimezoneOffset() * MINUTE
         let d = new Date(t)
 
         if (ti === YEAR) {
