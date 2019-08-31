@@ -27,9 +27,9 @@ export default {
 
         // Load the last data chunk:
         let now = Utils.now()
-        this.load_chunk([now - Const.HOUR, now]).then(data => {
+        this.load_chunk([now - Const.DAY, now]).then(data => {
             this.chart = new DataCube({ ohlcv: data })
-            //this.chart.onrange(this.load_chunk)
+            this.chart.onrange(this.load_chunk)
         })
 
     },
@@ -39,7 +39,6 @@ export default {
             this.height = window.innerHeight - 50
         },
         async load_chunk(range) {
-            console.log(range)
             const [t1, t2] = range
             const x = 'BTCUSDT'
             return this.parse_binance(await fetch(
