@@ -169,7 +169,9 @@ export default class DataCube extends DCCore {
     // Set data loader callback
     onrange(callback) {
         this.loader = callback
-        this.tv.set_loader(callback ? this : null)
+        setTimeout(() =>
+            this.tv.set_loader(callback ? this : null), 0
+        )
     }
 
 }
