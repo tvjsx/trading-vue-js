@@ -124,6 +124,10 @@ export default {
 
     now() { return (new Date()).getTime() },
 
+    pause(delay) {
+        return new Promise((rs, rj) => setTimeout(rs, delay))
+    },
+
     // Limit crazy wheel delta values
     smart_wheel(delta) {
         let abs = Math.abs(delta)

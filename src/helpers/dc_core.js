@@ -1,6 +1,8 @@
 
 // DataCube private methods
 
+import Utils from '../stuff/utils.js'
+
 export default class DCCore {
 
     // Set TV instance (once). Called by TradingVue itself
@@ -40,13 +42,15 @@ export default class DCCore {
     }
 
     // Range change callback (called by TradingVue)
-    async range_changed(range, tf) {
+    async range_changed(range, tf, check=false) {
 
-        if (this.loader && !this.loading) {
+        if (!this.loader) return
+        if (!this.loading) {
             let first = this.data.chart.data[0][0]
             if (range[0] < first) {
                 this.loading = true
-                range = range.slice() // copy
+                await Utils.pause(250) // Load bigger chunks
+                range = range.slice()  // copy
                 range[0] = Math.floor(range[0])
                 range[1] = Math.floor(first)
                 let prom = this.loader(range, tf, d => {
@@ -59,6 +63,7 @@ export default class DCCore {
                 }
             }
         }
+        if (!check) this.last_chunk = [range, tf]
     }
 
     // A new chunk of data is loaded
@@ -66,11 +71,14 @@ export default class DCCore {
 
         // TODO: full data structure
         if (Array.isArray(data)) {
-            console.log(JSON.stringify(this.data.chart.data))
-            console.log(JSON.stringify(data))
             this.merge('chart.data', data)
         }
         this.loading = false
+        if (this.last_chunk) {
+            this.range_changed(...this.last_chunk, true)
+            this.last_chunk = null
+        }
+
     }
 
     // Update ids for all overlays
@@ -213,7 +221,7 @@ export default class DCCore {
 
             // Dst === Overlap === Src
             if (!obj.v.length && !data.length) {
-                return od
+                this.tv.$set(obj.p, obj.i, od)
             }
 
             // If src is totally contained in dst
@@ -222,14 +230,19 @@ export default class DCCore {
             // If dst is totally contained in src
             if (!obj.v.length) { obj.v = data.splice(d2[0]) }
 
-
-            return this.combine(obj.v, od, data)
+            this.tv.$set(
+                obj.p, obj.i, this.combine(obj.v, od, data)
+            )
 
         } else {
 
-            return this.combine(obj.v, [], data)
+            this.tv.$set(
+                obj.p, obj.i, this.combine(obj.v, [], data)
+            )
 
         }
+
+        return obj.v
 
     }
 
