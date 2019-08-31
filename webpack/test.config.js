@@ -29,4 +29,12 @@ module.exports = {
             template: './test/index.html'
         })
     ],
+    devServer: {
+        proxy: {
+            '/api/**': {
+                target: 'https://api.binance.com',
+                changeOrigin: true
+            }
+        }
+    }
 }

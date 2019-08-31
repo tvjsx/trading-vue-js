@@ -40,11 +40,37 @@ export default class DCCore {
     }
 
     // Range change callback (called by TradingVue)
-    range_changed(range) {
-        if (this.loader) {
-            // TODO: check data boundaries and call loader
-            //this.loader(range[0], range[1])
+    async range_changed(range, tf) {
+
+        if (this.loader && !this.loading) {
+            let first = this.data.chart.data[0][0]
+            if (range[0] < first) {
+                this.loading = true
+                range = range.slice() // copy
+                range[0] = Math.floor(range[0])
+                range[1] = Math.floor(first)
+                let prom = this.loader(range, tf, d => {
+                    // Callback way
+                    this.chunk_loaded(d)
+                })
+                if (prom && prom.then) {
+                    // Promise way
+                    this.chunk_loaded(await prom)
+                }
+            }
         }
+    }
+
+    // A new chunk of data is loaded
+    chunk_loaded(data) {
+
+        // TODO: full data structure
+        if (Array.isArray(data)) {
+            console.log(JSON.stringify(this.data.chart.data))
+            console.log(JSON.stringify(data))
+            this.merge('chart.data', data)
+        }
+        this.loading = false
     }
 
     // Update ids for all overlays
