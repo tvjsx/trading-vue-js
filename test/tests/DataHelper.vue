@@ -25,10 +25,17 @@ export default {
         window.addEventListener('resize', this.onResize)
         this.onResize()
 
-        // Load the last data chunk:
+        // Load the last data chunk & init DataCube:
         let now = Utils.now()
         this.load_chunk([now - Const.DAY, now]).then(data => {
-            this.chart = new DataCube({ ohlcv: data })
+            this.chart = new DataCube({
+                ohlcv: data['chart.data'],
+                onchart: [{
+                    type: 'Spline',
+                    name: 'SMA',
+                    data: data['SMA.data']
+                }]
+            })
             this.chart.onrange(this.load_chunk)
         })
 
@@ -38,13 +45,18 @@ export default {
             this.width = window.innerWidth
             this.height = window.innerHeight - 50
         },
+        // New data handler. Shoud return Promise, or
+        // use callback: load_chunk(range, tf, callback)
         async load_chunk(range) {
             const [t1, t2] = range
             const x = 'BTCUSDT'
-            return this.parse_binance(await fetch(
+            return this.tech(
+                    this.parse_binance(
+                     await fetch(
                 URL + `${x}&interval=15m&startTime=${t1}&endTime=${t2}`
-            ).then(response => response.json()))
+            ).then(response => response.json())))
         },
+        // Parse a specific exchange format
         parse_binance(data) {
             if (!Array.isArray(data)) return []
             return data.map(x => {
@@ -53,6 +65,31 @@ export default {
                 }
                 return x.slice(0,6)
             })
+        },
+        tech(data) {
+            // Each query sets data to a corresponding overlay
+            return {
+                'chart.data': data,
+                'SMA.data': this.sma(data)
+            }
+        },
+        sma(data) {
+            // Just an example of a simple indicator
+            // First calculate SMA for the chunk, then
+            // keep updating it for the whole OHLCV
+            let ohlcv = this.chart.data ?
+                this.chart.get_one('chart.data') : data
+
+            let sma = []
+            for (var i = 26; i < ohlcv.length; i++) {
+                let buff = 0
+                for (var k = i - 25; k <= i; k++) {
+                    buff += ohlcv[k][4]
+                }
+                sma.push([ ohlcv[i][0], buff / 26 ])
+            }
+
+            return sma
         }
     },
     beforeDestroy() {
