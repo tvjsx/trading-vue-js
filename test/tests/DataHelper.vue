@@ -45,7 +45,7 @@ export default {
             this.width = window.innerWidth
             this.height = window.innerHeight - 50
         },
-        // New data handler. Shoud return Promise, or
+        // New data handler. Should return Promise, or
         // use callback: load_chunk(range, tf, callback)
         async load_chunk(range) {
             const [t1, t2] = range
@@ -74,8 +74,8 @@ export default {
             }
         },
         sma(data) {
-            // Just an example of a simple indicator
-            // First calculate SMA for the chunk, then
+            // Just an example of a simple indicator.
+            // First, calculate SMA for the chunk, then
             // keep updating it for the whole OHLCV
             let ohlcv = this.chart.data ?
                 this.chart.get_one('chart.data') : data
