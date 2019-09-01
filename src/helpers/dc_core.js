@@ -67,12 +67,19 @@ export default class DCCore {
     }
 
     // A new chunk of data is loaded
+    // TODO: bulletproof fetch
     chunk_loaded(data) {
 
-        // TODO: full data structure
+        // Updates only candlestick data, or
         if (Array.isArray(data)) {
             this.merge('chart.data', data)
+        } else {
+            // Bunch of overlays, including chart.data
+            for (var k in data) {
+                this.merge(k, data[k])
+            }
         }
+
         this.loading = false
         if (this.last_chunk) {
             this.range_changed(...this.last_chunk, true)
@@ -222,6 +229,7 @@ export default class DCCore {
             // Dst === Overlap === Src
             if (!obj.v.length && !data.length) {
                 this.tv.$set(obj.p, obj.i, od)
+                return obj.v
             }
 
             // If src is totally contained in dst
