@@ -1,5 +1,5 @@
 /*!
- * TradingVue.JS - v0.3.9 - Sat Aug 10 2019
+ * TradingVue.JS - v0.3.10 - Sun Sep 01 2019
  * https://github.com/C451/trading-vue-js
  * Copyright (c) 2019 c451 Code's All Right;
  * Licensed under the MIT license
@@ -98,11 +98,61 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 24);
+/******/ 	return __webpack_require__(__webpack_require__.s = 43);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var arrayWithoutHoles = __webpack_require__(22);
+
+var iterableToArray = __webpack_require__(23);
+
+var nonIterableSpread = __webpack_require__(24);
+
+function _toConsumableArray(arr) {
+  return arrayWithoutHoles(arr) || iterableToArray(arr) || nonIterableSpread();
+}
+
+module.exports = _toConsumableArray;
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports) {
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+module.exports = _classCallCheck;
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+
+module.exports = _createClass;
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;/*! Hammer.JS - v2.0.7 - 2016-04-22
@@ -2748,7 +2798,23 @@ if (true) {
 
 
 /***/ }),
-/* 1 */
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var arrayWithHoles = __webpack_require__(25);
+
+var iterableToArrayLimit = __webpack_require__(26);
+
+var nonIterableRest = __webpack_require__(27);
+
+function _slicedToArray(arr, i) {
+  return arrayWithHoles(arr) || iterableToArrayLimit(arr, i) || nonIterableRest();
+}
+
+module.exports = _slicedToArray;
+
+/***/ }),
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2839,7 +2905,7 @@ function toComment(sourceMap) {
 }
 
 /***/ }),
-/* 2 */
+/* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3101,87 +3167,130 @@ function applyToTag (styleElement, obj) {
 
 
 /***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(15);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var add = __webpack_require__(2).default
-var update = add("68f243ea", content, false, {});
-// Hot Module Replacement
-if(false) {}
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(17);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var add = __webpack_require__(2).default
-var update = add("9895d3a6", content, false, {});
-// Hot Module Replacement
-if(false) {}
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(19);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var add = __webpack_require__(2).default
-var update = add("1db01c0b", content, false, {});
-// Hot Module Replacement
-if(false) {}
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(21);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var add = __webpack_require__(2).default
-var update = add("12d2309d", content, false, {});
-// Hot Module Replacement
-if(false) {}
-
-/***/ }),
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(23);
+var content = __webpack_require__(32);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var add = __webpack_require__(2).default
-var update = add("1b34bfeb", content, false, {});
+var add = __webpack_require__(6).default
+var update = add("68f243ea", content, false, {});
 // Hot Module Replacement
 if(false) {}
 
 /***/ }),
 /* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(34);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var add = __webpack_require__(6).default
+var update = add("9895d3a6", content, false, {});
+// Hot Module Replacement
+if(false) {}
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(36);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var add = __webpack_require__(6).default
+var update = add("1db01c0b", content, false, {});
+// Hot Module Replacement
+if(false) {}
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(38);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var add = __webpack_require__(6).default
+var update = add("12d2309d", content, false, {});
+// Hot Module Replacement
+if(false) {}
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(40);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var add = __webpack_require__(6).default
+var update = add("1b34bfeb", content, false, {});
+// Hot Module Replacement
+if(false) {}
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports) {
+
+function _typeof2(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof2 = function _typeof2(obj) { return typeof obj; }; } else { _typeof2 = function _typeof2(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof2(obj); }
+
+function _typeof(obj) {
+  if (typeof Symbol === "function" && _typeof2(Symbol.iterator) === "symbol") {
+    module.exports = _typeof = function _typeof(obj) {
+      return _typeof2(obj);
+    };
+  } else {
+    module.exports = _typeof = function _typeof(obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : _typeof2(obj);
+    };
+  }
+
+  return _typeof(obj);
+}
+
+module.exports = _typeof;
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports) {
+
+function _assertThisInitialized(self) {
+  if (self === void 0) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return self;
+}
+
+module.exports = _assertThisInitialized;
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(42);
+
+
+/***/ }),
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -3191,9 +3300,9 @@ if(false) {}
 /**
  * Dependencies
  */
-var util = __webpack_require__(11),
-    cmp = __webpack_require__(12),
-    bin = __webpack_require__(13);
+var util = __webpack_require__(28),
+    cmp = __webpack_require__(29),
+    bin = __webpack_require__(30);
 
 /**
  * Module interface definition
@@ -3405,7 +3514,7 @@ IndexedArray.prototype.getRange = function (begin, end) {
 
 
 /***/ }),
-/* 9 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -3735,13 +3844,197 @@ if (typeof window.define === 'function' && window.define.amd) {
 
 
 /***/ }),
-/* 10 */
+/* 17 */
 /***/ (function(module) {
 
 module.exports = JSON.parse("{\"add.png\":\"iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAMAAADyHTlpAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAH5QTFRFAAAAAAAAAAAAAAAAAAAAAAAAAAAACgoKBgYGGxsbKioqPz8/Pj4+BQUFCQkJAQEBZGRkh4eHAgICEBAQNjY2g4ODgYGBAAAAAwMDeXl5d3d3GBgYERERgICAgICANDQ0PDw8Y2NjCAgIhYWFGhoaJycnOjo6YWFhgICAdXV14Y16sQAAACp0Uk5TAAILDxIKESEnJiYoKCgTKSkpKCAnKSkFKCkpJiDl/ycpKSA2JyYpKSkpOkQ+xgAAARdJREFUeJzllNt2gyAQRTWiRsHLoDU0GpPYmMv//2BMS+sgl6Z9bM8bi73gnJkBz/sn8lcBIUHofwtG8TpJKUuTLI6cYF7QEqRKynP71VX9AkhNXVlsbMQrLLQVGyPZLsGHWgPrCxMJwHUPlXa79NBp2et5d9f3u3m1XxatQNn7SagOXCUjCjYUDuqxcWlHj4MSfw12FDJchFViRN8+1qcQoUH6lR1L1mEMEErofB6WzEUwylzomfzOQGiOJdXiWH7mQoUyMa4WXJQWOBvLFvPCGxt6FSr5kyH0qi0YddNG2/pgCsOjff4ZTizXPNwKIzl56OoGg9d9Z/+5cs6On+CFCfevFQ3ZaTycx1YMbvDdRvjkp/lHdAcPXzokxcwfDwAAAABJRU5ErkJggg==\",\"display_off.png\":\"iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAMAAADyHTlpAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAU1QTFRFAAAAh4eHh4eHAAAAAAAAAAAAAwMDAAAAAAAAhoaGGBgYgYGBAAAAPz8/AgICg4ODCQkJhISEh4eHh4eHPj4+NjY2gYGBg4ODgYGBgYGBgoKCAQEBJycngoKChYWFEBAQg4ODCAgIKioqZGRkCgoKBQUFERERd3d3gYGBGxsbNDQ0hISEgYGBPDw8gYGBgYGBh4eHh4eHhYWFh4eHgoKChYWFgYGBgYGBg4ODhoaGg4ODYWFhgoKCBgYGdXV1goKCg4ODgYGBgICAgYGBAAAAg4ODhYWFhISEh4eHgoKChYWFOjo6goKCGhoah4eHh4eHh4eHgoKCh4eHeXl5hoaGgoKChISEgYGBgYGBgoKCY2NjgYGBgoKCh4eHgoKCgYGBhoaGg4ODhoaGhYWFh4eHgYGBhoaGhoaGhoaGg4ODgoKChISEgoKChYWFh4eHfKktUwAAAG90Uk5TACn/AhEFKA8SLCbxCigoVBNKUTYoJ/lh3PyAKSaTNiBtICYpISggKSkmJ0LEKef3lGxA8rn//+pcMSkpnCcptHPJKe0LUjnx5LzKKaMnX73hl64pLnhkzNSgKeLv17LQ+liIzaLe7PfTw5tFpz3K1fXR/gAAAgBJREFUeJzllNdXwjAUxknB0lIoCKVsGTIFQRAZ7r333nuv///R3LZ4mlDQZ/0ekp7b37n5bnITk+mfyDxv5Tir3fwjaElO5BIOKZFLJS1dQVfI0Y809TtEV+elo95RpFPWG+1go4fdQ5QybI8haaNBkM2ANbM09bnrwaPY7iFKrz7EMBdu7CHdVruXIt0M1hb+GKA3LTRKkp5lTA6Dg6xIkhaHhvQ1IlW/UCouQdJNJTRIpk1qO7+wUpcfpl537oBc7VNip3Gi/AmVPBAC1UrL6HXtSGVT+k2Yz0Focad07OMRf3P5BEbd63PFQx7HN+w61JoAm+uBlV48O/0jkLSMmtPCmQ8HwlYdykFV4/LJPp7e3hVyFdapHNehLk6PSjhSkBvwu/cFyJGIYvOyhoc1jjYQFGbygD4CWjoAMla/og3YoSw+KPhjPNoFcim4iFD+pFYA8zZ9WeYU5OBjZ3ORWyCfG03E+47kKpCIJTpGO4KP8XMgtw990xG/PBNTgmPEEXwf7P42oOdFIRAoBCtqTKL6Rcwq4Xsgh5xYC/mmSs6yJKk1YbnVeTq1NaEpmlHbmVn2EORkW2trF2ZzmHGTSUMGl1a9hp4ySRpdQ8yKGURpMmRIYg9pb1YPzg6kO79cLlE6bYFjEtv91bLEUxvhwbWwjY13BxUb9l8+mn9EX8x3Nki8ff5wAAAAAElFTkSuQmCC\",\"display_on.png\":\"iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAMAAADyHTlpAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAR1QTFRFAAAAh4eHgYGBAAAAAAAAgYGBAAAAAwMDAAAAAAAAgYGBg4ODGBgYgYGBhISEAAAAPz8/AgIChoaGCQkJhYWFPj4+NjY2goKCgYGBAQEBJycngYGBgoKCEBAQCAgIhISEKioqZGRkCgoKBQUFERERd3d3gYGBg4ODgYGBGxsbNDQ0hISEgoKCgoKChYWFPDw8gYGBgYGBhoaGgoKCg4ODgoKCgYGBgoKCgoKCgoKCg4ODgoKChoaGgoKCgYGBhoaGg4ODYWFhBgYGdXV1gYGBg4ODgoKCgICAg4ODg4ODhISEAAAAg4ODOjo6gYGBGhoaeXl5goKCgYGBgoKChYWFgoKChISEgoKCY2NjgYGBg4ODgYGBgYGBg4ODgYGBo8n54AAAAF90Uk5TACn/AhH3BSgPEuhUJvFACigoLBM2KCeA6ykm+pMgIEkmKSEoICn9XCkmJ0u6nDop4sUypGuEzLZ6vmCYLZ/dLykpJynUYa8pcllCC1Ip2ycpisl1PadFsintbsPQZdi/bTW7AAAB4UlEQVR4nOWUZ1fCMBSGSSGWFiq0UDbIkr2XbBwMxS0b1P//M0xK9XSiftX7oel585zkvfcmMRj+SRhvzRRlthm/BU3Ry3TYzofTsajpIOjw2iNAjIiddehvHXSdA0mkXEEdG0fkE1DEKXmkSVqVIA6rBmsktUgAWLWHoGp30UNclbtLmwQgoyya91wPTbFy0mQXJ5zJQO6BgXRjfH0iSkX5stHIXr5r0bB/lu8syjR8rzsFbR2SpX+5J2eMP3csLtYsEY2K8BeTFuE2jaVCBw7bHOBuxq16AXmpbui3LtIfbRLUHMY2q4lcFo2WB4KA1SUAlWumNEKCzyxBKZxVHvYGaFguCBx1vM/x0IPzoqQoj5SdP4mns2cCGhBsrgj0uaeUBtzMyxQN8w4mYROTW8+r0oANp8W5mf6WQw5aCYJ2o7ymPaKMi2uVpmWM4TW6tdImgGo1bT4nK6DbbsCc0AZSdmLEFszzHrh6riVvRrNA3/9SE8QLWQu+Gjto9+gE9NBMwr9zi83gFeeFTe11zpm1CHE3HeyVCSknf3MIDcFTbfJKdbR1L4xX49L+/BoillV5uPJqkshD3JWSgpNMXP/lcrD8+hO84MnDr5YpFHv0Fe99VjJ0GBRs2H74aP6R+ACr+TFvZNAQ1wAAAABJRU5ErkJggg==\",\"down.png\":\"iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAMAAADyHTlpAAAAAXNSR0IB2cksfwAAAKVQTFRFAAAAg4ODgICAAAAAAAAAAAAACAgIAAAAAAAAAAAAAAAAOTk5hYWFEBAQfHx8ODg4dnZ2NDQ0XV1dGxsbKCgogICAFBQUIiIiZGRkgICAgICAFRUVAAAAgICAgICAgICAf39/Li4ugICAcHBwgoKCgICAgoKCgICAg4ODgYGBPj4+goKCgICAhISEgYGBgICAgoKCgICAgYGBgYGBf39/gICAgICAIdPQHAAAADd0Uk5TACn/KAIRIBMFDwooKyApKSknKSYmzCcmKfL7JRCUi2L3J7IpcLUrr0VbKXntNEnkMbxrUcG56CMpi50AAAFZSURBVHic5ZRpf4MgDIeFKFatWm/tfW091u7evv9Hm1Acoujm2y0vFPH5Jf+EEE37J6bblmlatv4jaBCI4rMfR0CMXtAEJ0fccgfM7tAkQHXzArdDxggmqGETGCnJWROkNlOwOqhIhKCtgbSicw1uK/dATSK0aRatIzytA8ik4XSiyJnLSm+VPxULgeyLI3uHRJH+qcB4WZGrKb4c20WwI7b3iUt74OS6XD+xZWrXUCtme0uKTvfcJ65CZFa9VOebqwXmft+oT8yF+/VymT4XeGB+Xx8L+j4gBcoFIDT+oMz6Qp93Y74pCeBpUXaLuW0rUk6r1iv3nP322ewYkgv2nZIvgpSPQDrY5wTjRJDNg9XAE/+uSXIVX812GdKEmtvR2rtWaw+5MAOuofJy79SXu9TgBl4d9DZdI0NjgyiswNCB/qk1J5Bmvp+lQOa9IJNhW4bxm6H5R+wLQYMSQXZNzbcAAAAASUVORK5CYII=\",\"remove.png\":\"iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAMAAADyHTlpAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAK5QTFRFAAAAh4eHgICAAAAAAAAAh4eHAAAAAwMDAAAAAAAAgICAGBgYAAAAPz8/AgICgICACQkJhoaGhoaGgICAPj4+NjY2gYGBg4ODgYGBAQEBJycngoKCEBAQgICAgICACAgIKioqZGRkCgoKBQUFERERd3d3gYGBGxsbNDQ0gICAPDw8YWFhBgYGdXV1gICAg4ODgICAAAAAOjo6GhoaeXl5gICAhYWFY2NjhYWFgICA9O0oCgAAADp0Uk5TACn/AhErBSgPEvEmCigowxMuMcgoJ7hWrCkmdCD6vSAmKSEoICkpJie6KSknKSkp0wspJynCMik11rrLte8AAAFwSURBVHic5ZTXkoIwFIZNAAPSpKkoRQV7Wcva3v/FFiRmEwise7t7bs7MP98k/ylJq/VPQjjKiiJrwo+gON0uxro7XiRTsRHs+voE4JjoRrf+6sD7AFTMvaDGRht9glLMUJtLqmUwD5XDCohHAmBUPQSV27GHtFK7xycBWJab5uPaR+Hlmue7GfZxHwyWFHVMQghXFgD2A8IOZtfssdNJIXcyFEaSfchzp9BuMVP+Fhvr5Qh0nGfqYTGhm3BcYFUaQBKOhMWzRqHyGFRY03ppQ5lCFZ30RloVZGQTaa3QqEt0OyrQnkSkk8I1YJkvAwPCMgY0UpbzXRZhVbosIWGbZTLNQszGMCM42FJEjWDDjIAMtp+xj6x2K+/DqNDc0r4Yc8yGl3uer2aIyT1iyd8sYSuY8cldZbVrH4zPebTvP8OMNSoedj6XzDyk3pwG98u0/ufqGu7tBW5c1PxriXFyHq5PQxXFzeDThvbmp/lH4gt6WxfZ03H8DwAAAABJRU5ErkJggg==\",\"settings.png\":\"iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAMAAADyHTlpAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAW5QTFRFAAAAAAAAAAAAAAAAAAAAAAAAAAAACgoKBgYGGxsbKioqQEBAPj4+BQUFCAgIAQEBPz8/ZWVlh4eHZGRkAgICCQkJDw8PNjY2g4ODgoKCNTU1EBAQAAAAAwMDeXl5d3d3AAAAGBgYAAAAERERioqKgoKCgoKCgoKCgYGBgoKChISEhoaGNDQ0g4ODgICAgICAgICAgYGBgYGBhYWFgICAgICAPT09AAAAgYGBgICAgICAgICAgICAY2NjCAgIgICAgICAhYWFhYWFgYGBHBwcgICAhYWFGhoagYGBgYGBg4ODhoaGJycnAAAAhISEgICAg4ODPDw8AAAAgoKCgICAhISEOjo6h4eHgoKCgYGBgICAf39/gYGBgoKCgICAGBgYgYGBg4ODg4ODgICACwsLgYGBgICAgYGBgYGBgYGBgICAgYGBYWFhf39/g4ODPj4+gYGBg4ODgICAhYWFgoKCgYGBgICAgYGBgoKCdXV1T0kC9QAAAHp0Uk5TAAILDxMKESEnJiYpKSgTKSgpKSkoEyAnKSknIAYoKSkFJQEgKl94jYVvVC4nU9f/+K8pOu71KBCi3NPq/ikg0e01Nokm1UUnsZVqQSYOT9lrKRJz5lIpK12jyu+sesgnhGVLxCG55a6Um+GaKfJCKKRgKUt8ocergymDQ9knAAABsElEQVR4nOWUV1vCMBSGg1AQpBZrcVdE3KJxo4LgnuCoe4F7orjHv7doTk3bgF7rd5OnX94nZ+SkCP0TWQqsNpuVs/wI2h2FTleR2+XkHfa8YLHgKRGJSj2SN3fosvIKkVJlVXWONGrkWtEgn1zHJP1GMCs/g7XILFIUpXoTWmaKTnIImGovh72Gxqbmlta2dvgOGpsmQO0dnfhTXd3E6JH0pN1DNnr7MFE/HDsQ0qEO6Pxg9sCh4XDkGx2J6sovBD+G8eiYuo5PxLTKeLoJBZNgT2EcnjY0YYajUKsL7Fk1gcjU3PwChcYTFGorAnsRqlpa1tAVhUbdmr+6RtjIOlgbCjMBUdzc2t7ZzbJ7zAQ4p6GSfRVNwkeKLsvCg31w2JBdjlT0GDxZNzEnpcQ+xWfnFxeXVyp6Tay07gq+L/YUOoBvbomV0V8skiq//DutWfeEfJD1JPLCED4+Pb8kX986tApNQ4iqfSJT76bRzvlgBPODQXW/foYqK5lyeBeYJEL1gaoeGnwIBhjRoQ9SZgTAdEbO/9cKRfmZ+MpGPCVHQ3nBzzS4hKIkuNyh/5g+ALiAXSSas9hwAAAAAElFTkSuQmCC\",\"up.png\":\"iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAMAAADyHTlpAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAMZQTFRFAAAAh4eHgICAAAAAAAAAAAAAAwMDAAAAAAAAGBgYAAAAPz8/AgICCQkJgICAh4eHPj4+NjY2AQEBJycnEBAQgICAgICACAgIKioqZGRkCgoKBQUFgYGBERERd3d3gYGBGxsbNDQ0gICAgYGBPDw8gYGBh4eHgICAYWFhBgYGgYGBdXV1goKCg4ODhYWFgICAgoKCAAAAhISEOjo6gICAGhoagYGBeXl5hoaGgICAY2Njg4ODgoKCgoKCgYGBgoKCg4ODgoKC64uw1gAAAEJ0Uk5TACn/AhEFKA8SJgooKBP7KignKSYg9c0gJikhKLQgKSkmJ7ywKY8s5SknlClxKTMpXwtFKe0neiku8ClKWmSbbFFjM5GHSgAAAW5JREFUeJzllGd/gjAQxk3AMFWWOHDvVa2rVbu//5cqhJWQQO3b9nkVjv/v7rnLKJX+iYS9JMuSKvwIiu3loKkZzYHXFgvBiqW1QKSWplfySzvmAyDUN50cG2X0DDLqoTKXVLJgIIXDCohHAqCzHhymeuShy/Ru8kkAhtmhWUTvW9fdEnPQaVLU0n8XF0L3kn5P6LTtZPKgNoK+RrUkcGtQ7S9TsgOxxinrkUPYD+LwLCIh7CTsWSVQqRmTuPqpitlZFLQlApXjrsYBc335wOw47ksmUSMMrgKi/gnAE/awCqNHmTUwDf5X34LlBuedsgbUsK15kPMxTIXzzvFSIdsSPBw7nGD1K+7bL3F9xStEnZhoCw71TbpL71GBBbUF1MZmZWTOi97PI3eIJn9zCEtOj0+umaOde2EszqW9/xr6rM54WFtc0vfQNak57Ibd/Jerohu3GFwYqPjVEhve2Z4cbQU1ikFsQ73z0fwj+ga3VBezGuggFQAAAABJRU5ErkJggg==\"}");
 
 /***/ }),
-/* 11 */
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var _typeof = __webpack_require__(12);
+
+var assertThisInitialized = __webpack_require__(13);
+
+function _possibleConstructorReturn(self, call) {
+  if (call && (_typeof(call) === "object" || typeof call === "function")) {
+    return call;
+  }
+
+  return assertThisInitialized(self);
+}
+
+module.exports = _possibleConstructorReturn;
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports) {
+
+function _getPrototypeOf(o) {
+  module.exports = _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
+    return o.__proto__ || Object.getPrototypeOf(o);
+  };
+  return _getPrototypeOf(o);
+}
+
+module.exports = _getPrototypeOf;
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var setPrototypeOf = __webpack_require__(41);
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function");
+  }
+
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) setPrototypeOf(subClass, superClass);
+}
+
+module.exports = _inherits;
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports) {
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
+  try {
+    var info = gen[key](arg);
+    var value = info.value;
+  } catch (error) {
+    reject(error);
+    return;
+  }
+
+  if (info.done) {
+    resolve(value);
+  } else {
+    Promise.resolve(value).then(_next, _throw);
+  }
+}
+
+function _asyncToGenerator(fn) {
+  return function () {
+    var self = this,
+        args = arguments;
+    return new Promise(function (resolve, reject) {
+      var gen = fn.apply(self, args);
+
+      function _next(value) {
+        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
+      }
+
+      function _throw(err) {
+        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
+      }
+
+      _next(undefined);
+    });
+  };
+}
+
+module.exports = _asyncToGenerator;
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports) {
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) {
+    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {
+      arr2[i] = arr[i];
+    }
+
+    return arr2;
+  }
+}
+
+module.exports = _arrayWithoutHoles;
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports) {
+
+function _iterableToArray(iter) {
+  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+}
+
+module.exports = _iterableToArray;
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports) {
+
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance");
+}
+
+module.exports = _nonIterableSpread;
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports) {
+
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+
+module.exports = _arrayWithHoles;
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports) {
+
+function _iterableToArrayLimit(arr, i) {
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+  var _e = undefined;
+
+  try {
+    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+
+  return _arr;
+}
+
+module.exports = _iterableToArrayLimit;
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports) {
+
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance");
+}
+
+module.exports = _nonIterableRest;
+
+/***/ }),
+/* 28 */
 /***/ (function(module, exports) {
 
 /**
@@ -3786,7 +4079,7 @@ module.exports.isSortableArrayLike = function (o) {
 
 
 /***/ }),
-/* 12 */
+/* 29 */
 /***/ (function(module, exports) {
 
 /**
@@ -3821,7 +4114,7 @@ module.exports = {
 
 
 /***/ }),
-/* 13 */
+/* 30 */
 /***/ (function(module, exports) {
 
 /**
@@ -3883,107 +4176,854 @@ module.exports.search = search;
 
 
 /***/ }),
-/* 14 */
+/* 31 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_LegendButton_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_LegendButton_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
 /* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_LegendButton_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_LegendButton_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
  /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_LegendButton_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
-/* 15 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(1)(false);
+exports = module.exports = __webpack_require__(5)(false);
 // Module
 exports.push([module.i, "\n.t-vue-lbtn {\n    z-index: 100;\n    width: 21px;\n    height: 21px;\n    margin-bottom: -6px;\n    pointer-events: all;\n    cursor: pointer;\n}\n", ""]);
 
 
 
 /***/ }),
-/* 16 */
+/* 33 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ButtonGroup_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ButtonGroup_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
 /* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ButtonGroup_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ButtonGroup_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
  /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ButtonGroup_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
-/* 17 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(1)(false);
+exports = module.exports = __webpack_require__(5)(false);
 // Module
 exports.push([module.i, "\n.t-vue-lbtn-grp {\n    margin-left: 0.5em;\n}\n", ""]);
 
 
 
 /***/ }),
-/* 18 */
+/* 35 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Legend_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Legend_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9);
 /* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Legend_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Legend_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
  /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Legend_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
-/* 19 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(1)(false);
+exports = module.exports = __webpack_require__(5)(false);
 // Module
 exports.push([module.i, "\n.trading-vue-legend {\n    position: relative;\n    z-index: 100;\n    font-size: 1.25em;\n    margin-left: 10px;\n    pointer-events: none;\n}\n.trading-vue-ohlcv {\n    pointer-events: none;\n    margin-bottom: 0.5em;\n}\n.t-vue-lspan {\n    font-variant-numeric: tabular-nums;\n    font-weight: 100;\n    font-size: 0.95em;\n    color: #999999; /* TODO: move => params */\n    margin-left: 0.1em;\n    margin-right: 0.2em;\n}\n.t-vue-title {\n    margin-right: 0.25em;\n    font-size: 1.45em;\n    font-weight: 200;\n}\n.t-vue-ind {\n    margin-left: 0.2em;\n    margin-bottom: 0.5em;\n    font-weight: 200;\n    font-size: 1.0em;\n}\n.t-vue-ivalue {\n    margin-left: 0.5em;\n}\n.t-vue-unknown {\n    color: #999999; /* TODO: move => params */\n}\n", ""]);
 
 
 
 /***/ }),
-/* 20 */
+/* 37 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Section_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Section_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(10);
 /* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Section_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Section_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
  /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Section_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
-/* 21 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(1)(false);
+exports = module.exports = __webpack_require__(5)(false);
 // Module
 exports.push([module.i, "\n.trading-vue-section {\n    height: 0;\n    position: absolute;\n}\n", ""]);
 
 
 
 /***/ }),
-/* 22 */
+/* 39 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Botbar_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Botbar_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(11);
 /* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Botbar_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Botbar_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
  /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Botbar_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
-/* 23 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(1)(false);
+exports = module.exports = __webpack_require__(5)(false);
 // Module
 exports.push([module.i, "\n.trading-vue-botbar {\n    position: relative !important;\n}\n", ""]);
 
 
 
 /***/ }),
-/* 24 */
+/* 41 */
+/***/ (function(module, exports) {
+
+function _setPrototypeOf(o, p) {
+  module.exports = _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
+    o.__proto__ = p;
+    return o;
+  };
+
+  return _setPrototypeOf(o, p);
+}
+
+module.exports = _setPrototypeOf;
+
+/***/ }),
+/* 42 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Copyright (c) 2014-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+var runtime = (function (exports) {
+  "use strict";
+
+  var Op = Object.prototype;
+  var hasOwn = Op.hasOwnProperty;
+  var undefined; // More compressible than void 0.
+  var $Symbol = typeof Symbol === "function" ? Symbol : {};
+  var iteratorSymbol = $Symbol.iterator || "@@iterator";
+  var asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator";
+  var toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
+
+  function wrap(innerFn, outerFn, self, tryLocsList) {
+    // If outerFn provided and outerFn.prototype is a Generator, then outerFn.prototype instanceof Generator.
+    var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator;
+    var generator = Object.create(protoGenerator.prototype);
+    var context = new Context(tryLocsList || []);
+
+    // The ._invoke method unifies the implementations of the .next,
+    // .throw, and .return methods.
+    generator._invoke = makeInvokeMethod(innerFn, self, context);
+
+    return generator;
+  }
+  exports.wrap = wrap;
+
+  // Try/catch helper to minimize deoptimizations. Returns a completion
+  // record like context.tryEntries[i].completion. This interface could
+  // have been (and was previously) designed to take a closure to be
+  // invoked without arguments, but in all the cases we care about we
+  // already have an existing method we want to call, so there's no need
+  // to create a new function object. We can even get away with assuming
+  // the method takes exactly one argument, since that happens to be true
+  // in every case, so we don't have to touch the arguments object. The
+  // only additional allocation required is the completion record, which
+  // has a stable shape and so hopefully should be cheap to allocate.
+  function tryCatch(fn, obj, arg) {
+    try {
+      return { type: "normal", arg: fn.call(obj, arg) };
+    } catch (err) {
+      return { type: "throw", arg: err };
+    }
+  }
+
+  var GenStateSuspendedStart = "suspendedStart";
+  var GenStateSuspendedYield = "suspendedYield";
+  var GenStateExecuting = "executing";
+  var GenStateCompleted = "completed";
+
+  // Returning this object from the innerFn has the same effect as
+  // breaking out of the dispatch switch statement.
+  var ContinueSentinel = {};
+
+  // Dummy constructor functions that we use as the .constructor and
+  // .constructor.prototype properties for functions that return Generator
+  // objects. For full spec compliance, you may wish to configure your
+  // minifier not to mangle the names of these two functions.
+  function Generator() {}
+  function GeneratorFunction() {}
+  function GeneratorFunctionPrototype() {}
+
+  // This is a polyfill for %IteratorPrototype% for environments that
+  // don't natively support it.
+  var IteratorPrototype = {};
+  IteratorPrototype[iteratorSymbol] = function () {
+    return this;
+  };
+
+  var getProto = Object.getPrototypeOf;
+  var NativeIteratorPrototype = getProto && getProto(getProto(values([])));
+  if (NativeIteratorPrototype &&
+      NativeIteratorPrototype !== Op &&
+      hasOwn.call(NativeIteratorPrototype, iteratorSymbol)) {
+    // This environment has a native %IteratorPrototype%; use it instead
+    // of the polyfill.
+    IteratorPrototype = NativeIteratorPrototype;
+  }
+
+  var Gp = GeneratorFunctionPrototype.prototype =
+    Generator.prototype = Object.create(IteratorPrototype);
+  GeneratorFunction.prototype = Gp.constructor = GeneratorFunctionPrototype;
+  GeneratorFunctionPrototype.constructor = GeneratorFunction;
+  GeneratorFunctionPrototype[toStringTagSymbol] =
+    GeneratorFunction.displayName = "GeneratorFunction";
+
+  // Helper for defining the .next, .throw, and .return methods of the
+  // Iterator interface in terms of a single ._invoke method.
+  function defineIteratorMethods(prototype) {
+    ["next", "throw", "return"].forEach(function(method) {
+      prototype[method] = function(arg) {
+        return this._invoke(method, arg);
+      };
+    });
+  }
+
+  exports.isGeneratorFunction = function(genFun) {
+    var ctor = typeof genFun === "function" && genFun.constructor;
+    return ctor
+      ? ctor === GeneratorFunction ||
+        // For the native GeneratorFunction constructor, the best we can
+        // do is to check its .name property.
+        (ctor.displayName || ctor.name) === "GeneratorFunction"
+      : false;
+  };
+
+  exports.mark = function(genFun) {
+    if (Object.setPrototypeOf) {
+      Object.setPrototypeOf(genFun, GeneratorFunctionPrototype);
+    } else {
+      genFun.__proto__ = GeneratorFunctionPrototype;
+      if (!(toStringTagSymbol in genFun)) {
+        genFun[toStringTagSymbol] = "GeneratorFunction";
+      }
+    }
+    genFun.prototype = Object.create(Gp);
+    return genFun;
+  };
+
+  // Within the body of any async function, `await x` is transformed to
+  // `yield regeneratorRuntime.awrap(x)`, so that the runtime can test
+  // `hasOwn.call(value, "__await")` to determine if the yielded value is
+  // meant to be awaited.
+  exports.awrap = function(arg) {
+    return { __await: arg };
+  };
+
+  function AsyncIterator(generator) {
+    function invoke(method, arg, resolve, reject) {
+      var record = tryCatch(generator[method], generator, arg);
+      if (record.type === "throw") {
+        reject(record.arg);
+      } else {
+        var result = record.arg;
+        var value = result.value;
+        if (value &&
+            typeof value === "object" &&
+            hasOwn.call(value, "__await")) {
+          return Promise.resolve(value.__await).then(function(value) {
+            invoke("next", value, resolve, reject);
+          }, function(err) {
+            invoke("throw", err, resolve, reject);
+          });
+        }
+
+        return Promise.resolve(value).then(function(unwrapped) {
+          // When a yielded Promise is resolved, its final value becomes
+          // the .value of the Promise<{value,done}> result for the
+          // current iteration.
+          result.value = unwrapped;
+          resolve(result);
+        }, function(error) {
+          // If a rejected Promise was yielded, throw the rejection back
+          // into the async generator function so it can be handled there.
+          return invoke("throw", error, resolve, reject);
+        });
+      }
+    }
+
+    var previousPromise;
+
+    function enqueue(method, arg) {
+      function callInvokeWithMethodAndArg() {
+        return new Promise(function(resolve, reject) {
+          invoke(method, arg, resolve, reject);
+        });
+      }
+
+      return previousPromise =
+        // If enqueue has been called before, then we want to wait until
+        // all previous Promises have been resolved before calling invoke,
+        // so that results are always delivered in the correct order. If
+        // enqueue has not been called before, then it is important to
+        // call invoke immediately, without waiting on a callback to fire,
+        // so that the async generator function has the opportunity to do
+        // any necessary setup in a predictable way. This predictability
+        // is why the Promise constructor synchronously invokes its
+        // executor callback, and why async functions synchronously
+        // execute code before the first await. Since we implement simple
+        // async functions in terms of async generators, it is especially
+        // important to get this right, even though it requires care.
+        previousPromise ? previousPromise.then(
+          callInvokeWithMethodAndArg,
+          // Avoid propagating failures to Promises returned by later
+          // invocations of the iterator.
+          callInvokeWithMethodAndArg
+        ) : callInvokeWithMethodAndArg();
+    }
+
+    // Define the unified helper method that is used to implement .next,
+    // .throw, and .return (see defineIteratorMethods).
+    this._invoke = enqueue;
+  }
+
+  defineIteratorMethods(AsyncIterator.prototype);
+  AsyncIterator.prototype[asyncIteratorSymbol] = function () {
+    return this;
+  };
+  exports.AsyncIterator = AsyncIterator;
+
+  // Note that simple async functions are implemented on top of
+  // AsyncIterator objects; they just return a Promise for the value of
+  // the final result produced by the iterator.
+  exports.async = function(innerFn, outerFn, self, tryLocsList) {
+    var iter = new AsyncIterator(
+      wrap(innerFn, outerFn, self, tryLocsList)
+    );
+
+    return exports.isGeneratorFunction(outerFn)
+      ? iter // If outerFn is a generator, return the full iterator.
+      : iter.next().then(function(result) {
+          return result.done ? result.value : iter.next();
+        });
+  };
+
+  function makeInvokeMethod(innerFn, self, context) {
+    var state = GenStateSuspendedStart;
+
+    return function invoke(method, arg) {
+      if (state === GenStateExecuting) {
+        throw new Error("Generator is already running");
+      }
+
+      if (state === GenStateCompleted) {
+        if (method === "throw") {
+          throw arg;
+        }
+
+        // Be forgiving, per 25.3.3.3.3 of the spec:
+        // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-generatorresume
+        return doneResult();
+      }
+
+      context.method = method;
+      context.arg = arg;
+
+      while (true) {
+        var delegate = context.delegate;
+        if (delegate) {
+          var delegateResult = maybeInvokeDelegate(delegate, context);
+          if (delegateResult) {
+            if (delegateResult === ContinueSentinel) continue;
+            return delegateResult;
+          }
+        }
+
+        if (context.method === "next") {
+          // Setting context._sent for legacy support of Babel's
+          // function.sent implementation.
+          context.sent = context._sent = context.arg;
+
+        } else if (context.method === "throw") {
+          if (state === GenStateSuspendedStart) {
+            state = GenStateCompleted;
+            throw context.arg;
+          }
+
+          context.dispatchException(context.arg);
+
+        } else if (context.method === "return") {
+          context.abrupt("return", context.arg);
+        }
+
+        state = GenStateExecuting;
+
+        var record = tryCatch(innerFn, self, context);
+        if (record.type === "normal") {
+          // If an exception is thrown from innerFn, we leave state ===
+          // GenStateExecuting and loop back for another invocation.
+          state = context.done
+            ? GenStateCompleted
+            : GenStateSuspendedYield;
+
+          if (record.arg === ContinueSentinel) {
+            continue;
+          }
+
+          return {
+            value: record.arg,
+            done: context.done
+          };
+
+        } else if (record.type === "throw") {
+          state = GenStateCompleted;
+          // Dispatch the exception by looping back around to the
+          // context.dispatchException(context.arg) call above.
+          context.method = "throw";
+          context.arg = record.arg;
+        }
+      }
+    };
+  }
+
+  // Call delegate.iterator[context.method](context.arg) and handle the
+  // result, either by returning a { value, done } result from the
+  // delegate iterator, or by modifying context.method and context.arg,
+  // setting context.delegate to null, and returning the ContinueSentinel.
+  function maybeInvokeDelegate(delegate, context) {
+    var method = delegate.iterator[context.method];
+    if (method === undefined) {
+      // A .throw or .return when the delegate iterator has no .throw
+      // method always terminates the yield* loop.
+      context.delegate = null;
+
+      if (context.method === "throw") {
+        // Note: ["return"] must be used for ES3 parsing compatibility.
+        if (delegate.iterator["return"]) {
+          // If the delegate iterator has a return method, give it a
+          // chance to clean up.
+          context.method = "return";
+          context.arg = undefined;
+          maybeInvokeDelegate(delegate, context);
+
+          if (context.method === "throw") {
+            // If maybeInvokeDelegate(context) changed context.method from
+            // "return" to "throw", let that override the TypeError below.
+            return ContinueSentinel;
+          }
+        }
+
+        context.method = "throw";
+        context.arg = new TypeError(
+          "The iterator does not provide a 'throw' method");
+      }
+
+      return ContinueSentinel;
+    }
+
+    var record = tryCatch(method, delegate.iterator, context.arg);
+
+    if (record.type === "throw") {
+      context.method = "throw";
+      context.arg = record.arg;
+      context.delegate = null;
+      return ContinueSentinel;
+    }
+
+    var info = record.arg;
+
+    if (! info) {
+      context.method = "throw";
+      context.arg = new TypeError("iterator result is not an object");
+      context.delegate = null;
+      return ContinueSentinel;
+    }
+
+    if (info.done) {
+      // Assign the result of the finished delegate to the temporary
+      // variable specified by delegate.resultName (see delegateYield).
+      context[delegate.resultName] = info.value;
+
+      // Resume execution at the desired location (see delegateYield).
+      context.next = delegate.nextLoc;
+
+      // If context.method was "throw" but the delegate handled the
+      // exception, let the outer generator proceed normally. If
+      // context.method was "next", forget context.arg since it has been
+      // "consumed" by the delegate iterator. If context.method was
+      // "return", allow the original .return call to continue in the
+      // outer generator.
+      if (context.method !== "return") {
+        context.method = "next";
+        context.arg = undefined;
+      }
+
+    } else {
+      // Re-yield the result returned by the delegate method.
+      return info;
+    }
+
+    // The delegate iterator is finished, so forget it and continue with
+    // the outer generator.
+    context.delegate = null;
+    return ContinueSentinel;
+  }
+
+  // Define Generator.prototype.{next,throw,return} in terms of the
+  // unified ._invoke helper method.
+  defineIteratorMethods(Gp);
+
+  Gp[toStringTagSymbol] = "Generator";
+
+  // A Generator should always return itself as the iterator object when the
+  // @@iterator function is called on it. Some browsers' implementations of the
+  // iterator prototype chain incorrectly implement this, causing the Generator
+  // object to not be returned from this call. This ensures that doesn't happen.
+  // See https://github.com/facebook/regenerator/issues/274 for more details.
+  Gp[iteratorSymbol] = function() {
+    return this;
+  };
+
+  Gp.toString = function() {
+    return "[object Generator]";
+  };
+
+  function pushTryEntry(locs) {
+    var entry = { tryLoc: locs[0] };
+
+    if (1 in locs) {
+      entry.catchLoc = locs[1];
+    }
+
+    if (2 in locs) {
+      entry.finallyLoc = locs[2];
+      entry.afterLoc = locs[3];
+    }
+
+    this.tryEntries.push(entry);
+  }
+
+  function resetTryEntry(entry) {
+    var record = entry.completion || {};
+    record.type = "normal";
+    delete record.arg;
+    entry.completion = record;
+  }
+
+  function Context(tryLocsList) {
+    // The root entry object (effectively a try statement without a catch
+    // or a finally block) gives us a place to store values thrown from
+    // locations where there is no enclosing try statement.
+    this.tryEntries = [{ tryLoc: "root" }];
+    tryLocsList.forEach(pushTryEntry, this);
+    this.reset(true);
+  }
+
+  exports.keys = function(object) {
+    var keys = [];
+    for (var key in object) {
+      keys.push(key);
+    }
+    keys.reverse();
+
+    // Rather than returning an object with a next method, we keep
+    // things simple and return the next function itself.
+    return function next() {
+      while (keys.length) {
+        var key = keys.pop();
+        if (key in object) {
+          next.value = key;
+          next.done = false;
+          return next;
+        }
+      }
+
+      // To avoid creating an additional object, we just hang the .value
+      // and .done properties off the next function object itself. This
+      // also ensures that the minifier will not anonymize the function.
+      next.done = true;
+      return next;
+    };
+  };
+
+  function values(iterable) {
+    if (iterable) {
+      var iteratorMethod = iterable[iteratorSymbol];
+      if (iteratorMethod) {
+        return iteratorMethod.call(iterable);
+      }
+
+      if (typeof iterable.next === "function") {
+        return iterable;
+      }
+
+      if (!isNaN(iterable.length)) {
+        var i = -1, next = function next() {
+          while (++i < iterable.length) {
+            if (hasOwn.call(iterable, i)) {
+              next.value = iterable[i];
+              next.done = false;
+              return next;
+            }
+          }
+
+          next.value = undefined;
+          next.done = true;
+
+          return next;
+        };
+
+        return next.next = next;
+      }
+    }
+
+    // Return an iterator with no values.
+    return { next: doneResult };
+  }
+  exports.values = values;
+
+  function doneResult() {
+    return { value: undefined, done: true };
+  }
+
+  Context.prototype = {
+    constructor: Context,
+
+    reset: function(skipTempReset) {
+      this.prev = 0;
+      this.next = 0;
+      // Resetting context._sent for legacy support of Babel's
+      // function.sent implementation.
+      this.sent = this._sent = undefined;
+      this.done = false;
+      this.delegate = null;
+
+      this.method = "next";
+      this.arg = undefined;
+
+      this.tryEntries.forEach(resetTryEntry);
+
+      if (!skipTempReset) {
+        for (var name in this) {
+          // Not sure about the optimal order of these conditions:
+          if (name.charAt(0) === "t" &&
+              hasOwn.call(this, name) &&
+              !isNaN(+name.slice(1))) {
+            this[name] = undefined;
+          }
+        }
+      }
+    },
+
+    stop: function() {
+      this.done = true;
+
+      var rootEntry = this.tryEntries[0];
+      var rootRecord = rootEntry.completion;
+      if (rootRecord.type === "throw") {
+        throw rootRecord.arg;
+      }
+
+      return this.rval;
+    },
+
+    dispatchException: function(exception) {
+      if (this.done) {
+        throw exception;
+      }
+
+      var context = this;
+      function handle(loc, caught) {
+        record.type = "throw";
+        record.arg = exception;
+        context.next = loc;
+
+        if (caught) {
+          // If the dispatched exception was caught by a catch block,
+          // then let that catch block handle the exception normally.
+          context.method = "next";
+          context.arg = undefined;
+        }
+
+        return !! caught;
+      }
+
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        var record = entry.completion;
+
+        if (entry.tryLoc === "root") {
+          // Exception thrown outside of any try block that could handle
+          // it, so set the completion value of the entire function to
+          // throw the exception.
+          return handle("end");
+        }
+
+        if (entry.tryLoc <= this.prev) {
+          var hasCatch = hasOwn.call(entry, "catchLoc");
+          var hasFinally = hasOwn.call(entry, "finallyLoc");
+
+          if (hasCatch && hasFinally) {
+            if (this.prev < entry.catchLoc) {
+              return handle(entry.catchLoc, true);
+            } else if (this.prev < entry.finallyLoc) {
+              return handle(entry.finallyLoc);
+            }
+
+          } else if (hasCatch) {
+            if (this.prev < entry.catchLoc) {
+              return handle(entry.catchLoc, true);
+            }
+
+          } else if (hasFinally) {
+            if (this.prev < entry.finallyLoc) {
+              return handle(entry.finallyLoc);
+            }
+
+          } else {
+            throw new Error("try statement without catch or finally");
+          }
+        }
+      }
+    },
+
+    abrupt: function(type, arg) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.tryLoc <= this.prev &&
+            hasOwn.call(entry, "finallyLoc") &&
+            this.prev < entry.finallyLoc) {
+          var finallyEntry = entry;
+          break;
+        }
+      }
+
+      if (finallyEntry &&
+          (type === "break" ||
+           type === "continue") &&
+          finallyEntry.tryLoc <= arg &&
+          arg <= finallyEntry.finallyLoc) {
+        // Ignore the finally entry if control is not jumping to a
+        // location outside the try/catch block.
+        finallyEntry = null;
+      }
+
+      var record = finallyEntry ? finallyEntry.completion : {};
+      record.type = type;
+      record.arg = arg;
+
+      if (finallyEntry) {
+        this.method = "next";
+        this.next = finallyEntry.finallyLoc;
+        return ContinueSentinel;
+      }
+
+      return this.complete(record);
+    },
+
+    complete: function(record, afterLoc) {
+      if (record.type === "throw") {
+        throw record.arg;
+      }
+
+      if (record.type === "break" ||
+          record.type === "continue") {
+        this.next = record.arg;
+      } else if (record.type === "return") {
+        this.rval = this.arg = record.arg;
+        this.method = "return";
+        this.next = "end";
+      } else if (record.type === "normal" && afterLoc) {
+        this.next = afterLoc;
+      }
+
+      return ContinueSentinel;
+    },
+
+    finish: function(finallyLoc) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.finallyLoc === finallyLoc) {
+          this.complete(entry.completion, entry.afterLoc);
+          resetTryEntry(entry);
+          return ContinueSentinel;
+        }
+      }
+    },
+
+    "catch": function(tryLoc) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.tryLoc === tryLoc) {
+          var record = entry.completion;
+          if (record.type === "throw") {
+            var thrown = record.arg;
+            resetTryEntry(entry);
+          }
+          return thrown;
+        }
+      }
+
+      // The context.catch method must only be called with a location
+      // argument that corresponds to a known catch block.
+      throw new Error("illegal catch attempt");
+    },
+
+    delegateYield: function(iterable, resultName, nextLoc) {
+      this.delegate = {
+        iterator: values(iterable),
+        resultName: resultName,
+        nextLoc: nextLoc
+      };
+
+      if (this.method === "next") {
+        // Deliberately forget the last sent value so that we don't
+        // accidentally pass it on to the delegate.
+        this.arg = undefined;
+      }
+
+      return ContinueSentinel;
+    }
+  };
+
+  // Regardless of whether this script is executing as a CommonJS module
+  // or not, return the runtime object so that we can declare the variable
+  // regeneratorRuntime in the outer scope, which allows this module to be
+  // injected easily by `bin/regenerator --include-runtime script.js`.
+  return exports;
+
+}(
+  // If this script is executing as a CommonJS module, use module.exports
+  // as the regeneratorRuntime namespace. Otherwise create a new empty
+  // object. Either way, the resulting object will be used to initialize
+  // the regeneratorRuntime variable at the top of this file.
+   true ? module.exports : undefined
+));
+
+try {
+  regeneratorRuntime = runtime;
+} catch (accidentalStrictMode) {
+  // This module should not be running in strict mode, so the above
+  // assignment should always work unless something is misconfigured. Just
+  // in case runtime.js accidentally runs in strict mode, we can escape
+  // strict mode using a global Function call. This could conceivably fail
+  // if a Content Security Policy forbids using Function, but in that case
+  // the proper solution is to fix the accidental strict mode problem. If
+  // you've misconfigured your bundler to force strict mode and applied a
+  // CSP to forbid Function, and you're not willing to fix either of those
+  // problems, please detail your unique predicament in a GitHub issue.
+  Function("r", "regeneratorRuntime = r")(runtime);
+}
+
+
+/***/ }),
+/* 43 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4030,6 +5070,10 @@ TradingVuevue_type_template_id_235c0ade_render._withStripped = true
 
 
 // CONCATENATED MODULE: ./src/TradingVue.vue?vue&type=template&id=235c0ade&
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/toConsumableArray.js
+var toConsumableArray = __webpack_require__(0);
+var toConsumableArray_default = /*#__PURE__*/__webpack_require__.n(toConsumableArray);
 
 // CONCATENATED MODULE: ./src/stuff/constants.js
 var SECOND = 1000;
@@ -4141,18 +5185,15 @@ function Context($p) {
 }
 
 /* harmony default export */ var context = (Context);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/slicedToArray.js
+var slicedToArray = __webpack_require__(4);
+var slicedToArray_default = /*#__PURE__*/__webpack_require__.n(slicedToArray);
+
 // EXTERNAL MODULE: ./node_modules/arrayslicer/lib/index.js
-var lib = __webpack_require__(8);
+var lib = __webpack_require__(15);
 var lib_default = /*#__PURE__*/__webpack_require__.n(lib);
 
 // CONCATENATED MODULE: ./src/stuff/utils.js
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
 
 /* harmony default export */ var utils = ({
@@ -4214,7 +5255,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
   },
   // Update array keeping the same reference
   overwrite: function overwrite(arr, new_arr) {
-    arr.splice.apply(arr, [0, arr.length].concat(_toConsumableArray(new_arr)));
+    arr.splice.apply(arr, [0, arr.length].concat(toConsumableArray_default()(new_arr)));
   },
   // Copy layout in reactive way
   copy_layout: function copy_layout(obj, new_obj) {
@@ -4265,6 +5306,11 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
   },
   now: function now() {
     return new Date().getTime();
+  },
+  pause: function pause(delay) {
+    return new Promise(function (rs, rj) {
+      return setTimeout(rs, delay);
+    });
   },
   // Limit crazy wheel delta values
   smart_wheel: function smart_wheel(delta) {
@@ -4343,21 +5389,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
   return self;
 });
 // CONCATENATED MODULE: ./src/components/js/grid_maker.js
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
-
-function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-function grid_maker_toConsumableArray(arr) { return grid_maker_arrayWithoutHoles(arr) || grid_maker_iterableToArray(arr) || grid_maker_nonIterableSpread(); }
-
-function grid_maker_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function grid_maker_iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function grid_maker_arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
 
 
@@ -4389,10 +5421,10 @@ function GridMaker(id, params) {
   function calc_$range() {
     if (!master_grid) {
       // $ candlestick range
-      var hi = Math.max.apply(Math, grid_maker_toConsumableArray(sub.map(function (x) {
+      var hi = Math.max.apply(Math, toConsumableArray_default()(sub.map(function (x) {
         return x[2];
       })));
-      var lo = Math.min.apply(Math, grid_maker_toConsumableArray(sub.map(function (x) {
+      var lo = Math.min.apply(Math, toConsumableArray_default()(sub.map(function (x) {
         return x[3];
       })));
     } else {
@@ -4401,7 +5433,7 @@ function GridMaker(id, params) {
       var arr = [];
 
       for (var i = 1; i < dim; i++) {
-        arr.push.apply(arr, grid_maker_toConsumableArray(sub.map(function (x) {
+        arr.push.apply(arr, toConsumableArray_default()(sub.map(function (x) {
           return x[i];
         }).filter(function (x) {
           return typeof x !== 'string';
@@ -4414,7 +5446,7 @@ function GridMaker(id, params) {
       if (y_range_fn) {
         var _y_range_fn = y_range_fn(hi, lo);
 
-        var _y_range_fn2 = _slicedToArray(_y_range_fn, 2);
+        var _y_range_fn2 = slicedToArray_default()(_y_range_fn, 2);
 
         hi = _y_range_fn2[0];
         lo = _y_range_fn2[1];
@@ -4451,7 +5483,7 @@ function GridMaker(id, params) {
     var lens = subn.map(function (x) {
       return x[1].toFixed(self.prec).length;
     });
-    var str = '0'.repeat(Math.max.apply(Math, grid_maker_toConsumableArray(lens))) + '    ';
+    var str = '0'.repeat(Math.max.apply(Math, toConsumableArray_default()(lens))) + '    ';
     self.sb = ctx.measureText(str).width;
     self.sb = Math.max(Math.floor(self.sb), $p.config.SBMIN);
   } // Calculate $ precision for the Y-axis
@@ -4463,7 +5495,7 @@ function GridMaker(id, params) {
 
     data.forEach(function (x) {
       var _x$1$toString$split = x[1].toString().split('.'),
-          _x$1$toString$split2 = _slicedToArray(_x$1$toString$split, 2),
+          _x$1$toString$split2 = slicedToArray_default()(_x$1$toString$split, 2),
           l = _x$1$toString$split2[0],
           r = _x$1$toString$split2[1];
 
@@ -4641,21 +5673,7 @@ function GridMaker(id, params) {
 
 /* harmony default export */ var grid_maker = (GridMaker);
 // CONCATENATED MODULE: ./src/components/js/layout.js
-function layout_slicedToArray(arr, i) { return layout_arrayWithHoles(arr) || layout_iterableToArrayLimit(arr, i) || layout_nonIterableRest(); }
 
-function layout_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
-
-function layout_iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function layout_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-function layout_toConsumableArray(arr) { return layout_arrayWithoutHoles(arr) || layout_iterableToArray(arr) || layout_nonIterableSpread(); }
-
-function layout_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function layout_iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function layout_arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
 // Calculates all necessary s*it to build the chart
 // Heights, widths, transforms, ... = everything
@@ -4696,7 +5714,7 @@ function Layout(params) {
   function candles_n_vol() {
     self.candles = [];
     self.volume = [];
-    var maxv = Math.max.apply(Math, layout_toConsumableArray(sub.map(function (x) {
+    var maxv = Math.max.apply(Math, toConsumableArray_default()(sub.map(function (x) {
       return x[5];
     })));
     var vs = $p.config.VOLSCALE * $p.height / maxv;
@@ -4756,7 +5774,7 @@ function Layout(params) {
 
   try {
     for (var _iterator = offsub.entries()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-      var _step$value = layout_slicedToArray(_step.value, 2),
+      var _step$value = slicedToArray_default()(_step.value, 2),
           i = _step$value[0],
           data = _step$value[1].data;
 
@@ -4781,7 +5799,7 @@ function Layout(params) {
     }
   }
 
-  var sb = Math.max.apply(Math, layout_toConsumableArray(gms.map(function (x) {
+  var sb = Math.max.apply(Math, toConsumableArray_default()(gms.map(function (x) {
     return x.get_sidebar();
   })));
   var grids = [],
@@ -4809,12 +5827,16 @@ function Layout(params) {
 }
 
 /* harmony default export */ var js_layout = (Layout);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/classCallCheck.js
+var classCallCheck = __webpack_require__(1);
+var classCallCheck_default = /*#__PURE__*/__webpack_require__.n(classCallCheck);
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/createClass.js
+var createClass = __webpack_require__(2);
+var createClass_default = /*#__PURE__*/__webpack_require__.n(createClass);
+
 // CONCATENATED MODULE: ./src/components/js/updater.js
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 // Cursor updater: calculates current values for
 // OHLCV and all other indicators
@@ -4824,12 +5846,12 @@ var updater_CursorUpdater =
 /*#__PURE__*/
 function () {
   function CursorUpdater(comp) {
-    _classCallCheck(this, CursorUpdater);
+    classCallCheck_default()(this, CursorUpdater);
 
     this.comp = comp, this.grids = comp._layout.grids, this.cursor = comp.cursor;
   }
 
-  _createClass(CursorUpdater, [{
+  createClass_default()(CursorUpdater, [{
     key: "sync",
     value: function sync(e) {
       this.cursor.grid_id = e.grid_id;
@@ -5017,34 +6039,16 @@ Sectionvue_type_template_id_8fbe9336_render._withStripped = true
 // CONCATENATED MODULE: ./src/components/Section.vue?vue&type=template&id=8fbe9336&
 
 // EXTERNAL MODULE: ./node_modules/hammerjs/hammer.js
-var hammer = __webpack_require__(0);
+var hammer = __webpack_require__(3);
 
 // EXTERNAL MODULE: ./node_modules/hamsterjs/hamster.js
-var hamsterjs_hamster = __webpack_require__(9);
+var hamsterjs_hamster = __webpack_require__(16);
 var hamster_default = /*#__PURE__*/__webpack_require__.n(hamsterjs_hamster);
 
 // CONCATENATED MODULE: ./src/components/js/grid.js
-function grid_slicedToArray(arr, i) { return grid_arrayWithHoles(arr) || grid_iterableToArrayLimit(arr, i) || grid_nonIterableRest(); }
 
-function grid_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
 
-function grid_iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
-function grid_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-function grid_toConsumableArray(arr) { return grid_arrayWithoutHoles(arr) || grid_iterableToArray(arr) || grid_nonIterableSpread(); }
-
-function grid_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function grid_iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function grid_arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
-
-function grid_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function grid_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function grid_createClass(Constructor, protoProps, staticProps) { if (protoProps) grid_defineProperties(Constructor.prototype, protoProps); if (staticProps) grid_defineProperties(Constructor, staticProps); return Constructor; }
 
 // Grid.js listens to various user-generated events,
 // emits Vue-events if something has changed (e.g. range)
@@ -5057,7 +6061,7 @@ var grid_Grid =
 /*#__PURE__*/
 function () {
   function Grid(canvas, comp) {
-    grid_classCallCheck(this, Grid);
+    classCallCheck_default()(this, Grid);
 
     this.MIN_ZOOM = comp.config.MIN_ZOOM;
     this.MAX_ZOOM = comp.config.MAX_ZOOM;
@@ -5078,7 +6082,7 @@ function () {
     this.overlays = [];
   }
 
-  grid_createClass(Grid, [{
+  createClass_default()(Grid, [{
     key: "listeners",
     value: function listeners() {
       var _this = this;
@@ -5238,7 +6242,7 @@ function () {
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       this.grid();
       var overlays = [];
-      overlays.push.apply(overlays, grid_toConsumableArray(this.overlays)); // z-index sorting
+      overlays.push.apply(overlays, toConsumableArray_default()(this.overlays)); // z-index sorting
 
       overlays.sort(function (l1, l2) {
         return l1.z - l2.z;
@@ -5270,7 +6274,7 @@ function () {
 
       try {
         for (var _iterator = this.layout.xs[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-          var _step$value = grid_slicedToArray(_step.value, 2),
+          var _step$value = slicedToArray_default()(_step.value, 2),
               x = _step$value[0],
               p = _step$value[1];
 
@@ -5298,7 +6302,7 @@ function () {
 
       try {
         for (var _iterator2 = this.layout.ys[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-          var _step2$value = grid_slicedToArray(_step2.value, 2),
+          var _step2$value = slicedToArray_default()(_step2.value, 2),
               y = _step2$value[0],
               y$ = _step2$value[1];
 
@@ -5463,7 +6467,7 @@ function () {
 // CONCATENATED MODULE: ./src/mixins/canvas.js
 // Interactive canvas-based component
 // Should implement: mousemove, mouseout, mouseup, mousedown, click
-/* harmony default export */ var canvas = ({
+/* harmony default export */ var mixins_canvas = ({
   methods: {
     setup: function setup() {
       var _this = this;
@@ -5534,17 +6538,14 @@ function () {
   }
 });
 // CONCATENATED MODULE: ./src/components/js/crosshair.js
-function crosshair_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function crosshair_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-function crosshair_createClass(Constructor, protoProps, staticProps) { if (protoProps) crosshair_defineProperties(Constructor.prototype, protoProps); if (staticProps) crosshair_defineProperties(Constructor, staticProps); return Constructor; }
 
-var Crosshair =
+var crosshair_Crosshair =
 /*#__PURE__*/
 function () {
   function Crosshair(comp) {
-    crosshair_classCallCheck(this, Crosshair);
+    classCallCheck_default()(this, Crosshair);
 
     this.comp = comp;
     this.$p = comp.$props;
@@ -5554,7 +6555,7 @@ function () {
     this.layout = this.$p.layout;
   }
 
-  crosshair_createClass(Crosshair, [{
+  createClass_default()(Crosshair, [{
     key: "update",
     value: function update(x, y) {
       this.x = this.$p.cursor.x;
@@ -5613,7 +6614,7 @@ function () {
   props: ['cursor', 'colors', 'layout', 'sub'],
   methods: {
     create: function create() {
-      this.ch = new Crosshair(this); // New grid overlay-renderer descriptor.
+      this.ch = new crosshair_Crosshair(this); // New grid overlay-renderer descriptor.
       // Should implement draw() (see Spline.vue)
 
       this.$emit('new-grid-layer', {
@@ -5826,7 +6827,7 @@ KeyboardListener_component.options.__file = "src/components/KeyboardListener.vue
 /* harmony default export */ var KeyboardListener = (KeyboardListener_component.exports);
 // CONCATENATED MODULE: ./src/mixins/overlay.js
 // Usuful stuff for creating overlays. Include as mixin
-/* harmony default export */ var overlay = ({
+/* harmony default export */ var mixins_overlay = ({
   props: ['id', 'num', 'interval', 'cursor', 'colors', 'layout', 'sub', 'data', 'settings', 'grid_id', 'font', 'config'],
   mounted: function mounted() {
     // Main chart?
@@ -5887,7 +6888,7 @@ KeyboardListener_component.options.__file = "src/components/KeyboardListener.vue
 
 /* harmony default export */ var Splinevue_type_script_lang_js_ = ({
   name: 'Spline',
-  mixins: [overlay],
+  mixins: [mixins_overlay],
   methods: {
     meta_info: function meta_info() {
       return {
@@ -6015,7 +7016,7 @@ Spline_component.options.__file = "src/components/overlays/Spline.vue"
 
 /* harmony default export */ var Splinesvue_type_script_lang_js_ = ({
   name: 'Splines',
-  mixins: [overlay],
+  mixins: [mixins_overlay],
   methods: {
     meta_info: function meta_info() {
       return {
@@ -6131,7 +7132,7 @@ Splines_component.options.__file = "src/components/overlays/Splines.vue"
 
 /* harmony default export */ var Rangevue_type_script_lang_js_ = ({
   name: 'Range',
-  mixins: [overlay],
+  mixins: [mixins_overlay],
   methods: {
     meta_info: function meta_info() {
       return {
@@ -6277,7 +7278,7 @@ Range_component.options.__file = "src/components/overlays/Range.vue"
 
 /* harmony default export */ var Tradesvue_type_script_lang_js_ = ({
   name: 'Trades',
-  mixins: [overlay],
+  mixins: [mixins_overlay],
   methods: {
     meta_info: function meta_info() {
       return {
@@ -6422,7 +7423,7 @@ Trades_component.options.__file = "src/components/overlays/Trades.vue"
 
 /* harmony default export */ var Channelvue_type_script_lang_js_ = ({
   name: 'Channel',
-  mixins: [overlay],
+  mixins: [mixins_overlay],
   methods: {
     meta_info: function meta_info() {
       return {
@@ -6532,7 +7533,7 @@ Channel_component.options.__file = "src/components/overlays/Channel.vue"
 
 /* harmony default export */ var Segmentvue_type_script_lang_js_ = ({
   name: 'Segment',
-  mixins: [overlay],
+  mixins: [mixins_overlay],
   methods: {
     meta_info: function meta_info() {
       return {
@@ -6612,13 +7613,6 @@ if (false) { var Segment_api; }
 Segment_component.options.__file = "src/components/overlays/Segment.vue"
 /* harmony default export */ var Segment = (Segment_component.exports);
 // CONCATENATED MODULE: ./src/components/js/layout_cnv.js
-function layout_cnv_toConsumableArray(arr) { return layout_cnv_arrayWithoutHoles(arr) || layout_cnv_iterableToArray(arr) || layout_cnv_nonIterableSpread(); }
-
-function layout_cnv_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function layout_cnv_iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function layout_cnv_arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
 // Claculates postions and sizes for candlestick
 // and volume bars for the given subset of data
@@ -6632,7 +7626,7 @@ function layout_cnv(self) {
   var volume = []; // The volume bar height is determined as a percentage of
   // the chart's height (VOLSCALE)
 
-  var maxv = Math.max.apply(Math, layout_cnv_toConsumableArray(sub.map(function (x) {
+  var maxv = Math.max.apply(Math, toConsumableArray_default()(sub.map(function (x) {
     return x[5];
   })));
   var vs = $p.config.VOLSCALE * layout.height / maxv;
@@ -6699,7 +7693,7 @@ function layout_vol(self) {
   } : function (p) {
     return p[4] > p[1];
   };
-  var maxv = Math.max.apply(Math, layout_cnv_toConsumableArray(sub.map(function (x) {
+  var maxv = Math.max.apply(Math, toConsumableArray_default()(sub.map(function (x) {
     return x[self._i1];
   })));
   var volscale = self.volscale || $p.config.VOLSCALE;
@@ -6738,18 +7732,15 @@ function layout_vol(self) {
   return volume;
 }
 // CONCATENATED MODULE: ./src/components/js/candle_ext.js
-function candle_ext_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function candle_ext_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-function candle_ext_createClass(Constructor, protoProps, staticProps) { if (protoProps) candle_ext_defineProperties(Constructor.prototype, protoProps); if (staticProps) candle_ext_defineProperties(Constructor, staticProps); return Constructor; }
 
 // Candle object for Candles overlay
-var CandleExt =
+var candle_ext_CandleExt =
 /*#__PURE__*/
 function () {
   function CandleExt(overlay, ctx, data) {
-    candle_ext_classCallCheck(this, CandleExt);
+    classCallCheck_default()(this, CandleExt);
 
     this.ctx = ctx;
     this.self = overlay;
@@ -6757,7 +7748,7 @@ function () {
     this.draw(data);
   }
 
-  candle_ext_createClass(CandleExt, [{
+  createClass_default()(CandleExt, [{
     key: "draw",
     value: function draw(data) {
       var body_color = data.c <= data.o ? this.style.colorCandleUp : this.style.colorCandleDw;
@@ -6792,17 +7783,14 @@ function () {
 
 
 // CONCATENATED MODULE: ./src/components/js/volbar_ext.js
-function volbar_ext_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function volbar_ext_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-function volbar_ext_createClass(Constructor, protoProps, staticProps) { if (protoProps) volbar_ext_defineProperties(Constructor.prototype, protoProps); if (staticProps) volbar_ext_defineProperties(Constructor, staticProps); return Constructor; }
 
-var VolbarExt =
+var volbar_ext_VolbarExt =
 /*#__PURE__*/
 function () {
   function VolbarExt(overlay, ctx, data) {
-    volbar_ext_classCallCheck(this, VolbarExt);
+    classCallCheck_default()(this, VolbarExt);
 
     this.ctx = ctx;
     this.$p = overlay.$props;
@@ -6811,7 +7799,7 @@ function () {
     this.draw(data);
   }
 
-  volbar_ext_createClass(VolbarExt, [{
+  createClass_default()(VolbarExt, [{
     key: "draw",
     value: function draw(data) {
       var y0 = this.$p.layout.height;
@@ -6827,13 +7815,6 @@ function () {
 
 
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/components/overlays/Candles.vue?vue&type=script&lang=js&
-function Candlesvue_type_script_lang_js_toConsumableArray(arr) { return Candlesvue_type_script_lang_js_arrayWithoutHoles(arr) || Candlesvue_type_script_lang_js_iterableToArray(arr) || Candlesvue_type_script_lang_js_nonIterableSpread(); }
-
-function Candlesvue_type_script_lang_js_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function Candlesvue_type_script_lang_js_iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function Candlesvue_type_script_lang_js_arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
 // Renedrer for candlesticks + volume (optional)
 // It can be used as the main chart or an indicator
@@ -6843,7 +7824,7 @@ function Candlesvue_type_script_lang_js_arrayWithoutHoles(arr) { if (Array.isArr
 
 /* harmony default export */ var Candlesvue_type_script_lang_js_ = ({
   name: 'Candles',
-  mixins: [overlay],
+  mixins: [mixins_overlay],
   methods: {
     meta_info: function meta_info() {
       return {
@@ -6872,7 +7853,7 @@ function Candlesvue_type_script_lang_js_arrayWithoutHoles(arr) { if (Array.isArr
         try {
           for (var _iterator = cnv.volume[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
             var v = _step.value;
-            new VolbarExt(this, ctx, v);
+            new volbar_ext_VolbarExt(this, ctx, v);
           }
         } catch (err) {
           _didIteratorError = true;
@@ -6897,7 +7878,7 @@ function Candlesvue_type_script_lang_js_arrayWithoutHoles(arr) { if (Array.isArr
       try {
         for (var _iterator2 = cnv.candles[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
           var c = _step2.value;
-          new CandleExt(this, ctx, c);
+          new candle_ext_CandleExt(this, ctx, c);
         }
       } catch (err) {
         _didIteratorError2 = true;
@@ -6919,9 +7900,9 @@ function Candlesvue_type_script_lang_js_arrayWithoutHoles(arr) { if (Array.isArr
     },
     // When added as offchart overlay
     y_range: function y_range() {
-      return [Math.max.apply(Math, Candlesvue_type_script_lang_js_toConsumableArray(this.$props.sub.map(function (x) {
+      return [Math.max.apply(Math, toConsumableArray_default()(this.$props.sub.map(function (x) {
         return x[2];
-      }))), Math.min.apply(Math, Candlesvue_type_script_lang_js_toConsumableArray(this.$props.sub.map(function (x) {
+      }))), Math.min.apply(Math, toConsumableArray_default()(this.$props.sub.map(function (x) {
         return x[3];
       })))];
     }
@@ -6986,13 +7967,6 @@ if (false) { var Candles_api; }
 Candles_component.options.__file = "src/components/overlays/Candles.vue"
 /* harmony default export */ var Candles = (Candles_component.exports);
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/components/overlays/Volume.vue?vue&type=script&lang=js&
-function Volumevue_type_script_lang_js_toConsumableArray(arr) { return Volumevue_type_script_lang_js_arrayWithoutHoles(arr) || Volumevue_type_script_lang_js_iterableToArray(arr) || Volumevue_type_script_lang_js_nonIterableSpread(); }
-
-function Volumevue_type_script_lang_js_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function Volumevue_type_script_lang_js_iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function Volumevue_type_script_lang_js_arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
 // Standalone renedrer for the volume
 
@@ -7000,7 +7974,7 @@ function Volumevue_type_script_lang_js_arrayWithoutHoles(arr) { if (Array.isArra
 
 /* harmony default export */ var Volumevue_type_script_lang_js_ = ({
   name: 'Volume',
-  mixins: [overlay],
+  mixins: [mixins_overlay],
   methods: {
     meta_info: function meta_info() {
       return {
@@ -7018,7 +7992,7 @@ function Volumevue_type_script_lang_js_arrayWithoutHoles(arr) { if (Array.isArra
       try {
         for (var _iterator = layout_vol(this)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
           var v = _step.value;
-          new VolbarExt(this, ctx, v);
+          new volbar_ext_VolbarExt(this, ctx, v);
         }
       } catch (err) {
         _didIteratorError = true;
@@ -7056,9 +8030,9 @@ function Volumevue_type_script_lang_js_arrayWithoutHoles(arr) { if (Array.isArra
 
       if (this._i1 === 5) {
         var sub = this.$props.sub;
-        return [Math.max.apply(Math, Volumevue_type_script_lang_js_toConsumableArray(sub.map(function (x) {
+        return [Math.max.apply(Math, toConsumableArray_default()(sub.map(function (x) {
           return x[_this._i1];
-        }))), Math.min.apply(Math, Volumevue_type_script_lang_js_toConsumableArray(sub.map(function (x) {
+        }))), Math.min.apply(Math, toConsumableArray_default()(sub.map(function (x) {
           return x[_this._i1];
         })))];
       } else {
@@ -7121,7 +8095,7 @@ Volume_component.options.__file = "src/components/overlays/Volume.vue"
 
 /* harmony default export */ var Splittersvue_type_script_lang_js_ = ({
   name: 'Splitters',
-  mixins: [overlay],
+  mixins: [mixins_overlay],
   methods: {
     meta_info: function meta_info() {
       return {
@@ -7239,7 +8213,7 @@ Splitters_component.options.__file = "src/components/overlays/Splitters.vue"
 /* harmony default export */ var Gridvue_type_script_lang_js_ = ({
   name: 'Grid',
   props: ['sub', 'layout', 'range', 'interval', 'cursor', 'colors', 'overlays', 'width', 'height', 'data', 'grid_id', 'y_transform', 'font', 'tv_id', 'config'],
-  mixins: [canvas],
+  mixins: [mixins_canvas],
   components: {
     Crosshair: components_Crosshair,
     KeyboardListener: KeyboardListener
@@ -7471,11 +8445,7 @@ if (false) { var Grid_api; }
 Grid_component.options.__file = "src/components/Grid.vue"
 /* harmony default export */ var components_Grid = (Grid_component.exports);
 // CONCATENATED MODULE: ./src/components/js/sidebar.js
-function sidebar_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function sidebar_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function sidebar_createClass(Constructor, protoProps, staticProps) { if (protoProps) sidebar_defineProperties(Constructor.prototype, protoProps); if (staticProps) sidebar_defineProperties(Constructor, staticProps); return Constructor; }
 
 
 
@@ -7487,7 +8457,7 @@ function () {
   function Sidebar(canvas, comp) {
     var side = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'right';
 
-    sidebar_classCallCheck(this, Sidebar);
+    classCallCheck_default()(this, Sidebar);
 
     PANHEIGHT = comp.config.PANHEIGHT;
     this.canvas = canvas;
@@ -7502,7 +8472,7 @@ function () {
     this.listeners();
   }
 
-  sidebar_createClass(Sidebar, [{
+  createClass_default()(Sidebar, [{
     key: "listeners",
     value: function listeners() {
       var _this = this;
@@ -7721,7 +8691,7 @@ function () {
 /* harmony default export */ var Sidebarvue_type_script_lang_js_ = ({
   name: 'Sidebar',
   props: ['sub', 'layout', 'range', 'interval', 'cursor', 'colors', 'font', 'width', 'height', 'grid_id', 'rerender', 'y_transform', 'tv_id', 'config'],
-  mixins: [canvas],
+  mixins: [mixins_canvas],
   mounted: function mounted() {
     var el = this.$refs['canvas'];
     this.renderer = new sidebar_Sidebar(el, this);
@@ -7961,7 +8931,7 @@ LegendButtonvue_type_template_id_1ad87362_render._withStripped = true
 // CONCATENATED MODULE: ./src/components/LegendButton.vue?vue&type=template&id=1ad87362&
 
 // EXTERNAL MODULE: ./src/stuff/icons.json
-var icons = __webpack_require__(10);
+var icons = __webpack_require__(17);
 
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/components/LegendButton.vue?vue&type=script&lang=js&
 //
@@ -8015,7 +8985,7 @@ var icons = __webpack_require__(10);
 // CONCATENATED MODULE: ./src/components/LegendButton.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_LegendButtonvue_type_script_lang_js_ = (LegendButtonvue_type_script_lang_js_); 
 // EXTERNAL MODULE: ./src/components/LegendButton.vue?vue&type=style&index=0&lang=css&
-var LegendButtonvue_type_style_index_0_lang_css_ = __webpack_require__(14);
+var LegendButtonvue_type_style_index_0_lang_css_ = __webpack_require__(31);
 
 // CONCATENATED MODULE: ./src/components/LegendButton.vue
 
@@ -8073,7 +9043,7 @@ LegendButton_component.options.__file = "src/components/LegendButton.vue"
 // CONCATENATED MODULE: ./src/components/ButtonGroup.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_ButtonGroupvue_type_script_lang_js_ = (ButtonGroupvue_type_script_lang_js_); 
 // EXTERNAL MODULE: ./src/components/ButtonGroup.vue?vue&type=style&index=0&lang=css&
-var ButtonGroupvue_type_style_index_0_lang_css_ = __webpack_require__(16);
+var ButtonGroupvue_type_style_index_0_lang_css_ = __webpack_require__(33);
 
 // CONCATENATED MODULE: ./src/components/ButtonGroup.vue
 
@@ -8225,7 +9195,7 @@ ButtonGroup_component.options.__file = "src/components/ButtonGroup.vue"
 // CONCATENATED MODULE: ./src/components/Legend.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_Legendvue_type_script_lang_js_ = (Legendvue_type_script_lang_js_); 
 // EXTERNAL MODULE: ./src/components/Legend.vue?vue&type=style&index=0&lang=css&
-var Legendvue_type_style_index_0_lang_css_ = __webpack_require__(18);
+var Legendvue_type_style_index_0_lang_css_ = __webpack_require__(35);
 
 // CONCATENATED MODULE: ./src/components/Legend.vue
 
@@ -8383,7 +9353,7 @@ Legend_component.options.__file = "src/components/Legend.vue"
 // CONCATENATED MODULE: ./src/components/Section.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_Sectionvue_type_script_lang_js_ = (Sectionvue_type_script_lang_js_); 
 // EXTERNAL MODULE: ./src/components/Section.vue?vue&type=style&index=0&lang=css&
-var Sectionvue_type_style_index_0_lang_css_ = __webpack_require__(20);
+var Sectionvue_type_style_index_0_lang_css_ = __webpack_require__(37);
 
 // CONCATENATED MODULE: ./src/components/Section.vue
 
@@ -8410,15 +9380,12 @@ if (false) { var Section_api; }
 Section_component.options.__file = "src/components/Section.vue"
 /* harmony default export */ var Section = (Section_component.exports);
 // CONCATENATED MODULE: ./src/components/js/botbar.js
-function botbar_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function botbar_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function botbar_createClass(Constructor, protoProps, staticProps) { if (protoProps) botbar_defineProperties(Constructor.prototype, protoProps); if (staticProps) botbar_defineProperties(Constructor, staticProps); return Constructor; }
 
 
 
 var botbar_MINUTE15 = constants.MINUTE15,
+    botbar_MINUTE = constants.MINUTE,
     botbar_HOUR = constants.HOUR,
     botbar_DAY = constants.DAY,
     botbar_WEEK = constants.WEEK,
@@ -8429,7 +9396,7 @@ var botbar_Botbar =
 /*#__PURE__*/
 function () {
   function Botbar(canvas, comp) {
-    botbar_classCallCheck(this, Botbar);
+    classCallCheck_default()(this, Botbar);
 
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
@@ -8440,7 +9407,7 @@ function () {
     this.layout = this.$p.layout;
   }
 
-  botbar_createClass(Botbar, [{
+  createClass_default()(Botbar, [{
     key: "update",
     value: function update() {
       this.grid_0 = this.layout.grids[0];
@@ -8515,6 +9482,7 @@ function () {
   }, {
     key: "format_date",
     value: function format_date(t) {
+      t += new Date().getTimezoneOffset() * botbar_MINUTE;
       var d = new Date(t);
       if (utils.year_start(t) === t) return d.getFullYear();
       if (utils.month_start(t) === t) return botbar_MONTHMAP[d.getMonth()];
@@ -8528,6 +9496,7 @@ function () {
     value: function format_cursor_x() {
       var t = this.$p.cursor.t;
       var ti = this.$p.interval;
+      t += new Date().getTimezoneOffset() * botbar_MINUTE;
       var d = new Date(t);
 
       if (ti === botbar_YEAR) {
@@ -8592,7 +9561,7 @@ function () {
 /* harmony default export */ var Botbarvue_type_script_lang_js_ = ({
   name: 'Botbar',
   props: ['sub', 'layout', 'range', 'interval', 'cursor', 'colors', 'font', 'width', 'height', 'rerender', 'tv_id', 'config'],
-  mixins: [canvas],
+  mixins: [mixins_canvas],
   mounted: function mounted() {
     var el = this.$refs['canvas'];
     this.renderer = new botbar_Botbar(el, this);
@@ -8641,7 +9610,7 @@ function () {
 // CONCATENATED MODULE: ./src/components/Botbar.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_Botbarvue_type_script_lang_js_ = (Botbarvue_type_script_lang_js_); 
 // EXTERNAL MODULE: ./src/components/Botbar.vue?vue&type=style&index=0&lang=css&
-var Botbarvue_type_style_index_0_lang_css_ = __webpack_require__(22);
+var Botbarvue_type_style_index_0_lang_css_ = __webpack_require__(39);
 
 // CONCATENATED MODULE: ./src/components/Botbar.vue
 var Botbar_render, Botbar_staticRenderFns
@@ -8810,6 +9779,7 @@ Keyboard_component.options.__file = "src/components/Keyboard.vue"
       var sub = this.subset();
       utils.overwrite(this.sub, sub);
       this.update_layout();
+      this.$emit('range-changed', r);
     },
     "goto": function goto(t) {
       var dt = this.range[1] - this.range[0];
@@ -9035,13 +10005,6 @@ if (false) { var Chart_api; }
 Chart_component.options.__file = "src/components/Chart.vue"
 /* harmony default export */ var Chart = (Chart_component.exports);
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/TradingVue.vue?vue&type=script&lang=js&
-function TradingVuevue_type_script_lang_js_toConsumableArray(arr) { return TradingVuevue_type_script_lang_js_arrayWithoutHoles(arr) || TradingVuevue_type_script_lang_js_iterableToArray(arr) || TradingVuevue_type_script_lang_js_nonIterableSpread(); }
-
-function TradingVuevue_type_script_lang_js_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function TradingVuevue_type_script_lang_js_iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function TradingVuevue_type_script_lang_js_arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
 //
 //
@@ -9206,7 +10169,7 @@ function TradingVuevue_type_script_lang_js_arrayWithoutHoles(arr) { if (Array.is
 
       if (data.data !== undefined) {
         // DataCube detected
-        data.init_vue(this.$root);
+        data.init_tvjs(this);
         return data.data;
       } else {
         return data;
@@ -9228,7 +10191,7 @@ function TradingVuevue_type_script_lang_js_arrayWithoutHoles(arr) { if (Array.is
 
       if (!resetRange && range[0] && range[1]) {
         this.$nextTick(function () {
-          return _this.setRange.apply(_this, TradingVuevue_type_script_lang_js_toConsumableArray(range));
+          return _this.setRange.apply(_this, toConsumableArray_default()(range));
         });
       }
     },
@@ -9246,6 +10209,14 @@ function TradingVuevue_type_script_lang_js_arrayWithoutHoles(arr) { if (Array.is
     },
     legend_button: function legend_button(event) {
       this.$emit('legend-button-click', event);
+    },
+    set_loader: function set_loader(dc) {
+      var _this2 = this;
+
+      this.$refs.chart.$off('range-changed');
+      if (dc) this.$refs.chart.$on('range-changed', function (r) {
+        return dc.range_changed(r, _this2.$refs.chart.interval);
+      });
     }
   }
 });
@@ -9274,93 +10245,191 @@ var TradingVue_component = normalizeComponent(
 if (false) { var TradingVue_api; }
 TradingVue_component.options.__file = "src/TradingVue.vue"
 /* harmony default export */ var TradingVue = (TradingVue_component.exports);
-// CONCATENATED MODULE: ./src/helpers/datacube.js
-function datacube_toConsumableArray(arr) { return datacube_arrayWithoutHoles(arr) || datacube_iterableToArray(arr) || datacube_nonIterableSpread(); }
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/typeof.js
+var helpers_typeof = __webpack_require__(12);
+var typeof_default = /*#__PURE__*/__webpack_require__.n(helpers_typeof);
 
-function datacube_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js
+var possibleConstructorReturn = __webpack_require__(18);
+var possibleConstructorReturn_default = /*#__PURE__*/__webpack_require__.n(possibleConstructorReturn);
 
-function datacube_iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/getPrototypeOf.js
+var getPrototypeOf = __webpack_require__(19);
+var getPrototypeOf_default = /*#__PURE__*/__webpack_require__.n(getPrototypeOf);
 
-function datacube_arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/assertThisInitialized.js
+var assertThisInitialized = __webpack_require__(13);
+var assertThisInitialized_default = /*#__PURE__*/__webpack_require__.n(assertThisInitialized);
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/inherits.js
+var inherits = __webpack_require__(20);
+var inherits_default = /*#__PURE__*/__webpack_require__.n(inherits);
 
-function datacube_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/regenerator/index.js
+var regenerator = __webpack_require__(14);
+var regenerator_default = /*#__PURE__*/__webpack_require__.n(regenerator);
 
-function datacube_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/asyncToGenerator.js
+var asyncToGenerator = __webpack_require__(21);
+var asyncToGenerator_default = /*#__PURE__*/__webpack_require__.n(asyncToGenerator);
 
-function datacube_createClass(Constructor, protoProps, staticProps) { if (protoProps) datacube_defineProperties(Constructor.prototype, protoProps); if (staticProps) datacube_defineProperties(Constructor, staticProps); return Constructor; }
+// CONCATENATED MODULE: ./src/helpers/dc_core.js
 
-// Main DataHelper class. A container for data,
-// which works as a proxy and CRUD interface
-var DataCube =
+
+
+
+
+// DataCube private methods
+
+
+var dc_core_DCCore =
 /*#__PURE__*/
 function () {
-  function DataCube() {
-    var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  function DCCore() {
+    classCallCheck_default()(this, DCCore);
+  }
 
-    datacube_classCallCheck(this, DataCube);
+  createClass_default()(DCCore, [{
+    key: "init_tvjs",
+    // Set TV instance (once). Called by TradingVue itself
+    value: function init_tvjs($root) {
+      if (!this.tv) {
+        this.tv = $root;
+        this.init_data();
+        this.update_ids();
+      }
+    } // Init Data Structure v1.1
 
-    this.data = data;
-    /* Examples of queries: (go to test #8) */
-
-    /* Type in devtools:
-        DataCube.get('onchart.EMA0') // Nope!
-        DataCube.get('Keltner')      // By name
-        DataCube.get_one('chart.data')
-        DataCube.get('offchart.RSI')
-        DataCube.get('offchart.RSI.data')
-        DataCube.get('DI')
-        DataCube.get('Splines0.data') // By index
-        DataCube.get('Segment.settings')
-        ...
-        DataCube.set('.settings', { lineWidth: 2 })
-        DataCube.add('offchart', { type: 'New', data: [] })
-        DataCube.del('.')  // Fun !
-        ...
-        DataCube.hide('.')
-        DataCube.show('offchart')
-        DataCube.merge('RSI.settings', { color: 'green' })
-    */
-    // DEBUG
-
-    window.DataCube = this;
-  } // Init Data Structure v1.1
-
-
-  datacube_createClass(DataCube, [{
+  }, {
     key: "init_data",
     value: function init_data($root) {
       if (!('chart' in this.data)) {
-        this.Vue.$set(this.data, 'chart', {
+        this.tv.$set(this.data, 'chart', {
           type: 'Candles',
           data: this.data.ohlcv || []
         });
       }
 
       if (!('onchart' in this.data)) {
-        this.Vue.$set(this.data, 'onchart', []);
+        this.tv.$set(this.data, 'onchart', []);
       }
 
       if (!('offchart' in this.data)) {
-        this.Vue.$set(this.data, 'offchart', []);
+        this.tv.$set(this.data, 'offchart', []);
       }
 
       if (!this.data.chart.settings) {
-        this.Vue.$set(this.data.chart, 'settings', {});
+        this.tv.$set(this.data.chart, 'settings', {});
       } // Remove ohlcv cuz we have Data v1.1
 
 
       delete this.data.ohlcv;
-    } // Set vue instance (once)
+    } // Range change callback (called by TradingVue)
 
   }, {
-    key: "init_vue",
-    value: function init_vue($root) {
-      if (!this.Vue) {
-        this.Vue = $root;
-        this.init_data();
-        this.update_ids();
+    key: "range_changed",
+    value: function () {
+      var _range_changed = asyncToGenerator_default()(
+      /*#__PURE__*/
+      regenerator_default.a.mark(function _callee(range, tf) {
+        var _this = this;
+
+        var check,
+            first,
+            prom,
+            _args = arguments;
+        return regenerator_default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                check = _args.length > 2 && _args[2] !== undefined ? _args[2] : false;
+
+                if (this.loader) {
+                  _context.next = 3;
+                  break;
+                }
+
+                return _context.abrupt("return");
+
+              case 3:
+                if (this.loading) {
+                  _context.next = 19;
+                  break;
+                }
+
+                first = this.data.chart.data[0][0];
+
+                if (!(range[0] < first)) {
+                  _context.next = 19;
+                  break;
+                }
+
+                this.loading = true;
+                _context.next = 9;
+                return utils.pause(250);
+
+              case 9:
+                // Load bigger chunks
+                range = range.slice(); // copy
+
+                range[0] = Math.floor(range[0]);
+                range[1] = Math.floor(first);
+                prom = this.loader(range, tf, function (d) {
+                  // Callback way
+                  _this.chunk_loaded(d);
+                });
+
+                if (!(prom && prom.then)) {
+                  _context.next = 19;
+                  break;
+                }
+
+                _context.t0 = this;
+                _context.next = 17;
+                return prom;
+
+              case 17:
+                _context.t1 = _context.sent;
+
+                _context.t0.chunk_loaded.call(_context.t0, _context.t1);
+
+              case 19:
+                if (!check) this.last_chunk = [range, tf];
+
+              case 20:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function range_changed(_x, _x2) {
+        return _range_changed.apply(this, arguments);
+      }
+
+      return range_changed;
+    }() // A new chunk of data is loaded
+    // TODO: bulletproof fetch
+
+  }, {
+    key: "chunk_loaded",
+    value: function chunk_loaded(data) {
+      // Updates only candlestick data, or
+      if (Array.isArray(data)) {
+        this.merge('chart.data', data);
+      } else {
+        // Bunch of overlays, including chart.data
+        for (var k in data) {
+          this.merge(k, data[k]);
+        }
+      }
+
+      this.loading = false;
+
+      if (this.last_chunk) {
+        this.range_changed.apply(this, toConsumableArray_default()(this.last_chunk).concat([true]));
+        this.last_chunk = null;
       }
     } // Update ids for all overlays
 
@@ -9434,9 +10503,289 @@ function () {
           }
         }
       }
-    } // Add new overlay
+    } // Returns array of objects matching query.
+    // Object contains { parent, index, value }
+    // TODO: query caching
 
   }, {
+    key: "get_by_query",
+    value: function get_by_query(query, chuck) {
+      var tuple = query.split('.');
+
+      switch (tuple[0]) {
+        case 'chart':
+          var result = this.chart_as_piv(tuple);
+          break;
+
+        case 'onchart':
+        case 'offchart':
+          result = this.query_search(query, tuple);
+          break;
+
+        default:
+          /* Should get('.') return also the chart? */
+
+          /*let ch = this.chart_as_query([
+              'chart',
+              tuple[1]
+          ])*/
+          var on = this.query_search(query, ['onchart', tuple[0], tuple[1]]);
+          var off = this.query_search(query, ['offchart', tuple[0], tuple[1]]);
+          result = [].concat(toConsumableArray_default()(on), toConsumableArray_default()(off));
+          break;
+      }
+
+      return result.filter(function (x) {
+        return !x.v.locked || chuck;
+      });
+    }
+  }, {
+    key: "chart_as_piv",
+    value: function chart_as_piv(tuple) {
+      var field = tuple[1];
+      if (field) return [{
+        p: this.data.chart,
+        i: field,
+        v: this.data.chart[field]
+      }];else return [{
+        p: this.data,
+        i: 'chart',
+        v: this.data.chart
+      }];
+    }
+  }, {
+    key: "query_search",
+    value: function query_search(query, tuple) {
+      var _this2 = this;
+
+      var side = tuple[0];
+      var path = tuple[1] || '';
+      var field = tuple[2];
+      var arr = this.data[side].filter(function (x) {
+        return x.id && x.name && (x.id === query || x.id.includes(path) || x.name === query || x.name.includes(path));
+      });
+
+      if (field) {
+        return arr.map(function (x) {
+          return {
+            p: x,
+            i: field,
+            v: x[field]
+          };
+        });
+      }
+
+      return arr.map(function (x) {
+        return {
+          p: _this2.data[side],
+          i: undefined,
+          v: x
+        };
+      });
+    }
+  }, {
+    key: "merge_objects",
+    value: function merge_objects(obj, data) {
+      var new_obj = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+      // The only way to get Vue to update all stuff
+      // reactively is to create a brand new object.
+      // TODO: Is there a simpler approach?
+      Object.assign(new_obj, obj.v);
+      Object.assign(new_obj, data);
+      this.tv.$set(obj.p, obj.i, new_obj);
+    } // Merge overlapping time series
+
+  }, {
+    key: "merge_ts",
+    value: function merge_ts(obj, data) {
+      // Assume that both arrays are pre-sorted
+      if (!data.length) return obj.v;
+      var r1 = [obj.v[0][0], obj.v[obj.v.length - 1][0]];
+      var r2 = [data[0][0], data[data.length - 1][0]]; // Overlap
+
+      var o = [Math.max(r1[0], r2[0]), Math.min(r1[1], r2[1])];
+
+      if (o[1] >= o[0]) {
+        var _obj$v, _data;
+
+        var _this$ts_overlap = this.ts_overlap(obj.v, data, o),
+            od = _this$ts_overlap.od,
+            d1 = _this$ts_overlap.d1,
+            d2 = _this$ts_overlap.d2;
+
+        (_obj$v = obj.v).splice.apply(_obj$v, toConsumableArray_default()(d1));
+
+        (_data = data).splice.apply(_data, toConsumableArray_default()(d2)); // Dst === Overlap === Src
+
+
+        if (!obj.v.length && !data.length) {
+          this.tv.$set(obj.p, obj.i, od);
+          return obj.v;
+        } // If src is totally contained in dst
+
+
+        if (!data.length) {
+          data = obj.v.splice(d1[0]);
+        } // If dst is totally contained in src
+
+
+        if (!obj.v.length) {
+          obj.v = data.splice(d2[0]);
+        }
+
+        this.tv.$set(obj.p, obj.i, this.combine(obj.v, od, data));
+      } else {
+        this.tv.$set(obj.p, obj.i, this.combine(obj.v, [], data));
+      }
+
+      return obj.v;
+    } // TODO: review performance, move to worker
+
+  }, {
+    key: "ts_overlap",
+    value: function ts_overlap(arr1, arr2, range) {
+      var t1 = range[0];
+      var t2 = range[1];
+      var ts = {}; // timestamp map
+
+      var a1 = arr1.filter(function (x) {
+        return x[0] >= t1 && x[0] <= t2;
+      });
+      var a2 = arr2.filter(function (x) {
+        return x[0] >= t1 && x[0] <= t2;
+      }); // Indices of segments
+
+      var id11 = arr1.indexOf(a1[0]);
+      var id12 = arr1.indexOf(a1[a1.length - 1]);
+      var id21 = arr2.indexOf(a2[0]);
+      var id22 = arr2.indexOf(a2[a2.length - 1]);
+
+      for (var i = 0; i < a1.length; i++) {
+        ts[a1[i][0]] = a1[i];
+      }
+
+      for (var i = 0; i < a2.length; i++) {
+        ts[a2[i][0]] = a2[i];
+      }
+
+      var ts_sorted = Object.keys(ts).sort();
+      return {
+        od: ts_sorted.map(function (x) {
+          return ts[x];
+        }),
+        d1: [id11, id12 - id11 + 1],
+        d2: [id21, id22 - id21 + 1]
+      };
+    } // Combine parts together:
+    // (destination, overlap, source)
+
+  }, {
+    key: "combine",
+    value: function combine(dst, o, src) {
+      function last(arr) {
+        return arr[arr.length - 1][0];
+      }
+
+      if (!dst.length) {
+        dst = o;
+        o = [];
+      }
+
+      if (!src.length) {
+        src = o;
+        o = [];
+      } // The overlap right in the middle
+
+
+      if (src[0][0] >= dst[0][0] && last(src) <= last(dst)) {
+        return Object.assign(dst, o); // The overlap is on the right
+      } else if (last(src) > last(dst)) {
+        // Psh(...) is faster but can overflow the stack
+        if (o.length < 100000 && src.length < 100000) {
+          var _dst;
+
+          (_dst = dst).push.apply(_dst, toConsumableArray_default()(o).concat(toConsumableArray_default()(src)));
+
+          return dst;
+        } else {
+          return dst.concat(o, src);
+        } // The overlap is on the left
+
+      } else if (src[0][0] < dst[0][0]) {
+        // Push(...) is faster but can overflow the stack
+        if (o.length < 100000 && src.length < 100000) {
+          var _src;
+
+          (_src = src).push.apply(_src, toConsumableArray_default()(o).concat(toConsumableArray_default()(dst)));
+
+          return src;
+        } else {
+          return src.concat(o, dst);
+        }
+      } else {
+        return [];
+      }
+    }
+  }]);
+
+  return DCCore;
+}();
+
+
+// CONCATENATED MODULE: ./src/helpers/datacube.js
+
+
+
+
+
+
+
+// Main DataHelper class. A container for data,
+// which works as a proxy and CRUD interface
+ // Interface methods. Private methods in dc_core.js
+
+var datacube_DataCube =
+/*#__PURE__*/
+function (_DCCore) {
+  inherits_default()(DataCube, _DCCore);
+
+  function DataCube() {
+    var _this;
+
+    var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+    classCallCheck_default()(this, DataCube);
+
+    _this = possibleConstructorReturn_default()(this, getPrototypeOf_default()(DataCube).call(this));
+    _this.data = data;
+    /* Examples of queries: (go to test #8) */
+
+    /* Type in devtools:
+        DataCube.get('onchart.EMA0') // Nope!
+        DataCube.get('Keltner')      // By name
+        DataCube.get_one('chart.data')
+        DataCube.get('offchart.RSI')
+        DataCube.get('offchart.RSI.data')
+        DataCube.get('DI')
+        DataCube.get('Splines0.data') // By index
+        DataCube.get('Segment.settings')
+        ...
+        DataCube.set('.settings', { lineWidth: 2 })
+        DataCube.add('offchart', { type: 'New', data: [] })
+        DataCube.del('.')  // Fun !
+        ...
+        DataCube.hide('.')
+        DataCube.show('offchart')
+        DataCube.merge('RSI.settings', { color: 'green' })
+    */
+    // DEBUG
+
+    window.DataCube = assertThisInitialized_default()(_this);
+    return _this;
+  } // Add new overlay
+
+
+  createClass_default()(DataCube, [{
     key: "add",
     value: function add(side, overlay) {
       if (side !== 'onchart' && side !== 'offchart') {
@@ -9468,6 +10817,84 @@ function () {
     key: "set",
     value: function set(query, data) {
       var objects = this.get_by_query(query);
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = objects[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var obj = _step.value;
+          var i = obj.i !== undefined ? obj.i : obj.p.indexOf(obj.v);
+
+          if (i !== -1) {
+            this.tv.$set(obj.p, i, data);
+          }
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+            _iterator["return"]();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+
+      this.update_ids();
+    } // Merge object or array (reactively)
+
+  }, {
+    key: "merge",
+    value: function merge(query, data) {
+      var objects = this.get_by_query(query);
+      var _iteratorNormalCompletion2 = true;
+      var _didIteratorError2 = false;
+      var _iteratorError2 = undefined;
+
+      try {
+        for (var _iterator2 = objects[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+          var obj = _step2.value;
+
+          if (Array.isArray(obj.v)) {
+            if (!Array.isArray(data)) continue; // If array is a timeseries, merge it by timestamp
+            // else merge by item index
+
+            if (obj.v[0] && obj.v[0].length >= 2) {
+              this.merge_ts(obj, data);
+            } else {
+              this.merge_objects(obj, data, []);
+            }
+          } else if (typeof_default()(obj.v) === 'object') {
+            this.merge_objects(obj, data);
+          }
+        }
+      } catch (err) {
+        _didIteratorError2 = true;
+        _iteratorError2 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
+            _iterator2["return"]();
+          }
+        } finally {
+          if (_didIteratorError2) {
+            throw _iteratorError2;
+          }
+        }
+      }
+
+      this.update_ids();
+    } // Remove an overlay by query (id/type/name/...)
+
+  }, {
+    key: "del",
+    value: function del(query) {
+      var objects = this.get_by_query(query);
       var _iteratorNormalCompletion3 = true;
       var _didIteratorError3 = false;
       var _iteratorError3 = undefined;
@@ -9475,10 +10902,11 @@ function () {
       try {
         for (var _iterator3 = objects[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
           var obj = _step3.value;
+          // Find current index of the field (if not defined)
           var i = obj.i !== undefined ? obj.i : obj.p.indexOf(obj.v);
 
           if (i !== -1) {
-            this.Vue.$set(obj.p, i, data);
+            this.tv.$delete(obj.p, i);
           }
         }
       } catch (err) {
@@ -9492,86 +10920,6 @@ function () {
         } finally {
           if (_didIteratorError3) {
             throw _iteratorError3;
-          }
-        }
-      }
-
-      this.update_ids();
-    } // Merge object or array (reactively)
-
-  }, {
-    key: "merge",
-    value: function merge(query, data) {
-      var objects = this.get_by_query(query);
-      var _iteratorNormalCompletion4 = true;
-      var _didIteratorError4 = false;
-      var _iteratorError4 = undefined;
-
-      try {
-        for (var _iterator4 = objects[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-          var obj = _step4.value;
-
-          if (Array.isArray(obj.v)) {
-            if (!Array.isArray(data)) continue; // If array is timeseries, merge it by timestamp
-            // else merge by item index
-            // ...
-          } else if (_typeof(obj.v) === 'object') {
-            // The only way to get Vue to update all stuff
-            // reactively is to create a brand new object.
-            // TODO: Is there a simpler approach?
-            var new_obj = {};
-            Object.assign(new_obj, obj.v);
-            Object.assign(new_obj, data);
-            this.Vue.$set(obj.p, obj.i, new_obj);
-          }
-        }
-      } catch (err) {
-        _didIteratorError4 = true;
-        _iteratorError4 = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion4 && _iterator4["return"] != null) {
-            _iterator4["return"]();
-          }
-        } finally {
-          if (_didIteratorError4) {
-            throw _iteratorError4;
-          }
-        }
-      }
-
-      this.update_ids();
-    } // Remove an overlay by query (id/type/name/...)
-
-  }, {
-    key: "del",
-    value: function del(query) {
-      var objects = this.get_by_query(query);
-      var _iteratorNormalCompletion5 = true;
-      var _didIteratorError5 = false;
-      var _iteratorError5 = undefined;
-
-      try {
-        for (var _iterator5 = objects[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
-          var obj = _step5.value;
-          // Find current index of the field (if not defined)
-          var i = obj.i !== undefined ? obj.i : obj.p.indexOf(obj.v);
-
-          if (i !== -1) {
-            this.Vue.$delete(obj.p, i);
-          }
-        }
-      } catch (err) {
-        _didIteratorError5 = true;
-        _iteratorError5 = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion5 && _iterator5["return"] != null) {
-            _iterator5["return"]();
-          }
-        } finally {
-          if (_didIteratorError5) {
-            throw _iteratorError5;
           }
         }
       }
@@ -9629,102 +10977,34 @@ function () {
       this.merge(query + '.settings', {
         display: false
       });
-    } // Returns array of objects matching query.
-    // Object contains { parent, index, value }
-    // TODO: query caching
+    } // Set data loader callback
 
   }, {
-    key: "get_by_query",
-    value: function get_by_query(query, chuck) {
-      var tuple = query.split('.');
+    key: "onrange",
+    value: function onrange(callback) {
+      var _this2 = this;
 
-      switch (tuple[0]) {
-        case 'chart':
-          var result = this.chart_as_piv(tuple);
-          break;
-
-        case 'onchart':
-        case 'offchart':
-          result = this.query_search(query, tuple);
-          break;
-
-        default:
-          /* Should get('.') return also the chart? */
-
-          /*let ch = this.chart_as_query([
-              'chart',
-              tuple[1]
-          ])*/
-          var on = this.query_search(query, ['onchart', tuple[0], tuple[1]]);
-          var off = this.query_search(query, ['offchart', tuple[0], tuple[1]]);
-          result = [].concat(datacube_toConsumableArray(on), datacube_toConsumableArray(off));
-          break;
-      }
-
-      return result.filter(function (x) {
-        return !x.v.locked || chuck;
-      });
-    }
-  }, {
-    key: "chart_as_piv",
-    value: function chart_as_piv(tuple) {
-      var field = tuple[1];
-      if (field) return [{
-        p: this.data.chart,
-        i: field,
-        v: this.data.chart[field]
-      }];else return [{
-        p: this.data,
-        i: 'chart',
-        v: this.data.chart
-      }];
-    }
-  }, {
-    key: "query_search",
-    value: function query_search(query, tuple) {
-      var _this = this;
-
-      var side = tuple[0];
-      var path = tuple[1] || '';
-      var field = tuple[2];
-      var arr = this.data[side].filter(function (x) {
-        return x.id && x.name && (x.id === query || x.id.includes(path) || x.name === query || x.name.includes(path));
-      });
-
-      if (field) {
-        return arr.map(function (x) {
-          return {
-            p: x,
-            i: field,
-            v: x[field]
-          };
-        });
-      }
-
-      return arr.map(function (x) {
-        return {
-          p: _this.data[side],
-          i: undefined,
-          v: x
-        };
-      });
+      this.loader = callback;
+      setTimeout(function () {
+        return _this2.tv.set_loader(callback ? _this2 : null);
+      }, 0);
     }
   }]);
 
   return DataCube;
-}();
+}(dc_core_DCCore);
 
 
 // CONCATENATED MODULE: ./src/index.js
 /* concated harmony reexport TradingVue */__webpack_require__.d(__webpack_exports__, "TradingVue", function() { return TradingVue; });
-/* concated harmony reexport Overlay */__webpack_require__.d(__webpack_exports__, "Overlay", function() { return overlay; });
+/* concated harmony reexport Overlay */__webpack_require__.d(__webpack_exports__, "Overlay", function() { return mixins_overlay; });
 /* concated harmony reexport Utils */__webpack_require__.d(__webpack_exports__, "Utils", function() { return utils; });
 /* concated harmony reexport Constants */__webpack_require__.d(__webpack_exports__, "Constants", function() { return constants; });
-/* concated harmony reexport Candle */__webpack_require__.d(__webpack_exports__, "Candle", function() { return CandleExt; });
-/* concated harmony reexport Volbar */__webpack_require__.d(__webpack_exports__, "Volbar", function() { return VolbarExt; });
+/* concated harmony reexport Candle */__webpack_require__.d(__webpack_exports__, "Candle", function() { return candle_ext_CandleExt; });
+/* concated harmony reexport Volbar */__webpack_require__.d(__webpack_exports__, "Volbar", function() { return volbar_ext_VolbarExt; });
 /* concated harmony reexport layout_cnv */__webpack_require__.d(__webpack_exports__, "layout_cnv", function() { return layout_cnv; });
 /* concated harmony reexport layout_vol */__webpack_require__.d(__webpack_exports__, "layout_vol", function() { return layout_vol; });
-/* concated harmony reexport DataCube */__webpack_require__.d(__webpack_exports__, "DataCube", function() { return DataCube; });
+/* concated harmony reexport DataCube */__webpack_require__.d(__webpack_exports__, "DataCube", function() { return datacube_DataCube; });
 
 
 
@@ -9742,18 +11022,18 @@ if (typeof window !== 'undefined' && window.Vue) {
   window.Vue.use(TradingVue);
   window.TradingVueLib = {
     TradingVue: TradingVue,
-    Overlay: overlay,
+    Overlay: mixins_overlay,
     Utils: utils,
     Constants: constants,
-    Candle: CandleExt,
-    Volbar: VolbarExt,
+    Candle: candle_ext_CandleExt,
+    Volbar: volbar_ext_VolbarExt,
     layout_cnv: layout_cnv,
     layout_vol: layout_vol,
-    DataCube: DataCube
+    DataCube: datacube_DataCube
   };
 }
 
-/* harmony default export */ var src = __webpack_exports__["default"] = (TradingVue);
+/* harmony default export */ var src_0 = __webpack_exports__["default"] = (TradingVue);
 
 
 /***/ })
