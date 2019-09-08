@@ -79,7 +79,7 @@ export function layout_vol(self) {
     // Support special volume data (see API book), or OHLCV
     // Data indices:
     self._i1 = dim < 6 ? 1 : 5
-    self._i2 = dim < 6 ? (p => p[2]) : (p => p[4] > p[1])
+    self._i2 = dim < 6 ? (p => p[2]) : (p => p[4] >= p[1])
 
     let maxv = Math.max(...sub.map(x => x[self._i1]))
     let volscale = self.volscale || $p.config.VOLSCALE

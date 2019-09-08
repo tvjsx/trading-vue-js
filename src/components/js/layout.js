@@ -71,7 +71,7 @@ function Layout(params) {
                 x1: x1,
                 x2: x2,
                 h: p[5] * vs,
-                green: p[4] > p[1],
+                green: p[4] >= p[1],
                 raw: p
             })
             prev = x2 + splitter
