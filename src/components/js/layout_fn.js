@@ -31,7 +31,7 @@ export default function(self, range) {
             const prec = self.prec
             return (self.$_lo + y$).toFixed(prec)
         },
-        // Screen-X to timestapm
+        // Screen-X to timestamp
         screen2t: x => {
             const dt = range[1] - range[0]
             const r = self.spacex / dt
