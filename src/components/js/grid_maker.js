@@ -200,7 +200,7 @@ function GridMaker(id, params, master_grid = null) {
             let x = Math.floor((t  - range[0]) * r)
             if (x < 0) break
             if (t % interval === 0) {
-                self.xs.push([x,[t]])
+                self.xs.unshift([x,[t]])
             }
         }
     }
