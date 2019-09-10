@@ -149,7 +149,7 @@ export default {
             return chart_props
         },
         chart_config() {
-            return Object.assign(
+            return Object.assign({},
                 Const.ChartConfig,
                 this.$props.chartConfig,
             )
