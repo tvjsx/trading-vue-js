@@ -2,6 +2,7 @@
 // Main DataHelper class. A container for data,
 // which works as a proxy and CRUD interface
 
+import Utils from '../stuff/utils.js'
 import DCCore from './dc_core.js'
 
 // Interface methods. Private methods in dc_core.js
@@ -122,6 +123,46 @@ export default class DataCube extends DCCore {
         }
 
         this.update_ids()
+    }
+
+    // Update/append data point, depending on timestamp
+    update(data) {
+
+        if (!data['price'] && !data['candle']) return false
+
+        let ohlcv = this.data.chart.data
+        let last = ohlcv[ohlcv.length - 1]
+        let tick = data['price']
+        let volume = data['volume'] || 0
+        let candle = data['candle']
+        let tf = Utils.detect_interval(ohlcv)
+        let t_next = last[0] + tf
+        let t = Utils.now() >= t_next ? t_next : last[0]
+
+        if (candle) {
+            // Update the entire candle
+            if (candle.length >= 6) {
+                t = candle[0]
+                this.merge('chart.data', [candle])
+            } else {
+                this.merge('chart.data', [[t, ...candle]])
+            }
+        } else if (t >= t_next) {
+            // And new zero-height candle
+            this.merge('chart.data', [[
+                t, tick, tick, tick, tick, volume
+            ]])
+        } else {
+            // Update an existing one
+            last[2] = Math.max(tick, last[2])
+            last[3] = Math.min(tick, last[3])
+            last[4] = tick
+            last[5] += volume
+            this.merge('chart.data', [last])
+        }
+
+        this.update_overlays(data, t)
+        return t >= t_next
     }
 
     // Lock overlays from being pulled by query_search

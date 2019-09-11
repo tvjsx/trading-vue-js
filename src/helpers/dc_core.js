@@ -114,6 +114,23 @@ export default class DCCore {
         }
     }
 
+    // Updates all overlays with given values.
+    update_overlays(data, t) {
+        for (var k in data) {
+            if (k === 'price' || k === 'volume' ||
+                k === 'candle') {
+                continue
+            }
+            if (!Array.isArray(data[k])) {
+                var val = [data[k]]
+            } else {
+                val = data[k]
+            }
+            if (!k.includes('.data')) k += '.data'
+            this.merge(k, [[t, ...val]])
+        }
+    }
+
     // Returns array of objects matching query.
     // Object contains { parent, index, value }
     // TODO: query caching
