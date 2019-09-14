@@ -159,8 +159,8 @@ export default {
             // Rerender
             this.update_layout()
         },
-        update_layout() {
-            this.calc_interval()
+        update_layout(clac_tf) {
+            if (clac_tf) this.calc_interval()
             const lay = new Layout(this)
             Utils.copy_layout(this._layout, lay)
         },
@@ -261,11 +261,11 @@ export default {
             this.update_layout()
         },
         data: {
-            handler: function() {
+            handler: function(n, p) {
                 if (!this.sub.length) this.init_range()
                 const sub = this.subset()
                 Utils.overwrite(this.sub, sub)
-                this.update_layout()
+                this.update_layout(Utils.data_changed(n, p))
                 Utils.overwrite(this.range, this.range)
                 this.rerender++
             },

@@ -92,14 +92,18 @@ export default {
         }
     },
 
+    // Checks if the ohlcv data is changed (given the new
+    // and old dataset values)
+    data_changed(n, p) {
+        n = n.ohlcv || (n.chart ? n.chart.data : []) || []
+        p = p.ohlcv || (p.chart ? p.chart.data : []) || []
+        return n.length !== p.length && n[0] !== p[0]
+    },
+
     // Detects candles interval
     detect_interval(ohlcv) {
-        // If second candle is missing it will still work
-        let l = ohlcv.length - 1;
-        let i1 = ohlcv[1][0] - ohlcv[0][0]
-        let i2 = ohlcv[l][0] - ohlcv[l-1][0]
-        let r = Math.min(i1, i2)
-        return r || Math.max(i1, i2)
+        return ohlcv.reduce((a,x) =>
+            [Math.min(x[0] - a[1]), x[0]])[0]
     },
 
     // Gets numberic part of overlay id (e.g 'EMA_1' = > 1)
