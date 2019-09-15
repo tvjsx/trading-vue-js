@@ -102,7 +102,7 @@ export default {
 
     // Detects candles interval
     detect_interval(ohlcv) {
-        return ohlcv.reduce((a,x) =>
+        return ohlcv.slice(0, 99).reduce((a,x) =>
             [Math.min(x[0] - a[1]), x[0]])[0]
     },
 
