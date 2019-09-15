@@ -102,9 +102,8 @@ export default {
 
     // Detects candles interval
     detect_interval(ohlcv) {
-        return ohlcv.slice(0, 99).reduce((a,x) => {
-            return [Math.min(x[0] - a[1], a[0]), x[0]]
-        })[0]
+        return ohlcv.slice(0, 99).reduce((a,x) =>
+        [Math.min(x[0] - a[1], a[0]), x[0]])[0]
     },
 
     // Gets numberic part of overlay id (e.g 'EMA_1' = > 1)
