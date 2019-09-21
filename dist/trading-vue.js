@@ -1,5 +1,5 @@
 /*!
- * TradingVue.JS - v0.3.10 - Sun Sep 01 2019
+ * TradingVue.JS - v0.3.11 - Sat Sep 21 2019
  * https://github.com/C451/trading-vue-js
  * Copyright (c) 2019 c451 Code's All Right;
  * Licensed under the MIT license
@@ -5276,14 +5276,18 @@ var lib_default = /*#__PURE__*/__webpack_require__.n(lib);
       }
     }
   },
+  // Checks if the ohlcv data is changed (given the new
+  // and old dataset values)
+  data_changed: function data_changed(n, p) {
+    n = n.ohlcv || (n.chart ? n.chart.data : []) || [];
+    p = p.ohlcv || (p.chart ? p.chart.data : []) || [];
+    return n.length !== p.length && n[0] !== p[0];
+  },
   // Detects candles interval
   detect_interval: function detect_interval(ohlcv) {
-    // If second candle is missing it will still work
-    var l = ohlcv.length - 1;
-    var i1 = ohlcv[1][0] - ohlcv[0][0];
-    var i2 = ohlcv[l][0] - ohlcv[l - 1][0];
-    var r = Math.min(i1, i2);
-    return r || Math.max(i1, i2);
+    return ohlcv.slice(0, 99).reduce(function (a, x) {
+      return [Math.min(x[0] - a[1], a[0]), x[0]];
+    })[0];
   },
   // Gets numberic part of overlay id (e.g 'EMA_1' = > 1)
   get_num_id: function get_num_id(id) {
@@ -5364,7 +5368,7 @@ var lib_default = /*#__PURE__*/__webpack_require__.n(lib);
       var prec = self.prec;
       return (self.$_lo + y$).toFixed(prec);
     },
-    // Screen-X to timestapm
+    // Screen-X to timestamp
     screen2t: function screen2t(x) {
       var dt = range[1] - range[0];
       var r = self.spacex / dt;
@@ -5602,7 +5606,7 @@ function GridMaker(id, params) {
       if (x < 0) break;
 
       if (t % interval === 0) {
-        self.xs.push([x, [t]]);
+        self.xs.unshift([x, [t]]);
       }
     }
   }
@@ -5747,7 +5751,7 @@ function Layout(params) {
         x1: x1,
         x2: x2,
         h: p[5] * vs,
-        green: p[4] > p[1],
+        green: p[4] >= p[1],
         raw: p
       });
       prev = x2 + splitter;
@@ -5865,7 +5869,7 @@ function () {
           var c = this.cursor_data(grid, e);
 
           if (!this.cursor.locked) {
-            this.cursor.t = this.cursor_time(grid, e, c);
+            this.cursor.t = this.cursor_time(grid, e, c) || this.cursor.t;
 
             if (c.values) {
               this.comp.$set(this.cursor.values, grid.id, c.values);
@@ -7691,7 +7695,7 @@ function layout_vol(self) {
   self._i2 = dim < 6 ? function (p) {
     return p[2];
   } : function (p) {
-    return p[4] > p[1];
+    return p[4] >= p[1];
   };
   var maxv = Math.max.apply(Math, toConsumableArray_default()(sub.map(function (x) {
     return x[self._i1];
@@ -9868,8 +9872,8 @@ Keyboard_component.options.__file = "src/components/Keyboard.vue"
 
       this.update_layout();
     },
-    update_layout: function update_layout() {
-      this.calc_interval();
+    update_layout: function update_layout(clac_tf) {
+      if (clac_tf) this.calc_interval();
       var lay = new js_layout(this);
       utils.copy_layout(this._layout, lay);
     },
@@ -9967,11 +9971,11 @@ Keyboard_component.options.__file = "src/components/Keyboard.vue"
       this.update_layout();
     },
     data: {
-      handler: function handler() {
+      handler: function handler(n, p) {
         if (!this.sub.length) this.init_range();
         var sub = this.subset();
         utils.overwrite(this.sub, sub);
-        this.update_layout();
+        this.update_layout(utils.data_changed(n, p));
         utils.overwrite(this.range, this.range);
         this.rerender++;
       },
@@ -10162,7 +10166,7 @@ Chart_component.options.__file = "src/components/Chart.vue"
       return chart_props;
     },
     chart_config: function chart_config() {
-      return Object.assign(constants.ChartConfig, this.$props.chartConfig);
+      return Object.assign({}, constants.ChartConfig, this.$props.chartConfig);
     },
     decubed: function decubed() {
       var data = this.$props.data;
@@ -10503,6 +10507,25 @@ function () {
           }
         }
       }
+    } // Updates all overlays with given values.
+
+  }, {
+    key: "update_overlays",
+    value: function update_overlays(data, t) {
+      for (var k in data) {
+        if (k === 'price' || k === 'volume' || k === 'candle') {
+          continue;
+        }
+
+        if (!Array.isArray(data[k])) {
+          var val = [data[k]];
+        } else {
+          val = data[k];
+        }
+
+        if (!k.includes('.data')) k += '.data';
+        this.merge(k, [[t].concat(toConsumableArray_default()(val))]);
+      }
     } // Returns array of objects matching query.
     // Object contains { parent, index, value }
     // TODO: query caching
@@ -10740,8 +10763,10 @@ function () {
 
 
 
+
 // Main DataHelper class. A container for data,
 // which works as a proxy and CRUD interface
+
  // Interface methods. Private methods in dc_core.js
 
 var datacube_DataCube =
@@ -10925,6 +10950,43 @@ function (_DCCore) {
       }
 
       this.update_ids();
+    } // Update/append data point, depending on timestamp
+
+  }, {
+    key: "update",
+    value: function update(data) {
+      if (!data['price'] && !data['candle']) return false;
+      var ohlcv = this.data.chart.data;
+      var last = ohlcv[ohlcv.length - 1];
+      var tick = data['price'];
+      var volume = data['volume'] || 0;
+      var candle = data['candle'];
+      var tf = utils.detect_interval(ohlcv);
+      var t_next = last[0] + tf;
+      var t = utils.now() >= t_next ? t_next : last[0];
+
+      if (candle) {
+        // Update the entire candle
+        if (candle.length >= 6) {
+          t = candle[0];
+          this.merge('chart.data', [candle]);
+        } else {
+          this.merge('chart.data', [[t].concat(toConsumableArray_default()(candle))]);
+        }
+      } else if (t >= t_next) {
+        // And new zero-height candle
+        this.merge('chart.data', [[t, tick, tick, tick, tick, volume]]);
+      } else {
+        // Update an existing one
+        last[2] = Math.max(tick, last[2]);
+        last[3] = Math.min(tick, last[3]);
+        last[4] = tick;
+        last[5] += volume;
+        this.merge('chart.data', [last]);
+      }
+
+      this.update_overlays(data, t);
+      return t >= t_next;
     } // Lock overlays from being pulled by query_search
     // TODO: subject to review
 
