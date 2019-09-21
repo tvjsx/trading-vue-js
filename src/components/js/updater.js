@@ -17,7 +17,7 @@ class CursorUpdater {
         for (var grid of this.grids) {
             const c = this.cursor_data(grid, e)
             if (!this.cursor.locked) {
-                this.cursor.t = this.cursor_time(grid, e, c)
+                this.cursor.t = this.cursor_time(grid, e, c) || this.cursor.t
                 if(c.values) {
                     this.comp.$set(this.cursor.values, grid.id, c.values)
                 }
