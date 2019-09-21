@@ -11,9 +11,11 @@ import TradingVue from '../../src/TradingVue.vue'
 import Utils from '../../src/stuff/utils.js'
 import Const from '../../src/stuff/constants.js'
 import DataCube from '../../src/helpers/datacube.js'
+import Stream from './DataHelper/stream.js'
 
 // Gettin' data through webpeck proxy
 const URL = 'http://localhost:8080/api/v1/klines?symbol='
+const WSS = 'ws://localhost:8080/ws/btcusdt@aggTrade'
 
 export default {
     name: 'DataHelper',
@@ -36,7 +38,11 @@ export default {
                     data: data['SMA.data']
                 }]
             })
+            // Register onrange callback
             this.chart.onrange(this.load_chunk)
+            // And a stream of trades
+            this.stream = new Stream(WSS)
+            this.stream.ontrades = this.on_trades
         })
 
     },
@@ -90,6 +96,12 @@ export default {
             }
 
             return sma
+        },
+        on_trades(trade) {
+            this.chart.update({
+                price: parseFloat(trade.p),
+                volume: parseFloat(trade.q)
+            })
         }
     },
     beforeDestroy() {

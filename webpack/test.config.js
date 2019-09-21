@@ -34,6 +34,11 @@ module.exports = {
             '/api/**': {
                 target: 'https://api.binance.com',
                 changeOrigin: true
+            },
+            '/ws/**': {
+                target: 'wss://stream.binance.com:9443',
+                changeOrigin: true,
+                ws: true
             }
         }
     }
