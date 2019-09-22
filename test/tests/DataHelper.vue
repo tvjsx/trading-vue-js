@@ -38,9 +38,8 @@ export default {
                     data: data['SMA.data']
                 }]
             })
-            // Register onrange callback
+            // Register onrange callback & And a stream of trades
             this.chart.onrange(this.load_chunk)
-            // And a stream of trades
             this.stream = new Stream(WSS)
             this.stream.ontrades = this.on_trades
         })
@@ -99,13 +98,15 @@ export default {
         },
         on_trades(trade) {
             this.chart.update({
-                price: parseFloat(trade.p),
-                volume: parseFloat(trade.q)
+                price: parseFloat(trade.p),  // Trade price
+                volume: parseFloat(trade.q), // Trade amount
+                'SMA': this.sma().pop()[1]   // Last value of SMA
             })
         }
     },
     beforeDestroy() {
         window.removeEventListener('resize', this.onResize)
+        this.stream.off()
     },
     data() {
         return {
