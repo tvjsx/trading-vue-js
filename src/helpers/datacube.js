@@ -135,7 +135,8 @@ export default class DataCube extends DCCore {
         let candle = data['candle']
         let tf = Utils.detect_interval(ohlcv)
         let t_next = last[0] + tf
-        let t = Utils.now() >= t_next ? t_next : last[0]
+        let now = Utils.now()
+        let t = now >= t_next ? now - now % tf : last[0]
 
         if (candle) {
             // Update the entire candle
