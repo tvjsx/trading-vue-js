@@ -3,6 +3,7 @@ export default function Stream(url) {
     var ws = new WebSocket(url)
     var cb = () => {}
 
+
     ws.onopen = function() {
         console.log('Websocket is opened')
     }
@@ -17,6 +18,7 @@ export default function Stream(url) {
     }
 
     return {
-        set ontrades(val) { cb = val }
+        set ontrades(val) { cb = val },
+        off() { ws.close(1000) }
     }
 }
