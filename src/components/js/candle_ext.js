@@ -47,11 +47,12 @@ export default class CandleExt {
             this.ctx.fillStyle = body_color
 
             // TODO: Move common calculations to layout.js
+            let s = data.c >= data.o ? 1 : -1
             this.ctx.fillRect(
                 Math.floor(data.x - hw -1),
-                Math.floor(Math.min(data.o, data.c)),
+                Math.floor(data.o - 1),
                 Math.floor(hw * 2 + 1),
-                Math.floor(Math.max(h, max_h))
+                Math.floor(s * Math.max(h, max_h))
             )
 
         } else {
