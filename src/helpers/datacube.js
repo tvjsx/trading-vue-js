@@ -128,8 +128,6 @@ export default class DataCube extends DCCore {
     // Update/append data point, depending on timestamp
     update(data) {
 
-        if (!data['price'] && !data['candle']) return false
-
         let ohlcv = this.data.chart.data
         let last = ohlcv[ohlcv.length - 1]
         let tick = data['price']
@@ -147,12 +145,12 @@ export default class DataCube extends DCCore {
             } else {
                 this.merge('chart.data', [[t, ...candle]])
             }
-        } else if (t >= t_next) {
+        } else if (t >= t_next && tick !== undefined) {
             // And new zero-height candle
             this.merge('chart.data', [[
                 t, tick, tick, tick, tick, volume
             ]])
-        } else {
+        } else if (tick !== undefined) {
             // Update an existing one
             last[2] = Math.max(tick, last[2])
             last[3] = Math.min(tick, last[3])
