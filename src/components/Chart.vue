@@ -267,6 +267,7 @@ export default {
                 Utils.overwrite(this.sub, sub)
                 this.update_layout(Utils.data_changed(n, p))
                 Utils.overwrite(this.range, this.range)
+                // TODO: update legend values for overalys
                 this.rerender++
             },
             deep: true
