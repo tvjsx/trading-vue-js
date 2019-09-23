@@ -13,11 +13,15 @@ class CursorUpdater {
     sync(e) {
 
         this.cursor.grid_id = e.grid_id
-
+        let once = true
         for (var grid of this.grids) {
             const c = this.cursor_data(grid, e)
             if (!this.cursor.locked) {
-                this.cursor.t = this.cursor_time(grid, e, c) || this.cursor.t
+                // TODO: find a better fix to invisible cursor prob
+                if (once) {
+                    this.cursor.t = this.cursor_time(grid, e, c)
+                    if (this.cursor.t) once = false
+                }
                 if(c.values) {
                     this.comp.$set(this.cursor.values, grid.id, c.values)
                 }
