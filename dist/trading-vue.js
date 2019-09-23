@@ -1,5 +1,5 @@
 /*!
- * TradingVue.JS - v0.3.11 - Sat Sep 21 2019
+ * TradingVue.JS - v0.3.12 - Mon Sep 23 2019
  * https://github.com/C451/trading-vue-js
  * Copyright (c) 2019 c451 Code's All Right;
  * Licensed under the MIT license
@@ -5859,6 +5859,7 @@ function () {
     key: "sync",
     value: function sync(e) {
       this.cursor.grid_id = e.grid_id;
+      var once = true;
       var _iteratorNormalCompletion = true;
       var _didIteratorError = false;
       var _iteratorError = undefined;
@@ -5869,7 +5870,11 @@ function () {
           var c = this.cursor_data(grid, e);
 
           if (!this.cursor.locked) {
-            this.cursor.t = this.cursor_time(grid, e, c) || this.cursor.t;
+            // TODO: find a better fix to invisible cursor prob
+            if (once) {
+              this.cursor.t = this.cursor_time(grid, e, c);
+              if (this.cursor.t) once = false;
+            }
 
             if (c.values) {
               this.comp.$set(this.cursor.values, grid.id, c.values);
@@ -7771,7 +7776,8 @@ function () {
       if (data.w > 1.5) {
         this.ctx.fillStyle = body_color; // TODO: Move common calculations to layout.js
 
-        this.ctx.fillRect(Math.floor(data.x - hw - 1), Math.floor(Math.min(data.o, data.c)), Math.floor(hw * 2 + 1), Math.floor(Math.max(h, max_h)));
+        var s = data.c >= data.o ? 1 : -1;
+        this.ctx.fillRect(Math.floor(data.x - hw - 1), Math.floor(data.o - 1), Math.floor(hw * 2 + 1), Math.floor(s * Math.max(h, max_h)));
       } else {
         this.ctx.strokeStyle = body_color;
         this.ctx.beginPath();
@@ -9976,7 +9982,8 @@ Keyboard_component.options.__file = "src/components/Keyboard.vue"
         var sub = this.subset();
         utils.overwrite(this.sub, sub);
         this.update_layout(utils.data_changed(n, p));
-        utils.overwrite(this.range, this.range);
+        utils.overwrite(this.range, this.range); // TODO: update legend values for overalys
+
         this.rerender++;
       },
       deep: true
@@ -10955,7 +10962,6 @@ function (_DCCore) {
   }, {
     key: "update",
     value: function update(data) {
-      if (!data['price'] && !data['candle']) return false;
       var ohlcv = this.data.chart.data;
       var last = ohlcv[ohlcv.length - 1];
       var tick = data['price'];
@@ -10963,7 +10969,8 @@ function (_DCCore) {
       var candle = data['candle'];
       var tf = utils.detect_interval(ohlcv);
       var t_next = last[0] + tf;
-      var t = utils.now() >= t_next ? t_next : last[0];
+      var now = utils.now();
+      var t = now >= t_next ? now - now % tf : last[0];
 
       if (candle) {
         // Update the entire candle
@@ -10973,10 +10980,10 @@ function (_DCCore) {
         } else {
           this.merge('chart.data', [[t].concat(toConsumableArray_default()(candle))]);
         }
-      } else if (t >= t_next) {
+      } else if (t >= t_next && tick !== undefined) {
         // And new zero-height candle
         this.merge('chart.data', [[t, tick, tick, tick, tick, volume]]);
-      } else {
+      } else if (tick !== undefined) {
         // Update an existing one
         last[2] = Math.max(tick, last[2]);
         last[3] = Math.min(tick, last[3]);
