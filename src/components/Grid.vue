@@ -161,8 +161,8 @@ export default {
                     this.redraw()
                 },
                 'redraw-grid': this.redraw,
-                'layer-meta-props': d =>
-                    this.$emit('layer-meta-props', d)
+                'layer-meta-props': d => this.$emit('layer-meta-props', d),
+                'custom-event': d => this.$emit('custom-event', d)
             },
             keyboard_events: {
                 'register-kb-listener': event => {

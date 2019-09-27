@@ -13,6 +13,7 @@
             v-on:cursor-locked="cursor_locked"
             v-on:sidebar-transform="set_ytransform"
             v-on:layer-meta-props="layer_meta_props"
+            v-on:custom-event="emit_custom_event"
             v-on:legend-button-click="legend_button_click"
             >
         </grid-section>
@@ -158,6 +159,9 @@ export default {
 
             // Rerender
             this.update_layout()
+        },
+        emit_custom_event(d) {
+            this.$emit('custom-event', d)
         },
         update_layout(clac_tf) {
             if (clac_tf) this.calc_interval()
