@@ -12,6 +12,7 @@
             v-bind="chart_props"
             v-bind:tv_id="id"
             v-bind:config="chart_config"
+            v-on:custom-event="custom_event"
             v-on:legend-button-click="legend_button">
         </chart>
     </div>
@@ -190,6 +191,9 @@ export default {
         },
         legend_button(event) {
             this.$emit('legend-button-click', event)
+        },
+        custom_event(d) {
+            this.$emit(d.event, ...d.args)
         },
         set_loader(dc) {
             this.$refs.chart.$off('range-changed')

@@ -15,6 +15,7 @@
              v-on:cursor-changed="cursor_changed"
              v-on:cursor-locked="cursor_locked"
              v-on:layer-meta-props="emit_meta_props"
+             v-on:custom-event="emit_custom_event"
              v-on:sidebar-transform="sidebar_transform">
         </grid>
         <sidebar
@@ -57,6 +58,9 @@ export default {
         emit_meta_props(d) {
             this.$set(this.meta_props, d.layer_id, d)
             this.$emit('layer-meta-props', d)
+        },
+        emit_custom_event(d) {
+            this.$emit('custom-event', d)
         },
         button_click(event) {
             this.$emit('legend-button-click', event)

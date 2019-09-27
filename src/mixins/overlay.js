@@ -12,7 +12,9 @@ export default {
         let main = this.$props.sub === this.$props.data
 
         this.meta_info()
-        this.$emit('new-grid-layer', {
+        this._$emit = this.$emit
+        this.$emit = this.custom_event
+        this._$emit('new-grid-layer', {
             name: this.$options.name,
             id: this.$props.id,
             renderer: this,
@@ -23,7 +25,7 @@ export default {
         })
 
         // Overlay meta-props (adjusting behaviour)
-        this.$emit('layer-meta-props', {
+        this._$emit('layer-meta-props', {
             grid_id: this.$props.grid_id,
             layer_id: this.$props.id,
             legend: this.legend,
@@ -32,7 +34,7 @@ export default {
         })
     },
     beforeDestroy() {
-        this.$emit('delete-grid-layer', this.$props.id)
+        this._$emit('delete-grid-layer', this.$props.id)
     },
     methods: {
         use_for() {
@@ -55,12 +57,15 @@ export default {
                 contact (opt) '<email>'
                 github: (opt) '<GitHub Page>',
             }`)
+        },
+        custom_event(event, ...args) {
+            this._$emit('custom-event', {event, args})
         }
     },
     watch: {
         settings: {
             handler: function() {
-                this.$emit('show-grid-layer', {
+                this._$emit('show-grid-layer', {
                     id: this.$props.id,
                     display: 'display' in this.$props.settings ?
                         this.$props.settings['display'] : true,
