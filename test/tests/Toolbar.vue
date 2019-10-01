@@ -10,10 +10,11 @@
 import TradingVue from '../../src/TradingVue.vue'
 import Data from '../data/data_v1_1.json'
 import Utils from '../../src/stuff/utils.js'
+import DataCube from '../../src/helpers/datacube.js'
 
 export default {
-    name: 'ChartTypes',
-    description: 'Should allow you to switch between different chart types',
+    name: 'Toolbar',
+    description: 'Toolbar & drawing tools',
     components: {
         TradingVue
     },
@@ -32,17 +33,17 @@ export default {
     },
     data() {
         return {
-            chart: Data,
+            chart: new DataCube(Data),
             width: window.innerWidth,
             height: window.innerHeight,
             colors: {
                 colorBack: '#fff',
                 colorGrid: '#eee',
-                colorText: '#333',
+                colorText: '#333'
             }
-        };
+        }
     }
-};
+}
 </script>
 
 <style>
