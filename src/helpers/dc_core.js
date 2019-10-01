@@ -2,8 +2,9 @@
 // DataCube private methods
 
 import Utils from '../stuff/utils.js'
+import DCEvents from './dc_events.js'
 
-export default class DCCore {
+export default class DCCore extends DCEvents {
 
     // Set TV instance (once). Called by TradingVue itself
     init_tvjs($root) {

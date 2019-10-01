@@ -194,6 +194,11 @@ export default {
         },
         custom_event(d) {
             this.$emit(d.event, ...d.args)
+            let data = this.$props.data
+            if (data.tv) {
+                // If the data object is DataCube
+                data.on_custom_event(d.event, d.args)
+            }
         },
         set_loader(dc) {
             this.$refs.chart.$off('range-changed')
