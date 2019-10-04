@@ -1,5 +1,6 @@
 <template>
 <trading-vue :data="chart" :width="this.width" :height="this.height"
+        title-txt="The King"
         :color-back="colors.colorBack"
         :color-grid="colors.colorGrid"
         :color-text="colors.colorText">
@@ -8,7 +9,7 @@
 
 <script>
 import TradingVue from '../../src/TradingVue.vue'
-import Data from '../data/data_v1_1.json'
+import Data from '../data/data_tools.json'
 import Utils from '../../src/stuff/utils.js'
 import DataCube from '../../src/helpers/datacube.js'
 
