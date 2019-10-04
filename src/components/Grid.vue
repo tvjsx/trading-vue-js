@@ -15,6 +15,7 @@ import Segment from "./overlays/Segment.vue"
 import Candles from "./overlays/Candles.vue"
 import Volume from "./overlays/Volume.vue"
 import Splitters from "./overlays/Splitters.vue"
+import LineTool from "./overlays/LineTool.vue"
 
 
 export default {
@@ -30,7 +31,7 @@ export default {
         // List of all possible overlays (builtin + custom)
         this._list = [
             Spline, Splines, Range, Trades, Channel, Segment,
-            Candles, Volume, Splitters
+            Candles, Volume, Splitters, LineTool
         ]
         .concat(this.$props.overlays)
         this._registry = {}
@@ -38,6 +39,7 @@ export default {
         // We need to know which components we will use.
         // Custom overlay components overwrite built-ins:
         this._list.forEach((x, i) => {
+            if (x.methods.tool) {}
             let use_for = x.methods.use_for()
             use_for.forEach(indicator => {
                 this._registry[indicator] = i
