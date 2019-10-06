@@ -6,7 +6,10 @@
             color: this.colorText, font: this.font,
             width: this.width+'px',
             height: this.height+'px'}">
-        <!-- <toolbar> </toolbar> TODO: add drawing tools -->
+        <toolbar v-if="toolbar"
+            v-bind="chart_props"
+            v-bind:config="chart_config">
+        </toolbar>
         <chart :key="reset"
             ref="chart"
             v-bind="chart_props"
@@ -22,11 +25,12 @@
 
 import Const from './stuff/constants.js'
 import Chart from './components/Chart.vue'
+import Toolbar from './components/Toolbar.vue'
 
 export default {
     name: 'TradingVue',
     components: {
-        Chart
+        Chart, Toolbar
     },
     props: {
         titleTxt: {
@@ -105,9 +109,19 @@ export default {
             type: String,
             default: '#565c68'
         },
+        colorTbBack: {
+            type: String,
+        },
+        colorTbBorder: {
+            type: String,
+        },
         font: {
-            typr: String,
+            type: String,
             default: Const.ChartConfig.FONT
+        },
+        toolbar: {
+            type: Boolean,
+            default: false
         },
         data: {
             type: Object,
@@ -132,14 +146,16 @@ export default {
     computed: {
         // Copy a subset of TradingVue props
         chart_props() {
+            let offset = this.$props.toolbar ? 60 : 0
             let chart_props = {
                 title_txt: this.$props.titleTxt,
                 overlays: this.$props.overlays,
                 data: this.decubed,
-                width: this.$props.width,
+                width: this.$props.width - offset,
                 height: this.$props.height,
                 font: this.$props.font,
                 buttons: this.$props.legendButtons,
+                toolbar: this.$props.toolbar,
                 colors: {}
             }
             for (var k in this.$props) {
