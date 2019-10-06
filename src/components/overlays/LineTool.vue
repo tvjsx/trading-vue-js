@@ -12,8 +12,19 @@ export default {
         },
         tool() {
             return {
-                // Meta data for the tool
-                group: 'Lines', icon: 'svg {...}'
+                // Descriptor for the tool
+                group: 'Lines', icon: 'svg {...}',
+                data: [],     // Default data
+                settings: {}, // Default settings
+                // Modifications
+                mods: {
+                    'Segment': {},
+                    'Extended': {
+                        // Rewrites the default setting fields
+                        settings: { extended: true },
+                        icon: 'svg {...}'
+                    }
+                }
             }
         },
         draw(ctx) {

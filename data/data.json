@@ -85136,5 +85136,24 @@
                 "bandColor": "#666"
             }
         }
+    ],
+    "tools": [
+        {
+            "type": "Cursor",
+            "icon": "svg {...}"
+        },
+        {
+            "group": "Lines",
+            "tools": [
+                {
+                    "type": "LineToolSegment",
+                    "icon": "svg {...}"
+                },
+                {
+                    "type": "LineToolExtended",
+                    "icon": "svg {...}"
+                }
+            ]
+        }
     ]
 }
