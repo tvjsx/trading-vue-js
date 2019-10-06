@@ -1,6 +1,6 @@
 <template>
     <!-- Chart components combined together -->
-    <div class="trading-vue-chart">
+    <div class="trading-vue-chart" :style="styles">
         <keyboard ref="keyboard"></keyboard>
         <grid-section v-for="(grid, i) in this._layout.grids"
             :key="grid.id"
@@ -35,7 +35,7 @@ export default {
     name: 'Chart',
     props: [
         'title_txt', 'data', 'width', 'height', 'font', 'colors',
-        'overlays', 'tv_id', 'config', 'buttons'
+        'overlays', 'tv_id', 'config', 'buttons', 'toolbar'
     ],
     components: {
         GridSection,
@@ -222,6 +222,10 @@ export default {
         },
         offchart() {
             return this.$props.data.offchart || []
+        },
+        styles() {
+            let w = this.$props.toolbar ? this.$props.config.TOOLBAR : 0
+            return { 'margin-left': `${w}px` }
         }
     },
     data() {
@@ -280,5 +284,3 @@ export default {
 }
 
 </script>
-
-<style></style>
