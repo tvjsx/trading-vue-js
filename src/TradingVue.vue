@@ -110,7 +110,7 @@ export default {
             default: '#565c68'
         },
         colorTbBack: {
-            type: String,
+            type: String
         },
         colorTbBorder: {
             type: String,
@@ -146,7 +146,8 @@ export default {
     computed: {
         // Copy a subset of TradingVue props
         chart_props() {
-            let offset = this.$props.toolbar ? 60 : 0
+            let offset = this.$props.toolbar ?
+                this.chart_config.TOOLBAR : 0
             let chart_props = {
                 title_txt: this.$props.titleTxt,
                 overlays: this.$props.overlays,

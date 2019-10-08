@@ -85140,18 +85140,18 @@
     "tools": [
         {
             "type": "Cursor",
-            "icon": "svg {...}"
+            "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZAgMAAAC5h23wAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAxQTFRFAAAATU1NTU1NTU1NwlMHHwAAAAR0Uk5TAOvhxbpPrUkAAAAkSURBVHicY2BgYHBggAByabxg1WoGBq2pRCk9AKUbcND43AEAufYHlSuusE4AAAAASUVORK5CYII="
         },
         {
             "group": "Lines",
             "tools": [
                 {
                     "type": "LineToolSegment",
-                    "icon": "svg {...}"
+                    "icon": ""
                 },
                 {
                     "type": "LineToolExtended",
-                    "icon": "svg {...}"
+                    "icon": ""
                 }
             ]
         }
