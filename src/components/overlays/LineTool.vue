@@ -14,11 +14,12 @@ export default {
             return {
                 // Descriptor for the tool
                 group: 'Lines', icon: 'svg {...}',
+                name: 'Segment',
+                hint: 'This hint will be shown on hover',
                 data: [],     // Default data
                 settings: {}, // Default settings
                 // Modifications
                 mods: {
-                    'Segment': {},
                     'Extended': {
                         // Rewrites the default setting fields
                         settings: { extended: true },

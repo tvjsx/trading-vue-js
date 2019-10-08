@@ -32,7 +32,7 @@ const $SCALES = [0.05, 0.1, 0.2, 0.25, 0.5, 0.8, 1, 2, 5]
 const ChartConfig = {
     SBMIN: 60,      // Minimal sidebar px
     TOOLBAR: 60,    // Toolbar width px
-    TB_BORDER: 2,   // Toolbar border px 
+    TB_BORDER: 2,   // Toolbar border px
     EXPAND: 0.15,   // %/100 of range
     CANDLEW: 0.6,   // %/100 of step
     GRIDX: 100,     // px

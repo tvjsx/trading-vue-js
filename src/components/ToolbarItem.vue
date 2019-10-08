@@ -1,29 +1,22 @@
 
 <template>
-    <div class="trading-vue-toolbar" :style="styles">
-        <toolbar-item v-for="(tool, i) in data.tools"
-            :key="i"
-            :data="tool">
-        </toolbar-item>
+    <div class="trading-vue-tbitem" :style="styles">
     </div>
 </template>
 
 <script>
 
-import ToolbarItem from './ToolbarItem.vue'
-
 export default {
-    name: 'Toolbar',
+    name: 'ToolbarItem',
     props: [
-        'data', 'height', 'colors', 'tv_id', 'config'
+        'data', 'colors', 'tv_id', 'config'
     ],
-    components: { ToolbarItem },
     mounted() {
-
+        console.log(this.$props.data)
     },
     computed: {
         styles() {
-            let colors = this.$props.colors
+            /*let colors = this.$props.colors
             let b = this.$props.config.TB_BORDER
             let w = this.$props.config.TOOLBAR - b
             let c = colors.colorGrid
@@ -34,12 +27,14 @@ export default {
                 'height': `${this.$props.height}px`,
                 'background-color': cb,
                 'border-right': `${b}px solid ${brd}`
+            }*/
+            return {
+                'background-image': `url(${this.$props.data.icon})`,
+                'width': '25px',
+                'height': '25px',
+                'margin': '15px',
+                'filter': 'brightness(1.6) sepia(1) hue-rotate(120deg) saturate(6)'
             }
-        }
-    },
-    watch: {
-        data() {
-            console.log(this.$props.data.tools)
         }
     }
 }
@@ -47,9 +42,7 @@ export default {
 </script>
 
 <style>
-.trading-vue-toolbar {
-    position: absolute;
-    border-right: 1px solid black;
-    z-index: 100;
+.trading-vue-tbitem {
+
 }
 </style>
