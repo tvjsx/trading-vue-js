@@ -114,6 +114,7 @@ export default {
         },
         colorTbBorder: {
             type: String,
+            default: '#8282827d'
         },
         font: {
             type: String,
