@@ -3,7 +3,9 @@
     <div class="trading-vue-toolbar" :style="styles">
         <toolbar-item v-for="(tool, i) in data.tools"
             :key="i"
-            :data="tool">
+            :data="tool"
+            :config="config"
+            :selected="tool.type === data.tool">
         </toolbar-item>
     </div>
 </template>
@@ -28,18 +30,19 @@ export default {
             let w = this.$props.config.TOOLBAR - b
             let c = colors.colorGrid
             let cb = colors.colorTbBack || colors.colorBack
-            let brd = colors.colorTbBorder || colors.colorGrid
+            let brd = colors.colorTbBorder || colors.colorScale
+            let st = this.$props.config.TB_B_STYLE
             return {
                 'width': `${w}px`,
                 'height': `${this.$props.height}px`,
                 'background-color': cb,
-                'border-right': `${b}px solid ${brd}`
+                'border-right': `${b}px ${st} ${brd}`
             }
         }
     },
     watch: {
         data() {
-            console.log(this.$props.data.tools)
+            console.log(this.$props.data)
         }
     }
 }
@@ -51,5 +54,6 @@ export default {
     position: absolute;
     border-right: 1px solid black;
     z-index: 100;
+    padding-top: 4px;
 }
 </style>

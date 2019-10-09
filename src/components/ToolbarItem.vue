@@ -1,6 +1,10 @@
 
 <template>
-    <div class="trading-vue-tbitem" :style="styles">
+    <div :class="['trading-vue-tbitem', selected ? 'selected-item' : '']"
+        :style="item_style">
+        <div class="trading-vue-tbicon"
+            :style="icon_style">
+        </div>
     </div>
 </template>
 
@@ -9,31 +13,30 @@
 export default {
     name: 'ToolbarItem',
     props: [
-        'data', 'colors', 'tv_id', 'config'
+        'data', 'selected', 'colors', 'tv_id', 'config'
     ],
     mounted() {
-        console.log(this.$props.data)
+        console.log(this.$props.selected)
     },
     computed: {
-        styles() {
-            /*let colors = this.$props.colors
-            let b = this.$props.config.TB_BORDER
-            let w = this.$props.config.TOOLBAR - b
-            let c = colors.colorGrid
-            let cb = colors.colorTbBack || colors.colorBack
-            let brd = colors.colorTbBorder || colors.colorGrid
+        item_style() {
+            let conf = this.$props.config
+            let im = conf.TB_ITEM_M
+            let m = (conf.TOOLBAR - conf.TB_ICON) * 0.5 - im
+            let s = conf.TB_ICON + im * 2
             return {
-                'width': `${w}px`,
-                'height': `${this.$props.height}px`,
-                'background-color': cb,
-                'border-right': `${b}px solid ${brd}`
-            }*/
+                'width': `${s}px`,
+                'height': `${s}px`,
+                'margin': `8px ${m}px 0px ${m}px`,
+                'border-radius': '3px'
+            }
+        },
+        icon_style() {
             return {
                 'background-image': `url(${this.$props.data.icon})`,
                 'width': '25px',
                 'height': '25px',
-                'margin': '15px',
-                'filter': 'brightness(1.6) sepia(1) hue-rotate(120deg) saturate(6)'
+                'margin': '5px'
             }
         }
     }
@@ -43,6 +46,15 @@ export default {
 
 <style>
 .trading-vue-tbitem {
+}
+.trading-vue-tbitem:hover {
+    background-color: #76878319;
+}
 
+.trading-vue-tbicon {
+    position: absolute;
+}
+.trading-vue-tbitem.selected-item .trading-vue-tbicon {
+    filter: brightness(1.6) sepia(1) hue-rotate(110deg) saturate(6);
 }
 </style>
