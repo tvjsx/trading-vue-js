@@ -33,7 +33,8 @@ const ChartConfig = {
     SBMIN: 60,      // Minimal sidebar px
     TOOLBAR: 57,    // Toolbar width px
     TB_ICON: 25,    // Toolbar icon size px
-    TB_ITEM_M: 5,   // Toolbar item margin px
+    TB_ITEM_M: 6,   // Toolbar item margin px
+    TB_ICON_BRI: 1, // Toolbar icon brightness
     TB_BORDER: 1,   // Toolbar border px
     TB_B_STYLE: 'dotted', // Toolbar border style
     EXPAND: 0.15,   // %/100 of range
