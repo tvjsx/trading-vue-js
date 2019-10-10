@@ -1,6 +1,7 @@
 <template>
 <trading-vue :data="chart" :width="this.width" :height="this.height"
         title-txt="The King"
+        :toolbar="true"
         :color-back="colors.colorBack"
         :color-grid="colors.colorGrid"
         :color-text="colors.colorText">

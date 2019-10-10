@@ -2,6 +2,7 @@
 <template>
     <div class="trading-vue-toolbar" :style="styles">
         <toolbar-item v-for="(tool, i) in data.tools"
+            @item-selected="selected"
             :key="i"
             :data="tool"
             :config="config"
@@ -22,6 +23,13 @@ export default {
     components: { ToolbarItem },
     mounted() {
 
+    },
+    methods: {
+        selected(tool) {
+            this.$emit('custom-event', {
+                event:'tool-selected', args: [tool.type]
+            })
+        }
     },
     computed: {
         styles() {

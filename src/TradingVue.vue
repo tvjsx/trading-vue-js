@@ -7,6 +7,7 @@
             width: this.width+'px',
             height: this.height+'px'}">
         <toolbar v-if="toolbar"
+            v-on:custom-event="custom_event"
             v-bind="chart_props"
             v-bind:config="chart_config">
         </toolbar>

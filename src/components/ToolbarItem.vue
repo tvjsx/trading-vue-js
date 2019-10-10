@@ -1,8 +1,9 @@
 
 <template>
     <div :class="['trading-vue-tbitem', selected ? 'selected-item' : '']"
+        @click="$emit('item-selected', data)"
         :style="item_style">
-        <div class="trading-vue-tbicon"
+        <div class="trading-vue-tbicon pixelated"
             :style="icon_style">
         </div>
     </div>
@@ -16,7 +17,6 @@ export default {
         'data', 'selected', 'colors', 'tv_id', 'config'
     ],
     mounted() {
-        console.log(this.$props.selected)
     },
     computed: {
         item_style() {
@@ -32,11 +32,16 @@ export default {
             }
         },
         icon_style() {
+            let conf = this.$props.config
+            let br = conf.TB_ICON_BRI
+            let im = conf.TB_ITEM_M
             return {
                 'background-image': `url(${this.$props.data.icon})`,
                 'width': '25px',
                 'height': '25px',
-                'margin': '5px'
+                'margin': `${im}px`,
+                'filter': `brightness(${br})`
+
             }
         }
     }
@@ -45,8 +50,10 @@ export default {
 </script>
 
 <style>
+
 .trading-vue-tbitem {
 }
+
 .trading-vue-tbitem:hover {
     background-color: #76878319;
 }
@@ -55,6 +62,16 @@ export default {
     position: absolute;
 }
 .trading-vue-tbitem.selected-item .trading-vue-tbicon {
-    filter: brightness(1.6) sepia(1) hue-rotate(110deg) saturate(6);
+    /*filter: brightness(1.6) sepia(1) hue-rotate(110deg) saturate(6);*/
+     filter: brightness(1.45) sepia(1) hue-rotate(90deg) saturate(4.5) !important;
 }
+.pixelated {
+    -ms-interpolation-mode: nearest-neighbor;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: -webkit-crisp-edges;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -o-crisp-edges;
+    image-rendering: pixelated;
+}
+
 </style>
