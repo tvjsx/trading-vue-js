@@ -6,7 +6,7 @@ This library is in alpha stage, API may change. This guide version is **0.3.7**
 
 ![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=Current%20lib%20version)
 
-### DataCube API  [here](https://github.com/C451/trading-vue-js/tree/master/docs/datacube)
+### DataCube API is [here](https://github.com/C451/trading-vue-js/tree/master/docs/datacube)
 
 ## Props
 
