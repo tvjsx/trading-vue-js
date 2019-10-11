@@ -8,7 +8,7 @@ This library is in alpha stage, API may change. This guide version is **0.3.12**
 
 **DataCube** [WIP] is a helper class dedicated for data manipulation. `Trading-vue` component provides only rendering functionality, but with the help of DC it also enables features such as real-time chart updates, indicator calculations and drawing tools (and much more).
 
-Use the DC to wrap your data object:
+Use DC to wrap your data object:
 
 ```html
 <template>
