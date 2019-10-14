@@ -15,7 +15,7 @@ export default {
     },
     computed: {
         base64() {
-            return 'data:image/png;base64,' + Icons[this.file_name]
+            return Icons[this.file_name]
         },
         file_name() {
             let id = this.$props.id

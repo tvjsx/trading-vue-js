@@ -38,12 +38,18 @@ export default {
 
         // We need to know which components we will use.
         // Custom overlay components overwrite built-ins:
+        let tools = []
         this._list.forEach((x, i) => {
-            if (x.methods.tool) {}
             let use_for = x.methods.use_for()
+            if (x.methods.tool) tools.push({
+                use_for, info: x.methods.tool()
+            })
             use_for.forEach(indicator => {
                 this._registry[indicator] = i
             })
+        })
+        this.$emit('custom-event', {
+            event: 'register-tools', args: tools
         })
     },
     mounted() {

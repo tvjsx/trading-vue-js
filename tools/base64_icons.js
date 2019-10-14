@@ -15,7 +15,7 @@ for (const file of files) {
     if (file === '.DS_Store') continue
 
     let b64 = base64_encode(PATH + file)
-    json[file] = b64
+    json[file] = 'data:image/png;base64,' + b64
 
     console.log(file)
 
