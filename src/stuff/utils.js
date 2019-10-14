@@ -150,5 +150,5 @@ export default {
     get_deltaY(event) {
         return event.originalEvent.deltaY / 12
     }
-
+    
 }

@@ -47,11 +47,6 @@ export default {
                 'border-right': `${b}px ${st} ${brd}`
             }
         }
-    },
-    watch: {
-        data() {
-            console.log(this.$props.data)
-        }
     }
 }
 

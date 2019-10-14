@@ -2,6 +2,7 @@
 // Line drawing tool
 
 import Overlay from '../../mixins/overlay.js'
+import Icons from '../../stuff/icons.json'
 
 export default {
     name: 'LineTool',
@@ -13,8 +14,8 @@ export default {
         tool() {
             return {
                 // Descriptor for the tool
-                group: 'Lines', icon: 'svg {...}',
-                name: 'Segment',
+                group: 'Lines', icon: Icons['segment.png'],
+                type: 'Segment',
                 hint: 'This hint will be shown on hover',
                 data: [],     // Default data
                 settings: {}, // Default settings
@@ -23,7 +24,7 @@ export default {
                     'Extended': {
                         // Rewrites the default setting fields
                         settings: { extended: true },
-                        icon: 'svg {...}'
+                        icon: Icons['extended.png']
                     }
                 }
             }

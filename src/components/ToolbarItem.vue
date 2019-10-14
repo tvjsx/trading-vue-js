@@ -62,7 +62,6 @@ export default {
     position: absolute;
 }
 .trading-vue-tbitem.selected-item .trading-vue-tbicon {
-    /*filter: brightness(1.6) sepia(1) hue-rotate(110deg) saturate(6);*/
      filter: brightness(1.45) sepia(1) hue-rotate(90deg) saturate(4.5) !important;
 }
 .pixelated {
