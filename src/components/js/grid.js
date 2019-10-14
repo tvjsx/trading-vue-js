@@ -43,15 +43,16 @@ export default class Grid {
         mc.get('pinch').set({ enable: true })
 
         mc.on('panstart', event => {
+            let tfrm = this.$p.y_transform
             this.drug = {
                 x: event.center.x + this.offset_x,
                 y: event.center.y + this.offset_y,
                 r: this.range.slice(),
                 t: this.range[1] - this.range[0],
-                o: this.$p.y_transform ?
-                    (this.$p.y_transform.offset || 0) : 0,
-                y_r: this.$p.y_transform ?
-                    this.$p.y_transform.range.slice() : undefined
+                o: tfrm ?
+                    (tfrm.offset || 0) : 0,
+                y_r: tfrm && tfrm.range ?
+                    tfrm.range.slice() : undefined
             }
             this.comp.$emit('cursor-changed', {
                 grid_id: this.id,
