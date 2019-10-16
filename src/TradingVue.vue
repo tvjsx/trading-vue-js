@@ -212,7 +212,11 @@ export default {
             this.$emit('legend-button-click', event)
         },
         custom_event(d) {
-            this.$emit(d.event, ...d.args)
+            if ('args' in d) {
+                this.$emit(d.event, ...d.args)
+            } else {
+                this.$emit(d.event)
+            }
             let data = this.$props.data
             if (data.tv) {
                 // If the data object is DataCube
