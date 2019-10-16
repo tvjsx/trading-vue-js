@@ -32,6 +32,7 @@ export default {
             data_colors: this.data_colors,
             y_range: this.y_range
         })
+        if (this.init) this.init()
     },
     beforeDestroy() {
         this._$emit('delete-grid-layer', this.$props.id)
@@ -59,6 +60,7 @@ export default {
             }`)
         },
         custom_event(event, ...args) {
+            if (event.split(':')[0] === 'hook') return
             this._$emit('custom-event', {event, args})
         }
     },

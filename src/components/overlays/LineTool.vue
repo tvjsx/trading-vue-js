@@ -29,6 +29,9 @@ export default {
                 }
             }
         },
+        init() {
+            console.log('Line tool init')
+        },
         draw(ctx) {
 
             if (!this.p1 || !this.p2) return
