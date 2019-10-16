@@ -151,6 +151,9 @@ export default class Grid {
 
     mousedown(event) {
         this.comp.$emit('cursor-locked', true)
+        this.comp.$emit('custom-event', {
+            event: 'drawing-mode-on', args: [this.id]
+        })
         this.propagate('mousedown', event)
     }
 

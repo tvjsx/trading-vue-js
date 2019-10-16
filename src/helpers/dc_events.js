@@ -6,7 +6,7 @@ import Icons from '../stuff/icons.json'
 
 export default class DCEvents {
 
-    // Called when overalay emits 'custom-event'
+    // Called when overalay/tv emits 'custom-event'
     on_custom_event(event, args) {
         switch(event) {
             case 'register-tools':
@@ -14,6 +14,21 @@ export default class DCEvents {
                 break
             case 'tool-selected':
                 this.tv.$set(this.data, 'tool', args[0])
+                if (args[0] === 'Cursor') {
+                    this.tv.$set(this.data, 'drawingMode', false)
+                }
+                break
+            case 'drawing-mode-on':
+                // TODO: Tools for offchart grids
+                if (this.data.tool !== 'Cursor') {
+                    console.log('drawing-mode-on', args[0])
+                    this.tv.$set(this.data, 'drawingMode', true)
+                }
+                break
+            case 'drawing-mode-off':
+                console.log('drawing-mode-off')
+                this.tv.$set(this.data, 'drawingMode', false)
+                this.tv.$set(this.data, 'tool', 'Cursor')
                 break
             default:
                 console.log(event, args)
@@ -23,29 +38,26 @@ export default class DCEvents {
 
     register_tools(tools) {
 
-        if (this.data.tools) return
+        if (this.data.tools) return //TODO: merging with user-defined toolset
         let list = [{
-            type: 'Cursor',
-            icon: Icons['cursor.png']
+            type: 'Cursor', icon: Icons['cursor.png']
         }]
 
         for (var tool of tools) {
-            list.push({
-                type: `${tool.use_for}:${tool.info.type}`,
-                icon: tool.info.icon
-            })
+            var proto = Object.assign({}, tool.info)
+            proto.type = `${tool.use_for}:${tool.info.type}`
+            delete proto.mods
+            list.push(proto)
             for (var mod in tool.info.mods) {
-                list.push({
-                    type: `${tool.use_for}:${mod}`,
-                    icon: tool.info.mods[mod].icon
-                })
+                var mp = Object.assign({}, proto)
+                mp = Object.assign(mp, tool.info.mods[mod])
+                mp.type = `${tool.use_for}:${mod}`
+                list.push(mp)
             }
         }
 
         this.tv.$set(this.data, 'tools', list)
+        this.tv.$set(this.data, 'tool', 'Cursor')
 
-        if (!this.data.tool) {
-            this.tv.$set(this.data, 'tool', 'Cursor')
-        }
     }
 }
