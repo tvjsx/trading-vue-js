@@ -28,8 +28,7 @@ export default function(self, range) {
             const range = self.height
             const range$ = self.$_hi - self.$_lo
             const y$ = (range - y) * (range$ / range)
-            const prec = self.prec
-            return (self.$_lo + y$).toFixed(prec)
+            return self.$_lo + y$
         },
         // Screen-X to timestamp
         screen2t: x => {

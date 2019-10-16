@@ -3,8 +3,8 @@ import DataCube from './helpers/datacube.js'
 import Overlay from './mixins/overlay.js'
 import Utils from './stuff/utils.js'
 import Constants from './stuff/constants.js'
-import Candle from './components/js/candle_ext.js'
-import Volbar from './components/js/volbar_ext.js'
+import Candle from './components/basic/candle.js'
+import Volbar from './components/basic/volbar.js'
 import { layout_cnv, layout_vol } from
     './components/js/layout_cnv.js'
 

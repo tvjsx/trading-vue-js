@@ -4,8 +4,8 @@
 
 import Overlay from '../../mixins/overlay.js'
 import { layout_cnv } from '../js/layout_cnv.js'
-import Candle from '../js/candle_ext.js'
-import Volbar from '../js/volbar_ext.js'
+import Candle from '../basic/candle.js'
+import Volbar from '../basic/volbar.js'
 
 export default {
     name: 'Candles',

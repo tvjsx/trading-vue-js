@@ -170,7 +170,7 @@ export default class Sidebar {
             return
         }
 
-        let lbl = this.$p.cursor.y$
+        let lbl = this.$p.cursor.y$.toFixed(this.layout.prec)
         this.ctx.fillStyle = this.$p.colors.colorPanel
 
         let panwidth = this.layout.sb + 1
