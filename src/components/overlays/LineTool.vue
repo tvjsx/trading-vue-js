@@ -3,6 +3,7 @@
 
 import Overlay from '../../mixins/overlay.js'
 import Icons from '../../stuff/icons.json'
+import Pin from '../basic/pin.js'
 
 export default {
     name: 'LineTool',
@@ -29,8 +30,14 @@ export default {
                 }
             }
         },
+        // Called after overlay mounted
         init() {
-            console.log('Line tool init')
+            this.pins = [
+                // First pin is settled at the mouse position
+                new Pin(this, 'p1'),
+                // Second one is following mouse until it clicks
+                new Pin(this, 'p2', {state: 'tracking'})
+            ]
         },
         draw(ctx) {
             if (!this.p1 || !this.p2) return
@@ -50,6 +57,9 @@ export default {
             ctx.lineTo(x2, y2)
 
             ctx.stroke()
+
+            // Render pins
+            (this.pins || []).forEach(x => x.draw(ctx))
         },
         use_for() { return ['LineTool'] },
         data_colors() { return [this.color] }
