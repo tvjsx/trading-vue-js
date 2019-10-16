@@ -33,7 +33,6 @@ export default {
             console.log('Line tool init')
         },
         draw(ctx) {
-
             if (!this.p1 || !this.p2) return
 
             ctx.lineWidth = this.line_width

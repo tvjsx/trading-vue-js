@@ -3,7 +3,7 @@
 
 import Overlay from '../../mixins/overlay.js'
 import { layout_vol } from '../js/layout_cnv.js'
-import Volbar from '../js/volbar_ext.js'
+import Volbar from '../basic/volbar.js'
 
 export default {
     name: 'Volume',
