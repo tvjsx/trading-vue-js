@@ -1,6 +1,8 @@
 
 // Usuful stuff for creating overlays. Include as mixin
 
+import Mouse from '../stuff/mouse.js'
+
 export default {
     props: [
         'id', 'num', 'interval', 'cursor', 'colors',
@@ -32,6 +34,7 @@ export default {
             data_colors: this.data_colors,
             y_range: this.y_range
         })
+        this.mouse = new Mouse(this)
         if (this.init) this.init()
     },
     beforeDestroy() {

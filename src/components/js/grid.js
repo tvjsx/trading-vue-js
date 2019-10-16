@@ -370,6 +370,10 @@ export default class Grid {
             if (layer.renderer[name]) {
                 layer.renderer[name](event)
             }
+            const mouse = layer.renderer.mouse
+            if (mouse.listeners) {
+                mouse.emit(name, event)
+            }
         }
     }
 }
