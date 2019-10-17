@@ -22,6 +22,7 @@ export default class Grid {
         this.id = this.$p.grid_id
         this.layout = this.$p.layout.grids[this.id]
         this.interval = this.$p.interval
+        this.cursor = comp.$props.cursor
         this.offset_x = 0
         this.offset_y = 0
         this.deltas = 0 // Wheel delta events
@@ -43,6 +44,7 @@ export default class Grid {
         mc.get('pinch').set({ enable: true })
 
         mc.on('panstart', event => {
+            if (this.cursor.scroll_lock) return
             let tfrm = this.$p.y_transform
             this.drug = {
                 x: event.center.x + this.offset_x,

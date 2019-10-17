@@ -39,7 +39,7 @@ export default {
                 new Pin(this, 'p2', {state: 'tracking'})
             ]
             this.pins[1].on('settled', () => {
-                //this.$emit('drawing-mode-off')
+                this.$emit('drawing-mode-off')
             })
         },
         draw(ctx) {
