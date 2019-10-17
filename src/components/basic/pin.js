@@ -6,8 +6,10 @@ export default class Pin {
     // pin parameters)
     constructor(comp, name, params = {}) {
 
-        this.RADIUS = comp.$props.config.PIN_RADIUS || 5
-        this.RADIUS_SQ = this.RADIUS * this.RADIUS
+        this.RADIUS = comp.$props.config.PIN_RADIUS || 5.5
+        this.RADIUS_SQ = Math.pow(this.RADIUS + 7, 2)
+        this.COLOR_BACK = comp.$props.colors.colorBack
+        this.COLOR_BR = comp.$props.colors.colorText
 
         this.comp = comp
         this.layout = comp.layout
@@ -41,8 +43,8 @@ export default class Pin {
     draw_circle(ctx) {
 
         ctx.lineWidth = 1.5
-        ctx.strokeStyle = 'black'
-        ctx.fillStyle = 'white'
+        ctx.strokeStyle = this.COLOR_BR
+        ctx.fillStyle = this.COLOR_BACK
         ctx.beginPath()
         ctx.arc(
             this.x = this.layout.t2screen(this.t),

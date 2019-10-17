@@ -70,7 +70,11 @@ export default class DCEvents {
         // TODO: Tools for offchart grids (grid_id > 0).
         // Currently 1 offchart overlay === 1 new grid,
         // need to find a way to stack offchart overlays.
-        if (grid_id !== 0) return
+        if (grid_id !== 0) {
+            this.tv.$set(this.data, 'drawingMode', false)
+            this.tv.$set(this.data, 'tool', 'Cursor')
+            return
+        }
 
         let list = this.data.tools
         let type = this.data.tool
