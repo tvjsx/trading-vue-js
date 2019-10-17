@@ -6,7 +6,11 @@ export default class Pin {
     // pin parameters)
     constructor(comp, name, params = {}) {
 
+        this.RADIUS = comp.$props.config.PIN_RADIUS || 5
+        this.RADIUS_SQ = this.RADIUS * this.RADIUS
+
         this.comp = comp
+        this.layout = comp.layout
         this.mouse = comp.mouse
         this.name = name
         this.state = params.state || 'settled'
@@ -15,19 +19,46 @@ export default class Pin {
         this.mouse.on('mousedown', e => this.mousedown(e))
         this.mouse.on('mouseup', e => this.mouseup(e))
 
+        this.update()
     }
 
     draw(ctx) {
-
         switch (this.state) {
             case 'tracking':
                 break
             case 'dragging':
                 break
             case 'settled':
+                this.draw_circle(ctx)
                 break
         }
+    }
 
+    draw_circle(ctx) {
+
+        ctx.lineWidth = 1.5
+        ctx.strokeStyle = 'black'
+        ctx.fillStyle = 'white'
+        ctx.beginPath()
+        ctx.arc(
+            this.layout.t2screen(this.t),
+            this.layout.$2screen(this.y$), 
+            this.RADIUS + 0.5, 0, Math.PI * 2, true)
+        ctx.fill()
+        ctx.stroke()
+    }
+
+    update() {
+
+        this.y$ = this.comp.$props.cursor.y$
+        this.y =  this.comp.$props.cursor.y
+        this.t = this.comp.$props.cursor.t
+        this.x =  this.comp.$props.cursor.x
+
+        // Reset the settings attahed to the pin (position)
+        this.comp.$emit('change-settings', {
+             [this.name]: [this.t, this.y$]
+        })
     }
 
     mousemove(event) {
@@ -35,13 +66,7 @@ export default class Pin {
         switch(this.state) {
             case 'tracking':
             case 'dragging':
-                // cursor.y$ is more precise than mouse.y$
-                this.y$ = this.comp.$props.cursor.y$
-                this.t = this.mouse.t
-                // Reset the settings attahed to the pin (position)
-                this.comp.$emit('change-settings', {
-                     [this.name]: [this.t, this.y$]
-                })
+                this.update()
                 break
         }
     }
@@ -51,9 +76,12 @@ export default class Pin {
         switch (this.state) {
             case 'tracking':
                 this.state = 'settled'
+                if (this.on_settled) this.on_settled()
                 break
             case 'settled':
-                this.state = 'dragging'
+                if (this.hover()) {
+                    this.state = 'dragging'
+                }
                 break
         }
 
@@ -61,6 +89,23 @@ export default class Pin {
 
     mouseup(event) {
 
+    }
+
+    on(name, handler) {
+        switch (name) {
+            case 'settled':
+                this.on_settled = handler
+                break
+        }
+    }
+
+    hover() {
+        let x = this.x
+        let y = this.y
+        return (
+            (x - this.mouse.x) * (x - this.mouse.x) +
+            (y - this.mouse.y) * (y - this.mouse.y)
+        ) < this.RADIUS_SQ
     }
 
 }

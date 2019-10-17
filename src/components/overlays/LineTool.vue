@@ -38,6 +38,9 @@ export default {
                 // Second one is following mouse until it clicks
                 new Pin(this, 'p2', {state: 'tracking'})
             ]
+            this.pins[1].on('settled', () => {
+                //this.$emit('drawing-mode-off')
+            })
         },
         draw(ctx) {
             if (!this.p1 || !this.p2) return
@@ -59,7 +62,7 @@ export default {
             ctx.stroke()
 
             // Render pins
-            (this.pins || []).forEach(x => x.draw(ctx))
+            this.pins.forEach(x => x.draw(ctx))
         },
         use_for() { return ['LineTool'] },
         data_colors() { return [this.color] }
