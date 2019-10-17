@@ -28,6 +28,8 @@ export default class DCEvents {
                 this.tv.$set(this.data, 'drawingMode', false)
                 this.tv.$set(this.data, 'tool', 'Cursor')
                 break
+            case 'change-settings': this.change_settings(args)
+                break
             default: console.log(event, args)
                 break
         }
@@ -83,6 +85,20 @@ export default class DCEvents {
             settings: sett,
             data: data
         })
+
+    }
+
+    // Apply new overlay settings
+    change_settings(args) {
+        let settings = args[0]
+        delete settings.id
+        let grid_id = args[1]
+        let id = args[2].replace('_', '')
+
+        // TODO: Tools for offchart grids
+        if (grid_id !== 0) return
+
+        this.merge(`${id}.settings`, settings)
 
     }
 }
