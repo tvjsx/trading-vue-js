@@ -59,10 +59,22 @@ export default {
             let y2 = layout.$2screen(this.p2[1])
             ctx.lineTo(x2, y2)
 
+            if (this.sett.extended) {
+                this.draw_extended(ctx, [x1, y1], [x2, y2])
+            }
+
             ctx.stroke()
 
             // Render pins
             this.pins.forEach(x => x.draw(ctx))
+        },
+        draw_extended(ctx, p1, p2) {
+            let w = this.$props.layout.width
+            let k = (p2[1] - p1[1]) / (p2[0] - p1[0])
+            ctx.moveTo(...p2)
+            ctx.lineTo(p2[0] + w, p2[1] + w * k)
+            ctx.moveTo(...p1)
+            ctx.lineTo(p1[0] - w, p1[1] - w * k)
         },
         use_for() { return ['LineTool'] },
         data_colors() { return [this.color] }
