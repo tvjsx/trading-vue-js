@@ -18,7 +18,8 @@ export default class DCEvents {
                 }
                 break
             case 'drawing-mode-on':
-                if (this.data.tool !== 'Cursor' &&
+                // TODO: tool state finished?
+                if (this.data.tool && this.data.tool !== 'Cursor' &&
                    !this.data.drawingMode) {
                     this.tv.$set(this.data, 'drawingMode', true)
                     this.build_tool(args[0])

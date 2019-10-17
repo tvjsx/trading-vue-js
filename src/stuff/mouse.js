@@ -6,6 +6,10 @@ export default class Mouse {
         this.comp = comp
         this.map = {}
         this.listeners = 0
+        this.x = comp.$props.cursor.x
+        this.y = comp.$props.cursor.y
+        this.t = comp.$props.cursor.t
+        this.y$ = comp.$props.cursor.y$
     }
 
     on(name, handler) {
