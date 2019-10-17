@@ -31,6 +31,8 @@ export default class DCEvents {
                 break
             case 'change-settings': this.change_settings(args)
                 break
+            case 'scroll-lock': this.on_scroll_lock(args[0])
+                break
             default: console.log(event, args)
                 break
         }
@@ -79,6 +81,7 @@ export default class DCEvents {
         let data = (proto.data || []).slice()
 
         if(!('legend' in sett)) sett.legend = false
+        if(!('z-index' in sett)) sett['z-index'] = 100
 
         this.add('onchart', {
             name: proto.name,
@@ -101,5 +104,10 @@ export default class DCEvents {
 
         this.merge(`${id}.settings`, settings)
 
+    }
+
+    // Lock the scrolling mechanism
+    on_scroll_lock(flag) {
+        this.tv.$set(this.data, 'scrollLock', flag)
     }
 }

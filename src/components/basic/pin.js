@@ -20,6 +20,10 @@ export default class Pin {
         this.mouse.on('mouseup', e => this.mouseup(e))
 
         this.update()
+
+        if (this.state !== 'settled') {
+            this.comp.$emit('scroll-lock', true)
+        }
     }
 
     draw(ctx) {
@@ -41,8 +45,8 @@ export default class Pin {
         ctx.fillStyle = 'white'
         ctx.beginPath()
         ctx.arc(
-            this.layout.t2screen(this.t),
-            this.layout.$2screen(this.y$), 
+            this.x = this.layout.t2screen(this.t),
+            this.y = this.layout.$2screen(this.y$),
             this.RADIUS + 0.5, 0, Math.PI * 2, true)
         ctx.fill()
         ctx.stroke()
@@ -72,23 +76,29 @@ export default class Pin {
     }
 
     mousedown(event) {
-
         switch (this.state) {
             case 'tracking':
                 this.state = 'settled'
                 if (this.on_settled) this.on_settled()
+                this.comp.$emit('scroll-lock', false)
                 break
             case 'settled':
                 if (this.hover()) {
                     this.state = 'dragging'
+                    this.comp.$emit('scroll-lock', true)
                 }
                 break
         }
-
     }
 
     mouseup(event) {
-
+        switch (this.state) {
+            case 'dragging':
+                this.state = 'settled'
+                if (this.on_settled) this.on_settled()
+                this.comp.$emit('scroll-lock', false)
+                break
+        }
     }
 
     on(name, handler) {
