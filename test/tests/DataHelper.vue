@@ -106,7 +106,7 @@ export default {
     },
     beforeDestroy() {
         window.removeEventListener('resize', this.onResize)
-        this.stream.off()
+        if (this.stream) this.stream.off()
     },
     data() {
         return {

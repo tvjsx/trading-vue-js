@@ -33,12 +33,12 @@ export default {
         },
         // Called after overlay mounted
         init() {
-            this.pins = [
-                // First pin is settled at the mouse position
-                new Pin(this, 'p1'),
-                // Second one is following mouse until it clicks
-                new Pin(this, 'p2', {state: 'tracking'})
-            ]
+            // First pin is settled at the mouse position
+            this.pins.push(new Pin(this, 'p1'))
+            // Second one is following mouse until it clicks
+            this.pins.push(new Pin(this, 'p2', {
+                state: 'tracking'
+            }))
             this.pins[1].on('settled', () => {
                 this.$emit('drawing-mode-off')
             })
@@ -65,9 +65,7 @@ export default {
             }
 
             ctx.stroke()
-
-            // Render pins
-            this.pins.forEach(x => x.draw(ctx))
+            this.render_pins(ctx)
         },
         draw_extended(ctx, p1, p2) {
 
