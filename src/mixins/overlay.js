@@ -66,7 +66,7 @@ export default {
         custom_event(event, ...args) {
             if (event.split(':')[0] === 'hook') return
             if (event === 'change-settings' ||
-                event === 'tool-selected') {
+                event === 'object-selected') {
                 args.push(this.grid_id, this.id)
             }
             this._$emit('custom-event', {event, args})
