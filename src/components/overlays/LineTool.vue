@@ -69,12 +69,21 @@ export default {
             this.pins.forEach(x => x.draw(ctx))
         },
         draw_extended(ctx, p1, p2) {
+
             let w = this.$props.layout.width
+            let h = this.$props.layout.height
             let k = (p2[1] - p1[1]) / (p2[0] - p1[0])
+            let s = Math.sign(p2[0] - p1[0] || p2[1] - p1[1])
+            let dx = w * s
+            let dy = w * k * s
+            if (dy === Infinity) { dx = 0, dy = h * s}
+
             ctx.moveTo(...p2)
-            ctx.lineTo(p2[0] + w, p2[1] + w * k)
+            ctx.lineTo(p2[0] + dx, p2[1] + dy)
+            ctx.strokeStyle = 'green'
             ctx.moveTo(...p1)
-            ctx.lineTo(p1[0] - w, p1[1] - w * k)
+            ctx.lineTo(p1[0] - dx, p1[1] - dy)
+            
         },
         use_for() { return ['LineTool'] },
         data_colors() { return [this.color] }
