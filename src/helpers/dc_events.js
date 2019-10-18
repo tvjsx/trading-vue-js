@@ -17,7 +17,7 @@ export default class DCEvents {
                     this.tv.$set(this.data, 'drawingMode', false)
                 }
                 break
-            case 'drawing-mode-on':
+            case 'grid-mousedown':
                 // TODO: tool state finished?
                 if (this.data.tool && this.data.tool !== 'Cursor' &&
                    !this.data.drawingMode) {

@@ -6,6 +6,7 @@ import * as Hammer from 'hammerjs'
 import Hamster from 'hamsterjs'
 import Utils from '../../stuff/utils.js'
 
+// Grid is good.
 export default class Grid {
 
     constructor(canvas, comp) {
@@ -154,7 +155,7 @@ export default class Grid {
     mousedown(event) {
         this.comp.$emit('cursor-locked', true)
         this.comp.$emit('custom-event', {
-            event: 'drawing-mode-on', args: [this.id]
+            event: 'grid-mousedown', args: [this.id]
         })
         this.propagate('mousedown', event)
     }

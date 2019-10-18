@@ -2,12 +2,13 @@
 // Line drawing tool
 
 import Overlay from '../../mixins/overlay.js'
+import Tool from '../../mixins/tool.js'
 import Icons from '../../stuff/icons.json'
-import Pin from '../basic/pin.js'
+import Pin from '../primitives/pin.js'
 
 export default {
     name: 'LineTool',
-    mixins: [Overlay],
+    mixins: [Overlay, Tool],
     methods: {
         meta_info() {
             return { author: 'C451', version: '1.0.0' }
@@ -80,10 +81,9 @@ export default {
 
             ctx.moveTo(...p2)
             ctx.lineTo(p2[0] + dx, p2[1] + dy)
-            ctx.strokeStyle = 'green'
             ctx.moveTo(...p1)
             ctx.lineTo(p1[0] - dx, p1[1] - dy)
-            
+
         },
         use_for() { return ['LineTool'] },
         data_colors() { return [this.color] }
