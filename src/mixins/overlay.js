@@ -35,8 +35,8 @@ export default {
             y_range: this.y_range
         })
         this.mouse = new Mouse(this)
-        if (this.init) this.init()
         if (this.init_tool) this.init_tool()
+        if (this.init) this.init()
     },
     beforeDestroy() {
         this._$emit('delete-grid-layer', this.$props.id)
@@ -65,7 +65,8 @@ export default {
         },
         custom_event(event, ...args) {
             if (event.split(':')[0] === 'hook') return
-            if (event === 'change-settings') {
+            if (event === 'change-settings' ||
+                event === 'tool-selected') {
                 args.push(this.grid_id, this.id)
             }
             this._$emit('custom-event', {event, args})
