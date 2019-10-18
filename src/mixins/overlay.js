@@ -36,6 +36,7 @@ export default {
         })
         this.mouse = new Mouse(this)
         if (this.init) this.init()
+        if (this.init_tool) this.init_tool()
     },
     beforeDestroy() {
         this._$emit('delete-grid-layer', this.$props.id)
