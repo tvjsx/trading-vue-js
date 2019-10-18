@@ -42,14 +42,20 @@ export default class Pin {
 
     draw_circle(ctx) {
 
-        ctx.lineWidth = 1.5
+        if (this.comp.selected) {
+            var r = this.RADIUS, lw = 1.5
+        } else {
+            var r = this.RADIUS * 0.75, lw = 0.75
+        }
+
+        ctx.lineWidth = lw
         ctx.strokeStyle = this.COLOR_BR
         ctx.fillStyle = this.COLOR_BACK
         ctx.beginPath()
         ctx.arc(
             this.x = this.layout.t2screen(this.t),
             this.y = this.layout.$2screen(this.y$),
-            this.RADIUS + 0.5, 0, Math.PI * 2, true)
+            r + 0.5, 0, Math.PI * 2, true)
         ctx.fill()
         ctx.stroke()
     }
@@ -75,9 +81,12 @@ export default class Pin {
                 this.update()
                 break
         }
+
+
     }
 
     mousedown(event) {
+        if (event.defaultPrevented) return
         switch (this.state) {
             case 'tracking':
                 this.state = 'settled'
@@ -88,8 +97,12 @@ export default class Pin {
                 if (this.hover()) {
                     this.state = 'dragging'
                     this.comp.$emit('scroll-lock', true)
+                    this.comp.$emit('object-selected')
                 }
                 break
+        }
+        if (this.hover()) {
+            event.preventDefault()
         }
     }
 

@@ -8,14 +8,6 @@ export default {
             this.collisions = []
             this.pins = []
 
-            this.mouse.on('mousedown', e => {
-                if (this.collisions.every(f => f(
-                    this.mouse.x, this.mouse.y,
-                ))) {
-                    this.$emit('tool-selected')
-                }
-            })
-
             this.mouse.on('mousemove', e => {
                 if (this.collisions.every(f => f(
                     this.mouse.x, this.mouse.y,
@@ -25,11 +17,31 @@ export default {
                     this.show_pins = false
                 }
             })
+
+            this.mouse.on('mousedown', e => {
+                if (this.collisions.length &&
+                    this.collisions.every(f => f(
+                    this.mouse.x, this.mouse.y,
+                ))) {
+                    this.$emit('object-selected')
+                }
+            })
+
+            this.show_pins = true
         },
         render_pins(ctx) {
             if (this.show_pins) {
                 this.pins.forEach(x => x.draw(ctx))
             }
         }
+    },
+    computed: {
+        // Settings starting with $ are reserved
+        selected() {
+            return this.$props.settings.$selected
+        },
+        tool_state() {
+            return this.$props.settings.$state
+        },
     }
 }

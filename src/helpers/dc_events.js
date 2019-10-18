@@ -19,6 +19,7 @@ export default class DCEvents {
                 break
             case 'grid-mousedown':
                 // TODO: tool state finished?
+                this.object_selected([])
                 if (this.data.tool && this.data.tool !== 'Cursor' &&
                    !this.data.drawingMode) {
                     this.tv.$set(this.data, 'drawingMode', true)
@@ -32,6 +33,8 @@ export default class DCEvents {
             case 'change-settings': this.change_settings(args)
                 break
             case 'scroll-lock': this.on_scroll_lock(args[0])
+                break
+            case 'object-selected': this.object_selected(args)
                 break
             default: console.log(event, args)
                 break
@@ -86,14 +89,17 @@ export default class DCEvents {
 
         if(!('legend' in sett)) sett.legend = false
         if(!('z-index' in sett)) sett['z-index'] = 100
+        sett.$selected = true
+        sett.$state = 'wip'
 
-        this.add('onchart', {
+        let id = this.add('onchart', {
             name: proto.name,
             type: type.split(':')[0],
             settings: sett,
             data: data
         })
 
+        this.tv.$set(this.data, 'selected', id)
     }
 
     // Apply new overlay settings
@@ -101,17 +107,45 @@ export default class DCEvents {
         let settings = args[0]
         delete settings.id
         let grid_id = args[1]
-        let id = args[2].replace('_', '')
+        let q = this.layer_query(args[1], args[2])
 
         // TODO: Tools for offchart grids
         if (grid_id !== 0) return
 
-        this.merge(`${id}.settings`, settings)
+        this.merge(`${q}.settings`, settings)
 
     }
 
     // Lock the scrolling mechanism
     on_scroll_lock(flag) {
         this.tv.$set(this.data, 'scrollLock', flag)
+    }
+
+    // When new object is selected / unselected
+    object_selected(args) {
+        var q = this.data.selected
+        if (q) {
+            // Check if current drawing is finished
+            //let res = this.get_one(`${q}.settings`)
+            //if (res && res.$state !== 'finished') return
+            this.merge(`${q}.settings`, {
+                $selected: false
+            })
+        }
+        this.tv.$set(this.data, 'selected', null)
+
+        if (!args.length) return
+
+        var q = this.layer_query(args[0], args[1])
+        this.tv.$set(this.data, 'selected', q)
+        this.merge(`${q}.settings`, {
+            $selected: true
+        })
+    }
+
+    // Form query for given grid and layer id
+    layer_query(grid_id, id) {
+        let side = grid_id ? 'offchart' : 'onchart'
+        return `${side}.${id.replace('_', '')}`
     }
 }
