@@ -33,6 +33,7 @@ export default class Pin {
             case 'tracking':
                 break
             case 'dragging':
+                if (!this.moved) this.draw_circle(ctx)
                 break
             case 'settled':
                 this.draw_circle(ctx)
@@ -78,6 +79,7 @@ export default class Pin {
         switch(this.state) {
             case 'tracking':
             case 'dragging':
+                this.moved = true
                 this.update()
                 break
         }
@@ -96,6 +98,7 @@ export default class Pin {
             case 'settled':
                 if (this.hover()) {
                     this.state = 'dragging'
+                    this.moved = false
                     this.comp.$emit('scroll-lock', true)
                     this.comp.$emit('object-selected')
                 }
