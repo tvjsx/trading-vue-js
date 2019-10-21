@@ -12,6 +12,10 @@ export default class DCEvents {
             case 'register-tools': this.register_tools(args)
                 break
             case 'tool-selected':
+                if (args[0].split(':')[0] === 'System') {
+                    this.system_tool(args[0].split(':')[1])
+                    break
+                }
                 this.tv.$set(this.data, 'tool', args[0])
                 if (args[0] === 'Cursor') {
                     this.tv.$set(this.data, 'drawingMode', false)
@@ -102,6 +106,11 @@ export default class DCEvents {
         this.tv.$set(this.data, 'selected', id)
     }
 
+    // Remove selected / Remove all, etc
+    system_tool(type) {
+
+    }
+
     // Apply new overlay settings
     change_settings(args) {
         let settings = args[0]
@@ -141,11 +150,22 @@ export default class DCEvents {
         this.merge(`${q}.settings`, {
             $selected: true
         })
+        this.add_trash_icon()
     }
 
     // Form query for given grid and layer id
     layer_query(grid_id, id) {
         let side = grid_id ? 'offchart' : 'onchart'
         return `${side}.${id.replace('_', '')}`
+    }
+
+    add_trash_icon() {
+        const type = 'System:Remove'
+        if (this.data.tools.find(x => x.type === type)) {
+            return
+        }
+        this.data.tools.push({
+            type, icon: Icons['trash.png']
+        })
     }
 }

@@ -40,6 +40,9 @@ export default {
                 state: 'tracking'
             }))
             this.pins[1].on('settled', () => {
+                // Call when current tool drawing is finished
+                // (Optionally) reset the mode back to 'Cursor'
+                this.set_state('finished')
                 this.$emit('drawing-mode-off')
             })
         },
