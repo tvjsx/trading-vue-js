@@ -71,10 +71,12 @@ export default {
 
             let w = this.$props.layout.width
             let h = this.$props.layout.height
+            // TODO: transform k (angle) to screen ratio
+            // (this requires a new a2screen function)
             let k = (p2[1] - p1[1]) / (p2[0] - p1[0])
             let s = Math.sign(p2[0] - p1[0] || p2[1] - p1[1])
-            let dx = w * s
-            let dy = w * k * s
+            let dx = w * s * 2
+            let dy = w * k * s * 2
             if (dy === Infinity) { dx = 0, dy = h * s}
 
             ctx.moveTo(...p2)

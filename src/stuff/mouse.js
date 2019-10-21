@@ -6,6 +6,7 @@ export default class Mouse {
         this.comp = comp
         this.map = {}
         this.listeners = 0
+        this.pressed = false
         this.x = comp.$props.cursor.x
         this.y = comp.$props.cursor.y
         this.t = comp.$props.cursor.t
@@ -32,6 +33,12 @@ export default class Mouse {
             this.y = event.layerY
             this.t = l.screen2t(this.x)
             this.y$ = l.screen2$(this.y)
+        }
+        if (name === 'mousedown') {
+            this.pressed = true
+        }
+        if (name === 'mouseup') {
+            this.pressed = false
         }
     }
 
