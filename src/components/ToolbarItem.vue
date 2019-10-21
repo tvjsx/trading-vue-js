@@ -20,6 +20,9 @@ export default {
     },
     computed: {
         item_style() {
+            if (this.$props.data.type === 'System:Splitter') {
+                return this.splitter
+            }
             let conf = this.$props.config
             let im = conf.TB_ITEM_M
             let m = (conf.TOOLBAR - conf.TB_ICON) * 0.5 - im
@@ -32,6 +35,9 @@ export default {
             }
         },
         icon_style() {
+            if (this.$props.data.type === 'System:Splitter') {
+                return {}
+            }
             let conf = this.$props.config
             let br = conf.TB_ICON_BRI
             let im = conf.TB_ITEM_M
@@ -41,7 +47,20 @@ export default {
                 'height': '25px',
                 'margin': `${im}px`,
                 'filter': `brightness(${br})`
-
+            }
+        },
+        splitter() {
+            let conf = this.$props.config
+            let colors = this.$props.colors
+            let c = colors.colorGrid
+            let im = conf.TB_ITEM_M
+            let m = (conf.TOOLBAR - conf.TB_ICON) * 0.5 - im
+            let s = conf.TB_ICON + im * 2
+            return {
+                'width': `${s}px`,
+                'height': '1px',
+                'margin': `8px ${m}px 8px ${m}px`,
+                'background-color': c
             }
         }
     }

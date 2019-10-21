@@ -33,6 +33,11 @@ export default {
             if (this.show_pins) {
                 this.pins.forEach(x => x.draw(ctx))
             }
+        },
+        set_state(name) {
+            this.$emit('change-settings', {
+                 $state: name
+            })
         }
     },
     computed: {
@@ -40,7 +45,7 @@ export default {
         selected() {
             return this.$props.settings.$selected
         },
-        tool_state() {
+        state() {
             return this.$props.settings.$state
         },
     }

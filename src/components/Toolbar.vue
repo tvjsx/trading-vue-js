@@ -6,6 +6,7 @@
             :key="i"
             :data="tool"
             :config="config"
+            :colors="colors"
             :selected="tool.type === data.tool">
         </toolbar-item>
     </div>
