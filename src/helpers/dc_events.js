@@ -43,6 +43,7 @@ export default class DCEvents {
             default: console.log(event, args)
                 break
         }
+
     }
 
     // Combine all tools and their mods
@@ -104,11 +105,18 @@ export default class DCEvents {
         })
 
         this.tv.$set(this.data, 'selected', id)
+        this.add_trash_icon()
     }
 
     // Remove selected / Remove all, etc
     system_tool(type) {
-
+        switch (type) {
+            case 'Remove':
+                if (this.data.selected) {
+                    this.del(this.data.selected)
+                }
+                break
+        }
     }
 
     // Apply new overlay settings
@@ -140,6 +148,7 @@ export default class DCEvents {
             this.merge(`${q}.settings`, {
                 $selected: false
             })
+            this.remove_trash_icon()
         }
         this.tv.$set(this.data, 'selected', null)
 
@@ -167,5 +176,11 @@ export default class DCEvents {
         this.data.tools.push({
             type, icon: Icons['trash.png']
         })
+    }
+
+    remove_trash_icon() {
+        const type = 'System:Remove'
+        this.data.tools =
+            this.data.tools.filter(x => x.type !== type)
     }
 }
