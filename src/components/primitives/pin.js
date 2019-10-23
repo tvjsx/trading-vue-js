@@ -21,7 +21,12 @@ export default class Pin {
         this.mouse.on('mousedown', e => this.mousedown(e))
         this.mouse.on('mouseup', e => this.mouseup(e))
 
-        this.update()
+        if (comp.state === 'finished') {
+            this.state = 'settled'
+            this.update_from(comp.$props.settings[name])
+        } else {
+            this.update()            
+        }
 
         if (this.state !== 'settled') {
             this.comp.$emit('scroll-lock', true)
@@ -72,6 +77,17 @@ export default class Pin {
         this.comp.$emit('change-settings', {
              [this.name]: [this.t, this.y$]
         })
+    }
+
+    update_from(data) {
+
+        if (!data) return
+
+        this.y$ = data[1]
+        this.y = this.layout.$2screen(this.y$)
+        this.t = data[0]
+        this.x = this.layout.t2screen(this.t)
+
     }
 
     mousemove(event) {
