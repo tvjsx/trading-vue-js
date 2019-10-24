@@ -29,6 +29,7 @@ export default {
     mounted() {
         window.addEventListener('resize', this.onResize)
         this.onResize()
+        window.DataCube = this.chart
     },
     beforeDestroy() {
         window.removeEventListener('resize', this.onResize)

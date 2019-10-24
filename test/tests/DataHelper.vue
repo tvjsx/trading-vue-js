@@ -42,6 +42,7 @@ export default {
             this.chart.onrange(this.load_chunk)
             this.stream = new Stream(WSS)
             this.stream.ontrades = this.on_trades
+            window.DataCube = this.chart // Debug
         })
 
     },
