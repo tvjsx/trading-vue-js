@@ -38,6 +38,14 @@ export default {
             this.$emit('change-settings', {
                  $state: name
             })
+        },
+        watch_uuid(n, p) {
+            // If layer $uuid is changed, then re-init
+            // pins & collisions
+            if (n.$uuid !== p.$uuid) {
+                for (var p of this.pins) p.re_init()
+                // TODO: coliisions
+            }
         }
     },
     computed: {

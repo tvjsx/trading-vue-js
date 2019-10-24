@@ -25,12 +25,18 @@ export default class Pin {
             this.state = 'settled'
             this.update_from(comp.$props.settings[name])
         } else {
-            this.update()            
+            this.update()
         }
 
         if (this.state !== 'settled') {
             this.comp.$emit('scroll-lock', true)
         }
+    }
+
+    re_init() {
+        this.update_from(
+            this.comp.$props.settings[this.name]
+        )
     }
 
     draw(ctx) {

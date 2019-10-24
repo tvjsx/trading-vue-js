@@ -74,7 +74,8 @@ export default {
     },
     watch: {
         settings: {
-            handler: function() {
+            handler: function(n, p) {
+                if (this.watch_uuid) this.watch_uuid(n, p)
                 this._$emit('show-grid-layer', {
                     id: this.$props.id,
                     display: 'display' in this.$props.settings ?
