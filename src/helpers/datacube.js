@@ -13,29 +13,6 @@ export default class DataCube extends DCCore {
         super()
         this.data = data
 
-        /* Examples of queries: (go to test #8) */
-        /* Type in devtools:
-            DataCube.get('onchart.EMA0') // Nope!
-            DataCube.get('Keltner')      // By name
-            DataCube.get_one('chart.data')
-            DataCube.get('offchart.RSI')
-            DataCube.get('offchart.RSI.data')
-            DataCube.get('DI')
-            DataCube.get('Splines0.data') // By index
-            DataCube.get('Segment.settings')
-            ...
-            DataCube.set('.settings', { lineWidth: 2 })
-            DataCube.add('offchart', { type: 'New', data: [] })
-            DataCube.del('.')  // Fun !
-            ...
-            DataCube.hide('.')
-            DataCube.show('offchart')
-            DataCube.merge('RSI.settings', { color: 'green' })
-        */
-
-        // DEBUG
-        window.DataCube = this
-
     }
 
     // Add new overlay
