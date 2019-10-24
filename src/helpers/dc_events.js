@@ -104,6 +104,8 @@ export default class DCEvents {
             data: data
         })
 
+        sett.$uuid = `${id}-${Utils.now()}`
+
         this.tv.$set(this.data, 'selected', id)
         this.add_trash_icon()
     }
@@ -114,6 +116,7 @@ export default class DCEvents {
             case 'Remove':
                 if (this.data.selected) {
                     this.del(this.data.selected)
+                    this.remove_trash_icon()
                 }
                 break
         }
