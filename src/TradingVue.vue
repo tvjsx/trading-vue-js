@@ -188,6 +188,9 @@ export default {
     data() {
         return { reset: 0 }
     },
+    beforeDestroy() {
+        this.custom_event({ event: 'before-destroy' })
+    },
     methods: {
         resetChart(resetRange = true) {
             this.reset++
