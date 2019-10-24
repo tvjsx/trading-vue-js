@@ -18,7 +18,7 @@ export default class DCEvents {
                 }
                 this.tv.$set(this.data, 'tool', args[0])
                 if (args[0] === 'Cursor') {
-                    this.tv.$set(this.data, 'drawingMode', false)
+                    this.drawing_mode_off()
                 }
                 break
             case 'grid-mousedown':
@@ -30,9 +30,7 @@ export default class DCEvents {
                     this.build_tool(args[0])
                 }
                 break
-            case 'drawing-mode-off':
-                this.tv.$set(this.data, 'drawingMode', false)
-                this.tv.$set(this.data, 'tool', 'Cursor')
+            case 'drawing-mode-off': this.drawing_mode_off()
                 break
             case 'change-settings': this.change_settings(args)
                 break
@@ -73,14 +71,18 @@ export default class DCEvents {
 
     }
 
-    // Place a
+    drawing_mode_off() {
+        this.tv.$set(this.data, 'drawingMode', false)
+        this.tv.$set(this.data, 'tool', 'Cursor')
+    }
+
+    // Place a new tool
     build_tool(grid_id) {
         // TODO: Tools for offchart grids (grid_id > 0).
         // Currently 1 offchart overlay === 1 new grid,
         // need to find a way to stack offchart overlays.
         if (grid_id !== 0) {
-            this.tv.$set(this.data, 'drawingMode', false)
-            this.tv.$set(this.data, 'tool', 'Cursor')
+            this.drawing_mode_off()
             return
         }
 
@@ -117,6 +119,8 @@ export default class DCEvents {
                 if (this.data.selected) {
                     this.del(this.data.selected)
                     this.remove_trash_icon()
+                    this.drawing_mode_off()
+                    this.on_scroll_lock(false)
                 }
                 break
         }
