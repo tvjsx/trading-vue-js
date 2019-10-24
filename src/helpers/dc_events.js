@@ -38,8 +38,9 @@ export default class DCEvents {
                 break
             case 'object-selected': this.object_selected(args)
                 break
-            default: console.log(event, args)
+            case 'before-destroy': this.before_destroy()
                 break
+
         }
 
     }
@@ -190,4 +191,17 @@ export default class DCEvents {
         this.data.tools =
             this.data.tools.filter(x => x.type !== type)
     }
+
+    // Clean-up unfinished business (tools)
+    before_destroy() {
+        let f = x => x.settings.$state === 'finished'
+        this.data.onchart = this.data.onchart
+            .filter(f)
+        this.data.onchart = this.data.onchart
+            .filter(f)
+        this.drawing_mode_off()
+        this.on_scroll_lock(false)
+        this.object_selected([])
+    }
+
 }
