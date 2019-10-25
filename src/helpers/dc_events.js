@@ -47,29 +47,41 @@ export default class DCEvents {
 
     // Combine all tools and their mods
     register_tools(tools) {
-
-        //TODO: merging with user-defined toolset
         if (this.data.tools) return
+        let preset = this.data.preset || {}
         let list = [{
             type: 'Cursor', icon: Icons['cursor.png']
         }]
-
         for (var tool of tools) {
             var proto = Object.assign({}, tool.info)
-            proto.type = `${tool.use_for}:${tool.info.type}`
+            let type = tool.info.type || 'Default'
+            proto.type = `${tool.use_for}:${type}`
+            this.merge_presets(proto, preset[tool.use_for])
+            this.merge_presets(proto, preset[proto.type])
             delete proto.mods
             list.push(proto)
             for (var mod in tool.info.mods) {
                 var mp = Object.assign({}, proto)
                 mp = Object.assign(mp, tool.info.mods[mod])
                 mp.type = `${tool.use_for}:${mod}`
+                this.merge_presets(mp, preset[tool.use_for])
+                this.merge_presets(mp, preset[mp.type])
                 list.push(mp)
             }
         }
-
         this.tv.$set(this.data, 'tools', list)
         this.tv.$set(this.data, 'tool', 'Cursor')
+    }
 
+    merge_presets(proto, preset) {
+        if (!preset) return
+        for (var k in preset) {
+            if (k === 'settings') {
+                Object.assign(proto[k], preset[k])
+            } else {
+                proto[k] = preset[k]
+            }
+        }
     }
 
     drawing_mode_off() {
