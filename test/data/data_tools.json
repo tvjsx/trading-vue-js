@@ -6663,5 +6663,17 @@
                 "bandColor": "#666"
             }
         }
-    ]
+    ],
+    "preset": {
+        "LineTool": {
+            "settings": {
+                "color": "#35c460"
+            }
+        },
+        "LineTool:Extended": {
+            "settings": {
+                "color": "#3186c4"
+            }
+        }
+    }
 }

@@ -106,18 +106,11 @@ export default {
             return this.sett.lineWidth || 0.9
         },
         color() {
-            const n = this.$props.num % 5
-            return this.sett.color || this.COLORS[n]
+            return this.sett.color || '#42b28a'
         }
     },
     data() {
-        return {
-            COLORS:
-            [
-                '#42b28a', '#5691ce', '#612ff9',
-                '#d50b90', '#ff2316'
-            ]
-        }
+        return {}
     }
 
 }
