@@ -47,8 +47,12 @@ export default class DCEvents {
 
     // Combine all tools and their mods
     register_tools(tools) {
-        if (this.data.tools) return
-        let preset = this.data.preset || {}
+        let preset = {}
+        for (var tool of this.data.tools || []) {
+             preset[tool.type] = tool
+             delete tool.type
+        }
+        this.data.tools = []
         let list = [{
             type: 'Cursor', icon: Icons['cursor.png']
         }]

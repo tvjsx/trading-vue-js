@@ -6664,16 +6664,18 @@
             }
         }
     ],
-    "preset": {
-        "LineTool": {
+    "tools": [
+        {
+            "type": "LineTool",
             "settings": {
                 "color": "#35c460"
             }
         },
-        "LineTool:Extended": {
+        {
+            "type": "LineTool:Extended",
             "settings": {
                 "color": "#3186c4"
             }
         }
-    }
+    ]
 }
