@@ -2,6 +2,7 @@
 <template>
     <div class="trading-vue-toolbar" :style="styles">
         <toolbar-item v-for="(tool, i) in data.tools"
+            v-if="tool.icon"
             @item-selected="selected"
             :key="i"
             :data="tool"
