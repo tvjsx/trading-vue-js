@@ -16,6 +16,8 @@ import TradingVue from '../../src/TradingVue.vue'
 import TfSelector from './Timeframes/TFSelector.vue'
 import Data from '../data/data_tf.json'
 import Utils from '../../src/stuff/utils.js'
+import DataCube from '../../src/helpers/datacube.js'
+
 
 export default {
     name: 'Timeframes',
@@ -29,15 +31,20 @@ export default {
             this.height = window.innerHeight - 50
         },
         on_selected(tf) {
-            this.chart = {
-                 ohlcv: this.charts[tf.name]
-            }
+            // TODO: This does not update the interval:
+            // this.chart.set('chart.data', this.charts[tf.name])
+
+            // Works only with a full update:
+            this.chart = new DataCube({
+                ohlcv: this.charts[tf.name]
+            })
             this.$refs.tradingVue.resetChart()
         }
     },
     mounted() {
         window.addEventListener('resize', this.onResize)
         this.onResize()
+        window.DataCube = this.chart // Debug
     },
     beforeDestroy() {
         window.removeEventListener('resize', this.onResize)
@@ -45,7 +52,7 @@ export default {
     data() {
         return {
             charts: Data,
-            chart: {},
+            chart: new DataCube({}),
             width: window.innerWidth,
             height: window.innerHeight,
             colors: {
