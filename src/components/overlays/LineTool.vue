@@ -5,6 +5,7 @@ import Overlay from '../../mixins/overlay.js'
 import Tool from '../../mixins/tool.js'
 import Icons from '../../stuff/icons.json'
 import Pin from '../primitives/pin.js'
+import Math2 from '../../stuff/math.js'
 
 export default {
     name: 'LineTool',
@@ -69,6 +70,12 @@ export default {
 
             ctx.stroke()
             this.render_pins(ctx)
+
+            /*console.log(Math2.point2seg(
+                [this.mouse.x, this.mouse.y],
+                [x1, y1], [x2, y2],
+            ))*/
+
         },
         draw_extended(ctx, p1, p2) {
 
