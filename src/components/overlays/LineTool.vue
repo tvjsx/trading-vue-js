@@ -71,7 +71,7 @@ export default {
             ctx.stroke()
             this.render_pins(ctx)
 
-            /*console.log(Math2.point2seg(
+            /*console.log(Math2.point2line(
                 [this.mouse.x, this.mouse.y],
                 [x1, y1], [x2, y2],
             ))*/
