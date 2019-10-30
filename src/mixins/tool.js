@@ -9,7 +9,7 @@ export default {
             this.pins = []
 
             this.mouse.on('mousemove', e => {
-                if (this.collisions.every(f => f(
+                if (this.collisions.some(f => f(
                     this.mouse.x, this.mouse.y,
                 ))) {
                     this.show_pins = true
@@ -19,18 +19,22 @@ export default {
             })
 
             this.mouse.on('mousedown', e => {
-                if (this.collisions.length &&
-                    this.collisions.every(f => f(
+                if (e.defaultPrevented) return
+                if (this.collisions.some(f => f(
                     this.mouse.x, this.mouse.y,
                 ))) {
-                    this.$emit('object-selected')
+                    if (!this.selected) {
+                        this.$emit('object-selected')
+                    }
+                    e.preventDefault()
+                    this.pins.forEach(x => x.mousedown(e, true))
                 }
             })
 
             this.show_pins = true
         },
         render_pins(ctx) {
-            if (this.show_pins) {
+            if (this.selected || this.show_pins) {
                 this.pins.forEach(x => x.draw(ctx))
             }
         },
@@ -46,6 +50,12 @@ export default {
                 for (var p of this.pins) p.re_init()
                 // TODO: coliisions
             }
+        },
+        pre_draw() {
+            // Delete all collision functions before
+            // the draw() call and let primitives set
+            // them again
+            this.collisions = []
         }
     },
     computed: {

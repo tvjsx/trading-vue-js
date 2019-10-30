@@ -2,7 +2,7 @@
 
 export default class Pin {
 
-    // (Comp reference, a name in overlay settings
+    // (Comp reference, a name in overlay settings,
     // pin parameters)
     constructor(comp, name, params = {}) {
 
@@ -57,7 +57,7 @@ export default class Pin {
         if (this.comp.selected) {
             var r = this.RADIUS, lw = 1.5
         } else {
-            var r = this.RADIUS * 0.75, lw = 0.75
+            var r = this.RADIUS * 0.95, lw = 1
         }
 
         ctx.lineWidth = lw
@@ -109,8 +109,8 @@ export default class Pin {
 
     }
 
-    mousedown(event) {
-        if (event.defaultPrevented) return
+    mousedown(event, force = false) {
+        if (event.defaultPrevented && !force) return
         switch (this.state) {
             case 'tracking':
                 this.state = 'settled'
