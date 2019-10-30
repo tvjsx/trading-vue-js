@@ -7,7 +7,7 @@ export default {
     mixins: [Overlay],
     methods: {
         meta_info() {
-            return { author: 'C451', version: '1.0.0' }
+            return { author: 'C451', version: '1.0.1' }
         },
         draw(ctx) {
             let layout = this.$props.layout
@@ -41,14 +41,11 @@ export default {
         // Defines legend format (values & colors)
         legend(values) {
             switch (values[1]) {
-                case -1:
-                    var pos = 'Short'
-                    break
                 case 0:
-                    pos = 'Closed'
+                    var pos = 'Sell'
                     break
                 case 1:
-                    pos = 'Long'
+                    pos = 'Buy'
                     break
                 default:
                     pos = 'Unknown'
