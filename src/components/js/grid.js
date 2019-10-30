@@ -204,7 +204,10 @@ export default class Grid {
         overlays.forEach(l => {
             if (!l.display) return
             this.ctx.save()
-            l.renderer.draw(this.ctx)
+            let r = l.renderer
+            if (r.pre_draw) r.pre_draw(this.ctx)
+            r.draw(this.ctx)
+            if (r.post_draw) r.post_draw(this.ctx)
             this.ctx.restore()
         })
 

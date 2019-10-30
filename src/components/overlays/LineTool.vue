@@ -5,7 +5,7 @@ import Overlay from '../../mixins/overlay.js'
 import Tool from '../../mixins/tool.js'
 import Icons from '../../stuff/icons.json'
 import Pin from '../primitives/pin.js'
-import Math2 from '../../stuff/math.js'
+import Seg from '../primitives/seg.js'
 
 export default {
     name: 'LineTool',
@@ -58,11 +58,9 @@ export default {
 
             let x1 = layout.t2screen(this.p1[0])
             let y1 = layout.$2screen(this.p1[1])
-            ctx.moveTo(x1, y1)
-
             let x2 = layout.t2screen(this.p2[0])
             let y2 = layout.$2screen(this.p2[1])
-            ctx.lineTo(x2, y2)
+            new Seg(this, ctx).draw([x1, y1], [x2, y2])
 
             if (this.sett.extended) {
                 this.draw_extended(ctx, [x1, y1], [x2, y2])
@@ -70,11 +68,6 @@ export default {
 
             ctx.stroke()
             this.render_pins(ctx)
-
-            /*console.log(Math2.point2line(
-                [this.mouse.x, this.mouse.y],
-                [x1, y1], [x2, y2],
-            ))*/
 
         },
         draw_extended(ctx, p1, p2) {
