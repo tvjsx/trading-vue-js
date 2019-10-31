@@ -12,13 +12,21 @@ export default class Seg {
         this.T = overlay.$props.config.TOOL_COLL
     }
 
-    // p1[x1, y1], p2[x2, y2] (in pixels)
+    // p1[t, $], p2[t, $] (time-price coordinates)
     draw(p1, p2) {
-        this.ctx.moveTo(p1[0], p1[1])
-        this.ctx.lineTo(p2[0], p2[1])
+
+        const layout = this.comp.$props.layout
+
+        let x1 = layout.t2screen(p1[0])
+        let y1 = layout.$2screen(p1[1])
+        let x2 = layout.t2screen(p2[0])
+        let y2 = layout.$2screen(p2[1])
+
+        this.ctx.moveTo(x1, y1)
+        this.ctx.lineTo(x2, y2)
 
         this.comp.collisions.push(
-            this.make(p1, p2)
+            this.make([x1, y1], [x2, y2])
         )
     }
 
