@@ -62,7 +62,7 @@ export default {
          )
     },
 
-    // Triangle hight
+    // Triangle height
     tri_h(area, base) {
 	    return area / base
     },
