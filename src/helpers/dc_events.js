@@ -38,6 +38,8 @@ export default class DCEvents {
                 break
             case 'object-selected': this.object_selected(args)
                 break
+            case 'remove-tool': this.system_tool('Remove')
+                break
             case 'before-destroy': this.before_destroy()
                 break
 

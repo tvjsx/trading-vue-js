@@ -378,8 +378,12 @@ export default class Grid {
                 layer.renderer[name](event)
             }
             const mouse = layer.renderer.mouse
+            const keys = layer.renderer.keys
             if (mouse.listeners) {
                 mouse.emit(name, event)
+            }
+            if (keys && keys.listeners) {
+                keys.emit(name, event)
             }
         }
     }

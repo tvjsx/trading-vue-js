@@ -1,6 +1,8 @@
 
 // Usuful stuff for creating tools. Include as mixin
 
+import Keys from '../stuff/keys.js'
+
 export default {
     methods: {
         init_tool() {
@@ -31,6 +33,10 @@ export default {
                 }
             })
 
+            this.keys = new Keys(this)
+            this.keys.on('Delete', this.remove_tool)
+            this.keys.on('Backspace', this.remove_tool)
+
             this.show_pins = true
         },
         render_pins(ctx) {
@@ -56,6 +62,9 @@ export default {
             // the draw() call and let primitives set
             // them again
             this.collisions = []
+        },
+        remove_tool() {
+            if (this.selected) this.$emit('remove-tool')
         }
     },
     computed: {
