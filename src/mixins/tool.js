@@ -27,7 +27,6 @@ export default {
                     this.mouse.x, this.mouse.y,
                 ))) {
                     if (!this.selected) {
-                        console.log(this.$props.settings.$uuid)
                         this.$emit('object-selected')
                     }
                     this.start_drag()
@@ -61,7 +60,6 @@ export default {
             // If layer $uuid is changed, then re-init
             // pins & collisions
             if (n.$uuid !== p.$uuid) {
-                console.log(n.$uuid, this.$props.settings.p1, this.$props.settings.p2)
                 for (var p of this.pins) p.re_init()
                 this.collisions = []
                 this.show_pins = false
