@@ -99,7 +99,7 @@ export default class DCCore extends DCEvents {
             }
             let i = count[ov.type]++
             ov.id = `onchart.${ov.type}${i}`
-            if (!ov.name) ov.name = ov.id
+            if (!ov.name) ov.name = ov.type + ` ${i}`
             if (!ov.settings) ov.settings = {}
 
         }
@@ -110,7 +110,7 @@ export default class DCCore extends DCEvents {
             }
             let i = count[ov.type]++
             ov.id = `offchart.${ov.type}${i}`
-            if (!ov.name) ov.name = ov.id
+            if (!ov.name) ov.name = ov.type + ` ${i}`
             if (!ov.settings) ov.settings = {}
         }
     }

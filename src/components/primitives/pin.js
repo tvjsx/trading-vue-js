@@ -85,7 +85,7 @@ export default class Pin {
         })
     }
 
-    update_from(data) {
+    update_from(data, emit = false) {
 
         if (!data) return
 
@@ -94,7 +94,7 @@ export default class Pin {
         this.t = data[0]
         this.x = this.layout.t2screen(this.t)
 
-        this.comp.$emit('change-settings', {
+        if (emit) this.comp.$emit('change-settings', {
              [this.name]: [this.t, this.y$]
         })
 
