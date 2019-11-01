@@ -18,6 +18,7 @@ export default {
                 } else {
                     this.show_pins = false
                 }
+                if (this.drag) this.drag_update()
             })
 
             this.mouse.on('mousedown', e => {
@@ -28,9 +29,14 @@ export default {
                     if (!this.selected) {
                         this.$emit('object-selected')
                     }
+                    this.start_drag()
                     e.preventDefault()
                     this.pins.forEach(x => x.mousedown(e, true))
                 }
+            })
+            this.mouse.on('mouseup', e => {
+                this.drag = null
+                this.$emit('scroll-lock', false)
             })
 
             this.keys = new Keys(this)
@@ -38,6 +44,7 @@ export default {
             this.keys.on('Backspace', this.remove_tool)
 
             this.show_pins = true
+            this.dragging = false
         },
         render_pins(ctx) {
             if (this.selected || this.show_pins) {
@@ -54,7 +61,7 @@ export default {
             // pins & collisions
             if (n.$uuid !== p.$uuid) {
                 for (var p of this.pins) p.re_init()
-                // TODO: coliisions
+                this.collisions = []
             }
         },
         pre_draw() {
@@ -65,6 +72,20 @@ export default {
         },
         remove_tool() {
             if (this.selected) this.$emit('remove-tool')
+        },
+        start_drag() {
+            this.$emit('scroll-lock', true)
+            let cursor = this.$props.cursor
+            this.drag = { t: cursor.t, y$: cursor.y$ }
+            this.pins.forEach(x => x.rec_position())
+        },
+        drag_update() {
+            let dt = this.$props.cursor.t - this.drag.t
+            let dy = this.$props.cursor.y$ - this.drag.y$
+            this.pins.forEach(x => x.update_from([
+                x.t1 + dt,
+                x.y$1 + dy
+            ]))
         }
     },
     computed: {

@@ -13,10 +13,12 @@ export default class Mouse {
         this.y$ = comp.$props.cursor.y$
     }
 
-    on(name, handler) {
+    // You can choose where to place the handler
+    // (beginning or end of the queue)
+    on(name, handler, dir = "unshift") {
         if (!handler) return
         this.map[name] = this.map[name] || []
-        this.map[name].push(handler)
+        this.map[name][dir](handler)
         this.listeners++
     }
 

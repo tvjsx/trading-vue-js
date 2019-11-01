@@ -94,6 +94,15 @@ export default class Pin {
         this.t = data[0]
         this.x = this.layout.t2screen(this.t)
 
+        this.comp.$emit('change-settings', {
+             [this.name]: [this.t, this.y$]
+        })
+
+    }
+
+    rec_position() {
+        this.t1 = this.t
+        this.y$1 = this.y$
     }
 
     mousemove(event) {
