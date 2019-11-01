@@ -27,6 +27,7 @@ export default {
                     this.mouse.x, this.mouse.y,
                 ))) {
                     if (!this.selected) {
+                        console.log(this.$props.settings.$uuid)
                         this.$emit('object-selected')
                     }
                     this.start_drag()
@@ -43,8 +44,8 @@ export default {
             this.keys.on('Delete', this.remove_tool)
             this.keys.on('Backspace', this.remove_tool)
 
-            this.show_pins = true
-            this.dragging = false
+            this.show_pins = false
+            this.drag = null
         },
         render_pins(ctx) {
             if (this.selected || this.show_pins) {
@@ -60,8 +61,11 @@ export default {
             // If layer $uuid is changed, then re-init
             // pins & collisions
             if (n.$uuid !== p.$uuid) {
+                console.log(n.$uuid, this.$props.settings.p1, this.$props.settings.p2)
                 for (var p of this.pins) p.re_init()
                 this.collisions = []
+                this.show_pins = false
+                this.drag = null
             }
         },
         pre_draw() {
@@ -82,10 +86,9 @@ export default {
         drag_update() {
             let dt = this.$props.cursor.t - this.drag.t
             let dy = this.$props.cursor.y$ - this.drag.y$
-            this.pins.forEach(x => x.update_from([
-                x.t1 + dt,
-                x.y$1 + dy
-            ]))
+            this.pins.forEach(x => x.update_from(
+                [x.t1 + dt, x.y$1 + dy], true
+            ))
         }
     },
     computed: {
