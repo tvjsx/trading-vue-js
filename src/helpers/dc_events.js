@@ -181,8 +181,6 @@ export default class DCEvents {
         if (!args.length) return
 
         var q = this.layer_query(args[0], args[1])
-        console.log(q)
-
         this.tv.$set(this.data, 'selected', q)
         this.merge(`${q}.settings`, {
             $selected: true
