@@ -1,5 +1,5 @@
 /*!
- * TradingVue.JS - v0.3.12 - Mon Sep 23 2019
+ * TradingVue.JS - v0.4.0 - Sat Nov 02 2019
  * https://github.com/C451/trading-vue-js
  * Copyright (c) 2019 c451 Code's All Right;
  * Licensed under the MIT license
@@ -98,18 +98,18 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 43);
+/******/ 	return __webpack_require__(__webpack_require__.s = 50);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayWithoutHoles = __webpack_require__(22);
+var arrayWithoutHoles = __webpack_require__(24);
 
-var iterableToArray = __webpack_require__(23);
+var iterableToArray = __webpack_require__(25);
 
-var nonIterableSpread = __webpack_require__(24);
+var nonIterableSpread = __webpack_require__(26);
 
 function _toConsumableArray(arr) {
   return arrayWithoutHoles(arr) || iterableToArray(arr) || nonIterableSpread();
@@ -2801,11 +2801,11 @@ if (true) {
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayWithHoles = __webpack_require__(25);
+var arrayWithHoles = __webpack_require__(27);
 
-var iterableToArrayLimit = __webpack_require__(26);
+var iterableToArrayLimit = __webpack_require__(28);
 
-var nonIterableRest = __webpack_require__(27);
+var nonIterableRest = __webpack_require__(29);
 
 function _slicedToArray(arr, i) {
   return arrayWithHoles(arr) || iterableToArrayLimit(arr, i) || nonIterableRest();
@@ -2815,6 +2815,12 @@ module.exports = _slicedToArray;
 
 /***/ }),
 /* 5 */
+/***/ (function(module) {
+
+module.exports = JSON.parse("{\"add.png\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAMAAADyHTlpAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAH5QTFRFAAAAAAAAAAAAAAAAAAAAAAAAAAAACgoKBgYGGxsbKioqPz8/Pj4+BQUFCQkJAQEBZGRkh4eHAgICEBAQNjY2g4ODgYGBAAAAAwMDeXl5d3d3GBgYERERgICAgICANDQ0PDw8Y2NjCAgIhYWFGhoaJycnOjo6YWFhgICAdXV14Y16sQAAACp0Uk5TAAILDxIKESEnJiYoKCgTKSkpKCAnKSkFKCkpJiDl/ycpKSA2JyYpKSkpOkQ+xgAAARdJREFUeJzllNt2gyAQRTWiRsHLoDU0GpPYmMv//2BMS+sgl6Z9bM8bi73gnJkBz/sn8lcBIUHofwtG8TpJKUuTLI6cYF7QEqRKynP71VX9AkhNXVlsbMQrLLQVGyPZLsGHWgPrCxMJwHUPlXa79NBp2et5d9f3u3m1XxatQNn7SagOXCUjCjYUDuqxcWlHj4MSfw12FDJchFViRN8+1qcQoUH6lR1L1mEMEErofB6WzEUwylzomfzOQGiOJdXiWH7mQoUyMa4WXJQWOBvLFvPCGxt6FSr5kyH0qi0YddNG2/pgCsOjff4ZTizXPNwKIzl56OoGg9d9Z/+5cs6On+CFCfevFQ3ZaTycx1YMbvDdRvjkp/lHdAcPXzokxcwfDwAAAABJRU5ErkJggg==\",\"cursor.png\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZAgMAAAC5h23wAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAxQTFRFAAAATU1NTU1NTU1NwlMHHwAAAAR0Uk5TAOvhxbpPrUkAAAAkSURBVHicY2BgYHBggAByabxg1WoGBq2pRCk9AKUbcND43AEAufYHlSuusE4AAAAASUVORK5CYII=\",\"display_off.png\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAMAAADyHTlpAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAU1QTFRFAAAAh4eHh4eHAAAAAAAAAAAAAwMDAAAAAAAAhoaGGBgYgYGBAAAAPz8/AgICg4ODCQkJhISEh4eHh4eHPj4+NjY2gYGBg4ODgYGBgYGBgoKCAQEBJycngoKChYWFEBAQg4ODCAgIKioqZGRkCgoKBQUFERERd3d3gYGBGxsbNDQ0hISEgYGBPDw8gYGBgYGBh4eHh4eHhYWFh4eHgoKChYWFgYGBgYGBg4ODhoaGg4ODYWFhgoKCBgYGdXV1goKCg4ODgYGBgICAgYGBAAAAg4ODhYWFhISEh4eHgoKChYWFOjo6goKCGhoah4eHh4eHh4eHgoKCh4eHeXl5hoaGgoKChISEgYGBgYGBgoKCY2NjgYGBgoKCh4eHgoKCgYGBhoaGg4ODhoaGhYWFh4eHgYGBhoaGhoaGhoaGg4ODgoKChISEgoKChYWFh4eHfKktUwAAAG90Uk5TACn/AhEFKA8SLCbxCigoVBNKUTYoJ/lh3PyAKSaTNiBtICYpISggKSkmJ0LEKef3lGxA8rn//+pcMSkpnCcptHPJKe0LUjnx5LzKKaMnX73hl64pLnhkzNSgKeLv17LQ+liIzaLe7PfTw5tFpz3K1fXR/gAAAgBJREFUeJzllNdXwjAUxknB0lIoCKVsGTIFQRAZ7r333nuv///R3LZ4mlDQZ/0ekp7b37n5bnITk+mfyDxv5Tir3fwjaElO5BIOKZFLJS1dQVfI0Y809TtEV+elo95RpFPWG+1go4fdQ5QybI8haaNBkM2ANbM09bnrwaPY7iFKrz7EMBdu7CHdVruXIt0M1hb+GKA3LTRKkp5lTA6Dg6xIkhaHhvQ1IlW/UCouQdJNJTRIpk1qO7+wUpcfpl537oBc7VNip3Gi/AmVPBAC1UrL6HXtSGVT+k2Yz0Focad07OMRf3P5BEbd63PFQx7HN+w61JoAm+uBlV48O/0jkLSMmtPCmQ8HwlYdykFV4/LJPp7e3hVyFdapHNehLk6PSjhSkBvwu/cFyJGIYvOyhoc1jjYQFGbygD4CWjoAMla/og3YoSw+KPhjPNoFcim4iFD+pFYA8zZ9WeYU5OBjZ3ORWyCfG03E+47kKpCIJTpGO4KP8XMgtw990xG/PBNTgmPEEXwf7P42oOdFIRAoBCtqTKL6Rcwq4Xsgh5xYC/mmSs6yJKk1YbnVeTq1NaEpmlHbmVn2EORkW2trF2ZzmHGTSUMGl1a9hp4ySRpdQ8yKGURpMmRIYg9pb1YPzg6kO79cLlE6bYFjEtv91bLEUxvhwbWwjY13BxUb9l8+mn9EX8x3Nki8ff5wAAAAAElFTkSuQmCC\",\"display_on.png\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAMAAADyHTlpAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAR1QTFRFAAAAh4eHgYGBAAAAAAAAgYGBAAAAAwMDAAAAAAAAgYGBg4ODGBgYgYGBhISEAAAAPz8/AgIChoaGCQkJhYWFPj4+NjY2goKCgYGBAQEBJycngYGBgoKCEBAQCAgIhISEKioqZGRkCgoKBQUFERERd3d3gYGBg4ODgYGBGxsbNDQ0hISEgoKCgoKChYWFPDw8gYGBgYGBhoaGgoKCg4ODgoKCgYGBgoKCgoKCgoKCg4ODgoKChoaGgoKCgYGBhoaGg4ODYWFhBgYGdXV1gYGBg4ODgoKCgICAg4ODg4ODhISEAAAAg4ODOjo6gYGBGhoaeXl5goKCgYGBgoKChYWFgoKChISEgoKCY2NjgYGBg4ODgYGBgYGBg4ODgYGBo8n54AAAAF90Uk5TACn/AhH3BSgPEuhUJvFACigoLBM2KCeA6ykm+pMgIEkmKSEoICn9XCkmJ0u6nDop4sUypGuEzLZ6vmCYLZ/dLykpJynUYa8pcllCC1Ip2ycpisl1PadFsintbsPQZdi/bTW7AAAB4UlEQVR4nOWUZ1fCMBSGSSGWFiq0UDbIkr2XbBwMxS0b1P//M0xK9XSiftX7oel585zkvfcmMRj+SRhvzRRlthm/BU3Ry3TYzofTsajpIOjw2iNAjIiddehvHXSdA0mkXEEdG0fkE1DEKXmkSVqVIA6rBmsktUgAWLWHoGp30UNclbtLmwQgoyya91wPTbFy0mQXJ5zJQO6BgXRjfH0iSkX5stHIXr5r0bB/lu8syjR8rzsFbR2SpX+5J2eMP3csLtYsEY2K8BeTFuE2jaVCBw7bHOBuxq16AXmpbui3LtIfbRLUHMY2q4lcFo2WB4KA1SUAlWumNEKCzyxBKZxVHvYGaFguCBx1vM/x0IPzoqQoj5SdP4mns2cCGhBsrgj0uaeUBtzMyxQN8w4mYROTW8+r0oANp8W5mf6WQw5aCYJ2o7ymPaKMi2uVpmWM4TW6tdImgGo1bT4nK6DbbsCc0AZSdmLEFszzHrh6riVvRrNA3/9SE8QLWQu+Gjto9+gE9NBMwr9zi83gFeeFTe11zpm1CHE3HeyVCSknf3MIDcFTbfJKdbR1L4xX49L+/BoillV5uPJqkshD3JWSgpNMXP/lcrD8+hO84MnDr5YpFHv0Fe99VjJ0GBRs2H74aP6R+ACr+TFvZNAQ1wAAAABJRU5ErkJggg==\",\"down.png\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAMAAADyHTlpAAAAAXNSR0IB2cksfwAAAKVQTFRFAAAAg4ODgICAAAAAAAAAAAAACAgIAAAAAAAAAAAAAAAAOTk5hYWFEBAQfHx8ODg4dnZ2NDQ0XV1dGxsbKCgogICAFBQUIiIiZGRkgICAgICAFRUVAAAAgICAgICAgICAf39/Li4ugICAcHBwgoKCgICAgoKCgICAg4ODgYGBPj4+goKCgICAhISEgYGBgICAgoKCgICAgYGBgYGBf39/gICAgICAIdPQHAAAADd0Uk5TACn/KAIRIBMFDwooKyApKSknKSYmzCcmKfL7JRCUi2L3J7IpcLUrr0VbKXntNEnkMbxrUcG56CMpi50AAAFZSURBVHic5ZRpf4MgDIeFKFatWm/tfW091u7evv9Hm1Acoujm2y0vFPH5Jf+EEE37J6bblmlatv4jaBCI4rMfR0CMXtAEJ0fccgfM7tAkQHXzArdDxggmqGETGCnJWROkNlOwOqhIhKCtgbSicw1uK/dATSK0aRatIzytA8ik4XSiyJnLSm+VPxULgeyLI3uHRJH+qcB4WZGrKb4c20WwI7b3iUt74OS6XD+xZWrXUCtme0uKTvfcJ65CZFa9VOebqwXmft+oT8yF+/VymT4XeGB+Xx8L+j4gBcoFIDT+oMz6Qp93Y74pCeBpUXaLuW0rUk6r1iv3nP322ewYkgv2nZIvgpSPQDrY5wTjRJDNg9XAE/+uSXIVX812GdKEmtvR2rtWaw+5MAOuofJy79SXu9TgBl4d9DZdI0NjgyiswNCB/qk1J5Bmvp+lQOa9IJNhW4bxm6H5R+wLQYMSQXZNzbcAAAAASUVORK5CYII=\",\"extended.png\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZAQMAAAD+JxcgAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAZQTFRFAAAATU1NkJ+rOQAAAAJ0Uk5TAP9bkSK1AAAANElEQVR4nGNggABGEMEEIlhABAeI+AASF0AlHmAqA4kzKAAx8wGQuAMKwd6AoYzBAWonAwAcLwTgNfJ3RQAAAABJRU5ErkJggg==\",\"remove.png\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAMAAADyHTlpAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAK5QTFRFAAAAh4eHgICAAAAAAAAAh4eHAAAAAwMDAAAAAAAAgICAGBgYAAAAPz8/AgICgICACQkJhoaGhoaGgICAPj4+NjY2gYGBg4ODgYGBAQEBJycngoKCEBAQgICAgICACAgIKioqZGRkCgoKBQUFERERd3d3gYGBGxsbNDQ0gICAPDw8YWFhBgYGdXV1gICAg4ODgICAAAAAOjo6GhoaeXl5gICAhYWFY2NjhYWFgICA9O0oCgAAADp0Uk5TACn/AhErBSgPEvEmCigowxMuMcgoJ7hWrCkmdCD6vSAmKSEoICkpJie6KSknKSkp0wspJynCMik11rrLte8AAAFwSURBVHic5ZTXkoIwFIZNAAPSpKkoRQV7Wcva3v/FFiRmEwise7t7bs7MP98k/ylJq/VPQjjKiiJrwo+gON0uxro7XiRTsRHs+voE4JjoRrf+6sD7AFTMvaDGRht9glLMUJtLqmUwD5XDCohHAmBUPQSV27GHtFK7xycBWJab5uPaR+Hlmue7GfZxHwyWFHVMQghXFgD2A8IOZtfssdNJIXcyFEaSfchzp9BuMVP+Fhvr5Qh0nGfqYTGhm3BcYFUaQBKOhMWzRqHyGFRY03ppQ5lCFZ30RloVZGQTaa3QqEt0OyrQnkSkk8I1YJkvAwPCMgY0UpbzXRZhVbosIWGbZTLNQszGMCM42FJEjWDDjIAMtp+xj6x2K+/DqNDc0r4Yc8yGl3uer2aIyT1iyd8sYSuY8cldZbVrH4zPebTvP8OMNSoedj6XzDyk3pwG98u0/ufqGu7tBW5c1PxriXFyHq5PQxXFzeDThvbmp/lH4gt6WxfZ03H8DwAAAABJRU5ErkJggg==\",\"segment.png\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZAgMAAAC5h23wAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAlQTFRFAAAATU1NJCQkCxcHIQAAAAN0Uk5TAP8SmutI5AAAACxJREFUeJxjYMACGAMgNAsLdpoVKi8AVe8A1QblQlWRKt0AoULw2w1zGxoAABdiAviQhF/mAAAAAElFTkSuQmCC\",\"settings.png\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAMAAADyHTlpAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAW5QTFRFAAAAAAAAAAAAAAAAAAAAAAAAAAAACgoKBgYGGxsbKioqQEBAPj4+BQUFCAgIAQEBPz8/ZWVlh4eHZGRkAgICCQkJDw8PNjY2g4ODgoKCNTU1EBAQAAAAAwMDeXl5d3d3AAAAGBgYAAAAERERioqKgoKCgoKCgoKCgYGBgoKChISEhoaGNDQ0g4ODgICAgICAgICAgYGBgYGBhYWFgICAgICAPT09AAAAgYGBgICAgICAgICAgICAY2NjCAgIgICAgICAhYWFhYWFgYGBHBwcgICAhYWFGhoagYGBgYGBg4ODhoaGJycnAAAAhISEgICAg4ODPDw8AAAAgoKCgICAhISEOjo6h4eHgoKCgYGBgICAf39/gYGBgoKCgICAGBgYgYGBg4ODg4ODgICACwsLgYGBgICAgYGBgYGBgYGBgICAgYGBYWFhf39/g4ODPj4+gYGBg4ODgICAhYWFgoKCgYGBgICAgYGBgoKCdXV1T0kC9QAAAHp0Uk5TAAILDxMKESEnJiYpKSgTKSgpKSkoEyAnKSknIAYoKSkFJQEgKl94jYVvVC4nU9f/+K8pOu71KBCi3NPq/ikg0e01Nokm1UUnsZVqQSYOT9lrKRJz5lIpK12jyu+sesgnhGVLxCG55a6Um+GaKfJCKKRgKUt8ocergymDQ9knAAABsElEQVR4nOWUV1vCMBSGg1AQpBZrcVdE3KJxo4LgnuCoe4F7orjHv7doTk3bgF7rd5OnX94nZ+SkCP0TWQqsNpuVs/wI2h2FTleR2+XkHfa8YLHgKRGJSj2SN3fosvIKkVJlVXWONGrkWtEgn1zHJP1GMCs/g7XILFIUpXoTWmaKTnIImGovh72Gxqbmlta2dvgOGpsmQO0dnfhTXd3E6JH0pN1DNnr7MFE/HDsQ0qEO6Pxg9sCh4XDkGx2J6sovBD+G8eiYuo5PxLTKeLoJBZNgT2EcnjY0YYajUKsL7Fk1gcjU3PwChcYTFGorAnsRqlpa1tAVhUbdmr+6RtjIOlgbCjMBUdzc2t7ZzbJ7zAQ4p6GSfRVNwkeKLsvCg31w2JBdjlT0GDxZNzEnpcQ+xWfnFxeXVyp6Tay07gq+L/YUOoBvbomV0V8skiq//DutWfeEfJD1JPLCED4+Pb8kX986tApNQ4iqfSJT76bRzvlgBPODQXW/foYqK5lyeBeYJEL1gaoeGnwIBhjRoQ9SZgTAdEbO/9cKRfmZ+MpGPCVHQ3nBzzS4hKIkuNyh/5g+ALiAXSSas9hwAAAAAElFTkSuQmCC\",\"trash.png\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZAQMAAAD+JxcgAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAZQTFRFAAAATU1NkJ+rOQAAAAJ0Uk5TAP9bkSK1AAAALUlEQVR4nGNgAIN6ENHQACX4//9gYBBgYIESYC4LkA0lPEkmGFAI5v8PILYCAHygDJxlK0RUAAAAAElFTkSuQmCC\",\"up.png\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAMAAADyHTlpAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAMZQTFRFAAAAh4eHgICAAAAAAAAAAAAAAwMDAAAAAAAAGBgYAAAAPz8/AgICCQkJgICAh4eHPj4+NjY2AQEBJycnEBAQgICAgICACAgIKioqZGRkCgoKBQUFgYGBERERd3d3gYGBGxsbNDQ0gICAgYGBPDw8gYGBh4eHgICAYWFhBgYGgYGBdXV1goKCg4ODhYWFgICAgoKCAAAAhISEOjo6gICAGhoagYGBeXl5hoaGgICAY2Njg4ODgoKCgoKCgYGBgoKCg4ODgoKC64uw1gAAAEJ0Uk5TACn/AhEFKA8SJgooKBP7KignKSYg9c0gJikhKLQgKSkmJ7ywKY8s5SknlClxKTMpXwtFKe0neiku8ClKWmSbbFFjM5GHSgAAAW5JREFUeJzllGd/gjAQxk3AMFWWOHDvVa2rVbu//5cqhJWQQO3b9nkVjv/v7rnLKJX+iYS9JMuSKvwIiu3loKkZzYHXFgvBiqW1QKSWplfySzvmAyDUN50cG2X0DDLqoTKXVLJgIIXDCohHAqCzHhymeuShy/Ru8kkAhtmhWUTvW9fdEnPQaVLU0n8XF0L3kn5P6LTtZPKgNoK+RrUkcGtQ7S9TsgOxxinrkUPYD+LwLCIh7CTsWSVQqRmTuPqpitlZFLQlApXjrsYBc335wOw47ksmUSMMrgKi/gnAE/awCqNHmTUwDf5X34LlBuedsgbUsK15kPMxTIXzzvFSIdsSPBw7nGD1K+7bL3F9xStEnZhoCw71TbpL71GBBbUF1MZmZWTOi97PI3eIJn9zCEtOj0+umaOde2EszqW9/xr6rM54WFtc0vfQNak57Ibd/Jerohu3GFwYqPjVEhve2Z4cbQU1ikFsQ73z0fwj+ga3VBezGuggFQAAAABJRU5ErkJggg==\"}");
+
+/***/ }),
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2905,7 +2911,7 @@ function toComment(sourceMap) {
 }
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3167,22 +3173,6 @@ function applyToTag (styleElement, obj) {
 
 
 /***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(32);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var add = __webpack_require__(6).default
-var update = add("68f243ea", content, false, {});
-// Hot Module Replacement
-if(false) {}
-
-/***/ }),
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3193,8 +3183,8 @@ var content = __webpack_require__(34);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var add = __webpack_require__(6).default
-var update = add("9895d3a6", content, false, {});
+var add = __webpack_require__(7).default
+var update = add("68f243ea", content, false, {});
 // Hot Module Replacement
 if(false) {}
 
@@ -3209,8 +3199,8 @@ var content = __webpack_require__(36);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var add = __webpack_require__(6).default
-var update = add("1db01c0b", content, false, {});
+var add = __webpack_require__(7).default
+var update = add("9895d3a6", content, false, {});
 // Hot Module Replacement
 if(false) {}
 
@@ -3225,8 +3215,8 @@ var content = __webpack_require__(38);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var add = __webpack_require__(6).default
-var update = add("12d2309d", content, false, {});
+var add = __webpack_require__(7).default
+var update = add("1db01c0b", content, false, {});
 // Hot Module Replacement
 if(false) {}
 
@@ -3241,13 +3231,115 @@ var content = __webpack_require__(40);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var add = __webpack_require__(6).default
-var update = add("1b34bfeb", content, false, {});
+var add = __webpack_require__(7).default
+var update = add("12d2309d", content, false, {});
 // Hot Module Replacement
 if(false) {}
 
 /***/ }),
 /* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(42);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var add = __webpack_require__(7).default
+var update = add("1b34bfeb", content, false, {});
+// Hot Module Replacement
+if(false) {}
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(44);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var add = __webpack_require__(7).default
+var update = add("604bf5ef", content, false, {});
+// Hot Module Replacement
+if(false) {}
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(46);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var add = __webpack_require__(7).default
+var update = add("f32fd36e", content, false, {});
+// Hot Module Replacement
+if(false) {}
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var _typeof = __webpack_require__(18);
+
+var assertThisInitialized = __webpack_require__(47);
+
+function _possibleConstructorReturn(self, call) {
+  if (call && (_typeof(call) === "object" || typeof call === "function")) {
+    return call;
+  }
+
+  return assertThisInitialized(self);
+}
+
+module.exports = _possibleConstructorReturn;
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports) {
+
+function _getPrototypeOf(o) {
+  module.exports = _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
+    return o.__proto__ || Object.getPrototypeOf(o);
+  };
+  return _getPrototypeOf(o);
+}
+
+module.exports = _getPrototypeOf;
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var setPrototypeOf = __webpack_require__(48);
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function");
+  }
+
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) setPrototypeOf(subClass, superClass);
+}
+
+module.exports = _inherits;
+
+/***/ }),
+/* 18 */
 /***/ (function(module, exports) {
 
 function _typeof2(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof2 = function _typeof2(obj) { return typeof obj; }; } else { _typeof2 = function _typeof2(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof2(obj); }
@@ -3269,28 +3361,35 @@ function _typeof(obj) {
 module.exports = _typeof;
 
 /***/ }),
-/* 13 */
+/* 19 */
 /***/ (function(module, exports) {
 
-function _assertThisInitialized(self) {
-  if (self === void 0) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
   }
 
-  return self;
+  return obj;
 }
 
-module.exports = _assertThisInitialized;
+module.exports = _defineProperty;
 
 /***/ }),
-/* 14 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(42);
+module.exports = __webpack_require__(49);
 
 
 /***/ }),
-/* 15 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -3300,9 +3399,9 @@ module.exports = __webpack_require__(42);
 /**
  * Dependencies
  */
-var util = __webpack_require__(28),
-    cmp = __webpack_require__(29),
-    bin = __webpack_require__(30);
+var util = __webpack_require__(30),
+    cmp = __webpack_require__(31),
+    bin = __webpack_require__(32);
 
 /**
  * Module interface definition
@@ -3514,7 +3613,7 @@ IndexedArray.prototype.getRange = function (begin, end) {
 
 
 /***/ }),
-/* 16 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -3844,67 +3943,7 @@ if (typeof window.define === 'function' && window.define.amd) {
 
 
 /***/ }),
-/* 17 */
-/***/ (function(module) {
-
-module.exports = JSON.parse("{\"add.png\":\"iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAMAAADyHTlpAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAH5QTFRFAAAAAAAAAAAAAAAAAAAAAAAAAAAACgoKBgYGGxsbKioqPz8/Pj4+BQUFCQkJAQEBZGRkh4eHAgICEBAQNjY2g4ODgYGBAAAAAwMDeXl5d3d3GBgYERERgICAgICANDQ0PDw8Y2NjCAgIhYWFGhoaJycnOjo6YWFhgICAdXV14Y16sQAAACp0Uk5TAAILDxIKESEnJiYoKCgTKSkpKCAnKSkFKCkpJiDl/ycpKSA2JyYpKSkpOkQ+xgAAARdJREFUeJzllNt2gyAQRTWiRsHLoDU0GpPYmMv//2BMS+sgl6Z9bM8bi73gnJkBz/sn8lcBIUHofwtG8TpJKUuTLI6cYF7QEqRKynP71VX9AkhNXVlsbMQrLLQVGyPZLsGHWgPrCxMJwHUPlXa79NBp2et5d9f3u3m1XxatQNn7SagOXCUjCjYUDuqxcWlHj4MSfw12FDJchFViRN8+1qcQoUH6lR1L1mEMEErofB6WzEUwylzomfzOQGiOJdXiWH7mQoUyMa4WXJQWOBvLFvPCGxt6FSr5kyH0qi0YddNG2/pgCsOjff4ZTizXPNwKIzl56OoGg9d9Z/+5cs6On+CFCfevFQ3ZaTycx1YMbvDdRvjkp/lHdAcPXzokxcwfDwAAAABJRU5ErkJggg==\",\"display_off.png\":\"iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAMAAADyHTlpAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAU1QTFRFAAAAh4eHh4eHAAAAAAAAAAAAAwMDAAAAAAAAhoaGGBgYgYGBAAAAPz8/AgICg4ODCQkJhISEh4eHh4eHPj4+NjY2gYGBg4ODgYGBgYGBgoKCAQEBJycngoKChYWFEBAQg4ODCAgIKioqZGRkCgoKBQUFERERd3d3gYGBGxsbNDQ0hISEgYGBPDw8gYGBgYGBh4eHh4eHhYWFh4eHgoKChYWFgYGBgYGBg4ODhoaGg4ODYWFhgoKCBgYGdXV1goKCg4ODgYGBgICAgYGBAAAAg4ODhYWFhISEh4eHgoKChYWFOjo6goKCGhoah4eHh4eHh4eHgoKCh4eHeXl5hoaGgoKChISEgYGBgYGBgoKCY2NjgYGBgoKCh4eHgoKCgYGBhoaGg4ODhoaGhYWFh4eHgYGBhoaGhoaGhoaGg4ODgoKChISEgoKChYWFh4eHfKktUwAAAG90Uk5TACn/AhEFKA8SLCbxCigoVBNKUTYoJ/lh3PyAKSaTNiBtICYpISggKSkmJ0LEKef3lGxA8rn//+pcMSkpnCcptHPJKe0LUjnx5LzKKaMnX73hl64pLnhkzNSgKeLv17LQ+liIzaLe7PfTw5tFpz3K1fXR/gAAAgBJREFUeJzllNdXwjAUxknB0lIoCKVsGTIFQRAZ7r333nuv///R3LZ4mlDQZ/0ekp7b37n5bnITk+mfyDxv5Tir3fwjaElO5BIOKZFLJS1dQVfI0Y809TtEV+elo95RpFPWG+1go4fdQ5QybI8haaNBkM2ANbM09bnrwaPY7iFKrz7EMBdu7CHdVruXIt0M1hb+GKA3LTRKkp5lTA6Dg6xIkhaHhvQ1IlW/UCouQdJNJTRIpk1qO7+wUpcfpl537oBc7VNip3Gi/AmVPBAC1UrL6HXtSGVT+k2Yz0Focad07OMRf3P5BEbd63PFQx7HN+w61JoAm+uBlV48O/0jkLSMmtPCmQ8HwlYdykFV4/LJPp7e3hVyFdapHNehLk6PSjhSkBvwu/cFyJGIYvOyhoc1jjYQFGbygD4CWjoAMla/og3YoSw+KPhjPNoFcim4iFD+pFYA8zZ9WeYU5OBjZ3ORWyCfG03E+47kKpCIJTpGO4KP8XMgtw990xG/PBNTgmPEEXwf7P42oOdFIRAoBCtqTKL6Rcwq4Xsgh5xYC/mmSs6yJKk1YbnVeTq1NaEpmlHbmVn2EORkW2trF2ZzmHGTSUMGl1a9hp4ySRpdQ8yKGURpMmRIYg9pb1YPzg6kO79cLlE6bYFjEtv91bLEUxvhwbWwjY13BxUb9l8+mn9EX8x3Nki8ff5wAAAAAElFTkSuQmCC\",\"display_on.png\":\"iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAMAAADyHTlpAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAR1QTFRFAAAAh4eHgYGBAAAAAAAAgYGBAAAAAwMDAAAAAAAAgYGBg4ODGBgYgYGBhISEAAAAPz8/AgIChoaGCQkJhYWFPj4+NjY2goKCgYGBAQEBJycngYGBgoKCEBAQCAgIhISEKioqZGRkCgoKBQUFERERd3d3gYGBg4ODgYGBGxsbNDQ0hISEgoKCgoKChYWFPDw8gYGBgYGBhoaGgoKCg4ODgoKCgYGBgoKCgoKCgoKCg4ODgoKChoaGgoKCgYGBhoaGg4ODYWFhBgYGdXV1gYGBg4ODgoKCgICAg4ODg4ODhISEAAAAg4ODOjo6gYGBGhoaeXl5goKCgYGBgoKChYWFgoKChISEgoKCY2NjgYGBg4ODgYGBgYGBg4ODgYGBo8n54AAAAF90Uk5TACn/AhH3BSgPEuhUJvFACigoLBM2KCeA6ykm+pMgIEkmKSEoICn9XCkmJ0u6nDop4sUypGuEzLZ6vmCYLZ/dLykpJynUYa8pcllCC1Ip2ycpisl1PadFsintbsPQZdi/bTW7AAAB4UlEQVR4nOWUZ1fCMBSGSSGWFiq0UDbIkr2XbBwMxS0b1P//M0xK9XSiftX7oel585zkvfcmMRj+SRhvzRRlthm/BU3Ry3TYzofTsajpIOjw2iNAjIiddehvHXSdA0mkXEEdG0fkE1DEKXmkSVqVIA6rBmsktUgAWLWHoGp30UNclbtLmwQgoyya91wPTbFy0mQXJ5zJQO6BgXRjfH0iSkX5stHIXr5r0bB/lu8syjR8rzsFbR2SpX+5J2eMP3csLtYsEY2K8BeTFuE2jaVCBw7bHOBuxq16AXmpbui3LtIfbRLUHMY2q4lcFo2WB4KA1SUAlWumNEKCzyxBKZxVHvYGaFguCBx1vM/x0IPzoqQoj5SdP4mns2cCGhBsrgj0uaeUBtzMyxQN8w4mYROTW8+r0oANp8W5mf6WQw5aCYJ2o7ymPaKMi2uVpmWM4TW6tdImgGo1bT4nK6DbbsCc0AZSdmLEFszzHrh6riVvRrNA3/9SE8QLWQu+Gjto9+gE9NBMwr9zi83gFeeFTe11zpm1CHE3HeyVCSknf3MIDcFTbfJKdbR1L4xX49L+/BoillV5uPJqkshD3JWSgpNMXP/lcrD8+hO84MnDr5YpFHv0Fe99VjJ0GBRs2H74aP6R+ACr+TFvZNAQ1wAAAABJRU5ErkJggg==\",\"down.png\":\"iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAMAAADyHTlpAAAAAXNSR0IB2cksfwAAAKVQTFRFAAAAg4ODgICAAAAAAAAAAAAACAgIAAAAAAAAAAAAAAAAOTk5hYWFEBAQfHx8ODg4dnZ2NDQ0XV1dGxsbKCgogICAFBQUIiIiZGRkgICAgICAFRUVAAAAgICAgICAgICAf39/Li4ugICAcHBwgoKCgICAgoKCgICAg4ODgYGBPj4+goKCgICAhISEgYGBgICAgoKCgICAgYGBgYGBf39/gICAgICAIdPQHAAAADd0Uk5TACn/KAIRIBMFDwooKyApKSknKSYmzCcmKfL7JRCUi2L3J7IpcLUrr0VbKXntNEnkMbxrUcG56CMpi50AAAFZSURBVHic5ZRpf4MgDIeFKFatWm/tfW091u7evv9Hm1Acoujm2y0vFPH5Jf+EEE37J6bblmlatv4jaBCI4rMfR0CMXtAEJ0fccgfM7tAkQHXzArdDxggmqGETGCnJWROkNlOwOqhIhKCtgbSicw1uK/dATSK0aRatIzytA8ik4XSiyJnLSm+VPxULgeyLI3uHRJH+qcB4WZGrKb4c20WwI7b3iUt74OS6XD+xZWrXUCtme0uKTvfcJ65CZFa9VOebqwXmft+oT8yF+/VymT4XeGB+Xx8L+j4gBcoFIDT+oMz6Qp93Y74pCeBpUXaLuW0rUk6r1iv3nP322ewYkgv2nZIvgpSPQDrY5wTjRJDNg9XAE/+uSXIVX812GdKEmtvR2rtWaw+5MAOuofJy79SXu9TgBl4d9DZdI0NjgyiswNCB/qk1J5Bmvp+lQOa9IJNhW4bxm6H5R+wLQYMSQXZNzbcAAAAASUVORK5CYII=\",\"remove.png\":\"iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAMAAADyHTlpAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAK5QTFRFAAAAh4eHgICAAAAAAAAAh4eHAAAAAwMDAAAAAAAAgICAGBgYAAAAPz8/AgICgICACQkJhoaGhoaGgICAPj4+NjY2gYGBg4ODgYGBAQEBJycngoKCEBAQgICAgICACAgIKioqZGRkCgoKBQUFERERd3d3gYGBGxsbNDQ0gICAPDw8YWFhBgYGdXV1gICAg4ODgICAAAAAOjo6GhoaeXl5gICAhYWFY2NjhYWFgICA9O0oCgAAADp0Uk5TACn/AhErBSgPEvEmCigowxMuMcgoJ7hWrCkmdCD6vSAmKSEoICkpJie6KSknKSkp0wspJynCMik11rrLte8AAAFwSURBVHic5ZTXkoIwFIZNAAPSpKkoRQV7Wcva3v/FFiRmEwise7t7bs7MP98k/ylJq/VPQjjKiiJrwo+gON0uxro7XiRTsRHs+voE4JjoRrf+6sD7AFTMvaDGRht9glLMUJtLqmUwD5XDCohHAmBUPQSV27GHtFK7xycBWJab5uPaR+Hlmue7GfZxHwyWFHVMQghXFgD2A8IOZtfssdNJIXcyFEaSfchzp9BuMVP+Fhvr5Qh0nGfqYTGhm3BcYFUaQBKOhMWzRqHyGFRY03ppQ5lCFZ30RloVZGQTaa3QqEt0OyrQnkSkk8I1YJkvAwPCMgY0UpbzXRZhVbosIWGbZTLNQszGMCM42FJEjWDDjIAMtp+xj6x2K+/DqNDc0r4Yc8yGl3uer2aIyT1iyd8sYSuY8cldZbVrH4zPebTvP8OMNSoedj6XzDyk3pwG98u0/ufqGu7tBW5c1PxriXFyHq5PQxXFzeDThvbmp/lH4gt6WxfZ03H8DwAAAABJRU5ErkJggg==\",\"settings.png\":\"iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAMAAADyHTlpAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAW5QTFRFAAAAAAAAAAAAAAAAAAAAAAAAAAAACgoKBgYGGxsbKioqQEBAPj4+BQUFCAgIAQEBPz8/ZWVlh4eHZGRkAgICCQkJDw8PNjY2g4ODgoKCNTU1EBAQAAAAAwMDeXl5d3d3AAAAGBgYAAAAERERioqKgoKCgoKCgoKCgYGBgoKChISEhoaGNDQ0g4ODgICAgICAgICAgYGBgYGBhYWFgICAgICAPT09AAAAgYGBgICAgICAgICAgICAY2NjCAgIgICAgICAhYWFhYWFgYGBHBwcgICAhYWFGhoagYGBgYGBg4ODhoaGJycnAAAAhISEgICAg4ODPDw8AAAAgoKCgICAhISEOjo6h4eHgoKCgYGBgICAf39/gYGBgoKCgICAGBgYgYGBg4ODg4ODgICACwsLgYGBgICAgYGBgYGBgYGBgICAgYGBYWFhf39/g4ODPj4+gYGBg4ODgICAhYWFgoKCgYGBgICAgYGBgoKCdXV1T0kC9QAAAHp0Uk5TAAILDxMKESEnJiYpKSgTKSgpKSkoEyAnKSknIAYoKSkFJQEgKl94jYVvVC4nU9f/+K8pOu71KBCi3NPq/ikg0e01Nokm1UUnsZVqQSYOT9lrKRJz5lIpK12jyu+sesgnhGVLxCG55a6Um+GaKfJCKKRgKUt8ocergymDQ9knAAABsElEQVR4nOWUV1vCMBSGg1AQpBZrcVdE3KJxo4LgnuCoe4F7orjHv7doTk3bgF7rd5OnX94nZ+SkCP0TWQqsNpuVs/wI2h2FTleR2+XkHfa8YLHgKRGJSj2SN3fosvIKkVJlVXWONGrkWtEgn1zHJP1GMCs/g7XILFIUpXoTWmaKTnIImGovh72Gxqbmlta2dvgOGpsmQO0dnfhTXd3E6JH0pN1DNnr7MFE/HDsQ0qEO6Pxg9sCh4XDkGx2J6sovBD+G8eiYuo5PxLTKeLoJBZNgT2EcnjY0YYajUKsL7Fk1gcjU3PwChcYTFGorAnsRqlpa1tAVhUbdmr+6RtjIOlgbCjMBUdzc2t7ZzbJ7zAQ4p6GSfRVNwkeKLsvCg31w2JBdjlT0GDxZNzEnpcQ+xWfnFxeXVyp6Tay07gq+L/YUOoBvbomV0V8skiq//DutWfeEfJD1JPLCED4+Pb8kX986tApNQ4iqfSJT76bRzvlgBPODQXW/foYqK5lyeBeYJEL1gaoeGnwIBhjRoQ9SZgTAdEbO/9cKRfmZ+MpGPCVHQ3nBzzS4hKIkuNyh/5g+ALiAXSSas9hwAAAAAElFTkSuQmCC\",\"up.png\":\"iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAMAAADyHTlpAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAMZQTFRFAAAAh4eHgICAAAAAAAAAAAAAAwMDAAAAAAAAGBgYAAAAPz8/AgICCQkJgICAh4eHPj4+NjY2AQEBJycnEBAQgICAgICACAgIKioqZGRkCgoKBQUFgYGBERERd3d3gYGBGxsbNDQ0gICAgYGBPDw8gYGBh4eHgICAYWFhBgYGgYGBdXV1goKCg4ODhYWFgICAgoKCAAAAhISEOjo6gICAGhoagYGBeXl5hoaGgICAY2Njg4ODgoKCgoKCgYGBgoKCg4ODgoKC64uw1gAAAEJ0Uk5TACn/AhEFKA8SJgooKBP7KignKSYg9c0gJikhKLQgKSkmJ7ywKY8s5SknlClxKTMpXwtFKe0neiku8ClKWmSbbFFjM5GHSgAAAW5JREFUeJzllGd/gjAQxk3AMFWWOHDvVa2rVbu//5cqhJWQQO3b9nkVjv/v7rnLKJX+iYS9JMuSKvwIiu3loKkZzYHXFgvBiqW1QKSWplfySzvmAyDUN50cG2X0DDLqoTKXVLJgIIXDCohHAqCzHhymeuShy/Ru8kkAhtmhWUTvW9fdEnPQaVLU0n8XF0L3kn5P6LTtZPKgNoK+RrUkcGtQ7S9TsgOxxinrkUPYD+LwLCIh7CTsWSVQqRmTuPqpitlZFLQlApXjrsYBc335wOw47ksmUSMMrgKi/gnAE/awCqNHmTUwDf5X34LlBuedsgbUsK15kPMxTIXzzvFSIdsSPBw7nGD1K+7bL3F9xStEnZhoCw71TbpL71GBBbUF1MZmZWTOi97PI3eIJn9zCEtOj0+umaOde2EszqW9/xr6rM54WFtc0vfQNak57Ibd/Jerohu3GFwYqPjVEhve2Z4cbQU1ikFsQ73z0fwj+ga3VBezGuggFQAAAABJRU5ErkJggg==\"}");
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var _typeof = __webpack_require__(12);
-
-var assertThisInitialized = __webpack_require__(13);
-
-function _possibleConstructorReturn(self, call) {
-  if (call && (_typeof(call) === "object" || typeof call === "function")) {
-    return call;
-  }
-
-  return assertThisInitialized(self);
-}
-
-module.exports = _possibleConstructorReturn;
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports) {
-
-function _getPrototypeOf(o) {
-  module.exports = _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
-    return o.__proto__ || Object.getPrototypeOf(o);
-  };
-  return _getPrototypeOf(o);
-}
-
-module.exports = _getPrototypeOf;
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var setPrototypeOf = __webpack_require__(41);
-
-function _inherits(subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function");
-  }
-
-  subClass.prototype = Object.create(superClass && superClass.prototype, {
-    constructor: {
-      value: subClass,
-      writable: true,
-      configurable: true
-    }
-  });
-  if (superClass) setPrototypeOf(subClass, superClass);
-}
-
-module.exports = _inherits;
-
-/***/ }),
-/* 21 */
+/* 23 */
 /***/ (function(module, exports) {
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
@@ -3946,7 +3985,7 @@ function _asyncToGenerator(fn) {
 module.exports = _asyncToGenerator;
 
 /***/ }),
-/* 22 */
+/* 24 */
 /***/ (function(module, exports) {
 
 function _arrayWithoutHoles(arr) {
@@ -3962,7 +4001,7 @@ function _arrayWithoutHoles(arr) {
 module.exports = _arrayWithoutHoles;
 
 /***/ }),
-/* 23 */
+/* 25 */
 /***/ (function(module, exports) {
 
 function _iterableToArray(iter) {
@@ -3972,7 +4011,7 @@ function _iterableToArray(iter) {
 module.exports = _iterableToArray;
 
 /***/ }),
-/* 24 */
+/* 26 */
 /***/ (function(module, exports) {
 
 function _nonIterableSpread() {
@@ -3982,7 +4021,7 @@ function _nonIterableSpread() {
 module.exports = _nonIterableSpread;
 
 /***/ }),
-/* 25 */
+/* 27 */
 /***/ (function(module, exports) {
 
 function _arrayWithHoles(arr) {
@@ -3992,7 +4031,7 @@ function _arrayWithHoles(arr) {
 module.exports = _arrayWithHoles;
 
 /***/ }),
-/* 26 */
+/* 28 */
 /***/ (function(module, exports) {
 
 function _iterableToArrayLimit(arr, i) {
@@ -4024,7 +4063,7 @@ function _iterableToArrayLimit(arr, i) {
 module.exports = _iterableToArrayLimit;
 
 /***/ }),
-/* 27 */
+/* 29 */
 /***/ (function(module, exports) {
 
 function _nonIterableRest() {
@@ -4034,7 +4073,7 @@ function _nonIterableRest() {
 module.exports = _nonIterableRest;
 
 /***/ }),
-/* 28 */
+/* 30 */
 /***/ (function(module, exports) {
 
 /**
@@ -4079,7 +4118,7 @@ module.exports.isSortableArrayLike = function (o) {
 
 
 /***/ }),
-/* 29 */
+/* 31 */
 /***/ (function(module, exports) {
 
 /**
@@ -4114,7 +4153,7 @@ module.exports = {
 
 
 /***/ }),
-/* 30 */
+/* 32 */
 /***/ (function(module, exports) {
 
 /**
@@ -4176,42 +4215,22 @@ module.exports.search = search;
 
 
 /***/ }),
-/* 31 */
+/* 33 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_LegendButton_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_LegendButton_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
 /* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_LegendButton_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_LegendButton_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
  /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_LegendButton_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
-/* 32 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(5)(false);
-// Module
-exports.push([module.i, "\n.t-vue-lbtn {\n    z-index: 100;\n    width: 21px;\n    height: 21px;\n    margin-bottom: -6px;\n    pointer-events: all;\n    cursor: pointer;\n}\n", ""]);
-
-
-
-/***/ }),
-/* 33 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ButtonGroup_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ButtonGroup_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ButtonGroup_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* unused harmony reexport * */
- /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ButtonGroup_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
-
-/***/ }),
 /* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(5)(false);
+exports = module.exports = __webpack_require__(6)(false);
 // Module
-exports.push([module.i, "\n.t-vue-lbtn-grp {\n    margin-left: 0.5em;\n}\n", ""]);
+exports.push([module.i, "\n.t-vue-lbtn {\n    z-index: 100;\n    width: 21px;\n    height: 21px;\n    margin-bottom: -6px;\n    pointer-events: all;\n    cursor: pointer;\n}\n", ""]);
 
 
 
@@ -4220,18 +4239,18 @@ exports.push([module.i, "\n.t-vue-lbtn-grp {\n    margin-left: 0.5em;\n}\n", ""]
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Legend_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Legend_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Legend_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ButtonGroup_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ButtonGroup_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ButtonGroup_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
- /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Legend_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+ /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ButtonGroup_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 /* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(5)(false);
+exports = module.exports = __webpack_require__(6)(false);
 // Module
-exports.push([module.i, "\n.trading-vue-legend {\n    position: relative;\n    z-index: 100;\n    font-size: 1.25em;\n    margin-left: 10px;\n    pointer-events: none;\n}\n.trading-vue-ohlcv {\n    pointer-events: none;\n    margin-bottom: 0.5em;\n}\n.t-vue-lspan {\n    font-variant-numeric: tabular-nums;\n    font-weight: 100;\n    font-size: 0.95em;\n    color: #999999; /* TODO: move => params */\n    margin-left: 0.1em;\n    margin-right: 0.2em;\n}\n.t-vue-title {\n    margin-right: 0.25em;\n    font-size: 1.45em;\n    font-weight: 200;\n}\n.t-vue-ind {\n    margin-left: 0.2em;\n    margin-bottom: 0.5em;\n    font-weight: 200;\n    font-size: 1.0em;\n}\n.t-vue-ivalue {\n    margin-left: 0.5em;\n}\n.t-vue-unknown {\n    color: #999999; /* TODO: move => params */\n}\n", ""]);
+exports.push([module.i, "\n.t-vue-lbtn-grp {\n    margin-left: 0.5em;\n}\n", ""]);
 
 
 
@@ -4240,18 +4259,18 @@ exports.push([module.i, "\n.trading-vue-legend {\n    position: relative;\n    z
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Section_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(10);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Section_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Section_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Legend_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(10);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Legend_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Legend_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
- /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Section_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+ /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Legend_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 /* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(5)(false);
+exports = module.exports = __webpack_require__(6)(false);
 // Module
-exports.push([module.i, "\n.trading-vue-section {\n    height: 0;\n    position: absolute;\n}\n", ""]);
+exports.push([module.i, "\n.trading-vue-legend {\n    position: relative;\n    z-index: 100;\n    font-size: 1.25em;\n    margin-left: 10px;\n    pointer-events: none;\n}\n.trading-vue-ohlcv {\n    pointer-events: none;\n    margin-bottom: 0.5em;\n}\n.t-vue-lspan {\n    font-variant-numeric: tabular-nums;\n    font-weight: 100;\n    font-size: 0.95em;\n    color: #999999; /* TODO: move => params */\n    margin-left: 0.1em;\n    margin-right: 0.2em;\n}\n.t-vue-title {\n    margin-right: 0.25em;\n    font-size: 1.45em;\n    font-weight: 200;\n}\n.t-vue-ind {\n    margin-left: 0.2em;\n    margin-bottom: 0.5em;\n    font-weight: 200;\n    font-size: 1.0em;\n}\n.t-vue-ivalue {\n    margin-left: 0.5em;\n}\n.t-vue-unknown {\n    color: #999999; /* TODO: move => params */\n}\n", ""]);
 
 
 
@@ -4260,23 +4279,97 @@ exports.push([module.i, "\n.trading-vue-section {\n    height: 0;\n    position:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Botbar_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(11);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Botbar_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Botbar_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Section_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(11);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Section_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Section_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
- /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Botbar_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+ /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Section_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 /* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(5)(false);
+exports = module.exports = __webpack_require__(6)(false);
+// Module
+exports.push([module.i, "\n.trading-vue-section {\n    height: 0;\n    position: absolute;\n}\n", ""]);
+
+
+
+/***/ }),
+/* 41 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Botbar_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Botbar_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Botbar_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* unused harmony reexport * */
+ /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Botbar_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+/* 42 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(6)(false);
 // Module
 exports.push([module.i, "\n.trading-vue-botbar {\n    position: relative !important;\n}\n", ""]);
 
 
 
 /***/ }),
-/* 41 */
+/* 43 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ToolbarItem_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(13);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ToolbarItem_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ToolbarItem_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* unused harmony reexport * */
+ /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ToolbarItem_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+/* 44 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(6)(false);
+// Module
+exports.push([module.i, "\n.trading-vue-tbitem {\n}\n.trading-vue-tbitem:hover {\n    background-color: #76878319;\n}\n.trading-vue-tbicon {\n    position: absolute;\n}\n.trading-vue-tbitem.selected-item .trading-vue-tbicon {\n     filter: brightness(1.45) sepia(1) hue-rotate(90deg) saturate(4.5) !important;\n}\n.pixelated {\n    -ms-interpolation-mode: nearest-neighbor;\n    image-rendering: -webkit-optimize-contrast;\n    image-rendering: -webkit-crisp-edges;\n    image-rendering: -moz-crisp-edges;\n    image-rendering: -o-crisp-edges;\n    image-rendering: pixelated;\n}\n\n", ""]);
+
+
+
+/***/ }),
+/* 45 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Toolbar_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(14);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Toolbar_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Toolbar_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* unused harmony reexport * */
+ /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Toolbar_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+/* 46 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(6)(false);
+// Module
+exports.push([module.i, "\n.trading-vue-toolbar {\n    position: absolute;\n    border-right: 1px solid black;\n    z-index: 100;\n    padding-top: 4px;\n}\n", ""]);
+
+
+
+/***/ }),
+/* 47 */
+/***/ (function(module, exports) {
+
+function _assertThisInitialized(self) {
+  if (self === void 0) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return self;
+}
+
+module.exports = _assertThisInitialized;
+
+/***/ }),
+/* 48 */
 /***/ (function(module, exports) {
 
 function _setPrototypeOf(o, p) {
@@ -4291,7 +4384,7 @@ function _setPrototypeOf(o, p) {
 module.exports = _setPrototypeOf;
 
 /***/ }),
-/* 42 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -5023,7 +5116,7 @@ try {
 
 
 /***/ }),
-/* 43 */
+/* 50 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5047,6 +5140,21 @@ var TradingVuevue_type_template_id_235c0ade_render = function() {
       attrs: { id: _vm.id }
     },
     [
+      _vm.toolbar
+        ? _c(
+            "toolbar",
+            _vm._b(
+              {
+                attrs: { config: _vm.chart_config },
+                on: { "custom-event": _vm.custom_event }
+              },
+              "toolbar",
+              _vm.chart_props,
+              false
+            )
+          )
+        : _vm._e(),
+      _vm._v(" "),
       _c(
         "chart",
         _vm._b(
@@ -5054,7 +5162,10 @@ var TradingVuevue_type_template_id_235c0ade_render = function() {
             key: _vm.reset,
             ref: "chart",
             attrs: { tv_id: _vm.id, config: _vm.chart_config },
-            on: { "legend-button-click": _vm.legend_button }
+            on: {
+              "custom-event": _vm.custom_event,
+              "legend-button-click": _vm.legend_button
+            }
           },
           "chart",
           _vm.chart_props,
@@ -5094,7 +5205,21 @@ var TIMESCALES = [YEAR * 10, YEAR * 5, YEAR * 3, YEAR * 2, YEAR, MONTH * 6, MONT
 var $SCALES = [0.05, 0.1, 0.2, 0.25, 0.5, 0.8, 1, 2, 5];
 var ChartConfig = {
   SBMIN: 60,
-  // px
+  // Minimal sidebar px
+  TOOLBAR: 57,
+  // Toolbar width px
+  TB_ICON: 25,
+  // Toolbar icon size px
+  TB_ITEM_M: 6,
+  // Toolbar item margin px
+  TB_ICON_BRI: 1,
+  // Toolbar icon brightness
+  TB_BORDER: 1,
+  // Toolbar border px
+  TB_B_STYLE: 'dotted',
+  // Toolbar border style
+  TOOL_COLL: 7,
+  // Tool collision threshold 
   EXPAND: 0.15,
   // %/100 of range
   CANDLEW: 0.6,
@@ -5143,7 +5268,7 @@ var Chartvue_type_template_id_4d06a4de_render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "trading-vue-chart" },
+    { staticClass: "trading-vue-chart", style: _vm.styles },
     [
       _c("keyboard", { ref: "keyboard" }),
       _vm._v(" "),
@@ -5159,6 +5284,7 @@ var Chartvue_type_template_id_4d06a4de_render = function() {
             "cursor-locked": _vm.cursor_locked,
             "sidebar-transform": _vm.set_ytransform,
             "layer-meta-props": _vm.layer_meta_props,
+            "custom-event": _vm.emit_custom_event,
             "legend-button-click": _vm.legend_button_click
           }
         })
@@ -5190,7 +5316,7 @@ var slicedToArray = __webpack_require__(4);
 var slicedToArray_default = /*#__PURE__*/__webpack_require__.n(slicedToArray);
 
 // EXTERNAL MODULE: ./node_modules/arrayslicer/lib/index.js
-var lib = __webpack_require__(15);
+var lib = __webpack_require__(21);
 var lib_default = /*#__PURE__*/__webpack_require__.n(lib);
 
 // CONCATENATED MODULE: ./src/stuff/utils.js
@@ -5365,8 +5491,7 @@ var lib_default = /*#__PURE__*/__webpack_require__.n(lib);
       var range = self.height;
       var range$ = self.$_hi - self.$_lo;
       var y$ = (range - y) * (range$ / range);
-      var prec = self.prec;
-      return (self.$_lo + y$).toFixed(prec);
+      return self.$_lo + y$;
     },
     // Screen-X to timestamp
     screen2t: function screen2t(x) {
@@ -6016,6 +6141,7 @@ var Sectionvue_type_template_id_8fbe9336_render = function() {
               "cursor-changed": _vm.cursor_changed,
               "cursor-locked": _vm.cursor_locked,
               "layer-meta-props": _vm.emit_meta_props,
+              "custom-event": _vm.emit_custom_event,
               "sidebar-transform": _vm.sidebar_transform
             }
           },
@@ -6051,7 +6177,7 @@ Sectionvue_type_template_id_8fbe9336_render._withStripped = true
 var hammer = __webpack_require__(3);
 
 // EXTERNAL MODULE: ./node_modules/hamsterjs/hamster.js
-var hamsterjs_hamster = __webpack_require__(16);
+var hamsterjs_hamster = __webpack_require__(22);
 var hamster_default = /*#__PURE__*/__webpack_require__.n(hamsterjs_hamster);
 
 // CONCATENATED MODULE: ./src/components/js/grid.js
@@ -6064,7 +6190,7 @@ var hamster_default = /*#__PURE__*/__webpack_require__.n(hamsterjs_hamster);
 // Think of it as an I/O system for Grid.vue
 
 
-
+ // Grid is good.
 
 var grid_Grid =
 /*#__PURE__*/
@@ -6083,6 +6209,7 @@ function () {
     this.id = this.$p.grid_id;
     this.layout = this.$p.layout.grids[this.id];
     this.interval = this.$p.interval;
+    this.cursor = comp.$props.cursor;
     this.offset_x = 0;
     this.offset_y = 0;
     this.deltas = 0; // Wheel delta events
@@ -6108,13 +6235,15 @@ function () {
         enable: true
       });
       mc.on('panstart', function (event) {
+        if (_this.cursor.scroll_lock) return;
+        var tfrm = _this.$p.y_transform;
         _this.drug = {
           x: event.center.x + _this.offset_x,
           y: event.center.y + _this.offset_y,
           r: _this.range.slice(),
           t: _this.range[1] - _this.range[0],
-          o: _this.$p.y_transform ? _this.$p.y_transform.offset || 0 : 0,
-          y_r: _this.$p.y_transform ? _this.$p.y_transform.range.slice() : undefined
+          o: tfrm ? tfrm.offset || 0 : 0,
+          y_r: tfrm && tfrm.range ? tfrm.range.slice() : undefined
         };
 
         _this.comp.$emit('cursor-changed', {
@@ -6203,8 +6332,13 @@ function () {
   }, {
     key: "mousedown",
     value: function mousedown(event) {
-      this.comp.$emit('cursor-locked', true);
       this.propagate('mousedown', event);
+      this.comp.$emit('cursor-locked', true);
+      if (event.defaultPrevented) return;
+      this.comp.$emit('custom-event', {
+        event: 'grid-mousedown',
+        args: [this.id]
+      });
     }
   }, {
     key: "click",
@@ -6261,7 +6395,10 @@ function () {
 
         _this2.ctx.save();
 
-        l.renderer.draw(_this2.ctx);
+        var r = l.renderer;
+        if (r.pre_draw) r.pre_draw(_this2.ctx);
+        r.draw(_this2.ctx);
+        if (r.post_draw) r.post_draw(_this2.ctx);
 
         _this2.ctx.restore();
       });
@@ -6450,6 +6587,17 @@ function () {
 
           if (layer.renderer[name]) {
             layer.renderer[name](event);
+          }
+
+          var mouse = layer.renderer.mouse;
+          var keys = layer.renderer.keys;
+
+          if (mouse.listeners) {
+            mouse.emit(name, event);
+          }
+
+          if (keys && keys.listeners) {
+            keys.emit(name, event);
           }
         }
       } catch (err) {
@@ -6834,15 +6982,104 @@ var KeyboardListener_component = normalizeComponent(
 if (false) { var KeyboardListener_api; }
 KeyboardListener_component.options.__file = "src/components/KeyboardListener.vue"
 /* harmony default export */ var KeyboardListener = (KeyboardListener_component.exports);
+// CONCATENATED MODULE: ./src/stuff/mouse.js
+
+
+
+// Mouse event handler for overlay
+var mouse_Mouse =
+/*#__PURE__*/
+function () {
+  function Mouse(comp) {
+    classCallCheck_default()(this, Mouse);
+
+    this.comp = comp;
+    this.map = {};
+    this.listeners = 0;
+    this.pressed = false;
+    this.x = comp.$props.cursor.x;
+    this.y = comp.$props.cursor.y;
+    this.t = comp.$props.cursor.t;
+    this.y$ = comp.$props.cursor.y$;
+  } // You can choose where to place the handler
+  // (beginning or end of the queue)
+
+
+  createClass_default()(Mouse, [{
+    key: "on",
+    value: function on(name, handler) {
+      var dir = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "unshift";
+      if (!handler) return;
+      this.map[name] = this.map[name] || [];
+      this.map[name][dir](handler);
+      this.listeners++;
+    } // Called by grid.js
+
+  }, {
+    key: "emit",
+    value: function emit(name, event) {
+      var l = this.comp.layout;
+
+      if (name in this.map) {
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+          for (var _iterator = this.map[name][Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var f = _step.value;
+            f(event);
+          }
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+              _iterator["return"]();
+            }
+          } finally {
+            if (_didIteratorError) {
+              throw _iteratorError;
+            }
+          }
+        }
+      }
+
+      if (name === 'mousemove') {
+        this.x = event.layerX;
+        this.y = event.layerY;
+        this.t = l.screen2t(this.x);
+        this.y$ = l.screen2$(this.y);
+      }
+
+      if (name === 'mousedown') {
+        this.pressed = true;
+      }
+
+      if (name === 'mouseup') {
+        this.pressed = false;
+      }
+    }
+  }]);
+
+  return Mouse;
+}();
+
+
 // CONCATENATED MODULE: ./src/mixins/overlay.js
 // Usuful stuff for creating overlays. Include as mixin
+
 /* harmony default export */ var mixins_overlay = ({
   props: ['id', 'num', 'interval', 'cursor', 'colors', 'layout', 'sub', 'data', 'settings', 'grid_id', 'font', 'config'],
   mounted: function mounted() {
     // Main chart?
     var main = this.$props.sub === this.$props.data;
     this.meta_info();
-    this.$emit('new-grid-layer', {
+    this._$emit = this.$emit;
+    this.$emit = this.custom_event;
+
+    this._$emit('new-grid-layer', {
       name: this.$options.name,
       id: this.$props.id,
       renderer: this,
@@ -6850,16 +7087,21 @@ KeyboardListener_component.options.__file = "src/components/KeyboardListener.vue
       z: this.$props.settings['z-index'] || this.$props.settings['zIndex'] || (main ? 0 : -1)
     }); // Overlay meta-props (adjusting behaviour)
 
-    this.$emit('layer-meta-props', {
+
+    this._$emit('layer-meta-props', {
       grid_id: this.$props.grid_id,
       layer_id: this.$props.id,
       legend: this.legend,
       data_colors: this.data_colors,
       y_range: this.y_range
     });
+
+    this.mouse = new mouse_Mouse(this);
+    if (this.init_tool) this.init_tool();
+    if (this.init) this.init();
   },
   beforeDestroy: function beforeDestroy() {
-    this.$emit('delete-grid-layer', this.$props.id);
+    this._$emit('delete-grid-layer', this.$props.id);
   },
   methods: {
     use_for: function use_for() {
@@ -6872,12 +7114,30 @@ KeyboardListener_component.options.__file = "src/components/KeyboardListener.vue
       var id = this.$props.id;
       console.warn("".concat(id, " meta_info() is req. for publishing"));
       console.warn("Format: meta_info() {\n                author: 'Satoshi Smith',\n                version: '1.0.0',\n                contact (opt) '<email>'\n                github: (opt) '<GitHub Page>',\n            }");
+    },
+    custom_event: function custom_event(event) {
+      if (event.split(':')[0] === 'hook') return;
+
+      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+      }
+
+      if (event === 'change-settings' || event === 'object-selected' || event === 'remove-tool') {
+        args.push(this.grid_id, this.id);
+      }
+
+      this._$emit('custom-event', {
+        event: event,
+        args: args
+      });
     }
   },
   watch: {
     settings: {
-      handler: function handler() {
-        this.$emit('show-grid-layer', {
+      handler: function handler(n, p) {
+        if (this.watch_uuid) this.watch_uuid(n, p);
+
+        this._$emit('show-grid-layer', {
           id: this.$props.id,
           display: 'display' in this.$props.settings ? this.$props.settings['display'] : true
         });
@@ -7292,7 +7552,7 @@ Range_component.options.__file = "src/components/overlays/Range.vue"
     meta_info: function meta_info() {
       return {
         author: 'C451',
-        version: '1.0.0'
+        version: '1.0.1'
       };
     },
     draw: function draw(ctx) {
@@ -7347,16 +7607,12 @@ Range_component.options.__file = "src/components/overlays/Range.vue"
     // Defines legend format (values & colors)
     legend: function legend(values) {
       switch (values[1]) {
-        case -1:
-          var pos = 'Short';
-          break;
-
         case 0:
-          pos = 'Closed';
+          var pos = 'Sell';
           break;
 
         case 1:
-          pos = 'Long';
+          pos = 'Buy';
           break;
 
         default:
@@ -7740,12 +7996,12 @@ function layout_vol(self) {
 
   return volume;
 }
-// CONCATENATED MODULE: ./src/components/js/candle_ext.js
+// CONCATENATED MODULE: ./src/components/primitives/candle.js
 
 
 
 // Candle object for Candles overlay
-var candle_ext_CandleExt =
+var candle_CandleExt =
 /*#__PURE__*/
 function () {
   function CandleExt(overlay, ctx, data) {
@@ -7792,11 +8048,11 @@ function () {
 }();
 
 
-// CONCATENATED MODULE: ./src/components/js/volbar_ext.js
+// CONCATENATED MODULE: ./src/components/primitives/volbar.js
 
 
 
-var volbar_ext_VolbarExt =
+var volbar_VolbarExt =
 /*#__PURE__*/
 function () {
   function VolbarExt(overlay, ctx, data) {
@@ -7863,7 +8119,7 @@ function () {
         try {
           for (var _iterator = cnv.volume[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
             var v = _step.value;
-            new volbar_ext_VolbarExt(this, ctx, v);
+            new volbar_VolbarExt(this, ctx, v);
           }
         } catch (err) {
           _didIteratorError = true;
@@ -7888,7 +8144,7 @@ function () {
       try {
         for (var _iterator2 = cnv.candles[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
           var c = _step2.value;
-          new candle_ext_CandleExt(this, ctx, c);
+          new candle_CandleExt(this, ctx, c);
         }
       } catch (err) {
         _didIteratorError2 = true;
@@ -8002,7 +8258,7 @@ Candles_component.options.__file = "src/components/overlays/Candles.vue"
       try {
         for (var _iterator = layout_vol(this)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
           var v = _step.value;
-          new volbar_ext_VolbarExt(this, ctx, v);
+          new volbar_VolbarExt(this, ctx, v);
         }
       } catch (err) {
         _didIteratorError = true;
@@ -8205,8 +8461,730 @@ var Splitters_component = normalizeComponent(
 if (false) { var Splitters_api; }
 Splitters_component.options.__file = "src/components/overlays/Splitters.vue"
 /* harmony default export */ var Splitters = (Splitters_component.exports);
+// CONCATENATED MODULE: ./src/stuff/keys.js
+
+
+
+// Keyboard event handler for overlay
+var keys_Keys =
+/*#__PURE__*/
+function () {
+  function Keys(comp) {
+    classCallCheck_default()(this, Keys);
+
+    this.comp = comp;
+    this.map = {};
+    this.listeners = 0;
+    this.keymap = {};
+  }
+
+  createClass_default()(Keys, [{
+    key: "on",
+    value: function on(name, handler) {
+      if (!handler) return;
+      this.map[name] = this.map[name] || [];
+      this.map[name].push(handler);
+      this.listeners++;
+    } // Called by grid.js
+
+  }, {
+    key: "emit",
+    value: function emit(name, event) {
+      if (name in this.map) {
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+          for (var _iterator = this.map[name][Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var f = _step.value;
+            f(event);
+          }
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+              _iterator["return"]();
+            }
+          } finally {
+            if (_didIteratorError) {
+              throw _iteratorError;
+            }
+          }
+        }
+      }
+
+      if (name === 'keydown') {
+        if (!this.keymap[event.key]) {
+          this.emit(event.key);
+        }
+
+        this.keymap[event.key] = true;
+      }
+
+      if (name === 'keyup') {
+        this.keymap[event.key] = false;
+      }
+    }
+  }, {
+    key: "pressed",
+    value: function pressed(key) {
+      return this.keymap[key];
+    }
+  }]);
+
+  return Keys;
+}();
+
+
+// CONCATENATED MODULE: ./src/mixins/tool.js
+// Usuful stuff for creating tools. Include as mixin
+
+/* harmony default export */ var mixins_tool = ({
+  methods: {
+    init_tool: function init_tool() {
+      var _this = this;
+
+      // Collision functions (float, float) => bool,
+      this.collisions = [];
+      this.pins = [];
+      this.mouse.on('mousemove', function (e) {
+        if (_this.collisions.some(function (f) {
+          return f(_this.mouse.x, _this.mouse.y);
+        })) {
+          _this.show_pins = true;
+        } else {
+          _this.show_pins = false;
+        }
+
+        if (_this.drag) _this.drag_update();
+      });
+      this.mouse.on('mousedown', function (e) {
+        if (e.defaultPrevented) return;
+
+        if (_this.collisions.some(function (f) {
+          return f(_this.mouse.x, _this.mouse.y);
+        })) {
+          if (!_this.selected) {
+            _this.$emit('object-selected');
+          }
+
+          _this.start_drag();
+
+          e.preventDefault();
+
+          _this.pins.forEach(function (x) {
+            return x.mousedown(e, true);
+          });
+        }
+      });
+      this.mouse.on('mouseup', function (e) {
+        _this.drag = null;
+
+        _this.$emit('scroll-lock', false);
+      });
+      this.keys = new keys_Keys(this);
+      this.keys.on('Delete', this.remove_tool);
+      this.keys.on('Backspace', this.remove_tool);
+      this.show_pins = false;
+      this.drag = null;
+    },
+    render_pins: function render_pins(ctx) {
+      if (this.selected || this.show_pins) {
+        this.pins.forEach(function (x) {
+          return x.draw(ctx);
+        });
+      }
+    },
+    set_state: function set_state(name) {
+      this.$emit('change-settings', {
+        $state: name
+      });
+    },
+    watch_uuid: function watch_uuid(n, p) {
+      // If layer $uuid is changed, then re-init
+      // pins & collisions
+      if (n.$uuid !== p.$uuid) {
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+          for (var _iterator = this.pins[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var p = _step.value;
+            p.re_init();
+          }
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+              _iterator["return"]();
+            }
+          } finally {
+            if (_didIteratorError) {
+              throw _iteratorError;
+            }
+          }
+        }
+
+        this.collisions = [];
+        this.show_pins = false;
+        this.drag = null;
+      }
+    },
+    pre_draw: function pre_draw() {
+      // Delete all collision functions before
+      // the draw() call and let primitives set
+      // them again
+      this.collisions = [];
+    },
+    remove_tool: function remove_tool() {
+      if (this.selected) this.$emit('remove-tool');
+    },
+    start_drag: function start_drag() {
+      this.$emit('scroll-lock', true);
+      var cursor = this.$props.cursor;
+      this.drag = {
+        t: cursor.t,
+        y$: cursor.y$
+      };
+      this.pins.forEach(function (x) {
+        return x.rec_position();
+      });
+    },
+    drag_update: function drag_update() {
+      var dt = this.$props.cursor.t - this.drag.t;
+      var dy = this.$props.cursor.y$ - this.drag.y$;
+      this.pins.forEach(function (x) {
+        return x.update_from([x.t1 + dt, x.y$1 + dy], true);
+      });
+    }
+  },
+  computed: {
+    // Settings starting with $ are reserved
+    selected: function selected() {
+      return this.$props.settings.$selected;
+    },
+    state: function state() {
+      return this.$props.settings.$state;
+    }
+  }
+});
+// EXTERNAL MODULE: ./src/stuff/icons.json
+var icons = __webpack_require__(5);
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/defineProperty.js
+var defineProperty = __webpack_require__(19);
+var defineProperty_default = /*#__PURE__*/__webpack_require__.n(defineProperty);
+
+// CONCATENATED MODULE: ./src/components/primitives/pin.js
+
+
+
+
+// Semi-automatic pin object. For stretching things.
+var pin_Pin =
+/*#__PURE__*/
+function () {
+  // (Comp reference, a name in overlay settings,
+  // pin parameters)
+  function Pin(comp, name) {
+    var _this = this;
+
+    var params = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+    classCallCheck_default()(this, Pin);
+
+    this.RADIUS = comp.$props.config.PIN_RADIUS || 5.5;
+    this.RADIUS_SQ = Math.pow(this.RADIUS + 7, 2);
+    this.COLOR_BACK = comp.$props.colors.colorBack;
+    this.COLOR_BR = comp.$props.colors.colorText;
+    this.comp = comp;
+    this.layout = comp.layout;
+    this.mouse = comp.mouse;
+    this.name = name;
+    this.state = params.state || 'settled';
+    this.mouse.on('mousemove', function (e) {
+      return _this.mousemove(e);
+    });
+    this.mouse.on('mousedown', function (e) {
+      return _this.mousedown(e);
+    });
+    this.mouse.on('mouseup', function (e) {
+      return _this.mouseup(e);
+    });
+
+    if (comp.state === 'finished') {
+      this.state = 'settled';
+      this.update_from(comp.$props.settings[name]);
+    } else {
+      this.update();
+    }
+
+    if (this.state !== 'settled') {
+      this.comp.$emit('scroll-lock', true);
+    }
+  }
+
+  createClass_default()(Pin, [{
+    key: "re_init",
+    value: function re_init() {
+      this.update_from(this.comp.$props.settings[this.name]);
+    }
+  }, {
+    key: "draw",
+    value: function draw(ctx) {
+      switch (this.state) {
+        case 'tracking':
+          break;
+
+        case 'dragging':
+          if (!this.moved) this.draw_circle(ctx);
+          break;
+
+        case 'settled':
+          this.draw_circle(ctx);
+          break;
+      }
+    }
+  }, {
+    key: "draw_circle",
+    value: function draw_circle(ctx) {
+      if (this.comp.selected) {
+        var r = this.RADIUS,
+            lw = 1.5;
+      } else {
+        var r = this.RADIUS * 0.95,
+            lw = 1;
+      }
+
+      ctx.lineWidth = lw;
+      ctx.strokeStyle = this.COLOR_BR;
+      ctx.fillStyle = this.COLOR_BACK;
+      ctx.beginPath();
+      ctx.arc(this.x = this.layout.t2screen(this.t), this.y = this.layout.$2screen(this.y$), r + 0.5, 0, Math.PI * 2, true);
+      ctx.fill();
+      ctx.stroke();
+    }
+  }, {
+    key: "update",
+    value: function update() {
+      this.y$ = this.comp.$props.cursor.y$;
+      this.y = this.comp.$props.cursor.y;
+      this.t = this.comp.$props.cursor.t;
+      this.x = this.comp.$props.cursor.x; // Reset the settings attahed to the pin (position)
+
+      this.comp.$emit('change-settings', defineProperty_default()({}, this.name, [this.t, this.y$]));
+    }
+  }, {
+    key: "update_from",
+    value: function update_from(data) {
+      var emit = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      if (!data) return;
+      this.y$ = data[1];
+      this.y = this.layout.$2screen(this.y$);
+      this.t = data[0];
+      this.x = this.layout.t2screen(this.t);
+      if (emit) this.comp.$emit('change-settings', defineProperty_default()({}, this.name, [this.t, this.y$]));
+    }
+  }, {
+    key: "rec_position",
+    value: function rec_position() {
+      this.t1 = this.t;
+      this.y$1 = this.y$;
+    }
+  }, {
+    key: "mousemove",
+    value: function mousemove(event) {
+      switch (this.state) {
+        case 'tracking':
+        case 'dragging':
+          this.moved = true;
+          this.update();
+          break;
+      }
+    }
+  }, {
+    key: "mousedown",
+    value: function mousedown(event) {
+      var force = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      if (event.defaultPrevented && !force) return;
+
+      switch (this.state) {
+        case 'tracking':
+          this.state = 'settled';
+          if (this.on_settled) this.on_settled();
+          this.comp.$emit('scroll-lock', false);
+          break;
+
+        case 'settled':
+          if (this.hover()) {
+            this.state = 'dragging';
+            this.moved = false;
+            this.comp.$emit('scroll-lock', true);
+            this.comp.$emit('object-selected');
+          }
+
+          break;
+      }
+
+      if (this.hover()) {
+        event.preventDefault();
+      }
+    }
+  }, {
+    key: "mouseup",
+    value: function mouseup(event) {
+      switch (this.state) {
+        case 'dragging':
+          this.state = 'settled';
+          if (this.on_settled) this.on_settled();
+          this.comp.$emit('scroll-lock', false);
+          break;
+      }
+    }
+  }, {
+    key: "on",
+    value: function on(name, handler) {
+      switch (name) {
+        case 'settled':
+          this.on_settled = handler;
+          break;
+      }
+    }
+  }, {
+    key: "hover",
+    value: function hover() {
+      var x = this.x;
+      var y = this.y;
+      return (x - this.mouse.x) * (x - this.mouse.x) + (y - this.mouse.y) * (y - this.mouse.y) < this.RADIUS_SQ;
+    }
+  }]);
+
+  return Pin;
+}();
+
+
+// CONCATENATED MODULE: ./src/stuff/math.js
+// Math/Geometry
+/* harmony default export */ var math = ({
+  // Distance from point to line
+  // p1 = point, (p2, p3) = line
+  point2line: function point2line(p1, p2, p3) {
+    var _this$tri = this.tri(p1, p2, p3),
+        area = _this$tri.area,
+        base = _this$tri.base;
+
+    return Math.abs(this.tri_h(area, base));
+  },
+  // Distance from point to segment
+  // p1 = point, (p2, p3) = segment
+  point2seg: function point2seg(p1, p2, p3) {
+    var _this$tri2 = this.tri(p1, p2, p3),
+        area = _this$tri2.area,
+        base = _this$tri2.base; // Vector projection
+
+
+    var proj = this.dot_prod(p1, p2, p3) / base; // Distance from left pin
+
+    var l1 = Math.max(-proj, 0); // Distance from right pin
+
+    var l2 = Math.max(proj - base, 0); // Normal
+
+    var h = Math.abs(this.tri_h(area, base));
+    return Math.max(h, l1, l2);
+  },
+  // Distance from point to ray
+  // p1 = point, (p2, p3) = ray
+  point2ray: function point2ray(p1, p2, p3) {
+    var _this$tri3 = this.tri(p1, p2, p3),
+        area = _this$tri3.area,
+        base = _this$tri3.base; // Vector projection
+
+
+    var proj = this.dot_prod(p1, p2, p3) / base; // Distance from left pin
+
+    var l1 = Math.max(-proj, 0); // Normal
+
+    var h = Math.abs(this.tri_h(area, base));
+    return Math.max(h, l1);
+  },
+  tri: function tri(p1, p2, p3) {
+    var area = this.area(p1, p2, p3);
+    var dx = p3[0] - p2[0];
+    var dy = p3[1] - p2[1];
+    var base = Math.sqrt(dx * dx + dy * dy);
+    return {
+      area: area,
+      base: base
+    };
+  },
+
+  /* Area of triangle:
+          p1
+        /    \
+      p2  _  p3
+  */
+  area: function area(p1, p2, p3) {
+    return p1[0] * (p2[1] - p3[1]) + p2[0] * (p3[1] - p1[1]) + p3[0] * (p1[1] - p2[1]);
+  },
+  // Triangle height
+  tri_h: function tri_h(area, base) {
+    return area / base;
+  },
+  // Dot product of (p2, p3) and (p2, p1)
+  dot_prod: function dot_prod(p1, p2, p3) {
+    var v1 = [p3[0] - p2[0], p3[1] - p2[1]];
+    var v2 = [p1[0] - p2[0], p1[1] - p2[1]];
+    return v1[0] * v2[0] + v1[1] * v2[1];
+  }
+});
+// CONCATENATED MODULE: ./src/components/primitives/seg.js
+
+
+// Draws a segment, adds corresponding collision f-n
+
+
+var seg_Seg =
+/*#__PURE__*/
+function () {
+  // Overlay ref, canvas ctx
+  function Seg(overlay, ctx) {
+    classCallCheck_default()(this, Seg);
+
+    this.ctx = ctx;
+    this.comp = overlay;
+    this.T = overlay.$props.config.TOOL_COLL;
+  } // p1[t, $], p2[t, $] (time-price coordinates)
+
+
+  createClass_default()(Seg, [{
+    key: "draw",
+    value: function draw(p1, p2) {
+      var layout = this.comp.$props.layout;
+      var x1 = layout.t2screen(p1[0]);
+      var y1 = layout.$2screen(p1[1]);
+      var x2 = layout.t2screen(p2[0]);
+      var y2 = layout.$2screen(p2[1]);
+      this.ctx.moveTo(x1, y1);
+      this.ctx.lineTo(x2, y2);
+      this.comp.collisions.push(this.make([x1, y1], [x2, y2]));
+    } // Collision function. x, y - mouse coord.
+
+  }, {
+    key: "make",
+    value: function make(p1, p2) {
+      var _this = this;
+
+      return function (x, y) {
+        return math.point2seg([x, y], p1, p2) < _this.T;
+      };
+    }
+  }]);
+
+  return Seg;
+}();
+
+
+// CONCATENATED MODULE: ./src/components/primitives/line.js
+
+
+// Draws a line, adds corresponding collision f-n
+
+
+var line_Line =
+/*#__PURE__*/
+function () {
+  // Overlay ref, canvas ctx
+  function Line(overlay, ctx) {
+    classCallCheck_default()(this, Line);
+
+    this.ctx = ctx;
+    this.comp = overlay;
+    this.T = overlay.$props.config.TOOL_COLL;
+  } // p1[t, $], p2[t, $] (time-price coordinates)
+
+
+  createClass_default()(Line, [{
+    key: "draw",
+    value: function draw(p1, p2) {
+      var layout = this.comp.$props.layout;
+      var x1 = layout.t2screen(p1[0]);
+      var y1 = layout.$2screen(p1[1]);
+      var x2 = layout.t2screen(p2[0]);
+      var y2 = layout.$2screen(p2[1]);
+      this.ctx.moveTo(x1, y1);
+      this.ctx.lineTo(x2, y2);
+      var w = layout.width;
+      var h = layout.height; // TODO: transform k (angle) to screen ratio
+      // (this requires a new a2screen function)
+
+      var k = (y2 - y1) / (x2 - x1);
+      var s = Math.sign(x2 - x1 || y2 - y1);
+      var dx = w * s * 2;
+      var dy = w * k * s * 2;
+
+      if (dy === Infinity) {
+        dx = 0, dy = h * s;
+      }
+
+      this.ctx.moveTo(x2, y2);
+      this.ctx.lineTo(x2 + dx, y2 + dy);
+      this.ctx.moveTo(x1, y1);
+      this.ctx.lineTo(x1 - dx, y1 - dy);
+      this.comp.collisions.push(this.make([x1, y1], [x2, y2]));
+    } // Collision function. x, y - mouse coord.
+
+  }, {
+    key: "make",
+    value: function make(p1, p2) {
+      var _this = this;
+
+      return function (x, y) {
+        return math.point2line([x, y], p1, p2) < _this.T;
+      };
+    }
+  }]);
+
+  return Line;
+}();
+
+
+// CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/components/overlays/LineTool.vue?vue&type=script&lang=js&
+// Line drawing tool
+
+
+
+
+
+
+/* harmony default export */ var LineToolvue_type_script_lang_js_ = ({
+  name: 'LineTool',
+  mixins: [mixins_overlay, mixins_tool],
+  methods: {
+    meta_info: function meta_info() {
+      return {
+        author: 'C451',
+        version: '1.0.0'
+      };
+    },
+    tool: function tool() {
+      return {
+        // Descriptor for the tool
+        group: 'Lines',
+        icon: icons['segment.png'],
+        type: 'Segment',
+        hint: 'This hint will be shown on hover',
+        data: [],
+        // Default data
+        settings: {},
+        // Default settings
+        // Modifications
+        mods: {
+          'Extended': {
+            // Rewrites the default setting fields
+            settings: {
+              extended: true
+            },
+            icon: icons['extended.png']
+          }
+        }
+      };
+    },
+    // Called after overlay mounted
+    init: function init() {
+      var _this = this;
+
+      // First pin is settled at the mouse position
+      this.pins.push(new pin_Pin(this, 'p1')); // Second one is following mouse until it clicks
+
+      this.pins.push(new pin_Pin(this, 'p2', {
+        state: 'tracking'
+      }));
+      this.pins[1].on('settled', function () {
+        // Call when current tool drawing is finished
+        // (Optionally) reset the mode back to 'Cursor'
+        _this.set_state('finished');
+
+        _this.$emit('drawing-mode-off');
+      });
+    },
+    draw: function draw(ctx) {
+      if (!this.p1 || !this.p2) return;
+      ctx.lineWidth = this.line_width;
+      ctx.strokeStyle = this.color;
+      ctx.beginPath();
+
+      if (this.sett.extended) {
+        new line_Line(this, ctx).draw(this.p1, this.p2);
+      } else {
+        new seg_Seg(this, ctx).draw(this.p1, this.p2);
+      }
+
+      ctx.stroke();
+      this.render_pins(ctx);
+    },
+    use_for: function use_for() {
+      return ['LineTool'];
+    },
+    data_colors: function data_colors() {
+      return [this.color];
+    }
+  },
+  // Define internal setting & constants here
+  computed: {
+    sett: function sett() {
+      return this.$props.settings;
+    },
+    p1: function p1() {
+      return this.$props.settings.p1;
+    },
+    p2: function p2() {
+      return this.$props.settings.p2;
+    },
+    line_width: function line_width() {
+      return this.sett.lineWidth || 0.9;
+    },
+    color: function color() {
+      return this.sett.color || '#42b28a';
+    }
+  },
+  data: function data() {
+    return {};
+  }
+});
+// CONCATENATED MODULE: ./src/components/overlays/LineTool.vue?vue&type=script&lang=js&
+ /* harmony default export */ var overlays_LineToolvue_type_script_lang_js_ = (LineToolvue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/components/overlays/LineTool.vue
+var LineTool_render, LineTool_staticRenderFns
+
+
+
+
+/* normalize component */
+
+var LineTool_component = normalizeComponent(
+  overlays_LineToolvue_type_script_lang_js_,
+  LineTool_render,
+  LineTool_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var LineTool_api; }
+LineTool_component.options.__file = "src/components/overlays/LineTool.vue"
+/* harmony default export */ var LineTool = (LineTool_component.exports);
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Grid.vue?vue&type=script&lang=js&
 // Sets up all layers/overlays for the grid with 'grid_id'
+
 
 
 
@@ -8232,15 +9210,26 @@ Splitters_component.options.__file = "src/components/overlays/Splitters.vue"
     var _this = this;
 
     // List of all possible overlays (builtin + custom)
-    this._list = [Spline, Splines, Range, Trades, Channel, Segment, Candles, Volume, Splitters].concat(this.$props.overlays);
+    this._list = [Spline, Splines, Range, Trades, Channel, Segment, Candles, Volume, Splitters, LineTool].concat(this.$props.overlays);
     this._registry = {}; // We need to know which components we will use.
     // Custom overlay components overwrite built-ins:
 
+    var tools = [];
+
     this._list.forEach(function (x, i) {
       var use_for = x.methods.use_for();
+      if (x.methods.tool) tools.push({
+        use_for: use_for,
+        info: x.methods.tool()
+      });
       use_for.forEach(function (indicator) {
         _this._registry[indicator] = i;
       });
+    });
+
+    this.$emit('custom-event', {
+      event: 'register-tools',
+      args: tools
     });
   },
   mounted: function mounted() {
@@ -8401,6 +9390,9 @@ Splitters_component.options.__file = "src/components/overlays/Splitters.vue"
         'redraw-grid': this.redraw,
         'layer-meta-props': function layerMetaProps(d) {
           return _this7.$emit('layer-meta-props', d);
+        },
+        'custom-event': function customEvent(d) {
+          return _this7.$emit('custom-event', d);
         }
       },
       keyboard_events: {
@@ -8642,7 +9634,7 @@ function () {
         return;
       }
 
-      var lbl = this.$p.cursor.y$;
+      var lbl = this.$p.cursor.y$.toFixed(this.layout.prec);
       this.ctx.fillStyle = this.$p.colors.colorPanel;
       var panwidth = this.layout.sb + 1;
       var x = -0.5;
@@ -8940,9 +9932,6 @@ LegendButtonvue_type_template_id_1ad87362_render._withStripped = true
 
 // CONCATENATED MODULE: ./src/components/LegendButton.vue?vue&type=template&id=1ad87362&
 
-// EXTERNAL MODULE: ./src/stuff/icons.json
-var icons = __webpack_require__(17);
-
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/components/LegendButton.vue?vue&type=script&lang=js&
 //
 //
@@ -8956,7 +9945,7 @@ var icons = __webpack_require__(17);
   mounted: function mounted() {},
   computed: {
     base64: function base64() {
-      return 'data:image/png;base64,' + icons[this.file_name];
+      return icons[this.file_name];
     },
     file_name: function file_name() {
       var id = this.$props.id;
@@ -8995,7 +9984,7 @@ var icons = __webpack_require__(17);
 // CONCATENATED MODULE: ./src/components/LegendButton.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_LegendButtonvue_type_script_lang_js_ = (LegendButtonvue_type_script_lang_js_); 
 // EXTERNAL MODULE: ./src/components/LegendButton.vue?vue&type=style&index=0&lang=css&
-var LegendButtonvue_type_style_index_0_lang_css_ = __webpack_require__(31);
+var LegendButtonvue_type_style_index_0_lang_css_ = __webpack_require__(33);
 
 // CONCATENATED MODULE: ./src/components/LegendButton.vue
 
@@ -9053,7 +10042,7 @@ LegendButton_component.options.__file = "src/components/LegendButton.vue"
 // CONCATENATED MODULE: ./src/components/ButtonGroup.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_ButtonGroupvue_type_script_lang_js_ = (ButtonGroupvue_type_script_lang_js_); 
 // EXTERNAL MODULE: ./src/components/ButtonGroup.vue?vue&type=style&index=0&lang=css&
-var ButtonGroupvue_type_style_index_0_lang_css_ = __webpack_require__(33);
+var ButtonGroupvue_type_style_index_0_lang_css_ = __webpack_require__(35);
 
 // CONCATENATED MODULE: ./src/components/ButtonGroup.vue
 
@@ -9205,7 +10194,7 @@ ButtonGroup_component.options.__file = "src/components/ButtonGroup.vue"
 // CONCATENATED MODULE: ./src/components/Legend.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_Legendvue_type_script_lang_js_ = (Legendvue_type_script_lang_js_); 
 // EXTERNAL MODULE: ./src/components/Legend.vue?vue&type=style&index=0&lang=css&
-var Legendvue_type_style_index_0_lang_css_ = __webpack_require__(35);
+var Legendvue_type_style_index_0_lang_css_ = __webpack_require__(37);
 
 // CONCATENATED MODULE: ./src/components/Legend.vue
 
@@ -9232,6 +10221,7 @@ if (false) { var Legend_api; }
 Legend_component.options.__file = "src/components/Legend.vue"
 /* harmony default export */ var Legend = (Legend_component.exports);
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Section.vue?vue&type=script&lang=js&
+//
 //
 //
 //
@@ -9288,6 +10278,9 @@ Legend_component.options.__file = "src/components/Legend.vue"
     emit_meta_props: function emit_meta_props(d) {
       this.$set(this.meta_props, d.layer_id, d);
       this.$emit('layer-meta-props', d);
+    },
+    emit_custom_event: function emit_custom_event(d) {
+      this.$emit('custom-event', d);
     },
     button_click: function button_click(event) {
       this.$emit('legend-button-click', event);
@@ -9363,7 +10356,7 @@ Legend_component.options.__file = "src/components/Legend.vue"
 // CONCATENATED MODULE: ./src/components/Section.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_Sectionvue_type_script_lang_js_ = (Sectionvue_type_script_lang_js_); 
 // EXTERNAL MODULE: ./src/components/Section.vue?vue&type=style&index=0&lang=css&
-var Sectionvue_type_style_index_0_lang_css_ = __webpack_require__(37);
+var Sectionvue_type_style_index_0_lang_css_ = __webpack_require__(39);
 
 // CONCATENATED MODULE: ./src/components/Section.vue
 
@@ -9620,7 +10613,7 @@ function () {
 // CONCATENATED MODULE: ./src/components/Botbar.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_Botbarvue_type_script_lang_js_ = (Botbarvue_type_script_lang_js_); 
 // EXTERNAL MODULE: ./src/components/Botbar.vue?vue&type=style&index=0&lang=css&
-var Botbarvue_type_style_index_0_lang_css_ = __webpack_require__(39);
+var Botbarvue_type_style_index_0_lang_css_ = __webpack_require__(41);
 
 // CONCATENATED MODULE: ./src/components/Botbar.vue
 var Botbar_render, Botbar_staticRenderFns
@@ -9757,6 +10750,7 @@ Keyboard_component.options.__file = "src/components/Keyboard.vue"
 //
 //
 //
+//
 
 
 
@@ -9766,7 +10760,7 @@ Keyboard_component.options.__file = "src/components/Keyboard.vue"
 
 /* harmony default export */ var Chartvue_type_script_lang_js_ = ({
   name: 'Chart',
-  props: ['title_txt', 'data', 'width', 'height', 'font', 'colors', 'overlays', 'tv_id', 'config', 'buttons'],
+  props: ['title_txt', 'data', 'width', 'height', 'font', 'colors', 'overlays', 'tv_id', 'config', 'buttons', 'toolbar'],
   components: {
     GridSection: Section,
     Botbar: components_Botbar,
@@ -9802,6 +10796,7 @@ Keyboard_component.options.__file = "src/components/Keyboard.vue"
       this.updater.sync(e);
     },
     cursor_locked: function cursor_locked(state) {
+      if (this.cursor.scroll_lock && state) return;
       this.cursor.locked = state;
     },
     calc_interval: function calc_interval() {
@@ -9878,6 +10873,9 @@ Keyboard_component.options.__file = "src/components/Keyboard.vue"
 
       this.update_layout();
     },
+    emit_custom_event: function emit_custom_event(d) {
+      this.$emit('custom-event', d);
+    },
     update_layout: function update_layout(clac_tf) {
       if (clac_tf) this.calc_interval();
       var lay = new js_layout(this);
@@ -9937,6 +10935,12 @@ Keyboard_component.options.__file = "src/components/Keyboard.vue"
     },
     offchart: function offchart() {
       return this.$props.data.offchart || [];
+    },
+    styles: function styles() {
+      var w = this.$props.toolbar ? this.$props.config.TOOLBAR : 0;
+      return {
+        'margin-left': "".concat(w, "px")
+      };
     }
   },
   data: function data() {
@@ -9955,7 +10959,8 @@ Keyboard_component.options.__file = "src/components/Keyboard.vue"
         y$: null,
         grid_id: null,
         locked: false,
-        values: {}
+        values: {},
+        scroll_lock: false
       },
       // A trick to re-render botbar
       rerender: 0,
@@ -9976,13 +10981,22 @@ Keyboard_component.options.__file = "src/components/Keyboard.vue"
     height: function height() {
       this.update_layout();
     },
+    colors: function colors() {
+      utils.overwrite(this.range, this.range);
+    },
     data: {
       handler: function handler(n, p) {
         if (!this.sub.length) this.init_range();
         var sub = this.subset();
         utils.overwrite(this.sub, sub);
         this.update_layout(utils.data_changed(n, p));
-        utils.overwrite(this.range, this.range); // TODO: update legend values for overalys
+        utils.overwrite(this.range, this.range);
+        this.cursor.scroll_lock = !!n.scrollLock;
+
+        if (n.scrollLock && this.cursor.locked) {
+          this.cursor.locked = false;
+        } // TODO: update legend values for overalys
+
 
         this.rerender++;
       },
@@ -10015,6 +11029,240 @@ var Chart_component = normalizeComponent(
 if (false) { var Chart_api; }
 Chart_component.options.__file = "src/components/Chart.vue"
 /* harmony default export */ var Chart = (Chart_component.exports);
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Toolbar.vue?vue&type=template&id=021887fb&
+var Toolbarvue_type_template_id_021887fb_render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "trading-vue-toolbar", style: _vm.styles },
+    _vm._l(_vm.data.tools, function(tool, i) {
+      return tool.icon
+        ? _c("toolbar-item", {
+            key: i,
+            attrs: {
+              data: tool,
+              config: _vm.config,
+              colors: _vm.colors,
+              selected: tool.type === _vm.data.tool
+            },
+            on: { "item-selected": _vm.selected }
+          })
+        : _vm._e()
+    }),
+    1
+  )
+}
+var Toolbarvue_type_template_id_021887fb_staticRenderFns = []
+Toolbarvue_type_template_id_021887fb_render._withStripped = true
+
+
+// CONCATENATED MODULE: ./src/components/Toolbar.vue?vue&type=template&id=021887fb&
+
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/components/ToolbarItem.vue?vue&type=template&id=227b3c2e&
+var ToolbarItemvue_type_template_id_227b3c2e_render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      class: ["trading-vue-tbitem", _vm.selected ? "selected-item" : ""],
+      style: _vm.item_style,
+      on: {
+        click: function($event) {
+          return _vm.$emit("item-selected", _vm.data)
+        }
+      }
+    },
+    [
+      _c("div", {
+        staticClass: "trading-vue-tbicon pixelated",
+        style: _vm.icon_style
+      })
+    ]
+  )
+}
+var ToolbarItemvue_type_template_id_227b3c2e_staticRenderFns = []
+ToolbarItemvue_type_template_id_227b3c2e_render._withStripped = true
+
+
+// CONCATENATED MODULE: ./src/components/ToolbarItem.vue?vue&type=template&id=227b3c2e&
+
+// CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/components/ToolbarItem.vue?vue&type=script&lang=js&
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ var ToolbarItemvue_type_script_lang_js_ = ({
+  name: 'ToolbarItem',
+  props: ['data', 'selected', 'colors', 'tv_id', 'config'],
+  mounted: function mounted() {},
+  computed: {
+    item_style: function item_style() {
+      if (this.$props.data.type === 'System:Splitter') {
+        return this.splitter;
+      }
+
+      var conf = this.$props.config;
+      var im = conf.TB_ITEM_M;
+      var m = (conf.TOOLBAR - conf.TB_ICON) * 0.5 - im;
+      var s = conf.TB_ICON + im * 2;
+      return {
+        'width': "".concat(s, "px"),
+        'height': "".concat(s, "px"),
+        'margin': "8px ".concat(m, "px 0px ").concat(m, "px"),
+        'border-radius': '3px'
+      };
+    },
+    icon_style: function icon_style() {
+      if (this.$props.data.type === 'System:Splitter') {
+        return {};
+      }
+
+      var conf = this.$props.config;
+      var br = conf.TB_ICON_BRI;
+      var im = conf.TB_ITEM_M;
+      return {
+        'background-image': "url(".concat(this.$props.data.icon, ")"),
+        'width': '25px',
+        'height': '25px',
+        'margin': "".concat(im, "px"),
+        'filter': "brightness(".concat(br, ")")
+      };
+    },
+    splitter: function splitter() {
+      var conf = this.$props.config;
+      var colors = this.$props.colors;
+      var c = colors.colorGrid;
+      var im = conf.TB_ITEM_M;
+      var m = (conf.TOOLBAR - conf.TB_ICON) * 0.5 - im;
+      var s = conf.TB_ICON + im * 2;
+      return {
+        'width': "".concat(s, "px"),
+        'height': '1px',
+        'margin': "8px ".concat(m, "px 8px ").concat(m, "px"),
+        'background-color': c
+      };
+    }
+  }
+});
+// CONCATENATED MODULE: ./src/components/ToolbarItem.vue?vue&type=script&lang=js&
+ /* harmony default export */ var components_ToolbarItemvue_type_script_lang_js_ = (ToolbarItemvue_type_script_lang_js_); 
+// EXTERNAL MODULE: ./src/components/ToolbarItem.vue?vue&type=style&index=0&lang=css&
+var ToolbarItemvue_type_style_index_0_lang_css_ = __webpack_require__(43);
+
+// CONCATENATED MODULE: ./src/components/ToolbarItem.vue
+
+
+
+
+
+
+/* normalize component */
+
+var ToolbarItem_component = normalizeComponent(
+  components_ToolbarItemvue_type_script_lang_js_,
+  ToolbarItemvue_type_template_id_227b3c2e_render,
+  ToolbarItemvue_type_template_id_227b3c2e_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var ToolbarItem_api; }
+ToolbarItem_component.options.__file = "src/components/ToolbarItem.vue"
+/* harmony default export */ var ToolbarItem = (ToolbarItem_component.exports);
+// CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Toolbar.vue?vue&type=script&lang=js&
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ var Toolbarvue_type_script_lang_js_ = ({
+  name: 'Toolbar',
+  props: ['data', 'height', 'colors', 'tv_id', 'config'],
+  components: {
+    ToolbarItem: ToolbarItem
+  },
+  mounted: function mounted() {},
+  methods: {
+    selected: function selected(tool) {
+      this.$emit('custom-event', {
+        event: 'tool-selected',
+        args: [tool.type]
+      });
+    }
+  },
+  computed: {
+    styles: function styles() {
+      var colors = this.$props.colors;
+      var b = this.$props.config.TB_BORDER;
+      var w = this.$props.config.TOOLBAR - b;
+      var c = colors.colorGrid;
+      var cb = colors.colorTbBack || colors.colorBack;
+      var brd = colors.colorTbBorder || colors.colorScale;
+      var st = this.$props.config.TB_B_STYLE;
+      return {
+        'width': "".concat(w, "px"),
+        'height': "".concat(this.$props.height, "px"),
+        'background-color': cb,
+        'border-right': "".concat(b, "px ").concat(st, " ").concat(brd)
+      };
+    }
+  }
+});
+// CONCATENATED MODULE: ./src/components/Toolbar.vue?vue&type=script&lang=js&
+ /* harmony default export */ var components_Toolbarvue_type_script_lang_js_ = (Toolbarvue_type_script_lang_js_); 
+// EXTERNAL MODULE: ./src/components/Toolbar.vue?vue&type=style&index=0&lang=css&
+var Toolbarvue_type_style_index_0_lang_css_ = __webpack_require__(45);
+
+// CONCATENATED MODULE: ./src/components/Toolbar.vue
+
+
+
+
+
+
+/* normalize component */
+
+var Toolbar_component = normalizeComponent(
+  components_Toolbarvue_type_script_lang_js_,
+  Toolbarvue_type_template_id_021887fb_render,
+  Toolbarvue_type_template_id_021887fb_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var Toolbar_api; }
+Toolbar_component.options.__file = "src/components/Toolbar.vue"
+/* harmony default export */ var Toolbar = (Toolbar_component.exports);
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/TradingVue.vue?vue&type=script&lang=js&
 
 //
@@ -10036,12 +11284,19 @@ Chart_component.options.__file = "src/components/Chart.vue"
 //
 //
 //
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ var TradingVuevue_type_script_lang_js_ = ({
   name: 'TradingVue',
   components: {
-    Chart: Chart
+    Chart: Chart,
+    Toolbar: Toolbar
   },
   props: {
     titleTxt: {
@@ -10120,9 +11375,20 @@ Chart_component.options.__file = "src/components/Chart.vue"
       type: String,
       "default": '#565c68'
     },
+    colorTbBack: {
+      type: String
+    },
+    colorTbBorder: {
+      type: String,
+      "default": '#8282827d'
+    },
     font: {
-      typr: String,
+      type: String,
       "default": constants.ChartConfig.FONT
+    },
+    toolbar: {
+      type: Boolean,
+      "default": false
     },
     data: {
       type: Object,
@@ -10153,14 +11419,16 @@ Chart_component.options.__file = "src/components/Chart.vue"
   computed: {
     // Copy a subset of TradingVue props
     chart_props: function chart_props() {
+      var offset = this.$props.toolbar ? this.chart_config.TOOLBAR : 0;
       var chart_props = {
         title_txt: this.$props.titleTxt,
         overlays: this.$props.overlays,
         data: this.decubed,
-        width: this.$props.width,
+        width: this.$props.width - offset,
         height: this.$props.height,
         font: this.$props.font,
         buttons: this.$props.legendButtons,
+        toolbar: this.$props.toolbar,
         colors: {}
       };
 
@@ -10192,6 +11460,11 @@ Chart_component.options.__file = "src/components/Chart.vue"
       reset: 0
     };
   },
+  beforeDestroy: function beforeDestroy() {
+    this.custom_event({
+      event: 'before-destroy'
+    });
+  },
   methods: {
     resetChart: function resetChart() {
       var _this = this;
@@ -10220,6 +11493,20 @@ Chart_component.options.__file = "src/components/Chart.vue"
     },
     legend_button: function legend_button(event) {
       this.$emit('legend-button-click', event);
+    },
+    custom_event: function custom_event(d) {
+      if ('args' in d) {
+        this.$emit.apply(this, [d.event].concat(toConsumableArray_default()(d.args)));
+      } else {
+        this.$emit(d.event);
+      }
+
+      var data = this.$props.data;
+
+      if (data.tv) {
+        // If the data object is DataCube
+        data.on_custom_event(d.event, d.args);
+      }
     },
     set_loader: function set_loader(dc) {
       var _this2 = this;
@@ -10257,34 +11544,347 @@ if (false) { var TradingVue_api; }
 TradingVue_component.options.__file = "src/TradingVue.vue"
 /* harmony default export */ var TradingVue = (TradingVue_component.exports);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/typeof.js
-var helpers_typeof = __webpack_require__(12);
+var helpers_typeof = __webpack_require__(18);
 var typeof_default = /*#__PURE__*/__webpack_require__.n(helpers_typeof);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js
-var possibleConstructorReturn = __webpack_require__(18);
+var possibleConstructorReturn = __webpack_require__(15);
 var possibleConstructorReturn_default = /*#__PURE__*/__webpack_require__.n(possibleConstructorReturn);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/getPrototypeOf.js
-var getPrototypeOf = __webpack_require__(19);
+var getPrototypeOf = __webpack_require__(16);
 var getPrototypeOf_default = /*#__PURE__*/__webpack_require__.n(getPrototypeOf);
 
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/assertThisInitialized.js
-var assertThisInitialized = __webpack_require__(13);
-var assertThisInitialized_default = /*#__PURE__*/__webpack_require__.n(assertThisInitialized);
-
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/inherits.js
-var inherits = __webpack_require__(20);
+var inherits = __webpack_require__(17);
 var inherits_default = /*#__PURE__*/__webpack_require__.n(inherits);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/regenerator/index.js
-var regenerator = __webpack_require__(14);
+var regenerator = __webpack_require__(20);
 var regenerator_default = /*#__PURE__*/__webpack_require__.n(regenerator);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/asyncToGenerator.js
-var asyncToGenerator = __webpack_require__(21);
+var asyncToGenerator = __webpack_require__(23);
 var asyncToGenerator_default = /*#__PURE__*/__webpack_require__.n(asyncToGenerator);
 
+// CONCATENATED MODULE: ./src/helpers/dc_events.js
+
+
+// DataCube event handlers
+
+
+
+var dc_events_DCEvents =
+/*#__PURE__*/
+function () {
+  function DCEvents() {
+    classCallCheck_default()(this, DCEvents);
+  }
+
+  createClass_default()(DCEvents, [{
+    key: "on_custom_event",
+    // Called when overalay/tv emits 'custom-event'
+    value: function on_custom_event(event, args) {
+      switch (event) {
+        case 'register-tools':
+          this.register_tools(args);
+          break;
+
+        case 'tool-selected':
+          if (args[0].split(':')[0] === 'System') {
+            this.system_tool(args[0].split(':')[1]);
+            break;
+          }
+
+          this.tv.$set(this.data, 'tool', args[0]);
+
+          if (args[0] === 'Cursor') {
+            this.drawing_mode_off();
+          }
+
+          break;
+
+        case 'grid-mousedown':
+          // TODO: tool state finished?
+          this.object_selected([]);
+
+          if (this.data.tool && this.data.tool !== 'Cursor' && !this.data.drawingMode) {
+            this.tv.$set(this.data, 'drawingMode', true);
+            this.build_tool(args[0]);
+          }
+
+          break;
+
+        case 'drawing-mode-off':
+          this.drawing_mode_off();
+          break;
+
+        case 'change-settings':
+          this.change_settings(args);
+          break;
+
+        case 'scroll-lock':
+          this.on_scroll_lock(args[0]);
+          break;
+
+        case 'object-selected':
+          this.object_selected(args);
+          break;
+
+        case 'remove-tool':
+          this.system_tool('Remove');
+          break;
+
+        case 'before-destroy':
+          this.before_destroy();
+          break;
+      }
+    } // Combine all tools and their mods
+
+  }, {
+    key: "register_tools",
+    value: function register_tools(tools) {
+      var preset = {};
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = (this.data.tools || [])[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var tool = _step.value;
+          preset[tool.type] = tool;
+          delete tool.type;
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+            _iterator["return"]();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+
+      this.data.tools = [];
+      var list = [{
+        type: 'Cursor',
+        icon: icons['cursor.png']
+      }];
+      var _iteratorNormalCompletion2 = true;
+      var _didIteratorError2 = false;
+      var _iteratorError2 = undefined;
+
+      try {
+        for (var _iterator2 = tools[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+          var tool = _step2.value;
+          var proto = Object.assign({}, tool.info);
+          var type = tool.info.type || 'Default';
+          proto.type = "".concat(tool.use_for, ":").concat(type);
+          this.merge_presets(proto, preset[tool.use_for]);
+          this.merge_presets(proto, preset[proto.type]);
+          delete proto.mods;
+          list.push(proto);
+
+          for (var mod in tool.info.mods) {
+            var mp = Object.assign({}, proto);
+            mp = Object.assign(mp, tool.info.mods[mod]);
+            mp.type = "".concat(tool.use_for, ":").concat(mod);
+            this.merge_presets(mp, preset[tool.use_for]);
+            this.merge_presets(mp, preset[mp.type]);
+            list.push(mp);
+          }
+        }
+      } catch (err) {
+        _didIteratorError2 = true;
+        _iteratorError2 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
+            _iterator2["return"]();
+          }
+        } finally {
+          if (_didIteratorError2) {
+            throw _iteratorError2;
+          }
+        }
+      }
+
+      this.tv.$set(this.data, 'tools', list);
+      this.tv.$set(this.data, 'tool', 'Cursor');
+    }
+  }, {
+    key: "merge_presets",
+    value: function merge_presets(proto, preset) {
+      if (!preset) return;
+
+      for (var k in preset) {
+        if (k === 'settings') {
+          Object.assign(proto[k], preset[k]);
+        } else {
+          proto[k] = preset[k];
+        }
+      }
+    }
+  }, {
+    key: "drawing_mode_off",
+    value: function drawing_mode_off() {
+      this.tv.$set(this.data, 'drawingMode', false);
+      this.tv.$set(this.data, 'tool', 'Cursor');
+    } // Place a new tool
+
+  }, {
+    key: "build_tool",
+    value: function build_tool(grid_id) {
+      // TODO: Tools for offchart grids (grid_id > 0).
+      // Currently 1 offchart overlay === 1 new grid,
+      // need to find a way to stack offchart overlays.
+      if (grid_id !== 0) {
+        this.drawing_mode_off();
+        return;
+      }
+
+      var list = this.data.tools;
+      var type = this.data.tool;
+      var proto = list.find(function (x) {
+        return x.type === type;
+      });
+      if (!proto) return;
+      var sett = Object.assign({}, proto.settings || {});
+      var data = (proto.data || []).slice();
+      if (!('legend' in sett)) sett.legend = false;
+      if (!('z-index' in sett)) sett['z-index'] = 100;
+      sett.$selected = true;
+      sett.$state = 'wip';
+      var id = this.add('onchart', {
+        name: proto.name,
+        type: type.split(':')[0],
+        settings: sett,
+        data: data
+      });
+      sett.$uuid = "".concat(id, "-").concat(utils.now());
+      this.tv.$set(this.data, 'selected', id);
+      this.add_trash_icon();
+    } // Remove selected / Remove all, etc
+
+  }, {
+    key: "system_tool",
+    value: function system_tool(type) {
+      switch (type) {
+        case 'Remove':
+          if (this.data.selected) {
+            this.del(this.data.selected);
+            this.remove_trash_icon();
+            this.drawing_mode_off();
+            this.on_scroll_lock(false);
+          }
+
+          break;
+      }
+    } // Apply new overlay settings
+
+  }, {
+    key: "change_settings",
+    value: function change_settings(args) {
+      var settings = args[0];
+      delete settings.id;
+      var grid_id = args[1];
+      var q = this.layer_query(args[1], args[2]); // TODO: Tools for offchart grids
+
+      if (grid_id !== 0) return;
+      this.merge("".concat(q, ".settings"), settings);
+    } // Lock the scrolling mechanism
+
+  }, {
+    key: "on_scroll_lock",
+    value: function on_scroll_lock(flag) {
+      this.tv.$set(this.data, 'scrollLock', flag);
+    } // When new object is selected / unselected
+
+  }, {
+    key: "object_selected",
+    value: function object_selected(args) {
+      var q = this.data.selected;
+
+      if (q) {
+        // Check if current drawing is finished
+        //let res = this.get_one(`${q}.settings`)
+        //if (res && res.$state !== 'finished') return
+        this.merge("".concat(q, ".settings"), {
+          $selected: false
+        });
+        this.remove_trash_icon();
+      }
+
+      this.tv.$set(this.data, 'selected', null);
+      if (!args.length) return;
+      var q = this.layer_query(args[0], args[1]);
+      this.tv.$set(this.data, 'selected', q);
+      this.merge("".concat(q, ".settings"), {
+        $selected: true
+      });
+      this.add_trash_icon();
+    } // Form query for given grid and layer id
+
+  }, {
+    key: "layer_query",
+    value: function layer_query(grid_id, id) {
+      var side = grid_id ? 'offchart' : 'onchart';
+      return "".concat(side, ".").concat(id.replace('_', ''));
+    }
+  }, {
+    key: "add_trash_icon",
+    value: function add_trash_icon() {
+      var type = 'System:Remove';
+
+      if (this.data.tools.find(function (x) {
+        return x.type === type;
+      })) {
+        return;
+      }
+
+      this.data.tools.push({
+        type: type,
+        icon: icons['trash.png']
+      });
+    }
+  }, {
+    key: "remove_trash_icon",
+    value: function remove_trash_icon() {
+      // TODO: Does not call Toolbar render (distr version)
+      var type = 'System:Remove';
+      this.data.tools = this.data.tools.filter(function (x) {
+        return x.type !== type;
+      });
+    } // Clean-up unfinished business (tools)
+
+  }, {
+    key: "before_destroy",
+    value: function before_destroy() {
+      var f = function f(x) {
+        return x.settings.$state === 'finished';
+      };
+
+      this.data.onchart = this.data.onchart.filter(f);
+      this.data.onchart = this.data.onchart.filter(f);
+      this.drawing_mode_off();
+      this.on_scroll_lock(false);
+      this.object_selected([]);
+    }
+  }]);
+
+  return DCEvents;
+}();
+
+
 // CONCATENATED MODULE: ./src/helpers/dc_core.js
+
+
+
 
 
 
@@ -10293,11 +11893,16 @@ var asyncToGenerator_default = /*#__PURE__*/__webpack_require__.n(asyncToGenerat
 // DataCube private methods
 
 
+
 var dc_core_DCCore =
 /*#__PURE__*/
-function () {
+function (_DCEvents) {
+  inherits_default()(DCCore, _DCEvents);
+
   function DCCore() {
     classCallCheck_default()(this, DCCore);
+
+    return possibleConstructorReturn_default()(this, getPrototypeOf_default()(DCCore).apply(this, arguments));
   }
 
   createClass_default()(DCCore, [{
@@ -10463,7 +12068,7 @@ function () {
 
           var i = count[ov.type]++;
           ov.id = "onchart.".concat(ov.type).concat(i);
-          if (!ov.name) ov.name = ov.id;
+          if (!ov.name) ov.name = ov.type + " ".concat(i);
           if (!ov.settings) ov.settings = {};
         }
       } catch (err) {
@@ -10497,7 +12102,7 @@ function () {
           var _i = count[ov.type]++;
 
           ov.id = "offchart.".concat(ov.type).concat(_i);
-          if (!ov.name) ov.name = ov.id;
+          if (!ov.name) ov.name = ov.type + " ".concat(_i);
           if (!ov.settings) ov.settings = {};
         }
       } catch (err) {
@@ -10759,11 +12364,10 @@ function () {
   }]);
 
   return DCCore;
-}();
+}(dc_events_DCEvents);
 
 
 // CONCATENATED MODULE: ./src/helpers/datacube.js
-
 
 
 
@@ -10790,29 +12394,6 @@ function (_DCCore) {
 
     _this = possibleConstructorReturn_default()(this, getPrototypeOf_default()(DataCube).call(this));
     _this.data = data;
-    /* Examples of queries: (go to test #8) */
-
-    /* Type in devtools:
-        DataCube.get('onchart.EMA0') // Nope!
-        DataCube.get('Keltner')      // By name
-        DataCube.get_one('chart.data')
-        DataCube.get('offchart.RSI')
-        DataCube.get('offchart.RSI.data')
-        DataCube.get('DI')
-        DataCube.get('Splines0.data') // By index
-        DataCube.get('Segment.settings')
-        ...
-        DataCube.set('.settings', { lineWidth: 2 })
-        DataCube.add('offchart', { type: 'New', data: [] })
-        DataCube.del('.')  // Fun !
-        ...
-        DataCube.hide('.')
-        DataCube.show('offchart')
-        DataCube.merge('RSI.settings', { color: 'green' })
-    */
-    // DEBUG
-
-    window.DataCube = assertThisInitialized_default()(_this);
     return _this;
   } // Add new overlay
 
@@ -11069,8 +12650,8 @@ function (_DCCore) {
 /* concated harmony reexport Overlay */__webpack_require__.d(__webpack_exports__, "Overlay", function() { return mixins_overlay; });
 /* concated harmony reexport Utils */__webpack_require__.d(__webpack_exports__, "Utils", function() { return utils; });
 /* concated harmony reexport Constants */__webpack_require__.d(__webpack_exports__, "Constants", function() { return constants; });
-/* concated harmony reexport Candle */__webpack_require__.d(__webpack_exports__, "Candle", function() { return candle_ext_CandleExt; });
-/* concated harmony reexport Volbar */__webpack_require__.d(__webpack_exports__, "Volbar", function() { return volbar_ext_VolbarExt; });
+/* concated harmony reexport Candle */__webpack_require__.d(__webpack_exports__, "Candle", function() { return candle_CandleExt; });
+/* concated harmony reexport Volbar */__webpack_require__.d(__webpack_exports__, "Volbar", function() { return volbar_VolbarExt; });
 /* concated harmony reexport layout_cnv */__webpack_require__.d(__webpack_exports__, "layout_cnv", function() { return layout_cnv; });
 /* concated harmony reexport layout_vol */__webpack_require__.d(__webpack_exports__, "layout_vol", function() { return layout_vol; });
 /* concated harmony reexport DataCube */__webpack_require__.d(__webpack_exports__, "DataCube", function() { return datacube_DataCube; });
@@ -11094,8 +12675,8 @@ if (typeof window !== 'undefined' && window.Vue) {
     Overlay: mixins_overlay,
     Utils: utils,
     Constants: constants,
-    Candle: candle_ext_CandleExt,
-    Volbar: volbar_ext_VolbarExt,
+    Candle: candle_CandleExt,
+    Volbar: volbar_VolbarExt,
     layout_cnv: layout_cnv,
     layout_vol: layout_vol,
     DataCube: datacube_DataCube
