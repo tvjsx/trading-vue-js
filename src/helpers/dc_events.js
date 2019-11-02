@@ -205,6 +205,7 @@ export default class DCEvents {
     }
 
     remove_trash_icon() {
+        // TODO: Does not call Toolbar render (distr version)
         const type = 'System:Remove'
         this.data.tools =
             this.data.tools.filter(x => x.type !== type)
