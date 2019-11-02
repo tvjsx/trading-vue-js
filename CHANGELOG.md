@@ -1,6 +1,20 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.4.0] - 2019-11-2
+### Changes
+- Multiple bug fixes and improvements
+- Legend buttons
+- New/updated overlays (Segment, Splitters, Candles)
+- Data Structure v1.1
+- Mac support (Trackpad + Retina)
+- New API functions: setRange(), goto(), getCursor() etc.
+- Better timeline
+- New interval detection algo
+- DataCube
+- Tool overlay extension
+- Drawing tools (Line, Extended Line)
+
 ## [0.3.0] - 2019-5-17
 ### Changes
 - Multiple bug fixes (legend, slicelib, cursor)
