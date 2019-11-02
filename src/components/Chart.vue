@@ -270,6 +270,9 @@ export default {
         height() {
             this.update_layout()
         },
+        colors() {
+            Utils.overwrite(this.range, this.range)
+        },
         data: {
             handler: function(n, p) {
                 if (!this.sub.length) this.init_range()
