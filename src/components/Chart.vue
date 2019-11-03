@@ -277,7 +277,11 @@ export default {
             handler: function(n, p) {
                 if (!this.sub.length) this.init_range()
                 const sub = this.subset()
-                Utils.overwrite(this.sub, sub)
+                // Fix Infinite loop warn, when the subset is empty
+                // TODO: Consider removing 'sub' from data entirely
+                if (this.sub.length || sub.length) {
+                    Utils.overwrite(this.sub, sub)
+                }
                 this.update_layout(Utils.data_changed(n, p))
                 Utils.overwrite(this.range, this.range)
                 this.cursor.scroll_lock = !!n.scrollLock
