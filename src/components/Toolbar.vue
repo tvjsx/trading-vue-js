@@ -1,6 +1,7 @@
 
 <template>
-    <div class="trading-vue-toolbar" :style="styles">
+    <div class="trading-vue-toolbar" :style="styles"
+        :key="tool_count">
         <toolbar-item v-for="(tool, i) in data.tools"
             v-if="tool.icon"
             @item-selected="selected"
@@ -49,7 +50,20 @@ export default {
                 'border-right': `${b}px ${st} ${brd}`
             }
         }
-    }
+    },
+    watch: {
+        data: {
+            handler(n) {
+                // For some reason Vue.js don't want to
+                // update 'tools' automatically when new item
+                // is pushed/removed. Yo, Vue, I herd you
+                // you want more dirty tricks?
+                if (n.tools) this.tool_count = n.tools.length
+            },
+            deep: true
+        }
+    },
+    data() { return { tool_count: 0 } }
 }
 
 </script>
