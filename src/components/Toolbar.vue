@@ -54,7 +54,7 @@ export default {
     watch: {
         data: {
             handler(n) {
-                // For some reason Vue.js don't want to
+                // For some reason Vue.js doesn't want to
                 // update 'tools' automatically when new item
                 // is pushed/removed. Yo, Vue, I herd you
                 // you want more dirty tricks?
