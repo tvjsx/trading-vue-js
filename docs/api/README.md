@@ -36,9 +36,9 @@ This library is in alpha stage, API may change. This guide version is **0.4.1**
 | overlays | Array | List of custom overlay classes |
 | chartConfig | Object | Overwrites chart config values |
 | legendButtons | Array | Array of legend buttons ids |
-| toolbar <sup style="color:#14b32a">new</sup>| Boolean | Show toolbar (works with DataCube) |
-| colorTbBack <sup style="color:#14b32a">new</sup> | String | Toolbar background color |
-| colorTbBorder <sup style="color:#14b32a">new</sup> | String | Toolbar border color |
+| toolbar <sup style="color:#14b32a">new &#x1F34F;</sup>| Boolean | Show toolbar (works with DataCube) |
+| colorTbBack <sup style="color:#14b32a">new &#x1F34F;</sup> | String | Toolbar background color |
+| colorTbBorder <sup style="color:#14b32a">new &#x1F34F;</sup> | String | Toolbar border color |
 
 
 ### Legend Button Types
@@ -140,7 +140,7 @@ export default {
 </script>
 ```
 
-### custom-event  <sup style="color:#14b32a">new</sup>
+### custom-event  <sup style="color:#14b32a">new &#x1F34F;</sup>
 
 Can be emitted from overlay or **trading-vue** itself. Propagates all the way up to the root component; must have a unique name. Some names are reserved:
 ```
@@ -164,7 +164,7 @@ Event listener:
 </script>
 ```
 
-## Data structure <sup style="color:#14b32a">new</sup>
+## Data structure <sup style="color:#14b32a">new &#x1F34F;</sup>
 
 Data structure v1.2
 
@@ -278,7 +278,7 @@ Data for building overlays. Defined in `mixins/overlay.js`, accessed through ove
 | data | Array | Current subset of indicator data |
 | settings | Object | Indicator's settings, defined in `data.json` |
 | grid_id | Number | Current grid id |
-| config <sup style="color:#14b32a">new</sup> | Object | Chart config, see 'constants.js' |
+| config <sup style="color:#14b32a">new &#x1F34F;</sup> | Object | Chart config, see 'constants.js' |
 
 ### Cursor data*
 
@@ -291,7 +291,7 @@ Data for building overlays. Defined in `mixins/overlay.js`, accessed through ove
 | grid_id | Number | Current grid id |
 | locked | Boolean | *true* during scrolling, *false* otherwise |
 | values | Object | Current indicator values in a specific format |
-| scroll_lock  <sup style="color:#14b32a">new</sup> | Boolean | True when scrolling is locked (drawing mode) |
+| scroll_lock <sup style="color:#14b32a">new &#x1F34F;</sup> | Boolean | True when scrolling is locked (drawing mode) |
 
 #### Values format
 
@@ -519,7 +519,7 @@ legend(values) {
 }
 ```
 
-#### tool <sup style="color:#14b32a">new</sup>
+#### tool <sup style="color:#14b32a">new &#x1F34F;</sup>
 
 Tool descriptor. See `LineTool.vue` for now.
 
