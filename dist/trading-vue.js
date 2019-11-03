@@ -1,5 +1,5 @@
 /*!
- * TradingVue.JS - v0.4.0 - Sat Nov 02 2019
+ * TradingVue.JS - v0.4.1 - Sun Nov 03 2019
  * https://github.com/C451/trading-vue-js
  * Copyright (c) 2019 c451 Code's All Right;
  * Licensed under the MIT license
@@ -10987,8 +10987,13 @@ Keyboard_component.options.__file = "src/components/Keyboard.vue"
     data: {
       handler: function handler(n, p) {
         if (!this.sub.length) this.init_range();
-        var sub = this.subset();
-        utils.overwrite(this.sub, sub);
+        var sub = this.subset(); // Fix Infinite loop warn, when the subset is empty
+        // TODO: Consider removing 'sub' from data entirely
+
+        if (this.sub.length || sub.length) {
+          utils.overwrite(this.sub, sub);
+        }
+
         this.update_layout(utils.data_changed(n, p));
         utils.overwrite(this.range, this.range);
         this.cursor.scroll_lock = !!n.scrollLock;
@@ -11036,7 +11041,11 @@ var Toolbarvue_type_template_id_021887fb_render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "trading-vue-toolbar", style: _vm.styles },
+    {
+      key: _vm.tool_count,
+      staticClass: "trading-vue-toolbar",
+      style: _vm.styles
+    },
     _vm._l(_vm.data.tools, function(tool, i) {
       return tool.icon
         ? _c("toolbar-item", {
@@ -11200,6 +11209,7 @@ ToolbarItem_component.options.__file = "src/components/ToolbarItem.vue"
 //
 //
 //
+//
 
 /* harmony default export */ var Toolbarvue_type_script_lang_js_ = ({
   name: 'Toolbar',
@@ -11232,6 +11242,23 @@ ToolbarItem_component.options.__file = "src/components/ToolbarItem.vue"
         'border-right': "".concat(b, "px ").concat(st, " ").concat(brd)
       };
     }
+  },
+  watch: {
+    data: {
+      handler: function handler(n) {
+        // For some reason Vue.js don't want to
+        // update 'tools' automatically when new item
+        // is pushed/removed. Yo, Vue, I herd you
+        // you want more dirty tricks?
+        if (n.tools) this.tool_count = n.tools.length;
+      },
+      deep: true
+    }
+  },
+  data: function data() {
+    return {
+      tool_count: 0
+    };
   }
 });
 // CONCATENATED MODULE: ./src/components/Toolbar.vue?vue&type=script&lang=js&
@@ -11857,9 +11884,9 @@ function () {
     value: function remove_trash_icon() {
       // TODO: Does not call Toolbar render (distr version)
       var type = 'System:Remove';
-      this.data.tools = this.data.tools.filter(function (x) {
+      utils.overwrite(this.data.tools, this.data.tools.filter(function (x) {
         return x.type !== type;
-      });
+      }));
     } // Clean-up unfinished business (tools)
 
   }, {
