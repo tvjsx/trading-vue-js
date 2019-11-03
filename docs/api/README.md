@@ -1,7 +1,7 @@
 # API Book
 
 ::: warning
-This library is in alpha stage, API may change. This guide version is **0.3.7**
+This library is in alpha stage, API may change. This guide version is **0.4.1**
 :::
 
 ![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=Current%20lib%20version)
@@ -36,6 +36,9 @@ This library is in alpha stage, API may change. This guide version is **0.3.7**
 | overlays | Array | List of custom overlay classes |
 | chartConfig | Object | Overwrites chart config values |
 | legendButtons | Array | Array of legend buttons ids |
+| toolbar <sup style="color:#14b32a">new</sup>| Boolean | Show toolbar (works with DataCube) |
+| colorTbBack <sup style="color:#14b32a">new</sup> | String | Toolbar background color |
+| colorTbBorder <sup style="color:#14b32a">new</sup> | String | Toolbar border color |
 
 
 ### Legend Button Types
@@ -137,9 +140,33 @@ export default {
 </script>
 ```
 
-## Data structure
+### custom-event  <sup style="color:#14b32a">new</sup>
 
-Data structure v1.1
+Can be emitted from overlay or **trading-vue** itself. Propagates all the way up to the root component; must have a unique name. Some names are reserved:
+```
+register-tools, tool-selected, grid-mousedown, drawing-mode-off, change-settings,
+scroll-lock, object-selected, remove-tool, before-destroy
+```
+
+*Example:*
+
+Somewhere in overlay:
+```js
+this.$emit('adios-aloha', x1, x2)
+```
+
+Event listener:
+
+```html
+<trading-vue @adios-aloha="on_arrival">
+<script>
+    on_arrival(x1, x2) { ... }
+</script>
+```
+
+## Data structure <sup style="color:#14b32a">new</sup>
+
+Data structure v1.2
 
 ```js
 {
@@ -174,7 +201,23 @@ Data structure v1.1
             "settings": { } // Arbitrary settings format
         },
         ...
-    ]
+    ],
+    "tools": [ // Tool presets (colors, data, icons, see LineTool.vue)
+        {
+            "type": "<Tool type, e.g. LineTool:Segment>",
+            "group": "<Tool Group>", // WIP
+            "hint": "Tool Hint", // WIP
+            "settings": {
+                "color": "#35c460",
+                ...
+            },
+            "icon": "Data Url",
+            "data": [ ... ] // Initial data
+        }
+    ],
+    "tool": "<Tool type, e.g. Cursor>", // Current tool
+    "selected": "<Selected object id>",
+    "drawingMode": <true|false>
 }
 ```
 
@@ -235,6 +278,7 @@ Data for building overlays. Defined in `mixins/overlay.js`, accessed through ove
 | data | Array | Current subset of indicator data |
 | settings | Object | Indicator's settings, defined in `data.json` |
 | grid_id | Number | Current grid id |
+| config <sup style="color:#14b32a">new</sup> | Object | Chart config, see 'constants.js' |
 
 ### Cursor data*
 
@@ -247,6 +291,7 @@ Data for building overlays. Defined in `mixins/overlay.js`, accessed through ove
 | grid_id | Number | Current grid id |
 | locked | Boolean | *true* during scrolling, *false* otherwise |
 | values | Object | Current indicator values in a specific format |
+| scroll_lock  <sup style="color:#14b32a">new</sup> | Boolean | True when scrolling is locked (drawing mode) |
 
 #### Values format
 
@@ -473,6 +518,10 @@ legend(values) {
     ]
 }
 ```
+
+#### tool <sup style="color:#14b32a">new</sup>
+
+Tool descriptor. See `LineTool.vue` for now.
 
 <br>
 
