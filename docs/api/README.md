@@ -531,7 +531,7 @@ legend(values) {
 
 #### tool() <sup style="color:#14b32a">new</sup>
 
-Returns tool descriptor. See `LineTool.vue`:
+* **Returns:** Tool descriptor. See `LineTool.vue`:
 
 ```js
 tool() {
@@ -584,3 +584,31 @@ tool() {
 #### keypress(event)
 *Optional*
 * **Arguments**: event (Object) Native keypress event
+
+### Overlay I/O objects <sup style="color:#14b32a">new</sup>
+
+#### mouse
+
+Allows you to add multiple mouse listeners.
+
+| Prop/Method | Type | Description |
+|---|---|---|
+| pressed  | Boolean |  Left mouse button status |
+| listeners  | Number |  Listener count |
+| on  | Function |  Registers a listener: `function on(event, callback, queuePosition="unshift")` |
+| x | Number | Current screen position |
+| y | Number |  Current screen position |
+| t  | Number | Current timestamp  |
+| y$  | Number |  Current peice level |
+
+
+#### keys
+*(Available for Tool overlays)*
+
+Allows you to add multiple keyboard listeners.
+
+| Prop/Method | Type | Description |
+|---|---|---|
+| pressed  | Function |  Returns `true` if button is pressed: `function pressed(buttonName)` |
+| listeners  | Number |  Listener count |
+| on  | Function |  Registers a listener: `function on(event, callback)` |
