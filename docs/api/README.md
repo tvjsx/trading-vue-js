@@ -435,6 +435,10 @@ ctx.stroke()
 
 To change the default behaviour of an overlay, override this methods.
 
+#### init() <sup style="color:#14b32a">new</sup>
+
+Called when overlay is mounted.
+
 #### meta_info()
 
 Defines plugin version and other useful information. *Optional*, required for publishing.
@@ -538,7 +542,7 @@ tool() {
     return {
         // Descriptor for the LineTool
         group: 'Lines', // Tool group (WIP)
-        icon: Icons['segment.png'],
+        icon: Icons['segment.png'], // Data URL (png 25x25 or svg)
         type: 'Segment', // Tool type (in addition to overlay type)
         hint: 'This hint will be shown on hover', // WIP
         data: [],     // Default data
@@ -599,7 +603,7 @@ Allows you to add multiple mouse listeners.
 | x | Number | Current screen position |
 | y | Number |  Current screen position |
 | t  | Number | Current timestamp  |
-| y$  | Number |  Current peice level |
+| y$  | Number |  Current price level |
 
 
 #### keys
