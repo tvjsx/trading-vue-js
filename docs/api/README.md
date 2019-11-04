@@ -202,6 +202,9 @@ Data structure v1.2
         },
         ...
     ],
+    /* The Properties below are automatically created by DataCube,
+     * but can be defined / changed manually, for example,
+     * when you need to set a default color for a tool. */
     "tools": [ // Tool presets (colors, data, icons, see LineTool.vue)
         {
             "type": "<Tool type, e.g. LineTool:Segment>",
@@ -459,6 +462,13 @@ draw(ctx) {
 }
 ```
 
+#### pre_draw(ctx), post_draw(ctx) <sup style="color:#14b32a">new</sup>
+
+Override if you need them.
+
+* **Arguments**: ctx (Canvas context)
+
+
 #### use_for()
 
 * **Returns**: list of indicator types which this overlay can draw. **Required**
@@ -519,9 +529,31 @@ legend(values) {
 }
 ```
 
-#### tool <sup style="color:#14b32a">new</sup>
+#### tool() <sup style="color:#14b32a">new</sup>
 
-Tool descriptor. See `LineTool.vue` for now.
+Returns tool descriptor. See `LineTool.vue`:
+
+```js
+tool() {
+    return {
+        // Descriptor for the LineTool
+        group: 'Lines', // Tool group (WIP)
+        icon: Icons['segment.png'],
+        type: 'Segment', // Tool type (in addition to overlay type)
+        hint: 'This hint will be shown on hover', // WIP
+        data: [],     // Default data
+        settings: {}, // Default settings
+        // Modifications
+        mods: {
+            'Extended': {
+                // Rewrites the default settings field
+                settings: { extended: true },
+                icon: Icons['extended.png']
+            }
+        }
+    }
+}
+```
 
 <br>
 
