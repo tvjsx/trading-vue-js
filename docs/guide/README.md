@@ -490,7 +490,7 @@ export default {
 
 ## Publishing your overlay
 
-If you want to share your work, you can make a PR to https://github.com/C451/trading-vue-js .
+~~If you want to share your work, you can make a PR to https://github.com/C451/trading-vue-js .~~
 
 Make sure your class contains `meta_info()` method at the same level as `use_for()`:
 
