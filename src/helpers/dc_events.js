@@ -218,7 +218,7 @@ export default class DCEvents {
             x.settings.$state === 'finished'
         this.data.onchart = this.data.onchart
             .filter(f)
-        this.data.onchart = this.data.onchart
+        this.data.offchart = this.data.offchart
             .filter(f)
         this.drawing_mode_off()
         this.on_scroll_lock(false)
