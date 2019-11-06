@@ -112,3 +112,52 @@ Gets all objects matching the query.
 
 * **Arguments**: query (String)
 * **Returns**: Array of objects
+
+```js
+dc.get('onchart.Spline')  // -> [{id: "onchart.Spline0", name: "EMA", ...}]
+```
+
+### get_one (query)
+
+Gets first object matching the query.
+
+* **Arguments**: query (String)
+* **Returns**: Array of objects
+
+```js
+dc.get_one('chart') // -> Chart object
+dc.get_one('chart.data') // -> ohlcv data [ ... ]
+dc.get_one('onchart.Spline')  // -> {id: "onchart.Spline0", name: "EMA", ...}
+dc.get_one('onchart.Spline.data')  // -> [ ... ]
+```
+
+### set (query, data)
+
+Changes values of selected objects.
+
+* **Arguments**:
+    - query (String)
+    - data (Object|Array) New value
+
+*Examples:*
+
+```js
+// Reset candles
+dc.set('chart.data', ohlcv)
+
+ // Change the entire chart object
+dc.set('chart', {
+    type: "Candles",
+    data: [ ... ],
+    settings: {}
+})
+
+// Apply new settings to all splines
+dc.set('onchart.Spline.settings', {
+    lineWidth: 2,
+    color: 'green'
+})
+
+// Change the data of a specific overlay
+dc.set('onchart.EMA0.data', [ ... ])
+```
