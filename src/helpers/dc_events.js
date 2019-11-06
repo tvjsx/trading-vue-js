@@ -214,7 +214,8 @@ export default class DCEvents {
 
     // Clean-up unfinished business (tools)
     before_destroy() {
-        let f = x => x.settings.$state === 'finished'
+        let f = x => !x.settings.$state ||
+            x.settings.$state === 'finished'
         this.data.onchart = this.data.onchart
             .filter(f)
         this.data.onchart = this.data.onchart
