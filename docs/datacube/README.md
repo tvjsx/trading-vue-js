@@ -1,7 +1,7 @@
 # DataCube API
 
 ::: warning
-This library is in alpha stage, API may change. This guide version is **0.3.12**
+This library is in alpha stage, API may change. This guide version is **0.4.1**
 :::
 
 ![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=Current%20lib%20version)
@@ -83,4 +83,32 @@ dc.hide('.') // -> Hides all overlays
 
 ## Methods
 
-More stuff will be here
+### add (side, overlay)
+
+Adds a new overlay to the selected array reactively.
+
+* **Arguments**:
+    - side (String) "onchart" or "offchart"
+    - overlay (Object) Overlay descriptor
+* **Returns**: Overlay datacube id
+
+
+*Example:*
+
+```js
+dc.add('onchart', {
+    type: 'Spline',
+    name: 'EMA 25',
+    data: [ ... ],
+    settings: {
+        lineColor: 'green'
+    }
+})
+```
+
+### get (query)
+
+Gets all objects matching the query.
+
+* **Arguments**: query (String)
+* **Returns**: Array of objects
