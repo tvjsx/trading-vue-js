@@ -506,13 +506,9 @@ meta_info() {
 use_for() {return ['<YourOverlayId>'] }
 ```
 
-Submit a PR to `trading-vue-js/src/components/overlays/` as a folder with the following structure:
+~~Submit a PR to `trading-vue-js/src/components/overlays/` as a folder with the following structure:~~
 
-* **YourOverlay**\
-    * **YourOverlay.js** - main file
-    * **data.json** - Data example, less than `1MB`
-    * ...
+**There will be a separate git repository & npm package for community overlays [WIP].**
 
-*Please check that your overlay id is not yet in use. In the future this process will be automated.*
 
 *This section will be updated*
