@@ -103,7 +103,7 @@ dc.add('onchart', {
     settings: {
         lineColor: 'green'
     }
-})
+}) // -> "onchart.Spline0"
 ```
 
 ### get (query)
@@ -160,4 +160,33 @@ dc.set('onchart.Spline.settings', {
 
 // Change the data of a specific overlay
 dc.set('onchart.EMA0.data', [ ... ])
+```
+
+### merge (query, data)
+
+Merges objects pulled by query with new data. Objects can be of type `Object` or` Array`.
+If the type is `Array`, DC will first consider the data as time series and try to combine them by timestamp.
+
+* **Arguments**:
+    - query (String)
+    - data (Object|Array) New value
+
+*Examples:*
+
+```js
+// Merge new settings with existing ones
+// (old properties will be overridden)
+dc.merge('onchart.Spline.settings', {
+    lineWidth: 2,
+    color: 'green'
+})
+
+// Merge as time series
+dc.get('chart.data') // -> [[10001, 1, 1, 1, 1 ], [10002, 1, 1, 1, 1 ]]
+dc.merge('chart.data', [
+    [10002, 2, 2, 2, 2 ], [10003, 3, 3, 3, 3 ]
+])
+dc.get('chart.data') // ->
+// [[10001, 1, 1, 1, 1 ], [10002, 2, 2, 2, 2 ], [10003, 3, 3, 3, 3 ]]
+
 ```
