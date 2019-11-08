@@ -615,4 +615,4 @@ Allows you to add multiple keyboard listeners.
 |---|---|---|
 | pressed  | Function |  Returns `true` if button is pressed: `function pressed(buttonName)` |
 | listeners  | Number |  Listener count |
-| on  | Function |  Registers a listener: `function on(event, callback)` |
+| on  | Function |  Registers a listener: `function on(buttonName, callback)` |

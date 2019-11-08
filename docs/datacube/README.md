@@ -171,6 +171,8 @@ If the type is `Array`, DC will first consider the data as time series and try t
     - query (String)
     - data (Object|Array) New value
 
+*Note: time series must be sorted before merging*
+
 *Examples:*
 
 ```js
@@ -189,4 +191,46 @@ dc.merge('chart.data', [
 dc.get('chart.data') // ->
 // [[10001, 1, 1, 1, 1 ], [10002, 2, 2, 2, 2 ], [10003, 3, 3, 3, 3 ]]
 
+```
+
+### del (query)
+
+Removes all overlays matching query.
+
+* **Arguments**:
+    - query (String)
+
+```js
+dc.del('.') // Remove everything (except the main chart)
+dc.del('Spline') // Remove all overlays with id/name 'Spline'
+```
+
+### update (data)
+
+Updates/appends a data point, depending on the timestamp (or current time).
+
+* **Arguments**:
+    - data (Object) Specifies an update, see examples below
+* **Returns**: (Boolean) **true** if a new candle is formed
+
+```js
+// Update with a trade stream:
+dc.update({
+    price: 8800,
+    volume: 22,
+    'EMA': 8576, // query => value
+    'BB': [8955, 8522] // query => [value, value, ...]
+})
+// Update with full candlestick:
+dc.update({
+    candle: [1573231698000, 8750, 8900, 8700, 8800, 1688],
+    'EMA': 8576, // query => value
+    'BB': [8955, 8522] // query => [value, value, ...]
+})
+// Update with ohlcv (auto time):
+dc.update({
+    candle: [8750, 8900, 8700, 8800, 1688],
+    'EMA': 8576, // query => value
+    'BB': [8955, 8522] // query => [value, value, ...]
+})
 ```
