@@ -234,3 +234,39 @@ dc.update({
     'BB': [8955, 8522] // query => [value, value, ...]
 })
 ```
+
+### lock (query)
+
+Excludes specific query from results (for all query-based methods).
+
+* **Arguments**:
+    - query (String)
+
+```js
+dc.lock('onchart.Spline')
+dc.get('onchart.Spline')  // -> []
+```
+
+### unlock (query)
+
+Enables the query back.
+
+* **Arguments**:
+    - query (String)
+
+```js
+dc.unlock('onchart.Spline')
+dc.get('onchart.Spline')  // -> [{id: "onchart.Spline0", name: "EMA", ...}]
+```
+
+### show (query), hide (query)
+
+Show/hide all overlays by query.
+
+* **Arguments**:
+    - query (String)
+
+```js
+dc.hide('.')
+dc.show('onchart.Spline')
+```
