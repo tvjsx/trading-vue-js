@@ -45,7 +45,7 @@ export default {
             let st = this.$props.config.TB_B_STYLE
             return {
                 'width': `${w}px`,
-                'height': `${this.$props.height}px`,
+                'height': `${this.$props.height-3}px`,
                 'background-color': cb,
                 'border-right': `${b}px ${st} ${brd}`
             }
@@ -73,6 +73,6 @@ export default {
     position: absolute;
     border-right: 1px solid black;
     z-index: 100;
-    padding-top: 4px;
+    padding-top: 3px;
 }
 </style>
