@@ -16,6 +16,7 @@ import Candles from "./overlays/Candles.vue"
 import Volume from "./overlays/Volume.vue"
 import Splitters from "./overlays/Splitters.vue"
 import LineTool from "./overlays/LineTool.vue"
+import RangeTool from "./overlays/RangeTool.vue"
 
 
 export default {
@@ -31,7 +32,7 @@ export default {
         // List of all possible overlays (builtin + custom)
         this._list = [
             Spline, Splines, Range, Trades, Channel, Segment,
-            Candles, Volume, Splitters, LineTool
+            Candles, Volume, Splitters, LineTool, RangeTool
         ]
         .concat(this.$props.overlays)
         this._registry = {}
