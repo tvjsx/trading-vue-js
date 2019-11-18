@@ -42,9 +42,20 @@ export default {
         draw(ctx) {
             if (!this.p1 || !this.p2) return
 
+            let dir = Math.sign(this.p2[1] - this.p1[1])
+
             ctx.lineWidth = this.line_width
             ctx.strokeStyle = this.color
             ctx.beginPath()
+
+            // Background
+            ctx.fillStyle = this.back_color
+            const layout = this.$props.layout
+            let x1 = layout.t2screen(this.p1[0])
+            let y1 = layout.$2screen(this.p1[1])
+            let x2 = layout.t2screen(this.p2[0])
+            let y2 = layout.$2screen(this.p2[1])
+            ctx.fillRect(x1, y1, x2 - x1, y2 - y1)
 
             // Top
             new Seg(this, ctx).draw(
@@ -54,6 +65,13 @@ export default {
             new Seg(this, ctx).draw(
                 [this.p1[0], this.p1[1]],  [this.p2[0], this.p1[1]]
             )
+
+            // Arrow
+            let xm = layout.t2screen((this.p1[0] + this.p2[0]) * 0.5)
+            ctx.moveTo(xm - 4, y2 + 5 * dir)
+            ctx.lineTo(xm, y2)
+            ctx.lineTo(xm + 4, y2 + 5 * dir)
+
             ctx.stroke()
 
             // Vertical
@@ -88,6 +106,9 @@ export default {
         color() {
             return this.sett.color ||
                 this.$props.colors.colorCross
+        },
+        back_color() {
+            return this.sett.backColor || '#9b9ba316'
         }
     },
     data() {
