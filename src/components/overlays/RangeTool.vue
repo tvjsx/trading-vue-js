@@ -91,8 +91,8 @@ export default {
         },
         draw_value(ctx, dir, xm, y) {
             ctx.font = this.new_font
-            let d$ = (this.p2[1] - this.p1[1]).toFixed(2)
-            let p = (100 * (this.p2[1] / this.p1[1] - 1)).toFixed(2)
+            let d$ = (this.p2[1] - this.p1[1]).toFixed(this.prec)
+            let p = (100 * (this.p2[1] / this.p1[1] - 1)).toFixed(this.prec)
             let text = `${d$}  (${p}%)`
             let w = Math.max(ctx.measureText(text).width + 20, 100)
             ctx.fillStyle = this.value_back
@@ -132,6 +132,9 @@ export default {
         value_color() {
             return this.sett.valueColor ||
                 this.$props.colors.colorText
+        },
+        prec() {
+            return this.sett.precision || 2
         },
         new_font() {
             return '12px ' + this.$props.font.split('px').pop()
