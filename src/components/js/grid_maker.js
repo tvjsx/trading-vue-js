@@ -86,8 +86,17 @@ function GridMaker(id, params, master_grid = null) {
 
         // Get max lengths of integer and fractional parts
         data.forEach(x => {
-            var [l, r] = x[1].toString().split('.')
-
+            var str = x[1].toString()
+            if (x[1] < 0.000001) {
+                // Parsing the exponential form. Gosh this
+                // smells trickily
+                var [ls, rs] = str.split('e-')
+                var [l, r] = ls.split('.')
+                if (!r) r = ''
+                r = { length: r.length + parseInt(rs) || 0 }
+            } else {
+                var [l, r] = str.split('.')
+            }
             if (r && r.length > max_r) {
                 max_r = r.length
             }
@@ -222,7 +231,9 @@ function GridMaker(id, params, master_grid = null) {
 
     function grid_y() {
 
-        self.$_step = dollar_step()
+        // Prevent duplicate levels
+        let m = Math.pow(10, -self.prec)
+        self.$_step = Math.max(m, dollar_step())
         self.ys = []
 
         let y1 = self.$_lo - self.$_lo % self.$_step
