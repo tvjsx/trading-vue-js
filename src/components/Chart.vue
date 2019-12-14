@@ -191,7 +191,8 @@ export default {
                 type: this.chart.type || 'Candles',
                 main: true,
                 data: this.sub,
-                settings: this.chart.settings || this.settings_ohlcv
+                settings: this.chart.settings || this.settings_ohlcv,
+                grid: this.chart.grid || {}
             })
             p.overlays = this.$props.overlays
             return p
@@ -217,7 +218,7 @@ export default {
             return this.$props.data.ohlcv || this.chart.data || []
         },
         chart() {
-            return this.$props.data.chart || {}
+            return this.$props.data.chart || { grid: {} }
         },
         onchart() {
             return this.$props.data.onchart || []
