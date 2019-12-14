@@ -1,5 +1,5 @@
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
 
 const webpack = require('webpack')
 const path = require('path')
@@ -45,7 +45,7 @@ let common = {
     },
     optimization: {
         minimize: true,
-        minimizer: [new UglifyJsPlugin({
+        minimizer: [new TerserPlugin({
             include: /\.min\.js$/,
             sourceMap: true
         })]
