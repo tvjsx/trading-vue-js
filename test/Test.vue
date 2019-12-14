@@ -29,10 +29,12 @@ import LegendButtons from './tests/LegendButtons.vue'
 import ChartTypes from './tests/ChartTypes.vue'
 import DataHelper from './tests/DataHelper.vue'
 import Toolbar from './tests/Toolbar.vue'
+import GridSettings from './tests/GridSettings.vue'
 
 const TESTS = {
     Simple, Stocks, MouseEvents, Timeframes, Multichart,
-    LegendButtons, ChartTypes, DataHelper, Toolbar
+    LegendButtons, ChartTypes, DataHelper, Toolbar,
+    GridSettings
 }
 
 export default {

@@ -139,7 +139,8 @@ export default {
                     this.range[0] - this.interval,
                     this.range[1]
                 ),
-                settings: d.settings || this.settings_ov
+                settings: d.settings || this.settings_ov,
+                grid: d.grid || {}
             }))
         },
         section_props(i) {
