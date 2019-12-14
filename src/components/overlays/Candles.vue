@@ -15,10 +15,7 @@ export default {
             return { author: 'C451', version: '1.1.0' }
         },
         init() {
-            this.$emit('new-shader', {
-                target: 'sidebar',
-                draw: (ctx) => {}
-            })
+            
         },
         draw(ctx) {
 

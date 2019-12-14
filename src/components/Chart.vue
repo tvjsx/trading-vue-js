@@ -17,7 +17,8 @@
             v-on:legend-button-click="legend_button_click"
             >
         </grid-section>
-        <botbar v-bind="botbar_props"></botbar>
+        <botbar v-bind="botbar_props" :shaders="shaders">
+        </botbar>
     </div>
 </template>
 
@@ -30,6 +31,7 @@ import CursorUpdater from './js/updater.js'
 import GridSection from './Section.vue'
 import Botbar from './Botbar.vue'
 import Keyboard from './Keyboard.vue'
+import Shaders from '../mixins/shaders.js'
 
 export default {
     name: 'Chart',
@@ -37,6 +39,7 @@ export default {
         'title_txt', 'data', 'width', 'height', 'font', 'colors',
         'overlays', 'tv_id', 'config', 'buttons', 'toolbar'
     ],
+    mixins: [Shaders],
     components: {
         GridSection,
         Botbar,
@@ -163,6 +166,7 @@ export default {
             this.update_layout()
         },
         emit_custom_event(d) {
+            this.on_shader_event(d, 'botbar')
             this.$emit('custom-event', d)
         },
         update_layout(clac_tf) {
