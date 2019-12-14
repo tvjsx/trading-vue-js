@@ -33,10 +33,12 @@
 import Grid from './Grid.vue'
 import Sidebar from './Sidebar.vue'
 import ChartLegend from './Legend.vue'
+import Shaders from '../mixins/shaders.js'
 
 export default {
     name: 'GridSection',
     props: ['common', 'grid_id'],
+    mixins: [Shaders],
     components: {
         Grid,
         Sidebar,
@@ -61,17 +63,7 @@ export default {
             this.$emit('layer-meta-props', d)
         },
         emit_custom_event(d) {
-            if (d.event === 'new-shader') {
-                if (d.args[0].target === 'sidebar') {
-                    d.args[0].id = `${d.args[1]}-${d.args[2]}`
-                    this.shaders.push(d.args[0])
-                }
-            }
-            if (d.event === 'remove-shaders') {
-                let id = d.args.join('-')
-                this.shaders = this.shaders
-                    .filter(x => x.id !== id)
-            }
+            this.on_shader_event(d, 'sidebar')
             this.$emit('custom-event', d)
         },
         button_click(event) {

@@ -60,8 +60,17 @@ export default class Botbar {
         }
 
         this.ctx.stroke()
+        this.apply_shaders()
         if (this.$p.cursor.x && this.$p.cursor.t) this.panel()
 
+    }
+
+    apply_shaders() {
+        for (var s of this.$p.shaders) {
+            this.ctx.save()
+            s.draw(this.ctx)
+            this.ctx.restore()
+        }
     }
 
     panel() {
