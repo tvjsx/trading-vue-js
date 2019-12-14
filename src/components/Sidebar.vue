@@ -9,7 +9,7 @@ export default {
     props: [
         'sub', 'layout', 'range', 'interval', 'cursor', 'colors', 'font',
         'width', 'height', 'grid_id', 'rerender', 'y_transform', 'tv_id',
-        'config'
+        'config', 'shaders'
     ],
     mixins: [Canvas],
     mounted() {

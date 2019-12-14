@@ -39,6 +39,7 @@ export default {
         if (this.init) this.init()
     },
     beforeDestroy() {
+        if (this.destroy) this.destroy()
         this._$emit('delete-grid-layer', this.$props.id)
     },
     methods: {
@@ -67,6 +68,7 @@ export default {
             if (event.split(':')[0] === 'hook') return
             if (event === 'change-settings' ||
                 event === 'object-selected' ||
+                event === 'new-shader' ||
                 event === 'remove-tool') {
                 args.push(this.grid_id, this.id)
             }
