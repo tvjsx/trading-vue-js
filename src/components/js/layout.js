@@ -10,13 +10,17 @@ import GridMaker from './grid_maker.js'
 function Layout(params) {
 
     let {
-        sub, offsub, interval, range, ctx, layers_meta, $props:$p,
-        y_transforms: y_ts
+        chart, sub, offsub, interval, range, ctx, layers_meta,
+        $props:$p, y_transforms: y_ts
     } = params
 
     // Splits space between main chart
     // and offchart indicator grids
     function grid_hs() {
+
+        if (chart.grid) {
+            
+        }
 
         const n = offsub.length
         const off_h = (2 * Math.sqrt(n) / 7) / (n || 1)
