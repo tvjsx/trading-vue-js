@@ -18,22 +18,36 @@ function Layout(params) {
     // and offchart indicator grids
     function grid_hs() {
 
-        if (chart.grid) {
-            
+        const height = $p.height - $p.config.BOTBAR
+
+        // When at least one height defined (default = 1),
+        // Pxs calculated as: (sum of weights) / number
+        let grid = chart.grid || {}
+        if (grid.height || offsub.find(x => x.grid.height)) {
+            return weighted_hs(grid, height)
         }
 
         const n = offsub.length
         const off_h = (2 * Math.sqrt(n) / 7) / (n || 1)
-        const height = $p.height - $p.config.BOTBAR
 
         // Offchart grid height
         const px = Math.floor(height * off_h)
 
         // Main grid height
         const m = height - px * n
-
         return [m].concat(Array(n).fill(px))
 
+    }
+
+    function weighted_hs(grid, height) {
+        let hs = [{grid}, ...offsub].map(x => x.grid.height || 1)
+        let sum = hs.reduce((a, b) => a + b, 0)
+        hs = hs.map(x => Math.floor((x / sum) * height))
+
+        // Refine the height if Math.floor decreased px sum
+        sum = hs.reduce((a, b) => a + b, 0)
+        for (var i = 0; i < height - sum; i++) hs[i % hs.length]++
+        return hs
     }
 
     function t2screen(t) {
