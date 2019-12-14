@@ -14,7 +14,12 @@ export default {
         meta_info() {
             return { author: 'C451', version: '1.1.0' }
         },
-
+        init() {
+            this.$emit('new-shader', {
+                target: 'sidebar',
+                draw: (ctx) => {}
+            })
+        },
         draw(ctx) {
 
             // If data === main candlestick data

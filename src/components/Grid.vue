@@ -91,6 +91,11 @@ export default {
         },
         del_layer(layer) {
             this.$nextTick(() => this.renderer.del_layer(layer))
+            const grid_id = this.$props.grid_id
+            this.$emit('custom-event', {
+                event: 'remove-shaders',
+                args: [grid_id, layer]
+            })
         },
         get_overlays(h) {
             // Distributes overlay data & settings according

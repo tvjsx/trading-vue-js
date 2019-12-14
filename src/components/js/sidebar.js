@@ -151,8 +151,19 @@ export default class Sidebar {
         this.ctx.stroke()
 
         if (this.$p.grid_id) this.upper_border()
+
+        this.apply_shaders()
+
         if (this.$p.cursor.y && this.$p.cursor.y$) this.panel()
 
+    }
+
+    apply_shaders() {
+        for (var s of this.$p.shaders) {
+            this.ctx.save()
+            s.draw(this.ctx)
+            this.ctx.restore()
+        }
     }
 
     upper_border() {
