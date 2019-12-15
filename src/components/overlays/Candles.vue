@@ -6,16 +6,17 @@ import Overlay from '../../mixins/overlay.js'
 import { layout_cnv } from '../js/layout_cnv.js'
 import Candle from '../primitives/candle.js'
 import Volbar from '../primitives/volbar.js'
+import Price from '../primitives/price.js'
 
 export default {
     name: 'Candles',
     mixins: [Overlay],
     methods: {
         meta_info() {
-            return { author: 'C451', version: '1.1.0' }
+            return { author: 'C451', version: '1.2.0' }
         },
         init() {
-            
+            this.price = new Price(this)
         },
         draw(ctx) {
 
@@ -41,6 +42,7 @@ export default {
                 new Candle(this, ctx, c)
             }
 
+            if (this.price_line) this.price.draw(ctx)
         },
         use_for() { return ['Candles'] },
 
@@ -61,6 +63,10 @@ export default {
         show_volume() {
             return 'showVolume' in this.sett ?
                 this.sett.showVolume : true
+        },
+        price_line() {
+            return 'priceLine' in this.sett ?
+                this.sett.priceLine : true
         },
         colorCandleUp() {
             return this.sett.colorCandleUp ||
@@ -92,7 +98,7 @@ export default {
         }
     },
     data() {
-        return {}
+        return { price: {} }
     }
 
 }
