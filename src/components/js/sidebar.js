@@ -188,7 +188,7 @@ export default class Sidebar {
 
         let x = - 0.5
         let y = this.$p.cursor.y - PANHEIGHT * 0.5 - 0.5
-        let a = 5 //* 0.5
+        let a = 5
         this.ctx.fillRect(x - 0.5, y, panwidth, PANHEIGHT)
         this.ctx.fillStyle = this.$p.colors.colorTextHL
         this.ctx.textAlign = 'left'
