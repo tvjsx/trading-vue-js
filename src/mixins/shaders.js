@@ -1,5 +1,5 @@
 
-// Parser for shader events 
+// Parser for shader events
 
 export default {
     methods: {
@@ -8,6 +8,7 @@ export default {
                 if (d.args[0].target === target) {
                     d.args[0].id = `${d.args[1]}-${d.args[2]}`
                     this.shaders.push(d.args[0])
+                    this.rerender++
                 }
             }
             if (d.event === 'remove-shaders') {

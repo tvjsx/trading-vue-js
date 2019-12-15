@@ -24,7 +24,7 @@ export default {
     props: [
         'sub', 'layout', 'range', 'interval', 'cursor', 'colors', 'overlays',
         'width', 'height', 'data', 'grid_id', 'y_transform', 'font', 'tv_id',
-        'config'
+        'config', 'meta'
     ],
     mixins: [Canvas],
     components: { Crosshair, KeyboardListener },
@@ -124,6 +124,7 @@ export default {
                         settings: x.settings,
                         num: i,
                         grid_id: this.$props.grid_id,
+                        meta: this.$props.meta
                     })
                 })
             )
