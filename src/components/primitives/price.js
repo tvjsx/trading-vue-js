@@ -76,7 +76,7 @@ export default class Price {
     }
 
     last_price() {
-        return this.comp.$props.meta ?
+        return this.comp.$props.meta.last ?
             this.comp.$props.meta.last[4] : undefined
     }
 
