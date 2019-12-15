@@ -7,7 +7,7 @@ export default {
     props: [
         'id', 'num', 'interval', 'cursor', 'colors',
         'layout', 'sub', 'data', 'settings', 'grid_id',
-        'font', 'config'
+        'font', 'config', 'meta'
     ],
     mounted() {
         // Main chart?

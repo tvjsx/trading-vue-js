@@ -37,13 +37,13 @@ const ChartConfig = {
     TB_ICON_BRI: 1, // Toolbar icon brightness
     TB_BORDER: 1,   // Toolbar border px
     TB_B_STYLE: 'dotted', // Toolbar border style
-    TOOL_COLL: 7,   // Tool collision threshold 
+    TOOL_COLL: 7,   // Tool collision threshold
     EXPAND: 0.15,   // %/100 of range
     CANDLEW: 0.6,   // %/100 of step
     GRIDX: 100,     // px
     GRIDY: 47,      // px
     BOTBAR: 28,     // px
-    PANHEIGHT: 24,  // px
+    PANHEIGHT: 22,  // px
     DEFAULT_LEN: 50,// candles
     MINIMUM_LEN: 5, // candles,
     MIN_ZOOM: 25,   // candles

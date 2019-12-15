@@ -130,7 +130,8 @@ export default {
                 y_ts: this.y_transforms,
                 tv_id: this.$props.tv_id,
                 config: this.$props.config,
-                buttons: this.$props.buttons
+                buttons: this.$props.buttons,
+                meta: this.meta
             }
         },
         overlay_subset(source) {
@@ -233,6 +234,15 @@ export default {
         styles() {
             let w = this.$props.toolbar ? this.$props.config.TOOLBAR : 0
             return { 'margin-left': `${w}px` }
+        },
+        last_candle() {
+            return (this.ohlcv && this.ohlcv.length) ?
+                this.ohlcv[this.ohlcv.length - 1] : undefined
+        },
+        meta() {
+            return {
+                last: this.last_candle
+            }
         }
     },
     data() {
