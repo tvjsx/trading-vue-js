@@ -1,7 +1,7 @@
 # Built-in Overlays
 
 ::: warning
-This library is in alpha stage, API may change. This guide's version is **0.3.5**
+This library is in alpha stage, API may change. This guide's version is **0.4.3**
 :::
 
 ![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=Current%20lib%20version)
@@ -42,6 +42,7 @@ This library is in alpha stage, API may change. This guide's version is **0.3.5*
 | colorWickSm | String | Scaled down wick color, hex |
 | colorVolUp | String | Green volume color, hex |
 | colorVolDw | String | Red volume color, hex |
+| priceLine | Boolean | Show/hide a price line, default = true |
 
 The Style object, if defined, overwrites all the color settings of a particular candle:
 
