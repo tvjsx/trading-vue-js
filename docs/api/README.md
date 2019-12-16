@@ -1,7 +1,7 @@
 # API Book
 
 ::: warning
-This library is in alpha stage, API may change. This guide version is **0.4.1**
+This library is in alpha stage, API may change. This guide version is **0.4.3**
 :::
 
 ![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=Current%20lib%20version)
@@ -145,7 +145,7 @@ export default {
 Can be emitted from overlay or **trading-vue** itself. Propagates all the way up to the root component; must have a unique name. Some names are reserved:
 ```
 register-tools, tool-selected, grid-mousedown, drawing-mode-off, change-settings,
-scroll-lock, object-selected, remove-tool, before-destroy
+scroll-lock, object-selected, remove-tool, before-destroy, new-shader, remove-shaders
 ```
 
 *Example:*
@@ -266,6 +266,8 @@ Data structure v1.2
 ## Overlay api
 
 Data for building overlays. Defined in `mixins/overlay.js`, accessed through overlay's `this.$props`.
+
+### Inline Shaders API is [here](https://github.com/C451/trading-vue-js/tree/master/docs/api/SHADERS.md)
 
 *All properties reactive*
 
