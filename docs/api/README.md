@@ -170,14 +170,14 @@ Data structure v1.2
 
 ```js
 {
-    "chart": [   // Mandatory
+    "chart": {   // Mandatory
         "type": "<Candles|Spline>",
         "data": [
             [timestamp, open, high, low, close, volume],
             ...
         ],
         "settings": { } // Settings (depending on "type")
-    ],
+    },
     "onchart": [ // Displayed ON the chart
         {
             "name": "<Indicator name>",
