@@ -23,7 +23,7 @@ export default {
     data() {
         return {
             chart: new DataCube({
-                chart: [], onchart: [], offchart: []
+                chart: {}, onchart: [], offchart: []
             })
         }
     }

@@ -96,14 +96,14 @@ PRO TIP: **chart** is mandatory if you want to see something other than a white 
 
 ```js
 {
-    "chart": [   // Mandatory
+    "chart": {   // Mandatory
         "type": "<Chart Type, e.g. Candles>",
         "data": [
             [timestamp, open, high, low, close, volume],
             ...
         ],
         "settings": { } // Settings (depending on Chart Type)
-    ],
+    },
     "onchart": [ // Displayed ON the chart
         {
             "name": "<Indicator name>",
