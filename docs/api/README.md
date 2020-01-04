@@ -168,6 +168,8 @@ Event listener:
 
 Data structure v1.2
 
+IMPORTANT: All data must be sorted by time (in ascending order). The main OHLCV must not contain duplicate timestamps.  
+
 ```js
 {
     "chart": {   // Mandatory
