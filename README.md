@@ -93,7 +93,8 @@ The core philosophy is **Data -> Screen Mapping (DSM)**. The library provides yo
 ## Data structure
 
 PRO TIP: **chart** is mandatory if you want to see something other than a white screen
-IMPORTANT: All data must be sorted by time (in ascending order). The main OHLCV must not contain duplicate timestamps.  
+
+IMPORTANT: All data must be sorted by time (in ascending order). The main OHLCV must not contain duplicate timestamps.
 
 ```js
 {
