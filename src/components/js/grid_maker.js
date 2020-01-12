@@ -18,6 +18,7 @@ function GridMaker(id, params, master_grid = null) {
     var y_range_fn = null
     if (lm && Object.keys(lm).length) {
         // Gets last y_range fn()
+        //if (master_grid) console.log(layers_meta)
         y_range_fn = lm[Object.keys(lm).length - 1].y_range
     }
 

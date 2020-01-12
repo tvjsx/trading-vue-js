@@ -15,9 +15,9 @@ function Layout(params) {
     } = params
 
     offsub = offsub.filter((x, i) => {
-        // Skip offchart overlays with custom id,
-        // because they will be on top of existing grids
-        return !(x.grid && x.grid.id < i + 1)
+        // Skip offchart overlays with custom grid id,
+        // because they will be mergred with the existing grids
+        return !(x.grid && x.grid.id)
     })
 
     // Splits space between main chart

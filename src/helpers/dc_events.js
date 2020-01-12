@@ -97,13 +97,6 @@ export default class DCEvents {
 
     // Place a new tool
     build_tool(grid_id) {
-        // TODO: Tools for offchart grids (grid_id > 0).
-        // Currently 1 offchart overlay === 1 new grid,
-        // need to find a way to stack offchart overlays.
-        if (grid_id !== 0) {
-            this.drawing_mode_off()
-            return
-        }
 
         let list = this.data.tools
         let type = this.data.tool
@@ -118,11 +111,13 @@ export default class DCEvents {
         sett.$selected = true
         sett.$state = 'wip'
 
-        let id = this.add('onchart', {
+        let side = grid_id ? 'offchart' : 'onchart'
+        let id = this.add(side, {
             name: proto.name,
             type: type.split(':')[0],
             settings: sett,
-            data: data
+            data: data,
+            grid: { id: grid_id }
         })
 
         sett.$uuid = `${id}-${Utils.now()}`
@@ -151,12 +146,7 @@ export default class DCEvents {
         delete settings.id
         let grid_id = args[1]
         let q = this.layer_query(args[1], args[2])
-
-        // TODO: Tools for offchart grids
-        if (grid_id !== 0) return
-
         this.merge(`${q}.settings`, settings)
-
     }
 
     // Lock the scrolling mechanism
