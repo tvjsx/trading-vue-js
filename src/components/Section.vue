@@ -84,7 +84,12 @@ export default {
 
             // Split offchart data between offchart grids
             if (id > 0) {
+                let all = p.data
                 p.data = [p.data[id - 1]]
+                // Merge offchart overlays with custom ids with
+                // the existing onse (by comparing the grid ids)
+                p.data.push(...all.filter(
+                    x => x.grid && x.grid.id === id))
             }
 
             p.width = p.layout.grids[id].width
@@ -112,7 +117,11 @@ export default {
 
             // Split offchart data between offchart grids
             if (id > 0) {
+                let all = p.data
                 p.data = [p.data[id - 1]]
+                // TODO: show correct legend values
+                p.data.push(...all.filter(
+                    x => x.grid && x.grid.id === id))
             }
             return p
         },

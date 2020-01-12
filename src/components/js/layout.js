@@ -14,6 +14,12 @@ function Layout(params) {
         $props:$p, y_transforms: y_ts
     } = params
 
+    offsub = offsub.filter((x, i) => {
+        // Skip offchart overlays with custom id,
+        // because they will be on top of existing grids
+        return !(x.grid && x.grid.id < i + 1)
+    })
+
     // Splits space between main chart
     // and offchart indicator grids
     function grid_hs() {
