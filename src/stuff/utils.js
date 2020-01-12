@@ -102,9 +102,22 @@ export default {
 
     // Detects candles interval
     detect_interval(ohlcv) {
-        return ohlcv.slice(0, 99).reduce((a,x) =>
-        [Math.min(x[0] - a[1], a[0]), x[0]])[0]
+        let len = Math.min(ohlcv.length - 1, 99)
+        let min = Infinity
+        ohlcv.slice(0, len).forEach((x, i) => {
+            let d = ohlcv[i+1][0] - x[0]
+            if (d === d && d < min) min = d
+        })
+        return min
     },
+
+    // Detects candles interval. (old version, slightly slower)
+    /*detect_interval(ohlcv) {
+        // Initial value of accumulator
+        let a0 = [Infinity, ohlcv[0][0]]
+        return ohlcv.slice(1, 99).reduce((a,x) =>
+        [Math.min(x[0] - a[1], a[0]), x[0]], a0)[0]
+    },*/
 
     // Gets numberic part of overlay id (e.g 'EMA_1' = > 1)
     get_num_id(id) {
@@ -150,5 +163,5 @@ export default {
     get_deltaY(event) {
         return event.originalEvent.deltaY / 12
     }
-    
+
 }
