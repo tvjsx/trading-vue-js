@@ -6,9 +6,10 @@ export default {
         setup() {
             const id = `${this.$props.tv_id}-${this._id}-canvas`
             const canvas = document.getElementById(id)
-            const dpr = window.devicePixelRatio || 1
+            let dpr = window.devicePixelRatio || 1
             canvas.style.width = `${this._attrs.width}px`
             canvas.style.height = `${this._attrs.height}px`
+            if (dpr < 1) dpr = 1 // Realy ? That's it? Issue #63
             this.$nextTick(() => {
                 var rect = canvas.getBoundingClientRect()
                 canvas.width = rect.width * dpr
