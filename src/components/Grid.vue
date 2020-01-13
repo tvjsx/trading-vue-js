@@ -96,6 +96,10 @@ export default {
                 event: 'remove-shaders',
                 args: [grid_id, layer]
             })
+            this.$emit('custom-event', {
+                event: 'remove-layer-meta',
+                args: [grid_id, layer]
+            })
         },
         get_overlays(h) {
             // Distributes overlay data & settings according
@@ -114,7 +118,6 @@ export default {
                     count[d.type] = 0
                 }
             }
-
             return comp_list.map((x, i) => h(x.cls, {
                     on: this.layer_events,
                     attrs: Object.assign(this.common_props(), {

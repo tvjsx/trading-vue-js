@@ -16,10 +16,11 @@ function GridMaker(id, params, master_grid = null) {
     var self = {}
     var lm = layers_meta[id]
     var y_range_fn = null
+
     if (lm && Object.keys(lm).length) {
         // Gets last y_range fn()
-        //if (master_grid) console.log(layers_meta)
-        y_range_fn = lm[Object.keys(lm).length - 1].y_range
+        let yrs = Object.values(lm).filter(x => x.y_range)
+        if (yrs.length) y_range_fn = yrs[yrs.length - 1].y_range
     }
 
     // Calc vertical ($/₿) range
