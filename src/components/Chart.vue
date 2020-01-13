@@ -161,14 +161,22 @@ export default {
                 this.$set(this.layers_meta, d.grid_id, {})
             }
             this.$set(this.layers_meta[d.grid_id],
-                Utils.get_num_id(d.layer_id), d)
+                d.layer_id, d)
 
             // Rerender
             this.update_layout()
         },
+        remove_meta_props(grid_id, layer_id) {
+            if (grid_id in this.layers_meta) {
+                this.$delete(this.layers_meta[grid_id],layer_id)
+            }
+        },
         emit_custom_event(d) {
             this.on_shader_event(d, 'botbar')
             this.$emit('custom-event', d)
+            if (d.event === 'remove-layer-meta') {
+                this.remove_meta_props(...d.args)
+            }
         },
         update_layout(clac_tf) {
             if (clac_tf) this.calc_interval()

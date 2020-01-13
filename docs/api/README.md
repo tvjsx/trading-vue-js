@@ -145,7 +145,8 @@ export default {
 Can be emitted from overlay or **trading-vue** itself. Propagates all the way up to the root component; must have a unique name. Some names are reserved:
 ```
 register-tools, tool-selected, grid-mousedown, drawing-mode-off, change-settings,
-scroll-lock, object-selected, remove-tool, before-destroy, new-shader, remove-shaders
+scroll-lock, object-selected, remove-tool, before-destroy, new-shader, remove-shaders,
+remove-layer-meta
 ```
 
 *Example:*
@@ -168,7 +169,7 @@ Event listener:
 
 Data structure v1.2
 
-IMPORTANT: All data must be sorted by time (in ascending order). The main OHLCV must not contain duplicate timestamps.  
+IMPORTANT: All data must be sorted by time (in ascending order). The main OHLCV must not contain duplicate timestamps.
 
 ```js
 {
