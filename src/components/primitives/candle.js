@@ -42,7 +42,7 @@ export default class CandleExt {
 
         this.ctx.stroke()
 
-        if (data.w > 1.5) {
+        if (data.w > 1.5 || data.o === data.c) {
 
             this.ctx.fillStyle = body_color
 
