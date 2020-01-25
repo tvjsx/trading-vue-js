@@ -51,6 +51,11 @@ function GridMaker(id, params, master_grid = null) {
         } else {
             self.$_hi = hi + (hi - lo) * $p.config.EXPAND
             self.$_lo = lo - (hi - lo) * $p.config.EXPAND
+
+            if (self.$_hi === self.$_lo) {
+                self.$_hi *= 1.05  // Expand if height range === 0
+                self.$_lo *= 0.95
+            }
         }
 
     }
