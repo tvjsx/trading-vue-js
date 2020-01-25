@@ -1,9 +1,8 @@
 /*!
- * TradingVue.JS - v0.4.3 - Sun Dec 15 2019
- * https://github.com/C451/trading-vue-js
- * Copyright (c) 2019 c451 Code's All Right;
- * Licensed under the MIT license
- * 
+ * TradingVue.JS - v0.4.4 - Sat Jan 25 2020
+ *     https://github.com/C451/trading-vue-js
+ *     Copyright (c) 2019 c451 Code's All Right;
+ *     Licensed under the MIT license
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -5377,10 +5376,22 @@ var lib_default = /*#__PURE__*/__webpack_require__.n(lib);
   },
   // Detects candles interval
   detect_interval: function detect_interval(ohlcv) {
-    return ohlcv.slice(0, 99).reduce(function (a, x) {
-      return [Math.min(x[0] - a[1], a[0]), x[0]];
-    })[0];
+    var len = Math.min(ohlcv.length - 1, 99);
+    var min = Infinity;
+    ohlcv.slice(0, len).forEach(function (x, i) {
+      var d = ohlcv[i + 1][0] - x[0];
+      if (d === d && d < min) min = d;
+    });
+    return min;
   },
+  // Detects candles interval. (old version, slightly slower)
+
+  /*detect_interval(ohlcv) {
+      // Initial value of accumulator
+      let a0 = [Infinity, ohlcv[0][0]]
+      return ohlcv.slice(1, 99).reduce((a,x) =>
+      [Math.min(x[0] - a[1], a[0]), x[0]], a0)[0]
+  },*/
   // Gets numberic part of overlay id (e.g 'EMA_1' = > 1)
   get_num_id: function get_num_id(id) {
     return parseInt(id.split('_').pop());
@@ -5509,7 +5520,10 @@ function GridMaker(id, params) {
 
   if (lm && Object.keys(lm).length) {
     // Gets last y_range fn()
-    y_range_fn = lm[Object.keys(lm).length - 1].y_range;
+    var yrs = Object.values(lm).filter(function (x) {
+      return x.y_range;
+    });
+    if (yrs.length) y_range_fn = yrs[yrs.length - 1].y_range;
   } // Calc vertical ($/₿) range
 
 
@@ -5555,6 +5569,12 @@ function GridMaker(id, params) {
     } else {
       self.$_hi = hi + (hi - lo) * $p.config.EXPAND;
       self.$_lo = lo - (hi - lo) * $p.config.EXPAND;
+
+      if (self.$_hi === self.$_lo) {
+        self.$_hi *= 1.05; // Expand if height range === 0
+
+        self.$_lo *= 0.95;
+      }
     }
   }
 
@@ -5810,7 +5830,12 @@ function Layout(params) {
       ctx = params.ctx,
       layers_meta = params.layers_meta,
       $p = params.$props,
-      y_ts = params.y_transforms; // Splits space between main chart
+      y_ts = params.y_transforms;
+  offsub = offsub.filter(function (x, i) {
+    // Skip offchart overlays with custom grid id,
+    // because they will be mergred with the existing grids
+    return !(x.grid && x.grid.id);
+  }); // Splits space between main chart
   // and offchart indicator grids
 
   function grid_hs() {
@@ -6662,6 +6687,8 @@ function () {
       var dpr = window.devicePixelRatio || 1;
       canvas.style.width = "".concat(this._attrs.width, "px");
       canvas.style.height = "".concat(this._attrs.height, "px");
+      if (dpr < 1) dpr = 1; // Realy ? That's it? Issue #63
+
       this.$nextTick(function () {
         var rect = canvas.getBoundingClientRect();
         canvas.width = rect.width * dpr;
@@ -8059,7 +8086,7 @@ function () {
       this.ctx.lineTo(Math.floor(data.x) - 0.5, Math.floor(data.l));
       this.ctx.stroke();
 
-      if (data.w > 1.5) {
+      if (data.w > 1.5 || data.o === data.c) {
         this.ctx.fillStyle = body_color; // TODO: Move common calculations to layout.js
 
         var s = data.c >= data.o ? 1 : -1;
@@ -8153,7 +8180,7 @@ function () {
           var y = bar.y - h * 0.5 - 0.5;
           var a = 7;
           ctx.fillRect(x - 0.5, y, w + 1, h);
-          ctx.fillStyle = 'white';
+          ctx.fillStyle = comp.$props.colors.colorTextHL;
           ctx.textAlign = 'left';
           ctx.fillText(lbl, a, y + 15);
         }
@@ -8195,7 +8222,7 @@ function () {
   }, {
     key: "last_price",
     value: function last_price() {
-      return this.comp.$props.meta ? this.comp.$props.meta.last[4] : undefined;
+      return this.comp.$props.meta.last ? this.comp.$props.meta.last[4] : undefined;
     }
   }, {
     key: "green",
@@ -9590,6 +9617,10 @@ RangeTool_component.options.__file = "src/components/overlays/RangeTool.vue"
         event: 'remove-shaders',
         args: [grid_id, layer]
       });
+      this.$emit('custom-event', {
+        event: 'remove-layer-meta',
+        args: [grid_id, layer]
+      });
     },
     get_overlays: function get_overlays(h) {
       var _this5 = this;
@@ -10589,6 +10620,7 @@ Legend_component.options.__file = "src/components/Legend.vue"
   }
 });
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Section.vue?vue&type=script&lang=js&
+
 //
 //
 //
@@ -10671,7 +10703,15 @@ Legend_component.options.__file = "src/components/Legend.vue"
       var p = Object.assign({}, this.$props.common); // Split offchart data between offchart grids
 
       if (id > 0) {
-        p.data = [p.data[id - 1]];
+        var _p$data;
+
+        var all = p.data;
+        p.data = [p.data[id - 1]]; // Merge offchart overlays with custom ids with
+        // the existing onse (by comparing the grid ids)
+
+        (_p$data = p.data).push.apply(_p$data, toConsumableArray_default()(all.filter(function (x) {
+          return x.grid && x.grid.id === id;
+        })));
       }
 
       p.width = p.layout.grids[id].width;
@@ -10698,7 +10738,14 @@ Legend_component.options.__file = "src/components/Legend.vue"
       var p = Object.assign({}, this.$props.common); // Split offchart data between offchart grids
 
       if (id > 0) {
-        p.data = [p.data[id - 1]];
+        var _p$data2;
+
+        var all = p.data;
+        p.data = [p.data[id - 1]]; // TODO: show correct legend values
+
+        (_p$data2 = p.data).push.apply(_p$data2, toConsumableArray_default()(all.filter(function (x) {
+          return x.grid && x.grid.id === id;
+        })));
       }
 
       return p;
@@ -11131,6 +11178,7 @@ if (false) { var Keyboard_api; }
 Keyboard_component.options.__file = "src/components/Keyboard.vue"
 /* harmony default export */ var Keyboard = (Keyboard_component.exports);
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chart.vue?vue&type=script&lang=js&
+
 //
 //
 //
@@ -11277,13 +11325,22 @@ Keyboard_component.options.__file = "src/components/Keyboard.vue"
         this.$set(this.layers_meta, d.grid_id, {});
       }
 
-      this.$set(this.layers_meta[d.grid_id], utils.get_num_id(d.layer_id), d); // Rerender
+      this.$set(this.layers_meta[d.grid_id], d.layer_id, d); // Rerender
 
       this.update_layout();
+    },
+    remove_meta_props: function remove_meta_props(grid_id, layer_id) {
+      if (grid_id in this.layers_meta) {
+        this.$delete(this.layers_meta[grid_id], layer_id);
+      }
     },
     emit_custom_event: function emit_custom_event(d) {
       this.on_shader_event(d, 'botbar');
       this.$emit('custom-event', d);
+
+      if (d.event === 'remove-layer-meta') {
+        this.remove_meta_props.apply(this, toConsumableArray_default()(d.args));
+      }
     },
     update_layout: function update_layout(clac_tf) {
       if (clac_tf) this.calc_interval();
@@ -12183,14 +12240,6 @@ function () {
   }, {
     key: "build_tool",
     value: function build_tool(grid_id) {
-      // TODO: Tools for offchart grids (grid_id > 0).
-      // Currently 1 offchart overlay === 1 new grid,
-      // need to find a way to stack offchart overlays.
-      if (grid_id !== 0) {
-        this.drawing_mode_off();
-        return;
-      }
-
       var list = this.data.tools;
       var type = this.data.tool;
       var proto = list.find(function (x) {
@@ -12203,11 +12252,15 @@ function () {
       if (!('z-index' in sett)) sett['z-index'] = 100;
       sett.$selected = true;
       sett.$state = 'wip';
-      var id = this.add('onchart', {
+      var side = grid_id ? 'offchart' : 'onchart';
+      var id = this.add(side, {
         name: proto.name,
         type: type.split(':')[0],
         settings: sett,
-        data: data
+        data: data,
+        grid: {
+          id: grid_id
+        }
       });
       sett.$uuid = "".concat(id, "-").concat(utils.now());
       this.tv.$set(this.data, 'selected', id);
@@ -12236,9 +12289,7 @@ function () {
       var settings = args[0];
       delete settings.id;
       var grid_id = args[1];
-      var q = this.layer_query(args[1], args[2]); // TODO: Tools for offchart grids
-
-      if (grid_id !== 0) return;
+      var q = this.layer_query(args[1], args[2]);
       this.merge("".concat(q, ".settings"), settings);
     } // Lock the scrolling mechanism
 

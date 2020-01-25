@@ -6,6 +6,12 @@ const path = require('path')
 
 const VERS = require('../package.json').version
 const DATE = new Date().toDateString()
+const BANNER =
+
+`TradingVue.JS - v${VERS} - ${DATE}\n` +
+`    https://github.com/C451/trading-vue-js\n` +
+`    Copyright (c) 2019 c451 Code's All Right;\n` +
+`    Licensed under the MIT license`
 
 let common = {
     entry: {
@@ -47,18 +53,17 @@ let common = {
         minimize: true,
         minimizer: [new TerserPlugin({
             include: /\.min\.js$/,
-            sourceMap: true
+            sourceMap: true,
+            extractComments: {
+                banner: BANNER
+            }
         })]
     },
     devtool: '#source-map',
     plugins: [
         new VueLoaderPlugin(),
         new webpack.BannerPlugin({
-            banner:
-                `TradingVue.JS - v${VERS} - ${DATE}\n` +
-                `https://github.com/C451/trading-vue-js\n` +
-                `Copyright (c) 2019 c451 Code's All Right;\n` +
-                `Licensed under the MIT license\n`
+            banner: BANNER
         })
     ]
 }
