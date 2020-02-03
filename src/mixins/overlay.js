@@ -11,7 +11,7 @@ export default {
     ],
     mounted() {
         // Main chart?
-        let main = this.$props.sub === this.$props.data
+        const main = this.$props.sub === this.$props.data
 
         this.meta_info()
         this._$emit = this.$emit
@@ -34,6 +34,7 @@ export default {
             data_colors: this.data_colors,
             y_range: this.y_range
         })
+
         this.mouse = new Mouse(this)
         if (this.init_tool) this.init_tool()
         if (this.init) this.init()
@@ -53,9 +54,8 @@ export default {
         },
         meta_info() {
             /* override it (optional) */
-            let id = this.$props.id
-            console.warn(
-                `${id} meta_info() is req. for publishing`)
+            const id = this.$props.id
+            console.warn(`${id} meta_info() is req. for publishing`)
             console.warn(
             `Format: meta_info() {
                 author: 'Satoshi Smith',

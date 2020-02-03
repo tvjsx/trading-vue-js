@@ -11,8 +11,8 @@ export default class Hint {
 
     draw(ctx) {
 
-        let x = this.comp.layout.t2screen(this.t)
-        let y = this.comp.layout.$2screen(this.y$) - 50
+        const x = this.comp.layout.t2screen(this.t)
+        const y = this.comp.layout.$2screen(this.y$) - 50
 
         ctx.fillStyle = '#66666666'
         ctx.fillRect(

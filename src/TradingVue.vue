@@ -153,9 +153,10 @@ export default {
     computed: {
         // Copy a subset of TradingVue props
         chart_props() {
-            let offset = this.$props.toolbar ?
+            const offset = this.$props.toolbar ?
                 this.chart_config.TOOLBAR : 0
-            let chart_props = {
+
+            const chart_props = {
                 title_txt: this.$props.titleTxt,
                 overlays: this.$props.overlays,
                 data: this.decubed,
@@ -167,11 +168,13 @@ export default {
                 ib: this.$props.indexBased || this.index_based || false,
                 colors: {}
             }
-            for (var k in this.$props) {
+
+            for (const k in this.$props) {
                 if (k.indexOf('color') === 0) {
                     chart_props.colors[k] = this.$props[k]
                 }
             }
+
             return chart_props
         },
         chart_config() {
@@ -181,7 +184,8 @@ export default {
             )
         },
         decubed() {
-            let data = this.$props.data
+            const data = this.$props.data
+
             if (data.data !== undefined) {
                 // DataCube detected
                 data.init_tvjs(this)
@@ -210,7 +214,8 @@ export default {
     methods: {
         resetChart(resetRange = true) {
             this.reset++
-            let range = this.getRange()
+            const range = this.getRange()
+
             if (!resetRange && range[0] && range[1]) {
                 this.$nextTick(() => this.setRange(...range))
             }
@@ -261,7 +266,8 @@ export default {
             } else {
                 this.$emit(d.event)
             }
-            let data = this.$props.data
+
+            const data = this.$props.data
             if (data.tv) {
                 // If the data object is DataCube
                 data.on_custom_event(d.event, d.args)
@@ -272,11 +278,13 @@ export default {
         },
         set_loader(dc) {
             this.$refs.chart.$off('range-changed')
-            if (dc) this.$refs.chart.$on('range-changed',
-                r => dc.range_changed(
-                    r, this.$refs.chart.interval
+            if (dc) {
+                this.$refs.chart.$on('range-changed',
+                    r => dc.range_changed(
+                        r, this.$refs.chart.interval
+                    )
                 )
-            )
+            }
         }
     }
 }

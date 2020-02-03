@@ -3,14 +3,12 @@
 export default class Crosshair {
 
     constructor(comp) {
-
         this.comp = comp
         this.$p = comp.$props
         this.data = this.$p.sub
         this._visible = false
         this.locked = false
         this.layout = this.$p.layout
-
     }
 
     update(x, y) {
@@ -19,7 +17,6 @@ export default class Crosshair {
     }
 
     draw(ctx) {
-
         // Update reference to the grid
         this.layout = this.$p.layout
 
@@ -45,7 +42,6 @@ export default class Crosshair {
         ctx.lineTo(this.x, this.layout.height)
         ctx.stroke()
         ctx.restore()
-
     }
 
     hide() {

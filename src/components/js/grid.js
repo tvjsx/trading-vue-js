@@ -28,18 +28,18 @@ export default class Grid {
         this.offset_x = 0
         this.offset_y = 0
         this.deltas = 0 // Wheel delta events
+        this.drag = null;
+        this.pinch = null;
 
         this.listeners()
         this.overlays = []
-
     }
 
     listeners() {
-
-        var hamster = Hamster(this.canvas)
+        const hamster = Hamster(this.canvas)
         hamster.wheel((event, delta) => this.mousezoom(-delta * 50, event))
 
-        var mc = new Hammer.Manager(this.canvas)
+        const mc = new Hammer.Manager(this.canvas)
         mc.add(new Hammer.Pan())
         mc.add(new Hammer.Tap())
         mc.add(new Hammer.Pinch())
@@ -47,17 +47,15 @@ export default class Grid {
 
         mc.on('panstart', event => {
             if (this.cursor.scroll_lock) return
-            let tfrm = this.$p.y_transform
-            this.drug = {
+            const tfrm = this.$p.y_transform
+            this.drag = {
                 x: event.center.x + this.offset_x,
                 y: event.center.y + this.offset_y,
-                r: this.range.slice(),
+                r: this.range.slice(0),
                 t: this.range[1] - this.range[0],
-                o: tfrm ?
-                    (tfrm.offset || 0) : 0,
-                y_r: tfrm && tfrm.range ?
-                    tfrm.range.slice() : undefined,
-                B: this.layout.B
+                o: tfrm ? (tfrm.offset || 0) : 0,
+                y_r: tfrm && tfrm.range ? tfrm.range.slice(0) : undefined,
+                B: this.layout.B,
             }
             this.comp.$emit('cursor-changed', {
                 grid_id: this.id,
@@ -68,10 +66,10 @@ export default class Grid {
         })
 
         mc.on('panmove', event => {
-            if (this.drug) {
+            if (this.drag !== null) {
                 this.mousedrag(
-                    this.drug.x + event.deltaX,
-                    this.drug.y + event.deltaY,
+                    this.drag.x + event.deltaX,
+                    this.drag.y + event.deltaY,
                 )
                 this.comp.$emit('cursor-changed', {
                     grid_id: this.id,
@@ -82,7 +80,7 @@ export default class Grid {
         })
 
         mc.on('panend', () => {
-            this.drug = null
+            this.drag = null
             this.comp.$emit('cursor-locked', false)
         })
 
@@ -95,33 +93,32 @@ export default class Grid {
             this.update()
         })
 
-        mc.on('pinchstart', () =>  {
+        mc.on('pinchstart', () => {
             this.pinch = {
                 t: this.range[1] - this.range[0],
-                r: this.range.slice()
+                r: this.range.slice(0)
             }
         })
 
-        mc.on('pinchend', () =>  {
+        mc.on('pinchend', () => {
             this.pinch = null
         })
 
         mc.on('pinch', event => {
-            if (this.pinch) this.pinchzoom(event.scale)
+            if (this.pinch !== null) this.pinchzoom(event.scale)
         })
 
-        window.addEventListener("gesturestart", event => {
+        window.addEventListener('gesturestart', event => {
             event.preventDefault()
         })
 
-        window.addEventListener("gesturechange", event => {
+        window.addEventListener('gesturechange', event => {
             event.preventDefault()
         })
 
-        window.addEventListener("gestureend", event => {
+        window.addEventListener('gestureend', event => {
             event.preventDefault()
         })
-
     }
 
     mousemove(event) {
@@ -148,7 +145,7 @@ export default class Grid {
     }
 
     mouseup(event) {
-        this.drug = null
+        this.drag = null
     //    this.pinch = null
         this.comp.$emit('cursor-locked', false)
         this.propagate('mouseup', event)
@@ -182,7 +179,7 @@ export default class Grid {
     }
 
     show_hide_layer(event) {
-        let l = this.overlays.filter(x => x.id === event.id)
+        const l = this.overlays.filter(x => x.id === event.id)
         if (l.length) l[0].display = event.display
     }
 
@@ -197,21 +194,17 @@ export default class Grid {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
         this.grid()
 
-        let overlays = []
-        overlays.push(...this.overlays)
-
-        // z-index sorting
-        overlays.sort((l1, l2) => l1.z - l2.z)
-
-        overlays.forEach(l => {
-            if (!l.display) return
-            this.ctx.save()
-            let r = l.renderer
-            if (r.pre_draw) r.pre_draw(this.ctx)
-            r.draw(this.ctx)
-            if (r.post_draw) r.post_draw(this.ctx)
-            this.ctx.restore()
-        })
+        this.overlays.slice(0)  // copy
+            .sort((l1, l2) => l1.z - l2.z)  // z-index sorting
+            .forEach(l => {
+                if (!l.display) return
+                this.ctx.save()
+                const r = l.renderer
+                if (r.hasOwnProperty('pre_draw') && typeof r.pre_draw === 'function') r.pre_draw(this.ctx)
+                r.draw(this.ctx)
+                if (r.hasOwnProperty('post_draw') && typeof r.post_draw === 'function') r.post_draw(this.ctx)
+                this.ctx.restore()
+            })
 
         if (this.crosshair) {
             this.crosshair.renderer.draw(this.ctx)
@@ -225,24 +218,20 @@ export default class Grid {
         this.ctx.beginPath()
 
         const ymax = this.layout.height
-        for (var [x, p] of this.layout.xs) {
+        for (const [x, p] of this.layout.xs) {
 
             this.ctx.moveTo(x - 0.5, 0)
             this.ctx.lineTo(x - 0.5, ymax)
-
         }
 
-        for (var [y, y$] of this.layout.ys) {
+        for (const [y, y$] of this.layout.ys) {
 
             this.ctx.moveTo(0, y - 0.5)
             this.ctx.lineTo(this.layout.width, y - 0.5)
-
         }
 
         this.ctx.stroke()
-
         if (this.$p.grid_id) this.upper_border()
-
     }
 
     upper_border() {
@@ -261,7 +250,7 @@ export default class Grid {
         event.deltaX = event.deltaX || Utils.get_deltaX(event)
         event.deltaY = event.deltaY || Utils.get_deltaY(event)
 
-        if (Math.abs(event.deltaX) > 0) {
+        if (event.deltaX !== 0) {
             this.trackpad = true
             if (Math.abs(event.deltaX) >= Math.abs(event.deltaY)) {
                 delta *= 0.1
@@ -275,11 +264,11 @@ export default class Grid {
 
         // TODO: mouse zooming is a little jerky,
         // needs to follow f(mouse_wheel_speed) and
-        // if speed is low, scroll shoud be slower
+        // if speed is low, scroll should be slower
         if (delta < 0 && this.data.length <= this.MIN_ZOOM) return
         if (delta > 0 && this.data.length > this.MAX_ZOOM) return
 
-        let k = this.interval / 1000
+        const k = this.interval / 1000
         let diff = delta * k * this.data.length
         if (event.originalEvent.ctrlKey) {
             let offset = event.originalEvent.offsetX
@@ -292,16 +281,15 @@ export default class Grid {
         }
 
         this.change_range()
-
     }
 
     mousedrag(x, y) {
 
-        let dt = this.drug.t * (this.drug.x - x) / this.layout.width
+        const dt = this.drag.t * (this.drag.x - x) / this.layout.width
 
         let d$ = this.layout.$_hi - this.layout.$_lo
-        d$ *= (this.drug.y - y) / this.layout.height
-        let offset = this.drug.o + d$
+        d$ *= (this.drag.y - y) / this.layout.height
+        const offset = this.drag.o + d$
 
         let ls = this.layout.grid.logScale
 
@@ -320,17 +308,16 @@ export default class Grid {
             this.comp.$emit('sidebar-transform', {
                 grid_id: this.id,
                 range: ls ? (range || this.drug.y_r) : [
-                    this.drug.y_r[0] - offset,
-                    this.drug.y_r[1] - offset,
+                    this.drag.y_r[0] - offset,
+                    this.drag.y_r[1] - offset,
                 ]
             })
         }
 
-        this.range[0] = this.drug.r[0] + dt
-        this.range[1] = this.drug.r[1] + dt
+        this.range[0] = this.drag.r[0] + dt
+        this.range[1] = this.drag.r[1] + dt
 
         this.change_range()
-
     }
 
     pinchzoom(scale) {
@@ -338,26 +325,23 @@ export default class Grid {
         if (scale > 1 && this.data.length <= this.MIN_ZOOM) return
         if (scale < 1 && this.data.length > this.MAX_ZOOM) return
 
-        let t = this.pinch.t
-        let nt = t * 1 / scale
+        const t = this.pinch.t
+        const nt = t * 1 / scale
 
         this.range[0] = this.pinch.r[0] - (nt - t) * 0.5
         this.range[1] = this.pinch.r[1] + (nt - t) * 0.5
 
         this.change_range()
-
     }
 
     trackpad_scroll(event) {
 
-        let dt = this.range[1] - this.range[0]
+        const dt = this.range[1] - this.range[0]
 
         this.range[0] += event.deltaX * dt * 0.011
         this.range[1] += event.deltaX * dt * 0.011
 
         this.change_range()
-
-
     }
 
     change_range() {
@@ -370,18 +354,16 @@ export default class Grid {
 
         if (!this.range.length || this.data.length < 2) return
 
-        let l = this.data.length - 1
-        let data = this.data
-        let range = this.range
+        const l = this.data.length - 1
 
-        range[0] = Utils.clamp(
-            range[0],
-            -Infinity, data[l][0] - this.interval * 5.5,
+        this.range[0] = Utils.clamp(
+            this.range[0],
+            -Infinity, this.data[l][0] - this.interval * 5.5,
         )
 
-        range[1] = Utils.clamp(
-            range[1],
-            data[0][0] + this.interval * 5.5, Infinity
+        this.range[1] = Utils.clamp(
+            this.range[1],
+            this.data[0][0] + this.interval * 5.5, Infinity
         )
 
         // TODO: IMPORTANT scrolling is jerky The Problem caused
@@ -392,20 +374,22 @@ export default class Grid {
         // the lag. No smooth movement and it's annoying.
         // Solution: we could try to calc the layout immediatly
         // somewhere here. Still will hurt the sidebar & bottombar
-        this.comp.$emit('range-changed', range)
+        this.comp.$emit('range-changed', this.range)
     }
 
     // Propagate mouse event to overlays
     propagate(name, event) {
-        for (var layer of this.overlays) {
-            if (layer.renderer[name]) {
+        for (const layer of this.overlays) {
+            if (layer.renderer.hasOwnProperty(name) && typeof layer.renderer[name] === 'function') {
                 layer.renderer[name](event)
             }
+
             const mouse = layer.renderer.mouse
-            const keys = layer.renderer.keys
             if (mouse.listeners) {
                 mouse.emit(name, event)
             }
+
+            const keys = layer.renderer.keys
             if (keys && keys.listeners) {
                 keys.emit(name, event)
             }

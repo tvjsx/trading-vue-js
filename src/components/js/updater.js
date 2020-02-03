@@ -11,10 +11,9 @@ class CursorUpdater {
     }
 
     sync(e) {
-
         this.cursor.grid_id = e.grid_id
         let once = true
-        for (var grid of this.grids) {
+        for (const grid of this.grids) {
             const c = this.cursor_data(grid, e)
             if (!this.cursor.locked) {
                 // TODO: find a better fix to invisible cursor prob
@@ -42,15 +41,15 @@ class CursorUpdater {
         if (grid.id > 0) data = [data[grid.id - 1]]
 
         const t = grid.screen2t(e.x)
-        let ids = {}, res = {}
-        for (var d of data) {
+        const ids = {}, res = {}
+        for (const d of data) {
             let ts = d.data.map(x => x[0])
             let i = Utils.nearest_a(t, ts)[0]
             d.type in ids ? (ids[d.type]++) : (ids[d.type] = 0)
             res[`${d.type}_${ids[d.type]}`] = d.data[i]
         }
-        return res
 
+        return res
     }
 
     // Nearest datapoints
@@ -58,9 +57,10 @@ class CursorUpdater {
 
         const data = this.comp.main_section.sub
 
-        let xs = data.map(x => grid.t2screen(x[0]) + 0.5)
-        let i = Utils.nearest_a(e.x, xs)[0]
+        const xs = data.map(x => grid.t2screen(x[0]) + 0.5)
+        const i = Utils.nearest_a(e.x, xs)[0]
         if (!xs[i]) return {}
+
         return {
             x: Math.floor(xs[i]) - 0.5,
             y: Math.floor(e.y - 2) - 0.5 - grid.offset,
@@ -75,18 +75,19 @@ class CursorUpdater {
 
     // Get cursor t-position (extended)
     cursor_time(grid, mouse, candle) {
-        let t = grid.screen2t(mouse.x)
-        let r = Math.abs((t - candle.t) / this.comp.interval)
-        let sign = Math.sign(t - candle.t)
+        const t = grid.screen2t(mouse.x)
+        const r = Math.abs((t - candle.t) / this.comp.interval)
+        const sign = Math.sign(t - candle.t)
+
         if (r >= 0.5) {
             // Outside the data range
-            let n = Math.round(r)
+            const n = Math.round(r)
             return candle.t + n * this.comp.interval * sign
         }
+
         // Inside the data range
         return candle.t
     }
-
 }
 
 export default CursorUpdater

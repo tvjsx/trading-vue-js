@@ -10,9 +10,9 @@ export default class VolbarExt {
     }
 
     draw(data) {
-        let y0 = this.$p.layout.height
-        let w = data.x2 - data.x1
-        let h = Math.floor(data.h)
+        const y0 = this.$p.layout.height
+        const w = data.x2 - data.x1
+        const h = Math.floor(data.h)
 
         this.ctx.fillStyle = data.green ?
             this.style.colorVolUp :
@@ -24,7 +24,5 @@ export default class VolbarExt {
             Math.floor(w),
             Math.floor(h + 1)
         )
-
     }
-
 }

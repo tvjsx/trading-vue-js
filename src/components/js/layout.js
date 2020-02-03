@@ -14,14 +14,14 @@ function Layout(params) {
 
     let {
         chart, sub, offsub, interval, range, ctx, layers_meta,
-        ti_map, $props:$p, y_transforms: y_ts
+        ti_map, $props: $p, y_transforms: y_ts
     } = params
 
-    let mgrid = chart.grid || {}
+    const mgrid = chart.grid || {}
 
     offsub = offsub.filter((x, i) => {
         // Skip offchart overlays with custom grid id,
-        // because they will be mergred with the existing grids
+        // because they will be merged with the existing grids
         return !(x.grid && x.grid.id)
     })
 
@@ -46,7 +46,6 @@ function Layout(params) {
         // Main grid height
         const m = height - px * n
         return [m].concat(Array(n).fill(px))
-
     }
 
     function weighted_hs(grid, height) {
@@ -56,24 +55,23 @@ function Layout(params) {
 
         // Refine the height if Math.floor decreased px sum
         sum = hs.reduce((a, b) => a + b, 0)
-        for (var i = 0; i < height - sum; i++) hs[i % hs.length]++
+        for (let i = 0; i < height - sum; i++) hs[i % hs.length]++
         return hs
     }
 
     function candles_n_vol() {
-
         self.candles = []
         self.volume = []
 
-        let maxv = Math.max(...sub.map(x => x[5]))
-        let vs = $p.config.VOLSCALE * $p.height / maxv
-        var x1, x2, mid, prev = undefined
+        const maxv = Math.max(...sub.map(x => x[5]))
+        const vs = $p.config.VOLSCALE * $p.height / maxv
 
         let splitter = self.px_step > 5 ? 1 : 0
+        let prev = null
 
-        for (var i = 0; i < sub.length; i++) {
-            let p = sub[i]
-            mid = self.t2screen(p[0]) + 0.5
+        for (let i = 0; i < sub.length; i++) {
+            const p = sub[i]
+            const mid = self.t2screen(p[0]) + 0.5
             self.candles.push(mgrid.logScale ?
                 log_scale.candle(self, mid, p, $p): {
                 x: mid,
@@ -88,8 +86,8 @@ function Layout(params) {
             if (sub[i-1] && p[0] - sub[i-1][0] > interval) {
                 prev = null
             }
-            x1 = prev || Math.floor(mid - self.px_step * 0.5)
-            x2 = Math.floor(mid + self.px_step * 0.5) - 0.5
+            const x1 = prev || Math.floor(mid - self.px_step * 0.5)
+            const x2 = Math.floor(mid + self.px_step * 0.5) - 0.5
             self.volume.push({
                 x1: x1,
                 x2: x2,
@@ -108,10 +106,10 @@ function Layout(params) {
         ti_map, height: hs[0], y_t: y_ts[0],
         grid: mgrid
     }
-    let gms = [new GridMaker(0, specs)]
+    const gms = [new GridMaker(0, specs)]
 
     // Sub grids
-    for (var [i, { data, grid }] of offsub.entries()) {
+    for (let [i, { data, grid }] of offsub.entries()) {
         specs.sub = data
         specs.height = hs[i + 1]
         specs.y_t = y_ts[i + 1]
@@ -120,11 +118,10 @@ function Layout(params) {
     }
 
     // Max sidebar among all grinds
-    let sb = Math.max(...gms.map(x => x.get_sidebar()))
-
+    const sb = Math.max(...gms.map(x => x.get_sidebar()))
     let grids = [], offset = 0
 
-    for (i = 0; i < gms.length; i++) {
+    for (let i = 0; i < gms.length; i++) {
         gms[i].set_sidebar(sb)
         grids.push(gms[i].create())
         grids[i].id = i
@@ -132,8 +129,9 @@ function Layout(params) {
         offset += grids[i].height
     }
 
-    let self = grids[0]
+    const self = grids[0]
 
+    // TODO: candles_n_vol() already declared in this file
     candles_n_vol()
 
     return {

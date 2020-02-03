@@ -11,8 +11,9 @@ export default {
                     this.rerender++
                 }
             }
+
             if (d.event === 'remove-shaders') {
-                let id = d.args.join('-')
+                const id = d.args.join('-')
                 this.shaders = this.shaders
                     .filter(x => x.id !== id)
             }

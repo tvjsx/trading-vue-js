@@ -1,2 +1,37 @@
+### user ###
 .DS_Store
+
+### test ###
+/bin
+/screenshots
+
+### base ###
+# release folder
+/dist
+/browser
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# editor files
+# https://github.com/github/gitignore/blob/master/Global/JetBrains.gitignore
+# User-specific stuff from JetBrains:
+.idea/
+
+# Runtime data
+pids
+*.pid
+
+# Dependency directories
 node_modules
+coverage
+.nyc_output
+
+# webpack stuff
+bundle-analyzer-report.html
+
+/target
+/.mvn_repo
+

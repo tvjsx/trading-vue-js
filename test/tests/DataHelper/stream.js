@@ -1,8 +1,7 @@
 export default function Stream(url) {
 
-    var ws = new WebSocket(url)
-    var cb = () => {}
-
+    const ws = new WebSocket(url)
+    const cb = () => {}
 
     ws.onopen = function() {
         console.log('Websocket is opened')

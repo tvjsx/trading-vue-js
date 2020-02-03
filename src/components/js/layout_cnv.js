@@ -5,39 +5,39 @@ import Utils from '../../stuff/utils.js'
 
 export function layout_cnv(self) {
 
-    let $p = self.$props
-    let sub = $p.data
-    let t2screen = $p.layout.t2screen
-    let layout = $p.layout
+    const $p = self.$props
+    const sub = $p.data
+    const t2screen = $p.layout.t2screen
+    const layout = $p.layout
 
-    let candles = []
-    let volume = []
+    const candles = []
+    const volume = []
 
     // The volume bar height is determined as a percentage of
     // the chart's height (VOLSCALE)
-    let maxv = Math.max(...sub.map(x => x[5]))
-    let vs =  $p.config.VOLSCALE * layout.height / maxv
-    var x1, x2, w, avg_w, mid, prev = undefined
+    const maxv = Math.max(...sub.map(x => x[5]))
+    const vs = $p.config.VOLSCALE * layout.height / maxv
 
     // Subset interval against main interval
-    var [interval2, ratio] = new_interval(layout, $p, sub)
-    let px_step2 = layout.px_step * ratio
+    const [interval2, ratio] = new_interval(layout, $p, sub)
+    const px_step2 = layout.px_step * ratio
 
-    let splitter = px_step2 > 5 ? 1 : 0
+    const splitter = px_step2 > 5 ? 1 : 0
+    let prev = null
 
-    // A & B are current chart tranformations:
+    // A & B are current chart transformations:
     // A === scale,  B === Y-axis shift
-    for (var i = 0; i < sub.length; i++) {
-        let p = sub[i]
-        mid = t2screen(p[0]) + 1
+    for (let i = 0; i < sub.length; i++) {
+        const p = sub[i]
+        const mid = t2screen(p[0]) + 1
 
         // Clear volume bar if there is a time gap
         if (sub[i-1] && p[0] - sub[i-1][0] > interval2) {
             prev = null
         }
 
-        x1 = prev || Math.floor(mid - px_step2 * 0.5)
-        x2 = Math.floor(mid + px_step2 * 0.5) - 0.5
+        const x1 = prev || Math.floor(mid - px_step2 * 0.5)
+        const x2 = Math.floor(mid + px_step2 * 0.5) - 0.5
 
         // TODO: add log scale support
         candles.push({
@@ -61,49 +61,48 @@ export function layout_cnv(self) {
     }
 
     return { candles, volume }
-
 }
 
 export function layout_vol(self) {
 
-    let $p = self.$props
-    let sub = $p.data
-    let t2screen = $p.layout.t2screen
-    let layout = $p.layout
+    const $p = self.$props
+    const sub = $p.data
+    const t2screen = $p.layout.t2screen
+    const layout = $p.layout
 
-    let volume = []
+    const volume = []
 
     // Detect data second dimention size:
-    let dim = sub[0] ? sub[0].length : 0
+    const dim = sub[0] ? sub[0].length : 0
 
     // Support special volume data (see API book), or OHLCV
     // Data indices:
     self._i1 = dim < 6 ? 1 : 5
     self._i2 = dim < 6 ? (p => p[2]) : (p => p[4] >= p[1])
 
-    let maxv = Math.max(...sub.map(x => x[self._i1]))
-    let volscale = self.volscale || $p.config.VOLSCALE
-    let vs = volscale * layout.height / maxv
-    var x1, x2, mid, prev = undefined
+    const maxv = Math.max(...sub.map(x => x[self._i1]))
+    const volscale = self.volscale || $p.config.VOLSCALE
+    const vs = volscale * layout.height / maxv
 
     // Subset interval against main interval
-    var [interval2, ratio] = new_interval(layout, $p, sub)
-    let px_step2 = layout.px_step * ratio
+    const [interval2, ratio] = new_interval(layout, $p, sub)
+    const px_step2 = layout.px_step * ratio
 
-    let splitter = px_step2 > 5 ? 1 : 0
+    const splitter = px_step2 > 5 ? 1 : 0
+    let prev = null
 
     // A & B are current chart tranformations:
     // A === scale,  B === Y-axis shift
-    for (var i = 0; i < sub.length; i++) {
-        let p = sub[i]
-        mid = t2screen(p[0]) + 1
+    for (let i = 0; i < sub.length; i++) {
+        const p = sub[i]
+        const mid = t2screen(p[0]) + 1
 
         // Clear volume bar if there is a time gap
         if (sub[i-1] && p[0] - sub[i-1][0] > interval2) {
             prev = null
         }
-        x1 = prev || Math.floor(mid - px_step2 * 0.5)
-        x2 = Math.floor(mid + px_step2 * 0.5) - 0.5
+        const x1 = prev || Math.floor(mid - px_step2 * 0.5)
+        const x2 = Math.floor(mid + px_step2 * 0.5) - 0.5
 
         volume.push({
             x1: x1,

@@ -10,6 +10,7 @@ class Layer {
         } else {
             this.renderer = renderer
         }
+
         this.name = name
         this.z = z
         this.display = true

@@ -17,10 +17,10 @@ export default class Seg {
 
         const layout = this.comp.$props.layout
 
-        let x1 = layout.t2screen(p1[0])
-        let y1 = layout.$2screen(p1[1])
-        let x2 = layout.t2screen(p2[0])
-        let y2 = layout.$2screen(p2[1])
+        const x1 = layout.t2screen(p1[0])
+        const y1 = layout.$2screen(p1[1])
+        const x2 = layout.t2screen(p2[0])
+        const y2 = layout.$2screen(p2[1])
 
         this.ctx.moveTo(x1, y1)
         this.ctx.lineTo(x2, y2)

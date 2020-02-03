@@ -11,18 +11,15 @@ export default {
             this.pins = []
 
             this.mouse.on('mousemove', e => {
-                if (this.collisions.some(f => f(
+                this.show_pins = this.collisions.some(f => f(
                     this.mouse.x, this.mouse.y,
-                ))) {
-                    this.show_pins = true
-                } else {
-                    this.show_pins = false
-                }
+                ));
                 if (this.drag) this.drag_update()
             })
 
             this.mouse.on('mousedown', e => {
                 if (e.defaultPrevented) return
+
                 if (this.collisions.some(f => f(
                     this.mouse.x, this.mouse.y,
                 ))) {
@@ -60,7 +57,7 @@ export default {
             // If layer $uuid is changed, then re-init
             // pins & collisions
             if (n.$uuid !== p.$uuid) {
-                for (var p of this.pins) p.re_init()
+                for (const p of this.pins) p.re_init()
                 this.collisions = []
                 this.show_pins = false
                 this.drag = null
@@ -77,13 +74,13 @@ export default {
         },
         start_drag() {
             this.$emit('scroll-lock', true)
-            let cursor = this.$props.cursor
+            const cursor = this.$props.cursor
             this.drag = { t: cursor.t, y$: cursor.y$ }
             this.pins.forEach(x => x.rec_position())
         },
         drag_update() {
-            let dt = this.$props.cursor.t - this.drag.t
-            let dy = this.$props.cursor.y$ - this.drag.y$
+            const dt = this.$props.cursor.t - this.drag.t
+            const dy = this.$props.cursor.y$ - this.drag.y$
             this.pins.forEach(x => x.update_from(
                 [x.t1 + dt, x.y$1 + dy], true
             ))

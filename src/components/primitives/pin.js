@@ -54,10 +54,13 @@ export default class Pin {
 
     draw_circle(ctx) {
 
+        let r, lw
         if (this.comp.selected) {
-            var r = this.RADIUS, lw = 1.5
+            r = this.RADIUS
+            lw = 1.5
         } else {
-            var r = this.RADIUS * 0.95, lw = 1
+            r = this.RADIUS * 0.95
+            lw = 1
         }
 
         ctx.lineWidth = lw
@@ -107,7 +110,6 @@ export default class Pin {
         if (emit) this.comp.$emit('change-settings', {
              [this.name]: [this.t, this.y$]
         })
-
     }
 
     rec_position() {
@@ -116,7 +118,6 @@ export default class Pin {
     }
 
     mousemove(event) {
-
         switch(this.state) {
             case 'tracking':
             case 'dragging':
@@ -124,12 +125,11 @@ export default class Pin {
                 this.update()
                 break
         }
-
-
     }
 
     mousedown(event, force = false) {
         if (event.defaultPrevented && !force) return
+
         switch (this.state) {
             case 'tracking':
                 this.state = 'settled'
@@ -169,8 +169,9 @@ export default class Pin {
     }
 
     hover() {
-        let x = this.x
-        let y = this.y
+        const x = this.x
+        const y = this.y
+
         return (
             (x - this.mouse.x) * (x - this.mouse.x) +
             (y - this.mouse.y) * (y - this.mouse.y)

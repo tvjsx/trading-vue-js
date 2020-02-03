@@ -9,10 +9,8 @@ import DCCore from './dc_core.js'
 export default class DataCube extends DCCore {
 
     constructor(data = {}) {
-
         super()
         this.data = data
-
     }
 
     // Add new overlay
@@ -40,12 +38,11 @@ export default class DataCube extends DCCore {
 
     // Set data (reactively)
     set(query, data) {
+        const objects = this.get_by_query(query)
 
-        let objects = this.get_by_query(query)
+        for (const obj of objects) {
 
-        for (var obj of objects) {
-
-            let i = obj.i !== undefined ?
+            const i = obj.i !== undefined ?
                 obj.i :
                 obj.p.indexOf(obj.v)
 
@@ -55,48 +52,45 @@ export default class DataCube extends DCCore {
         }
 
         this.update_ids()
-
     }
 
     // Merge object or array (reactively)
     merge(query, data) {
 
-        let objects = this.get_by_query(query)
+        const objects = this.get_by_query(query)
 
-        for (var obj of objects) {
+        for (const obj of objects) {
             if (Array.isArray(obj.v)) {
                 if (!Array.isArray(data)) continue
-                // If array is a timeseries, merge it by timestamp
-                // else merge by item index
+                // If array is a timeseries, merge it by timestamp,
+                // else merge by item index:
                 if (obj.v[0] && obj.v[0].length >= 2) {
                     this.merge_ts(obj, data)
                 } else {
                     this.merge_objects(obj, data, [])
                 }
-            } else if (typeof obj.v === 'object') {
+            } else if (obj.v !== null && typeof obj.v === 'object') {
                 this.merge_objects(obj, data)
             }
         }
 
         this.update_ids()
-
     }
 
     // Remove an overlay by query (id/type/name/...)
     del(query) {
 
-        let objects = this.get_by_query(query)
+        const objects = this.get_by_query(query)
 
-        for (var obj of objects) {
+        for (const obj of objects) {
 
             // Find current index of the field (if not defined)
-            let i = obj.i !== undefined ?
+            const i = obj.i !== undefined ?
                 obj.i : obj.p.indexOf(obj.v)
 
             if (i !== -1) {
                 this.tv.$delete(obj.p, i)
             }
-
         }
 
         this.update_ids()
@@ -105,15 +99,15 @@ export default class DataCube extends DCCore {
     // Update/append data point, depending on timestamp
     update(data) {
 
-        let ohlcv = this.data.chart.data
-        let last = ohlcv[ohlcv.length - 1]
-        let tick = data['price']
-        let volume = data['volume'] || 0
-        let candle = data['candle']
-        let tfx = Utils.parse_tf(this.data.chart.tf)
-        let tf = tfx || Utils.detect_interval(ohlcv)
-        let t_next = last[0] + tf
-        let now = Utils.now()
+        const ohlcv = this.data.chart.data
+        const last = ohlcv[ohlcv.length - 1]
+        const tick = data['price']
+        const volume = data['volume'] || 0
+        const candle = data['candle']
+        const tfx = Utils.parse_tf(this.data.chart.tf)
+        const tf = tfx || Utils.detect_interval(ohlcv)
+        const t_next = last[0] + tf
+        const now = Utils.now()
         let t = now >= t_next ? (now - now % tf) : last[0]
 
         if (candle) {
@@ -124,7 +118,7 @@ export default class DataCube extends DCCore {
             } else {
                 this.merge('chart.data', [[t, ...candle]])
             }
-        } else if (t >= t_next && tick !== undefined) {
+        } else if (tick !== undefined && t >= t_next) {
             // And new zero-height candle
             this.merge('chart.data', [[
                 t, tick, tick, tick, tick, volume
@@ -145,7 +139,7 @@ export default class DataCube extends DCCore {
     // Lock overlays from being pulled by query_search
     // TODO: subject to review
     lock(query) {
-        let objects = this.get_by_query(query)
+        const objects = this.get_by_query(query)
         objects.forEach(x => {
             if (x.v && x.v.id && x.v.type) {
                 x.v.locked = true
@@ -156,7 +150,7 @@ export default class DataCube extends DCCore {
     // Unlock overlays from being pulled by query_search
     //
     unlock(query) {
-        let objects = this.get_by_query(query, true)
+        const objects = this.get_by_query(query, true)
         objects.forEach(x => {
             if (x.v && x.v.id && x.v.type) {
                 x.v.locked = false
@@ -171,6 +165,7 @@ export default class DataCube extends DCCore {
         } else if (query === '.') {
             query = ''
         }
+
         this.merge(query + '.settings', { display: true })
     }
 
@@ -181,6 +176,7 @@ export default class DataCube extends DCCore {
         } else if (query === '.') {
              query = ''
         }
+
         this.merge(query + '.settings', { display: false })
     }
 

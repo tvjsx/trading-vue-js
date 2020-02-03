@@ -23,11 +23,10 @@ export default class CandleExt {
         const wick_color_sm = this.style.colorWickSm
 
 
-        let w = Math.max(data.w, 1)
-        let hw = Math.max(Math.floor(w * 0.5), 1)
-        let h = Math.abs(data.o - data.c)
-        let max_h = data.c === data.o ? 1 : 2
-
+        const w = Math.max(data.w, 1)
+        const hw = Math.max(Math.floor(w * 0.5), 1)
+        const h = Math.abs(data.o - data.c)
+        const max_h = data.c === data.o ? 1 : 2
         this.ctx.strokeStyle = w > 1 ? wick_color : wick_color_sm
 
         this.ctx.beginPath()
@@ -46,14 +45,13 @@ export default class CandleExt {
 
             this.ctx.fillStyle = body_color
             // TODO: Move common calculations to layout.js
-            let s = green ? 1 : -1
+            const s = green ? 1 : -1
             this.ctx.fillRect(
                 Math.floor(data.x - hw -1),
                 data.c,
                 Math.floor(hw * 2 + 1),
                 s * Math.max(h, max_h),
             )
-
         } else {
 
             this.ctx.strokeStyle = body_color
@@ -69,9 +67,6 @@ export default class CandleExt {
             )
 
             this.ctx.stroke()
-
         }
-
     }
-
 }

@@ -10,16 +10,20 @@ export default class Keys {
     }
 
     on(name, handler) {
-        if (!handler) return
-        this.map[name] = this.map[name] || []
-        this.map[name].push(handler)
+        if (typeof handler !== 'function') return
+        if (!this.map.hasOwnProperty(name)) {
+            this.map[name] = [handler];
+        } else {
+            this.map[name].push(handler)
+        }
+
         this.listeners++
     }
 
     // Called by grid.js
     emit(name, event) {
-        if (name in this.map) {
-            for (var f of this.map[name]) {
+        if (this.map.hasOwnProperty(name)) {
+            for (const f of this.map[name]) {
                 f(event)
             }
         }
@@ -28,8 +32,7 @@ export default class Keys {
                 this.emit(event.key)
             }
             this.keymap[event.key] = true
-        }
-        if (name === 'keyup') {
+        } else if (name === 'keyup') {
             this.keymap[event.key] = false
         }
     }

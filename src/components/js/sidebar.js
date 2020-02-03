@@ -2,12 +2,11 @@ import * as Hammer from 'hammerjs'
 import Utils from '../../stuff/utils.js'
 import math from '../../stuff/math.js'
 
-var PANHEIGHT
+let PANHEIGHT
 
 export default class Sidebar {
 
     constructor(canvas, comp, side = 'right') {
-
         PANHEIGHT = comp.config.PANHEIGHT
 
         this.canvas = canvas
@@ -21,11 +20,10 @@ export default class Sidebar {
 
         this.side = side
         this.listeners()
-
     }
 
     listeners() {
-        var mc = new Hammer.Manager(this.canvas)
+        const mc = new Hammer.Manager(this.canvas)
         mc.add(new Hammer.Pan({
             direction: Hammer.DIRECTION_VERTICAL,
             threshold: 1
@@ -83,7 +81,6 @@ export default class Sidebar {
         })
 
         // TODO: Do later for mobile version
-
     }
 
     update() {
@@ -91,9 +88,9 @@ export default class Sidebar {
         // Update reference to the grid
         this.layout = this.$p.layout.grids[this.id]
 
-        var points = this.layout.ys
-        var x, y, w, h, side = this.side
-        var sb = this.layout.sb
+        const points = this.layout.ys
+        let x, y, w, h, side = this.side
+        const sb = this.layout.sb
 
         this.ctx.fillStyle = this.$p.colors.colorBack
         this.ctx.font = this.$p.font
@@ -134,20 +131,20 @@ export default class Sidebar {
         this.ctx.fillStyle = this.$p.colors.colorText
         this.ctx.beginPath()
 
-        for (var p of points) {
+        for (const p of points) {
 
             if (p[0] > this.layout.height) continue
 
-            var x1 = side === 'left' ? w - 0.5 : x - 0.5
-            var x2 = side === 'left' ? x1 - 4.5 : x1 + 4.5
+            const x1 = side === 'left' ? w - 0.5 : x - 0.5
+            const x2 = side === 'left' ? x1 - 4.5 : x1 + 4.5
 
             this.ctx.moveTo(x1, p[0] - 0.5)
             this.ctx.lineTo(x2, p[0] - 0.5)
 
-            var offst = side === 'left' ? - 10 : 10
+            const offset = side === 'left' ? -10 : 10
             this.ctx.textAlign = side === 'left' ? 'end' : 'start'
-            let d = this.layout.prec
-            this.ctx.fillText(p[1].toFixed(d), x1 + offst, p[0] + 4)
+            const d = this.layout.prec
+            this.ctx.fillText(p[1].toFixed(d), x1 + offset, p[0] + 4)
         }
 
         this.ctx.stroke()
@@ -157,11 +154,10 @@ export default class Sidebar {
         this.apply_shaders()
 
         if (this.$p.cursor.y && this.$p.cursor.y$) this.panel()
-
     }
 
     apply_shaders() {
-        for (var s of this.$p.shaders) {
+        for (const s of this.$p.shaders) {
             this.ctx.save()
             s.draw(this.ctx)
             this.ctx.restore()
@@ -183,25 +179,26 @@ export default class Sidebar {
             return
         }
 
-        let lbl = this.$p.cursor.y$.toFixed(this.layout.prec)
+        const lbl = this.$p.cursor.y$.toFixed(this.layout.prec)
         this.ctx.fillStyle = this.$p.colors.colorPanel
 
-        let panwidth = this.layout.sb + 1
+        const panwidth = this.layout.sb + 1
 
-        let x = - 0.5
-        let y = this.$p.cursor.y - PANHEIGHT * 0.5 - 0.5
-        let a = 7
+        const x = -0.5
+        const y = this.$p.cursor.y - PANHEIGHT * 0.5 - 0.5
+        const a = 7
+
         this.ctx.fillRect(x - 0.5, y, panwidth, PANHEIGHT)
         this.ctx.fillStyle = this.$p.colors.colorTextHL
         this.ctx.textAlign = 'left'
         this.ctx.fillText(lbl, a, y + 15)
-
     }
 
     calc_zoom(event) {
-        let d = this.drug.y - event.center.y
-        let speed = d > 0 ? 3 : 1
-        let k = 1 + speed * d / this.layout.height
+        const d = this.drug.y - event.center.y
+        const speed = d > 0 ? 3 : 1
+        const k = 1 + speed * d / this.layout.height
+
         return Utils.clamp(this.drug.z * k, 0.005, 100)
     }
 
@@ -209,11 +206,11 @@ export default class Sidebar {
     // this is the simplest solution I found up to
     // date
     calc_range() {
-        let z = this.zoom / this.drug.z
-        let zk = (1 / z - 1) / 2
+        const z = this.zoom / this.drug.z
+        const zk = (1 / z - 1) / 2
 
-        let range = this.y_range.slice()
-        let delta = range[0] - range[1]
+        const range = this.y_range.slice(0)
+        const delta = range[0] - range[1]
 
         if (!this.layout.grid.logScale) {
             range[0] = range[0] + delta * zk

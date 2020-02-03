@@ -17,23 +17,27 @@ export default class Line {
 
         const layout = this.comp.$props.layout
 
-        let x1 = layout.t2screen(p1[0])
-        let y1 = layout.$2screen(p1[1])
-        let x2 = layout.t2screen(p2[0])
-        let y2 = layout.$2screen(p2[1])
+        const x1 = layout.t2screen(p1[0])
+        const y1 = layout.$2screen(p1[1])
+        const x2 = layout.t2screen(p2[0])
+        const y2 = layout.$2screen(p2[1])
 
         this.ctx.moveTo(x1, y1)
         this.ctx.lineTo(x2, y2)
 
-        let w = layout.width
-        let h = layout.height
+        const w = layout.width
+        const h = layout.height
         // TODO: transform k (angle) to screen ratio
         // (this requires a new a2screen function)
-        let k = (y2 - y1) / (x2 - x1)
-        let s = Math.sign(x2 - x1 || y2 - y1)
+        const k = (y2 - y1) / (x2 - x1)
+        const s = Math.sign(x2 - x1 || y2 - y1)
         let dx = w * s * 2
         let dy = w * k * s * 2
-        if (dy === Infinity) { dx = 0, dy = h * s}
+
+        if (dy === Infinity) {
+            dx = 0
+            dy = h * s
+        }
 
         this.ctx.moveTo(x2, y2)
         this.ctx.lineTo(x2 + dx, y2 + dy)

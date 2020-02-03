@@ -10,8 +10,9 @@ export default {
             canvas.style.width = `${this._attrs.width}px`
             canvas.style.height = `${this._attrs.height}px`
             if (dpr < 1) dpr = 1 // Realy ? That's it? Issue #63
+
             this.$nextTick(() => {
-                var rect = canvas.getBoundingClientRect()
+                const rect = canvas.getBoundingClientRect()
                 canvas.width = rect.width * dpr
                 canvas.height = rect.height * dpr
                 const ctx = canvas.getContext('2d')
@@ -19,6 +20,7 @@ export default {
                 this.redraw()
             })
         },
+
         create_canvas(h, id, props) {
             this._id = id
             this._attrs = props.attrs

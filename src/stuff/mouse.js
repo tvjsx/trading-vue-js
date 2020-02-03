@@ -15,10 +15,15 @@ export default class Mouse {
 
     // You can choose where to place the handler
     // (beginning or end of the queue)
-    on(name, handler, dir = "unshift") {
-        if (!handler) return
-        this.map[name] = this.map[name] || []
-        this.map[name][dir](handler)
+    on(name, handler, dir = 'unshift') {
+        if (typeof handler !== 'function') return
+
+        if (!this.map.hasOwnProperty(name)) {
+            this.map[name] = [handler];
+        } else {
+            this.map[name][dir](handler)
+        }
+
         this.listeners++
     }
 
@@ -33,22 +38,25 @@ export default class Mouse {
     // Called by grid.js
     emit(name, event) {
         const l = this.comp.layout
-        if (name in this.map) {
-            for (var f of this.map[name]) {
+        if (this.map.hasOwnProperty(name)) {
+            for (const f of this.map[name]) {
                 f(event)
             }
         }
-        if (name === 'mousemove') {
-            this.x = event.layerX
-            this.y = event.layerY
-            this.t = l.screen2t(this.x)
-            this.y$ = l.screen2$(this.y)
-        }
-        if (name === 'mousedown') {
-            this.pressed = true
-        }
-        if (name === 'mouseup') {
-            this.pressed = false
+
+        switch (name) {
+            case 'mousemove':
+                this.x = event.layerX
+                this.y = event.layerY
+                this.t = l.screen2t(this.x)
+                this.y$ = l.screen2$(this.y)
+                break
+            case 'mousedown':
+                this.pressed = true
+                break
+            case 'mouseup':
+                this.pressed = false
+                break
         }
     }
 
