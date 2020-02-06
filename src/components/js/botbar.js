@@ -112,7 +112,7 @@ export default class Botbar {
         let t = this.$p.cursor.t
         let ti = this.$p.interval
 
-        t += new Date().getTimezoneOffset() * MINUTE
+        t += new Date(t).getTimezoneOffset() * MINUTE
         let d = new Date(t)
 
         if (ti === YEAR) {
