@@ -94,7 +94,7 @@ export default class Botbar {
 
     // TODO: implement time zones
     format_date(t) {
-        t += new Date().getTimezoneOffset() * MINUTE
+        t += new Date(t).getTimezoneOffset() * MINUTE
         let d = new Date(t)
 
         if (Utils.year_start(t) === t) return d.getFullYear()
