@@ -67,7 +67,7 @@ export default class Grid {
 
         mc.on('panmove', event => {
             if (this.drug) {
-                this.mousedrug(
+                this.mousedrag(
                     this.drug.x + event.deltaX,
                     this.drug.y + event.deltaY,
                 )
@@ -290,7 +290,7 @@ export default class Grid {
 
     }
 
-    mousedrug(x, y) {
+    mousedrag(x, y) {
 
         let dt = this.drug.t * (this.drug.x - x) / this.layout.width
 
