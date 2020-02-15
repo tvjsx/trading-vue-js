@@ -277,9 +277,12 @@ export default class Grid {
         if (delta < 0 && this.data.length <= this.MIN_ZOOM) return
         if (delta > 0 && this.data.length > this.MAX_ZOOM) return
 
-        let k = this.interval / 1000, diff = delta * k * this.data.length
+        let k = this.interval / 1000
+        let diff = delta * k * this.data.length
         if (event.originalEvent.ctrlKey) {
-            let diff_x = event.originalEvent.offsetX / (this.canvas.width-1) * diff, diff_y = diff - diff_x;
+            let offset = event.originalEvent.offsetX
+            let diff_x = offset / (this.canvas.width-1) * diff
+            let diff_y = diff - diff_x
             this.range[0] -= diff_x
             this.range[1] += diff_y
         } else {
