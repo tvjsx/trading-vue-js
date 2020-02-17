@@ -61,25 +61,13 @@ export default class DataCube extends DCCore {
     // Merge object or array (reactively)
     merge(query, data) {
 
-        let objects = this.get_by_query(query)
+        const objects = this.get_by_query(query)
 
-        for (var obj of objects) {
-            if (Array.isArray(obj.v)) {
-                if (!Array.isArray(data)) continue
-                // If array is a timeseries, merge it by timestamp
-                // else merge by item index
-                if (obj.v[0] && obj.v[0].length >= 2) {
-                    this.merge_ts(obj, data)
-                } else {
-                    this.merge_objects(obj, data, [])
-                }
-            } else if (typeof obj.v === 'object') {
-                this.merge_objects(obj, data)
-            }
+        for (const obj of objects) {
+            this.merge_objects(obj, data)
         }
 
         this.update_ids()
-
     }
 
     // Remove an overlay by query (id/type/name/...)
