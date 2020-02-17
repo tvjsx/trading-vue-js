@@ -28,12 +28,14 @@
   "devDependencies": {
     "@babel/core": "^7.7.5",
     "@babel/plugin-transform-runtime": "^7.7.6",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/preset-env": "^7.7.6",
     "babel-loader": "^8.0.6",
     "css-loader": "^3.3.2",
-    "eslint": "^6.7.2",
-    "eslint-config-eslint": "^5.0.1",
-    "eslint-plugin-vue": "^6.0.1",
+    "eslint": "^6.8.0",
+    "lodash-es": "^4.17.15",
+    "eslint-config-eslint": "^6.0.0",
+    "eslint-plugin-vue": "^6.1.2",
     "html-webpack-plugin": "^3.2.0",
     "request": "^2.88.0",
     "terser-webpack-plugin": "^2.3.0",
@@ -41,9 +43,9 @@
     "vue-loader": "^15.7.2",
     "vue-style-loader": "^4.1.2",
     "vue-template-compiler": "^2.6.11",
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10",
-    "webpack-dev-server": "^3.9.0"
+    "webpack": "^4.41.6",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
     "@babel/runtime": "^7.7.6",

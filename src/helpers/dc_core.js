@@ -3,6 +3,7 @@
 
 import Utils from '../stuff/utils.js'
 import DCEvents from './dc_events.js'
+import { mergeWith } from 'lodash-es'
 
 export default class DCCore extends DCEvents {
 
