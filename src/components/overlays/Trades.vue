@@ -15,7 +15,22 @@ export default {
             ctx.strokeStyle = 'black'
             for (var p of this.$props.data) {
 
-                ctx.fillStyle = p[1] ? this.buy_color : this.sell_color
+            switch (p[1]) {
+                case 0:
+                    ctx.fillStyle = this.short_color
+                    break
+                case 1:
+                    ctx.fillStyle = this.long_color
+                    break
+                case 2:
+                    ctx.fillStyle = this.short_cover_color
+                    break
+                case 3:
+                    ctx.fillStyle = this.long_cover_color
+                    break                    
+                default:
+                    ctx.fillStyle = 'black'
+            }                
                 ctx.beginPath()
                 let x = layout.t2screen(p[0]) // x - Mapping
                 let y = layout.$2screen(p[2]) // y - Mapping
@@ -42,15 +57,20 @@ export default {
         legend(values) {
             switch (values[1]) {
                 case 0:
-                    var pos = 'Sell'
+                    var pos = 'Short'
                     break
                 case 1:
-                    pos = 'Buy'
+                    pos = 'Long'
                     break
+                case 2:
+                    pos = 'Short Cover'
+                    break
+                case 3:
+                    pos = 'Long Cover'
+                    break                    
                 default:
                     pos = 'Unknown'
             }
-
             return [
                 {
                     value: pos
@@ -77,12 +97,18 @@ export default {
             //console.log(this.$props.font.split('px').pop())
             return '12px ' + this.$props.font.split('px').pop()
         },
-        buy_color() {
-            return this.sett.buyColor || '#63df89'
+        long_color() {
+            return this.sett.longColor || '#63df89'
         },
-        sell_color() {
-            return this.sett.sellColor || '#ec4662'
+        short_color() {
+            return this.sett.shortColor || '#ec4662'
         },
+        long_cover_color() {            
+            return this.sett.longCoverColor || '#2c65e0'
+        },
+        short_cover_color() {            
+            return this.sett.shortCoverColor || '#af54dd'
+        },        
         label_color() {
             return this.sett.labelColor || '#333'
         },
