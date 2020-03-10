@@ -47,10 +47,26 @@ TVJS automatically detects that you are a smart person who wants to use this lib
 
 All overlays, settings and candlestick data can be accessed with a simple query language. For example, if you want to get all overlays chilling in DC, call this:
 
+```html
+<trading-vue :data="dc"></trading-vue>
+<script>
+...
+    data() {
+        return {
+            // Data - see Data Structure v1.1
+            dc: new DataCube(Data),
+        }
+    }
+...
+</script>
+```
+
 ```js
-let dc = new DataCube()
+// 'dc' is shortcut for 'this.dc'
+
 dc.get('.') // -> [{id: "onchart.Spline0", settings: {...}}, ...]
 ```
+
 
 If you need only the main chart:
 
