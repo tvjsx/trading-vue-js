@@ -3,6 +3,7 @@
 
 import Utils from '../stuff/utils.js'
 import DCEvents from './dc_events.js'
+import { mergeWith } from 'lodash-es'
 
 export default class DCCore extends DCEvents {
 
@@ -92,26 +93,18 @@ export default class DCCore extends DCEvents {
     // Update ids for all overlays
     update_ids() {
         this.data.chart.id = `chart.${this.data.chart.type}`
-        var count = {}
-        for (var ov of this.data.onchart) {
-            if (count[ov.type] === undefined) {
-                count[ov.type] = 0
-            }
-            let i = count[ov.type]++
-            ov.id = `onchart.${ov.type}${i}`
-            if (!ov.name) ov.name = ov.type + ` ${i}`
-            if (!ov.settings) ov.settings = {}
 
-        }
-        count = {}
-        for (var ov of this.data.offchart) {
-            if (count[ov.type] === undefined) {
-                count[ov.type] = 0
+        for (const on_off of ['onchart', 'offchart']) {
+            const type_counts = {}
+            for (const ov of this.data[on_off]) {
+                if (!type_counts.hasOwnProperty(ov.type)) {
+                    type_counts[ov.type] = 0
+                }
+                const index = type_counts[ov.type]++
+                ov.id = `${on_off}.${ov.type}${index}`
+                if (!ov.name) ov.name = ov.type + ` ${index}`
+                if (!ov.settings) ov.settings = {}
             }
-            let i = count[ov.type]++
-            ov.id = `offchart.${ov.type}${i}`
-            if (!ov.name) ov.name = ov.type + ` ${i}`
-            if (!ov.settings) ov.settings = {}
         }
     }
 
@@ -184,18 +177,14 @@ export default class DCCore extends DCEvents {
         }]
     }
 
-    query_search(query, tuple) {
+    query_search(query, [side, path = '', field]) {
 
-        let side = tuple[0]
-        let path = tuple[1] || ''
-        let field = tuple[2]
-
-        let arr = this.data[side].filter(
+        const arr = this.data[side].filter(
             x => x.id && x.name && (
-                 x.id === query ||
-                 x.id.includes(path) ||
-                 x.name === query ||
-                 x.name.includes(path)
+                x.id === query ||
+                x.id.includes(path) ||
+                x.name === query ||
+                x.name.includes(path)
             ))
 
         if (field) {
@@ -208,143 +197,136 @@ export default class DCCore extends DCEvents {
 
         return arr.map(x => ({
             p: this.data[side],
-            i: undefined,
+            i: undefined,  // TODO: consider null for indicating non-values? what does vue think when undefined is passed?
             v: x
         }))
     }
 
-    merge_objects(obj, data, new_obj = {}) {
-
-        // The only way to get Vue to update all stuff
-        // reactively is to create a brand new object.
-        // TODO: Is there a simpler approach?
-        Object.assign(new_obj, obj.v)
-        Object.assign(new_obj, data)
-        this.tv.$set(obj.p, obj.i, new_obj)
-
+    _merge_customizer = (obj_val, src_val, key) => {
+        if (Array.isArray(obj_val) && obj_val[0] && obj_val[0].length >= 2 && isFinite(obj_val[0][0])) {
+            return this.merge_ts(obj_val, src_val)
+        }
     }
 
-    // Merge overlapping time series
+    merge_objects(obj, data) {
+        const new_obj = Array.isArray(obj.v) ? [] : {}
+        this.tv.$set(obj.p, obj.i, mergeWith(new_obj, obj.v, data, this._merge_customizer))
+    }
+
+    // Merge (possibly overlapping) time series;
+    // Assume that both input arrays are pre-sorted
     merge_ts(obj, data) {
 
-        // Assume that both arrays are pre-sorted
+        if (!data.length) {
+            return obj
+        } else if (!obj.length) {
+            return data
+        }
 
-        if (!data.length) return obj.v
+        const r1 = [obj[0][0], obj[obj.length - 1][0]]
+        const r2 = [data[0][0], data[data.length - 1][0]]
 
-        let r1 = [obj.v[0][0], obj.v[obj.v.length - 1][0]]
-        let r2 = [data[0][0],  data[data.length - 1][0]]
+        const o = [  // Overlap
+            Math.max(r1[0], r2[0]),
+            Math.min(r1[1], r2[1])
+        ]
 
-        // Overlap
-        let o = [Math.max(r1[0],r2[0]), Math.min(r1[1],r2[1])]
+        if (o[1] >= o[0]) {  // data overlaps
 
-        if (o[1] >= o[0]) {
+            const { od, d1, d2 } = this.ts_overlap(obj, data, o)
 
-            let { od, d1, d2 } = this.ts_overlap(obj.v, data, o)
-
-            obj.v.splice(...d1)
+            obj.splice(...d1)
             data.splice(...d2)
 
             // Dst === Overlap === Src
-            if (!obj.v.length && !data.length) {
-                this.tv.$set(obj.p, obj.i, od)
-                return obj.v
+            if (!obj.length && !data.length) {
+                return od
             }
 
             // If src is totally contained in dst
-            if (!data.length) { data = obj.v.splice(d1[0]) }
+            if (!data.length) { data = obj.splice(d1[0]) }
 
             // If dst is totally contained in src
-            if (!obj.v.length) { obj.v = data.splice(d2[0]) }
+            if (!obj.length) { obj = data.splice(d2[0]) }
 
-            this.tv.$set(
-                obj.p, obj.i, this.combine(obj.v, od, data)
-            )
+            return this.combine(obj, od, data)
 
-        } else {
+        } else {  // no overlap
 
-            this.tv.$set(
-                obj.p, obj.i, this.combine(obj.v, [], data)
-            )
-
+            return this.combine(obj, [], data)
         }
-
-        return obj.v
-
     }
 
     // TODO: review performance, move to worker
-    ts_overlap(arr1, arr2, range) {
+    ts_overlap(arr1, arr2, [t1, t2]) {
 
-        const t1 = range[0]
-        const t2 = range[1]
+        const filter_mutual_overlap = x => x[0] >= t1 && x[0] <= t2
 
-        let ts = {} // timestamp map
+        const arr1_overlap = arr1.filter(filter_mutual_overlap)
+        const arr2_overlap = arr2.filter(filter_mutual_overlap)
 
-        let a1 = arr1.filter(x => x[0] >= t1 && x[0] <= t2)
-        let a2 = arr2.filter(x => x[0] >= t1 && x[0] <= t2)
+        const ts = {}  // overlap range timestamp-to-datapoint map; note arr2 overrides timestamps of arr1
+
+        for (const data_point of arr1_overlap) {
+            ts[data_point[0]] = data_point
+        }
+
+        for (const data_point of arr2_overlap) {
+            ts[data_point[0]] = data_point
+        }
+
+        const ts_sorted = Object.keys(ts).sort()
 
         // Indices of segments
-        let id11 = arr1.indexOf(a1[0])
-        let id12 = arr1.indexOf(a1[a1.length - 1])
-        let id21 = arr2.indexOf(a2[0])
-        let id22 = arr2.indexOf(a2[a2.length - 1])
-
-        for (var i = 0; i < a1.length; i++) {
-            ts[a1[i][0]] = a1[i]
-        }
-
-        for (var i = 0; i < a2.length; i++) {
-            ts[a2[i][0]] = a2[i]
-        }
-
-        let ts_sorted = Object.keys(ts).sort()
+        const arr1_overlap_start_index = arr1.indexOf(arr1_overlap[0])
+        const arr1_overlap_end_index = arr1.indexOf(arr1_overlap[arr1_overlap.length - 1])
+        const arr2_overlap_start_index = arr2.indexOf(arr2_overlap[0])
+        const arr2_overlap_end_index = arr2.indexOf(arr2_overlap[arr2_overlap.length - 1])
 
         return {
-            od: ts_sorted.map(x => ts[x]),
-            d1: [id11, id12 - id11 + 1],
-            d2: [id21, id22 - id21 + 1]
+            od: ts_sorted.map(x => ts[x]),  // normalized overlap range of full datapoints
+            d1: [arr1_overlap_start_index, arr1_overlap_end_index - arr1_overlap_start_index + 1],
+            d2: [arr2_overlap_start_index, arr2_overlap_end_index - arr2_overlap_start_index + 1]
         }
-
     }
 
     // Combine parts together:
     // (destination, overlap, source)
     combine(dst, o, src) {
 
-        function last(arr) { return arr[arr.length - 1][0] }
+        const last = arr => arr[arr.length - 1][0]
+        const max_len_for_push = 100000
 
         if (!dst.length) { dst = o; o = [] }
         if (!src.length) { src = o; o = [] }
 
-        // The overlap right in the middle
+        // TODO: first if-block unreachable?
         if (src[0][0] >= dst[0][0] && last(src) <= last(dst)) {
 
             return Object.assign(dst, o)
 
-        // The overlap is on the right
         } else if (last(src) > last(dst)) {
 
             // Psh(...) is faster but can overflow the stack
-            if (o.length < 100000 && src.length < 100000) {
+            if (o.length < max_len_for_push && src.length < max_len_for_push) {
                 dst.push(...o, ...src)
                 return dst
             } else {
                 return dst.concat(o, src)
             }
 
-        // The overlap is on the left
         } else if (src[0][0] < dst[0][0]) {
 
             // Push(...) is faster but can overflow the stack
-            if (o.length < 100000 && src.length < 100000) {
+            if (o.length < max_len_for_push && src.length < max_len_for_push) {
                 src.push(...o, ...dst)
                 return src
             } else {
                 return src.concat(o, dst)
             }
-
-        } else {  return []  }
-
+        } else {
+            return []
+        }
     }
 
 }
