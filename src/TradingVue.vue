@@ -17,6 +17,7 @@
             v-bind:tv_id="id"
             v-bind:config="chart_config"
             v-on:custom-event="custom_event"
+            v-on:range-changed="range_changed"
             v-on:legend-button-click="legend_button">
         </chart>
     </div>
@@ -225,6 +226,9 @@ export default {
                 // If the data object is DataCube
                 data.on_custom_event(d.event, d.args)
             }
+        },
+        range_changed(r) {
+            this.$emit('range-changed', r)
         },
         set_loader(dc) {
             this.$refs.chart.$off('range-changed')
