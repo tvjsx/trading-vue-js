@@ -58,6 +58,8 @@ export default {
         // Updates current cursor values
         this.updater = new CursorUpdater(this)
 
+        this.update_last_candle()
+
     },
     methods: {
         range_changed(r) {
