@@ -1,9 +1,9 @@
 
 <div align="center">
-  <img width="318" heigth="256" src="https://raw.githubusercontent.com/C451/trading-vue-js/master/assets/README-c8a97eb7.png?raw=true" alt="trading-vue logo">
+  <img width="318" heigth="256" src="https://raw.githubusercontent.com/tvjsx/trading-vue-js/master/assets/README-c8a97eb7.png?raw=true" alt="trading-vue logo">
 </div>
 
-# TradingVue.js ![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=version) ![license](https://img.shields.io/badge/license-MIT-blue.svg) ![GRUGLIKE](https://img.shields.io/badge/GRUG-LIKE-yellow.svg) ![build](https://img.shields.io/badge/build-passing-brightgreen.svg) ![size](https://img.shields.io/github/size/C451/trading-vue-js/dist/trading-vue.min.js.svg) [![Gitter](https://badges.gitter.im/Trading-Vue-js/community.svg)](https://gitter.im/Trading-Vue-js/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+# TradingVue.js ![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=version) ![license](https://img.shields.io/badge/license-MIT-blue.svg) ![GRUGLIKE](https://img.shields.io/badge/GRUG-LIKE-yellow.svg) ![build](https://img.shields.io/badge/build-passing-brightgreen.svg) ![size](https://img.shields.io/github/size/tvjsx/trading-vue-js/dist/trading-vue.min.js.svg) [![Gitter](https://badges.gitter.im/Trading-Vue-js/community.svg)](https://gitter.im/Trading-Vue-js/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 **TradingVue.js** is a hackable charting lib for traders. You can draw literally ANYTHING on top of candlestick charts.
 
@@ -14,7 +14,7 @@ If you create trading software - this lib is probably for you. If you like to ma
 <br>
 
 <div align="center">
-    <img width="780" heigth="446" src="https://github.com/C451/trading-vue-js/blob/master/assets/README-new-preview.gif?raw=true" alt="White preview">
+    <img width="780" heigth="446" src="https://github.com/tvjsx/trading-vue-js/blob/master/assets/README-new-preview.gif?raw=true" alt="White preview">
 </div>
 
 <br>
@@ -31,7 +31,7 @@ If you create trading software - this lib is probably for you. If you like to ma
 
 ## Demo & Docs
 
-### [Demo](https://tvjsx.github.io/trading-vue-demo/) | [Getting Started](https://github.com/C451/trading-vue-js/tree/master/docs/guide#getting-started) | [API Book](https://github.com/C451/trading-vue-js/tree/master/docs/api#api-book) | [Built-in Overlays](https://github.com/C451/trading-vue-js/tree/master/docs/overlays#built-in-overlays) | [Examples](https://github.com/C451/trading-vue-js/tree/master/test/tests) | [101 Project](https://github.com/C451/trading-vue-101) | [llll Gitter](https://gitter.im/Trading-Vue-js)
+### [Demo](https://tvjsx.github.io/trading-vue-demo/) | [Getting Started](https://github.com/tvjsx/trading-vue-js/tree/master/docs/guide#getting-started) | [API Book](https://github.com/tvjsx/trading-vue-js/tree/master/docs/api#api-book) | [Built-in Overlays](https://github.com/tvjsx/trading-vue-js/tree/master/docs/overlays#built-in-overlays) | [Examples](https://github.com/tvjsx/trading-vue-js/tree/master/test/tests) | [101 Project](https://github.com/tvjsx/trading-vue-101) | [llll Gitter](https://gitter.im/Trading-Vue-js)
 
 ## Install
 
@@ -194,7 +194,7 @@ That's why the title doesn't lie: you can draw ANYTHING.
 ## Grin
 
 <div align="center">
-  <img src="https://github.com/C451/trading-vue-js/blob/master/assets/README-0027a833.png?raw=true" alt="trading-vue logo">
+  <img src="https://github.com/tvjsx/trading-vue-js/blob/master/assets/README-0027a833.png?raw=true" alt="trading-vue logo">
 </div>
 
 #### [ Code | click your 🐁 ](https://gist.github.com/C451/6d8ea8d603e3faadd801b4b3f2e7a57d)
@@ -213,7 +213,7 @@ That's why the title doesn't lie: you can draw ANYTHING.
 * Fix and improve mobile version
 * **Version 1.0.0 here**
 
-Progress in details: https://github.com/C451/trading-vue-js/projects/1
+Progress in details: https://github.com/tvjsx/trading-vue-js/projects/1
 
 ## Changelog
 
@@ -251,16 +251,10 @@ npm run test
 
 ## Contributing
 
-1. Fork ( https://github.com/C451/trading-vue-js/fork )
+1. Fork ( https://github.com/tvjsx/trading-vue-js/fork )
 2. Create your feature branch (`git checkout -b cool-new-feature`)
 3. Commit your changes (`git commit -am 'Let's rock smth'`)
 4. Push to the branch (`git push origin cool-new-feature`)
 5. Create a new Pull Request
 
 Please read the guidelines in CONTRIBUTING.md
-
-## Donation
-
-ɃTC 19vDB2pyn2ndJBH4p6We2SJNe8VZggyxfG
-
-ETH 0xFD3e4be6d3dAfCba7aFC7BE8b3D00847682158e8
