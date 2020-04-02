@@ -8,7 +8,8 @@
 **TradingVue.js** is a hackable charting lib for traders. You can draw literally ANYTHING on top of candlestick charts.
 
 <div align="center">
-  <a href="https://discord.gg/PKD4PUy"> <img width="318" heigth="256" src="assets/README-06bc5a15.png" alt="trading-vue logo"></a>
+<br>
+  <a href="https://discord.gg/PKD4PUy"> <img width="318" heigth="256" src="https://raw.githubusercontent.com/tvjsx/trading-vue-js/master/assets/README-06bc5a15.png" alt="trading-vue logo"></a>
 </div>
 
 
