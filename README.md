@@ -9,7 +9,7 @@
 
 <div align="center">
 <br>
-  <a href="https://discord.gg/PKD4PUy"> <img width="318" heigth="256" src="https://raw.githubusercontent.com/tvjsx/trading-vue-js/master/assets/README-06bc5a15.png" alt="trading-vue logo"></a>
+  <a href="https://discord.gg/PKD4PUy"> <img src="https://raw.githubusercontent.com/tvjsx/trading-vue-js/master/assets/README-06bc5a15.png" alt="trading-vue logo"></a>
 </div>
 
 
