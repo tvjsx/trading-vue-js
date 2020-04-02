@@ -7,6 +7,11 @@
 
 **TradingVue.js** is a hackable charting lib for traders. You can draw literally ANYTHING on top of candlestick charts.
 
+<div align="center">
+  <a href="https://discord.gg/PKD4PUy"> <img width="318" heigth="256" src="assets/README-06bc5a15.png" alt="trading-vue logo"></a>
+</div>
+
+
 ## Why
 
 If you create trading software - this lib is probably for you. If you like to make custom indicators and think out of the box - this lib is most likely for you. And if you miss usability of [TradingView.com](https://www.tradingview.com) in other open-source libraries and can't stand it - you are definetly in the right place!
