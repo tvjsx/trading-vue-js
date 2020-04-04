@@ -1,5 +1,6 @@
 <template>
 <trading-vue :data="chart" :width="this.width" :height="this.height"
+        :overlays="overlays"
         :color-back="colors.colorBack"
         :color-grid="colors.colorGrid"
         :color-text="colors.colorText">
@@ -8,12 +9,12 @@
 
 <script>
 import TradingVue from '../../src/TradingVue.vue'
-import Data from '../data/data_btc.json'
-import Utils from '../../src/stuff/utils.js'
+import Data from '../data/data_ux.json'
+import SplineUx from './interfaces/SplineUx.vue'
 
 export default {
     name: 'Simple',
-    description: 'Should display everything okay',
+    description: 'Html indicator interfaces: static & interactive',
     components: {
         TradingVue
     },
@@ -25,11 +26,6 @@ export default {
     },
     mounted() {
         window.addEventListener('resize', this.onResize)
-        // TODO: simplify the data setup 
-        setTimeout(() => {
-            // Async data setup
-            this.$set(this, 'chart', Data)
-        }, 0)
         this.onResize()
     },
     beforeDestroy() {
@@ -37,9 +33,10 @@ export default {
     },
     data() {
         return {
-            chart: {}, // Data will be here,
+            chart: Data, // Data will be here,
             width: window.innerWidth,
             height: window.innerHeight,
+            overlays: [SplineUx],
             colors: {
                 colorBack: '#fff',
                 colorGrid: '#eee',
