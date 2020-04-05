@@ -69,9 +69,14 @@ export default {
             if (event === 'change-settings' ||
                 event === 'object-selected' ||
                 event === 'new-shader' ||
+                event === 'new-interface' ||
                 event === 'remove-tool') {
                 args.push(this.grid_id, this.id)
             }
+            if (event === 'new-interface') {
+                args.push(this.uxs_count++)
+            }
+            // TODO: add a namespace to the event name
             this._$emit('custom-event', {event, args})
         }
     },
@@ -88,5 +93,6 @@ export default {
             deep: true
         }
     },
+    data() { return { uxs_count: 0 } },
     render(h) { return h() }
 }

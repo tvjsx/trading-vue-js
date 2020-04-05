@@ -50,7 +50,7 @@ export default class Price {
         let last = this.comp.$props.meta.last
 
         let color = last[4] >= last[1] ? this.green() : this.red()
-        let y = layout.$2screen(last[4]) - 1
+        let y = layout.$2screen(last[4]) - 1 // TODO: make more precise 
 
         ctx.strokeStyle = color
         ctx.setLineDash([1, 1])
