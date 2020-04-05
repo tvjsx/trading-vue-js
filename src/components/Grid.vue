@@ -3,8 +3,10 @@
 
 import Grid from './js/grid.js'
 import Canvas from '../mixins/canvas.js'
+import UxList from '../mixins/uxlist.js'
 import Crosshair from './Crosshair.vue'
 import KeyboardListener from './KeyboardListener.vue'
+import UxLayer from './UxLayer.vue'
 
 import Spline from "./overlays/Spline.vue"
 import Splines from "./overlays/Splines.vue"
@@ -26,7 +28,7 @@ export default {
         'width', 'height', 'data', 'grid_id', 'y_transform', 'font', 'tv_id',
         'config', 'meta'
     ],
-    mixins: [Canvas],
+    mixins: [Canvas, UxList],
     components: { Crosshair, KeyboardListener },
     created() {
         // List of all possible overlays (builtin + custom)
@@ -52,12 +54,15 @@ export default {
         this.$emit('custom-event', {
             event: 'register-tools', args: tools
         })
+        this.$on('custom-event',
+            e => this.on_ux_event(e, 'grid'))
     },
     mounted() {
         const el = this.$refs['canvas']
         this.renderer = new Grid(el, this)
         this.setup()
         this.$nextTick(() => this.redraw())
+
     },
     render(h) {
         const id = this.$props.grid_id
@@ -69,7 +74,8 @@ export default {
             },
             attrs: {
                 width: layout.width,
-                height: layout.height
+                height: layout.height,
+                overflow: 'hidden'
             },
             style: {
                 backgroundColor: this.$props.colors.colorBack
@@ -82,6 +88,12 @@ export default {
                 h(KeyboardListener, {
                     on: this.keyboard_events
                 }),
+                h(UxLayer, {
+                    props: {
+                        id, tv_id: this.$props.tv_id,
+                        uxs: this.uxs
+                    }
+                })
             ].concat(this.get_overlays(h))
         })
     },
@@ -96,6 +108,7 @@ export default {
                 event: 'remove-shaders',
                 args: [grid_id, layer]
             })
+            // TODO: remove-interfaces 
             this.$emit('custom-event', {
                 event: 'remove-layer-meta',
                 args: [grid_id, layer]

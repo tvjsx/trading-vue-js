@@ -2,6 +2,8 @@
 // Spline + several test interfaces
 // Adds all necessary stuff for you.
 import Overlay from '../../../src/mixins/overlay.js'
+import Ux1 from './Ux1.vue'
+import Ux2 from './Ux2.vue'
 
 export default {
     name: 'SplineUx',
@@ -10,7 +12,12 @@ export default {
         meta_info() {
             return { author: 'C451', version: '1.0.0' }
         },
-
+        init() {
+            this.$emit('new-interface', {
+                target: 'grid',
+                component: Ux1
+            })
+        },
         draw(ctx) {
             ctx.lineWidth = this.line_width
             ctx.strokeStyle = this.color

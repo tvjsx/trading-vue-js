@@ -197,6 +197,7 @@ export default {
             this.$refs.keyboard.remove(event)
         },
         update_last_candle() {
+            // TODO: add last values for all overlays
             this.last_candle = this.ohlcv ?
                 this.ohlcv[this.ohlcv.length - 1] : undefined
         }
