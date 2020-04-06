@@ -74,6 +74,7 @@ export default {
                 args.push(this.grid_id, this.id)
             }
             if (event === 'new-interface') {
+                args[0].overlay = this
                 args.push(this.uxs_count++)
             }
             // TODO: add a namespace to the event name

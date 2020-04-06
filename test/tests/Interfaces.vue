@@ -38,9 +38,9 @@ export default {
             height: window.innerHeight,
             overlays: [SplineUx],
             colors: {
-                colorBack: '#fff',
-                colorGrid: '#eee',
-                colorText: '#333',
+                //colorBack: '#fff',
+                //colorGrid: '#eee',
+                //colorText: '#333',
             }
         };
     }

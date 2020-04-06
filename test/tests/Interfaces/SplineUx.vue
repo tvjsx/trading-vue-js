@@ -15,7 +15,8 @@ export default {
         init() {
             this.$emit('new-interface', {
                 target: 'grid',
-                component: Ux1
+                component: Ux1,
+                pin: [1585936800000, 7100] 
             })
         },
         draw(ctx) {
