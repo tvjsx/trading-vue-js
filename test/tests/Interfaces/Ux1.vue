@@ -1,7 +1,8 @@
 <template>
 <div class='test-ux'>
-    <h1>Title</h1>
-    <p>Content</p>
+    <h1>Ok</h1>
+    <p>I got it</p>
+    <button>But Why?</button>
 </div>
 </template>
 <script>
@@ -15,8 +16,13 @@ export default {
 </script>
 <style scoped>
     .test-ux {
-        background: #3d71d3;
-        width: 100px;
-        height: 100px;
+        font-size: 3em;
+        background: url(http://youremyfavoritetoday.com/wp-content/uploads/2014/04/warp-speed.gif);
+        background-position: center;
+        width: 250px;
+        height: 150px;
+        color: #ffffff;
+        line-height: 0.25;
+        padding: 0.5em 1em 1em 1em;
     }
 </style>

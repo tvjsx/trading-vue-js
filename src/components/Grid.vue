@@ -91,7 +91,8 @@ export default {
                 h(UxLayer, {
                     props: {
                         id, tv_id: this.$props.tv_id,
-                        uxs: this.uxs
+                        uxs: this.uxs,
+                        updater: Math.random()
                     }
                 })
             ].concat(this.get_overlays(h))
@@ -108,7 +109,7 @@ export default {
                 event: 'remove-shaders',
                 args: [grid_id, layer]
             })
-            // TODO: remove-interfaces 
+            // TODO: remove-interfaces
             this.$emit('custom-event', {
                 event: 'remove-layer-meta',
                 args: [grid_id, layer]

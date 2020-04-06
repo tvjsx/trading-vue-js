@@ -5,7 +5,8 @@
 <span :class="`trading-vue-grid-ux-${id}`" :style="style">
     <ux-wrapper v-for="ux of uxs"
         :key="ux.uuid"
-        :comp="ux.component">
+        :ux="ux"
+        :updater="updater">
     </ux-wrapper>
 </span>
 </template>
@@ -16,12 +17,14 @@ import UxWrapper from './UxWrapper.vue'
 
 export default {
     name: 'UxLayer',
-    props: ['tv_id', 'id', 'uxs'],
+    props: ['tv_id', 'id', 'uxs', 'updater'],
     components: { UxWrapper },
-    created: function () {
+    created () {
 
     },
-    beforeDestroy: function () {
+    mounted() {
+    },
+    beforeDestroy () {
 
     },
     methods: {
@@ -36,7 +39,8 @@ export default {
                 'height': 'calc(100% - 2px)',
                 'position': 'absolute',
                 'z-index': '1',
-                'pointer-events': 'none'
+                'pointer-events': 'none',
+                'overflow': 'hidden'
             }
         }
     }
