@@ -16,7 +16,32 @@ export default {
             this.$emit('new-interface', {
                 target: 'grid',
                 component: Ux1,
-                pin: [1585936800000, 7100] 
+                pin: [1585936800000, 6800],
+                pin_position: '50%,100%+20px',
+                show_pin: true,
+            })
+            this.$emit('new-interface', {
+                target: 'grid',
+                component: Ux1,
+                pin: [1585936800000, 6600],
+                pin_position: '50%,-20px',
+                show_pin: true,
+            })
+
+            this.$emit('new-interface', {
+                target: 'grid',
+                component: Ux1,
+                pin: [1585936800000 - 3600000 * 50, 6800],
+                pin_position: '-20px,100%+20px',
+                show_pin: true,
+            })
+
+            this.$emit('new-interface', {
+                target: 'grid',
+                component: Ux1,
+                pin: [1585936800000 - 3600000 * 25, 6600],
+                pin_position: '100%+20px,-20px',
+                show_pin: true,
             })
         },
         draw(ctx) {
