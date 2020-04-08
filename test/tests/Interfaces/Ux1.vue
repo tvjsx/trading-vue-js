@@ -17,8 +17,8 @@ export default {
 <style scoped>
     .test-ux {
         font-size: 3em;
-        //background: url(http://youremyfavoritetoday.com/wp-content/uploads/2014/04/warp-speed.gif);
-        background: url(https://media.giphy.com/media/oyFyFiXz0hrnG/giphy.gif);
+        background: url(http://youremyfavoritetoday.com/wp-content/uploads/2014/04/warp-speed.gif);
+        //background: url(https://media.giphy.com/media/oyFyFiXz0hrnG/giphy.gif);
         background-position: center;
         width: 250px;
         height: 150px;
