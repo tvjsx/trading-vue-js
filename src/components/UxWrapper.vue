@@ -2,7 +2,7 @@
 <!-- Wrapper window for Interface objects -->
 
 <template>
-<div class="trading-vue-ux-wrapper"
+<div class="trading-vue-ux-wrapper" v-if="visible"
     :id="`tvjs-ux-wrapper-${ux.uuid}`"
     :style="style">
     <component v-bind:is="ux.component"></component>
@@ -22,10 +22,42 @@ export default {
         let self = document.getElementById(this.uuid)
         this.w = self.offsetWidth
         this.h = self.offsetHeight
-        this.x = this.layout.t2screen(this.uxr.pin[0]) + this.ox
-        this.y = this.layout.$2screen(this.uxr.pin[1]) + this.oy
+        this.update_position()
+    },
+    created () {
+        this.mouse.on('mousemove', this.mousemove)
+        this.mouse.on('mouseout', this.mouseout)
+    },
+    beforeDestroy() {
+        this.mouse.off('mousemove', this.mousemove)
+        this.mouse.off('mouseout', this.mouseout)
     },
     methods: {
+        update_position() {
+            let pin = this.uxr.pin
+            switch (pin[0]) {
+                case 'cursor':
+                    var x = this.uxr.overlay.cursor.x
+                    break
+                case 'mouse':
+                    x = this.mouse.x
+                    break
+                default:
+                    x = this.layout.t2screen(pin[0])
+            }
+            switch (pin[1]) {
+                case 'cursor':
+                    var y = this.uxr.overlay.cursor.y
+                    break
+                case 'mouse':
+                    y = this.mouse.y
+                    break
+                default:
+                    y = this.layout.$2screen(pin[1])
+            }
+            this.x = x + this.ox
+            this.y = y + this.oy
+        },
         parse_coord(str, scale) {
             if (str === '0' || str === '') return 0
             let plus = str.split('+')
@@ -51,6 +83,15 @@ export default {
                 return parseInt(px[0])
             }
             return undefined
+        },
+        mousemove() {
+            this.update_position()
+            this.visible = true
+        },
+        mouseout() {
+            if (this.uxr.pin.includes('cursor') ||
+                this.uxr.pin.includes('mouse'))
+                this.visible = false
         }
     },
     computed: {
@@ -63,10 +104,14 @@ export default {
         uuid() {
             return `tvjs-ux-wrapper-${this.uxr.uuid}`
         },
+        mouse() {
+            return this.uxr.overlay.mouse
+        },
         style() {
             return {
                 'left': `${this.x}px`,
-                'top': `${this.y}px`
+                'top': `${this.y}px`,
+                'pointer-events': this.uxr.pointer_events || 'all'
             }
         },
         pin_style() {
@@ -94,8 +139,10 @@ export default {
     },
     watch: {
         updater() {
-            this.x = this.layout.t2screen(this.uxr.pin[0]) + this.ox
-            this.y = this.layout.$2screen(this.uxr.pin[1]) + this.oy
+            if (this.uxr.pin.includes('cursor') ||
+                this.uxr.pin.includes('mouse')) {
+                this.update_position()
+            }
         }
     },
     data() {
@@ -103,7 +150,8 @@ export default {
             x: 0,
             y: 0,
             w: 0,
-            h: 0
+            h: 0,
+            visible: true
         }
     }
 }
@@ -111,7 +159,6 @@ export default {
 </script>
 <style>
     .trading-vue-ux-wrapper {
-        pointer-events: all;
         position: absolute;
         display: flex;
     }
@@ -124,5 +171,6 @@ export default {
         border-radius: 10px;
         margin-left: -5px;
         margin-top: -5px;
+        pointer-events: none;
     }
 </style>
