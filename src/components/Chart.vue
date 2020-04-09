@@ -121,7 +121,7 @@ export default {
         },
         common_props() {
             return {
-                title_txt: this.$props.title_txt,
+                title_txt: this.chart.name || this.$props.title_txt,
                 layout: this._layout,
                 sub: this.sub,
                 range: this.range,

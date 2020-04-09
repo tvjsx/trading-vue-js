@@ -31,7 +31,7 @@ module.exports = {
     ],
     devServer: {
         proxy: {
-            '/api/**': {
+            '/api/v1/**': {
                 target: 'https://api.binance.com',
                 changeOrigin: true
             },
@@ -39,7 +39,11 @@ module.exports = {
                 target: 'wss://stream.binance.com:9443',
                 changeOrigin: true,
                 ws: true
-            }
+            },
+            '/api/udf/**': {
+                target: 'https://www.bitmex.com',
+                changeOrigin: true
+            },
         }
     }
 }
