@@ -1,6 +1,15 @@
 
 <!-- Wrapper window for Interface objects -->
 
+<!-- TODO UxWrapper
+    * static pin values
+    * wrapper window controls
+    * behaviour on screen edges (h/v): (stick, disapper)
+    * drag'n'drop
+    * background (tranparent, backColor by default, etc...) 
+    *
+-->
+
 <template>
 <div class="trading-vue-ux-wrapper" v-if="visible"
     :id="`tvjs-ux-wrapper-${ux.uuid}`"
