@@ -4,9 +4,12 @@
 // e.g. a control panel.
 
 export default {
-    props: ['params'],
+    props: ['ux', 'updater'],
     methods: {
-        
+
+    },
+    computed: {
+
     },
     data() {
         return {

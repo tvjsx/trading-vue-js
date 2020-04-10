@@ -2,11 +2,11 @@
 <!-- Wrapper window for Interface objects -->
 
 <!-- TODO UxWrapper
-    * static pin values
+    + static pin values
     * wrapper window controls
-    * behaviour on screen edges (h/v): (stick, disapper)
     * drag'n'drop
-    * background (tranparent, backColor by default, etc...) 
+    * behaviour on screen edges (h/v): (stick, disapper)
+    * background (tranparent, backColor by default, etc...)
     *
 -->
 
@@ -14,7 +14,9 @@
 <div class="trading-vue-ux-wrapper" v-if="visible"
     :id="`tvjs-ux-wrapper-${ux.uuid}`"
     :style="style">
-    <component v-bind:is="ux.component"></component>
+    <component @modify="modify"
+        :ux="ux" :updater="updater"
+        v-bind:is="ux.component"></component>
     <div v-if="ux.show_pin"
         :style="pin_style"
         class="tvjs-ux-wrapper-pin">
@@ -28,12 +30,13 @@ export default {
     name: 'UxWrapper',
     props: ['ux', 'updater'],
     mounted() {
-        let self = document.getElementById(this.uuid)
-        this.w = self.offsetWidth
-        this.h = self.offsetHeight
+        this.self = document.getElementById(this.uuid)
+        this.w = this.self.offsetWidth
+        this.h = this.self.offsetHeight
         this.update_position()
     },
     created () {
+        this.uxr = this.$props.ux
         this.mouse.on('mousemove', this.mousemove)
         this.mouse.on('mouseout', this.mouseout)
     },
@@ -43,6 +46,8 @@ export default {
     },
     methods: {
         update_position() {
+            let lw = this.layout.width
+            let lh = this.layout.height
             let pin = this.uxr.pin
             switch (pin[0]) {
                 case 'cursor':
@@ -52,7 +57,7 @@ export default {
                     x = this.mouse.x
                     break
                 default:
-                    x = this.layout.t2screen(pin[0])
+                    x = this.parse_coord(this.uxr.pin[0], lw)
             }
             switch (pin[1]) {
                 case 'cursor':
@@ -62,7 +67,7 @@ export default {
                     y = this.mouse.y
                     break
                 default:
-                    y = this.layout.$2screen(pin[1])
+                    y = this.parse_coord(this.uxr.pin[1], lh)
             }
             this.x = x + this.ox
             this.y = y + this.oy
@@ -101,14 +106,23 @@ export default {
             if (this.uxr.pin.includes('cursor') ||
                 this.uxr.pin.includes('mouse'))
                 this.visible = false
+        },
+        modify(obj = {}) {
+            for (var k in obj) {
+                if (k in this.uxr) {
+                    this.uxr[k] = obj[k]
+                }
+            }
+            if (this.self) {
+                this.w = this.self.offsetWidth
+                this.h = this.self.offsetHeight
+            }
+            this.update_position()
         }
     },
     computed: {
         layout() {
             return this.$props.ux.overlay.layout
-        },
-        uxr() {
-            return this.$props.ux
         },
         uuid() {
             return `tvjs-ux-wrapper-${this.uxr.uuid}`
@@ -120,7 +134,9 @@ export default {
             return {
                 'left': `${this.x}px`,
                 'top': `${this.y}px`,
-                'pointer-events': this.uxr.pointer_events || 'all'
+                'pointer-events': this.uxr.pointer_events || 'all',
+                'border': '1px solid #50525d',
+                'border-radius': '3px'
             }
         },
         pin_style() {
