@@ -16,8 +16,8 @@ export default {
             this.$emit('new-interface', {
                 target: 'grid',
                 component: Ux1,
-                pin: [1585936800000, 'mouse'],
-                pin_position: '50%,100%+20px',
+                pin: ['50%', '50%'],
+                pin_position: '50%, 50%',
                 show_pin: true,
                 pointer_events: 'none'
             })
