@@ -1,7 +1,5 @@
 <template>
 <div class='test-ux'>
-    <h1>Title 2</h1>
-    <p>Content 2</p>
 </div>
 </template>
 <script>
@@ -15,8 +13,9 @@ export default {
 </script>
 <style scoped>
     .test-ux {
-        background: #dbb925;
+        background: url(https://usawatchdog.com/wp-content/uploads/2018/10/Peter-Schiff-10.2.18.png);
         width: 100px;
         height: 100px;
+        background-size: cover;
     }
 </style>

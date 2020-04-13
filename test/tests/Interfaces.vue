@@ -1,6 +1,6 @@
 <template>
 <trading-vue :data="chart" :width="this.width" :height="this.height"
-        :chart-config="{DEFAULT_LEN: 1000}"
+        :chart-config="{DEFAULT_LEN: 120}"
         :overlays="overlays"
         :color-back="colors.colorBack"
         :color-grid="colors.colorGrid"

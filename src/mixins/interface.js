@@ -27,6 +27,9 @@ export default {
         },
         layout() {
             return this.overlay.layout
+        },
+        uxr() {
+            return this.$props.ux
         }
     },
     data() {

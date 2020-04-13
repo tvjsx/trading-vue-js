@@ -59,6 +59,7 @@ export default {
             let lw = this.layout.width
             let lh = this.layout.height
             let pin = this.uxr.pin
+
             switch (pin[0]) {
                 case 'cursor':
                     var x = this.uxr.overlay.cursor.x
@@ -67,10 +68,10 @@ export default {
                     x = this.mouse.x
                     break
                 default:
-                    if (typeof x === 'string') {
-                        x = this.parse_coord(this.uxr.pin[0], lw)
+                    if (typeof pin[0] === 'string') {
+                        x = this.parse_coord(pin[0], lw)
                     } else {
-                        x = this.layout.t2screen(this.uxr.pin[0])
+                        x = this.layout.t2screen(pin[0])
                     }
             }
             switch (pin[1]) {
@@ -81,10 +82,10 @@ export default {
                     y = this.mouse.y
                     break
                 default:
-                    if (typeof x === 'string') {
-                        y = this.parse_coord(this.uxr.pin[1], lh)
+                    if (typeof pin[1] === 'string') {
+                        y = this.parse_coord(pin[1], lh)
                     } else {
-                        y = this.layout.$2screen(this.uxr.pin[1])
+                        y = this.layout.$2screen(pin[1])
                     }
             }
             this.x = x + this.ox
