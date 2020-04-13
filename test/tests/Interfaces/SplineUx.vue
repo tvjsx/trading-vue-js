@@ -14,53 +14,58 @@ export default {
         },
         init() {
 
-            /*for (var p of this.$props.data) {
-                this.$emit('new-interface', {
-                    target: 'grid',
-                    component: Ux1,
-                    pin: [p[0], p[1]],
-                    pin_position: '50%, 100% + 20px',
-                    show_pin: true,
-                    edge_behavior: "close",
-                })
-            }*/
+            // TODO: For some reason need to rebuild to see the changes here
+
             this.$emit('new-interface', {
                 target: 'grid',
                 component: Ux1,
-                pin: [1585605600000, 6636],
+                pin: [1585605600000, 6636], // Values can be: '100px', '50%', 'mouse', 'cursor'
                 pin_position: '50%, 100% + 20px',
                 show_pin: true,
-                z_index: 10,
-                edge_behavior: "close",
-                //win_header: false
-                //win_styling: false
-                //pointer_events: 'none'
+                win_styling: false,
+                inactive_btn_color: '#ffffff99',
+                vars: {
+                    p_text: 'Interface',
+                    button_text: 'OKAY',
+                    custom_back: 'url(https://mir-s3-cdn-cf.behance.net/project_modules/disp/d58c4258730099.5a0726f0f1616.gif)'
+                }
             })
 
-            /*
             this.$emit('new-interface', {
                 target: 'grid',
                 component: Ux1,
                 pin: [1585936800000, 6700],
                 pin_position: '50%,100% + 20px',
-                show_pin: true
+                show_pin: true,
+                win_header: false,
+                vars: {
+                    p_text: 'Interface.crypto',
+                    button_text: 'OBEY'
+                }
             })
 
             this.$emit('new-interface', {
                 target: 'grid',
                 component: Ux1,
-                pin: [1585936800000 - 3600000 * 50, 6800],
-                pin_position: '-20px,100%+20px',
+                pin: [1585936800000 - 3600000 * 50, 6600],
+                pin_position: '-20px,-20px',
                 show_pin: true,
+                vars: {
+                    p_text: 'Interface.gov',
+                    button_text: 'DO NOT OBEY'
+                }
             })
 
             this.$emit('new-interface', {
                 target: 'grid',
-                component: Ux1,
-                pin: [1585936800000 - 3600000 * 25, 6600],
-                pin_position: '100%+20px,-20px',
-                show_pin: true,
-            })*/
+                component: Ux2,
+                pin: ['mouse', 'mouse'],
+                pin_position: '-20px,-20px',
+                win_styling: false,
+                win_header: false,
+                pointer_events: false
+            })
+
         },
         draw(ctx) {
             ctx.lineWidth = this.line_width

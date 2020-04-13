@@ -6,8 +6,7 @@ export default {
         on_ux_event(d, target) {
             if (d.event === 'new-interface') {
                 if (d.args[0].target === target) {
-                    //let uuid = `${d.args[1]}-${d.args[2]}-${d.args[3]}`
-                    //d.args[0].uuid = uuid
+                    d.args[0].vars = d.args[0].vars || {}
                     d.args[0].grid_id = d.args[1]
                     d.args[0].overlay_id = d.args[2]
                     this.uxs.push(d.args[0])

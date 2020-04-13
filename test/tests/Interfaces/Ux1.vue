@@ -1,8 +1,8 @@
 <template>
 <div class='test-ux' :style="style">
     <h1>TVJS</h1>
-    <p>Interface</p>
-    <button>OKAY</button>
+    <p>{{ux.vars.p_text}}</p>
+    <button>{{ux.vars.button_text}}</button>
 </div>
 </template>
 <script>
@@ -26,7 +26,8 @@ export default {
     computed: {
         style() {
             return {
-                width: this.w + 'px'
+                width: this.w + 'px',
+                background: this.uxr.vars.custom_back
             }
         }
     },
