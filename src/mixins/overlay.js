@@ -75,7 +75,8 @@ export default {
             }
             if (event === 'new-interface') {
                 args[0].overlay = this
-                args.push(this.uxs_count++)
+                args[0].uuid = this.last_ux_id =
+                    `${this.grid_id}-${this.id}-${this.uxs_count++}`
             }
             // TODO: add a namespace to the event name
             this._$emit('custom-event', {event, args})
@@ -94,6 +95,6 @@ export default {
             deep: true
         }
     },
-    data() { return { uxs_count: 0 } },
+    data() { return { uxs_count: 0, last_ux_id: null } },
     render(h) { return h() }
 }

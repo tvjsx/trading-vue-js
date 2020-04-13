@@ -13,17 +13,31 @@ export default {
             return { author: 'C451', version: '1.0.0' }
         },
         init() {
+
+            /*for (var p of this.$props.data) {
+                this.$emit('new-interface', {
+                    target: 'grid',
+                    component: Ux1,
+                    pin: [p[0], p[1]],
+                    pin_position: '50%, 100% + 20px',
+                    show_pin: true,
+                    edge_behavior: "close",
+                })
+            }*/
             this.$emit('new-interface', {
                 target: 'grid',
                 component: Ux1,
                 pin: [1585605600000, 6636],
                 pin_position: '50%, 100% + 20px',
                 show_pin: true,
-                z_index: 10
+                z_index: 10,
+                edge_behavior: "close",
                 //win_header: false
                 //win_styling: false
                 //pointer_events: 'none'
             })
+
+            /*
             this.$emit('new-interface', {
                 target: 'grid',
                 component: Ux1,
@@ -31,7 +45,7 @@ export default {
                 pin_position: '50%,100% + 20px',
                 show_pin: true
             })
-/*
+
             this.$emit('new-interface', {
                 target: 'grid',
                 component: Ux1,

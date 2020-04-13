@@ -162,6 +162,16 @@ export default {
     // Parse the original mouse event to find deltaY
     get_deltaY(event) {
         return event.originalEvent.deltaY / 12
+    },
+
+    // Apply opacity to a hex color
+    apply_opacity(c, op) {
+        if (c.length === 7) {
+            let n = Math.floor(op * 255)
+            n = this.clamp(n, 0, 255)
+            c += n.toString(16)
+        }
+        return c
     }
 
 }

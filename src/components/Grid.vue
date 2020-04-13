@@ -92,6 +92,7 @@ export default {
                         id, tv_id: this.$props.tv_id,
                         uxs: this.uxs,
                         colors: this.$props.colors,
+                        config: this.$props.config,
                         updater: Math.random()
                     },
                     on: {
