@@ -9,6 +9,7 @@
 
 <script>
 import TradingVue from '../../src/TradingVue.vue'
+import DataCube from '../../src/helpers/datacube.js'
 import Data from '../data/data_ux.json'
 import SplineUx from './interfaces/SplineUx.vue'
 
@@ -27,13 +28,14 @@ export default {
     mounted() {
         window.addEventListener('resize', this.onResize)
         this.onResize()
+        window.dc = this.chart
     },
     beforeDestroy() {
         window.removeEventListener('resize', this.onResize)
     },
     data() {
         return {
-            chart: Data, // Data will be here,
+            chart: new DataCube(Data), // Data will be here,
             width: window.innerWidth,
             height: window.innerHeight,
             overlays: [SplineUx],
