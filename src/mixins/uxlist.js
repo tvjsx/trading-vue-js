@@ -14,24 +14,28 @@ export default {
                     // this.rerender++
                 }
             }
-            if (d.event === 'remove-interface') {
-                let id = d.args.join('-')
+            if (d.event === 'close-interface') {
                 this.uxs = this.uxs
-                    .filter(x => x.id !== id)
+                    .filter(x => x.uuid !== d.args[0])
             }
+            if (d.event === 'modify-interface') {
+                let ux = this.uxs
+                    .filter(x => x.uuid === d.args[0])
 
-            /*if (d.event === 'new-shader') {
-                if (d.args[0].target === target) {
-                    d.args[0].id = `${d.args[1]}-${d.args[2]}`
-                    this.shaders.push(d.args[0])
-                    this.rerender++
+                if (ux.length) {
+                    this.modify(ux[0], d.args[1])
                 }
             }
-            if (d.event === 'remove-shaders') {
-                let id = d.args.join('-')
-                this.shaders = this.shaders
-                    .filter(x => x.id !== id)
-            }*/
+        },
+        modify(ux, obj = {}) {
+            for (var k in obj) {
+                if (k in ux) {
+                    this.$set(ux, k, obj[k])
+                }
+            }
+        },
+        remove_all_ux() {
+            this.uxs = []
         }
     },
     data() { return { uxs: [] } }

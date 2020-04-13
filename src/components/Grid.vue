@@ -54,8 +54,7 @@ export default {
         this.$emit('custom-event', {
             event: 'register-tools', args: tools
         })
-        this.$on('custom-event',
-            e => this.on_ux_event(e, 'grid'))
+        this.$on('custom-event', this.emit_ux_event)
     },
     mounted() {
         const el = this.$refs['canvas']
@@ -92,7 +91,11 @@ export default {
                     props: {
                         id, tv_id: this.$props.tv_id,
                         uxs: this.uxs,
+                        colors: this.$props.colors,
                         updater: Math.random()
+                    },
+                    on: {
+                        'custom-event': this.emit_ux_event
                     }
                 })
             ].concat(this.get_overlays(h))
@@ -109,11 +112,12 @@ export default {
                 event: 'remove-shaders',
                 args: [grid_id, layer]
             })
-            // TODO: remove-interfaces
+            // TODO: close all interfaces
             this.$emit('custom-event', {
                 event: 'remove-layer-meta',
                 args: [grid_id, layer]
             })
+            this.remove_all_ux()
         },
         get_overlays(h) {
             // Distributes overlay data & settings according
@@ -156,6 +160,9 @@ export default {
                 font: this.$props.font,
                 config: this.$props.config,
             }
+        },
+        emit_ux_event(e) {
+            this.on_ux_event(e, 'grid')
         }
     },
     computed: {

@@ -13,14 +13,15 @@ export default {
     name: 'Ux1',
     mixins: [Interface],
     mounted() {
+        /*
         setInterval(() => {
             this.w = Math.abs(Math.sin(
                 new Date().getTime()/1000)) * 100 + 150, 0
-            this.$emit('modify')
+            this.modify()
         })
-        this.$emit('modify', {
+        this.modify({
             pin_position: '100%,0'
-        })
+        })*/
     },
     computed: {
         style() {
@@ -41,7 +42,7 @@ export default {
         font-size: 3em;
         //background: url(http://youremyfavoritetoday.com/wp-content/uploads/2014/04/warp-speed.gif);
         //background: url(https://media.giphy.com/media/oyFyFiXz0hrnG/giphy.gif);
-        background: url(https://mir-s3-cdn-cf.behance.net/project_modules/disp/d58c4258730099.5a0726f0f1616.gif);
+        //background: url(https://mir-s3-cdn-cf.behance.net/project_modules/disp/d58c4258730099.5a0726f0f1616.gif);
         background-position: center;
         width: 250px;
         height: 150px;
