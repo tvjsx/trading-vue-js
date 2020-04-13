@@ -63,7 +63,23 @@ export default {
                 pin_position: '-20px,-20px',
                 win_styling: false,
                 win_header: false,
-                pointer_events: false
+                pointer_events: 'none'
+            })
+
+            let schiff_id = this.last_ux_id
+
+            this.$emit('new-interface', {
+                target: 'grid',
+                component: Ux2,
+                pin: ['50%', '50%'],
+                pin_position: '50%,50%',
+                win_styling: false,
+                win_header: false,
+                pointer_events: 'none',
+                vars: {
+                    url: 'http://pngimg.com/uploads/gold/gold_PNG10998.png',
+                    schiff_id
+                }
             })
 
         },

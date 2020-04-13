@@ -16,7 +16,7 @@
     :style="style">
     <component
         @custom-event="on_custom_event"
-        :ux="ux" :updater="updater"
+        :ux="ux" :updater="updater" :wrapper="wrapper"
         v-bind:is="ux.component"></component>
     <div v-if="ux.show_pin"
         :style="pin_style"
@@ -220,8 +220,15 @@ export default {
         inactive_btn_color() {
             return this.uxr.inactive_btn_color ||
                 this.$props.colors.colorGrid
+        },
+        wrapper() {
+            return {
+                x: this.x,
+                y: this.y,
+                pin_x: this.x - this.ox,
+                pin_y: this.y - this.oy
+            }
         }
-
     },
     watch: {
         updater() {

@@ -4,7 +4,7 @@
 // e.g. a control panel.
 
 export default {
-    props: ['ux', 'updater', 'colors'],
+    props: ['ux', 'updater', 'colors', 'wrapper'],
     methods: {
         close() {
             this.$emit('custom-event', {
@@ -23,7 +23,7 @@ export default {
     },
     computed: {
         overlay() {
-            return this.$props.us.overlay
+            return this.$props.ux.overlay
         },
         layout() {
             return this.overlay.layout
