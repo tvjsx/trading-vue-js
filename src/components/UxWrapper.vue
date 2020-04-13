@@ -3,9 +3,9 @@
 
 <!-- TODO UxWrapper
     + static pin values
-    * wrapper window controls
+    + wrapper window controls
     * drag'n'drop
-    * behaviour on screen edges (h/v): (stick, disapper)
+    * behaviour on screen edges (h/v): (pass, stick, close)
     * background (trasnparent, backColor by default, etc...)
     * fullscreen mode
 -->
@@ -34,9 +34,11 @@
 
 <script>
 
+import Utils from '../stuff/utils.js'
+
 export default {
     name: 'UxWrapper',
-    props: ['ux', 'updater', 'colors'],
+    props: ['ux', 'updater', 'colors', 'config'],
     mounted() {
         this.self = document.getElementById(this.uuid)
         this.w = this.self.offsetWidth // TODO: => width: "content"
@@ -53,6 +55,7 @@ export default {
     },
     methods: {
         update_position() {
+            if (this.uxr.hidden) return
             let lw = this.layout.width
             let lh = this.layout.height
             let pin = this.uxr.pin
@@ -157,6 +160,7 @@ export default {
         },
         style() {
             let st = {
+                'display': this.uxr.hidden ? 'none' : undefined,
                 'left': `${this.x}px`,
                 'top': `${this.y}px`,
                 'pointer-events': this.uxr.pointer_events || 'all',
@@ -166,20 +170,21 @@ export default {
                 st = Object.assign(st, {
                     'border': `1px solid ${this.$props.colors.colorGrid}`,
                     'border-radius': '3px',
-                    'background': `${this.$props.colors.colorBack}`,
+                    'background': `${this.background}`,
                 })
             return st
         },
         pin_style() {
             return {
                 'left': `${ -this.ox }px`,
-                'top': `${ -this.oy }px`
+                'top': `${ -this.oy }px`,
+                'background-color': this.uxr.pin_color
             }
         },
         btn_style() {
             return {
-                'background': `${this.$props.colors.colorGrid}`,
-                'color': `${this.$props.colors.colorGrid}`,
+                'background': `${this.inactive_btn_color}`,
+                'color': `${this.inactive_btn_color}`,
             }
         },
         pin_pos() {
@@ -199,9 +204,21 @@ export default {
             return -y
         },
         z_index() {
-            return 'z_index' in this.uxr ? this.uxr['z_index'] :
-                this.settings['z-index'] ||
+            let base_index = this.settings['z-index'] ||
                 this.settings['zIndex']  || 0
+            let ux_index = this.uxr['z_index'] || 0
+            return base_index + ux_index
+        },
+        background() {
+            let c = this.uxr.background || this.$props.colors.colorBack
+            return Utils.apply_opacity(c,
+                this.uxr.background_opacity ||
+                this.$props.config.UX_OPACITY
+            )
+        },
+        inactive_btn_color() {
+            return this.uxr.inactive_btn_color ||
+                this.$props.colors.colorGrid
         }
 
     },

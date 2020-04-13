@@ -8,7 +8,8 @@
         :key="ux.uuid"
         :ux="ux"
         :updater="updater"
-        :colors="colors">
+        :colors="colors"
+        :config="config">
     </ux-wrapper>
 </span>
 </template>
@@ -19,7 +20,7 @@ import UxWrapper from './UxWrapper.vue'
 
 export default {
     name: 'UxLayer',
-    props: ['tv_id', 'id', 'uxs', 'updater', 'colors'],
+    props: ['tv_id', 'id', 'uxs', 'updater', 'colors', 'config'],
     components: { UxWrapper },
     created () {
     },

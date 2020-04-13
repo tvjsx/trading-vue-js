@@ -48,7 +48,8 @@ const ChartConfig = {
     MINIMUM_LEN: 5, // candles,
     MIN_ZOOM: 25,   // candles
     MAX_ZOOM: 1000, // candles,
-    VOLSCALE: 0.15  // %/100 of height
+    VOLSCALE: 0.15, // %/100 of height
+    UX_OPACITY: 0.9 // Ux background opacity
 }
 
 ChartConfig.FONT =
