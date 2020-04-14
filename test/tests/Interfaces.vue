@@ -15,8 +15,9 @@ import Data from '../data/data_ux.json'
 import SplineUx from './interfaces/SplineUx.vue'
 
 export default {
-    name: 'Simple',
-    description: 'Html indicator interfaces: static & interactive',
+    name: 'Interfaces',
+    description: 'Html interfaces: static & interactive',
+    props: ['night'],
     components: {
         TradingVue
     },
@@ -31,6 +32,15 @@ export default {
         this.onResize()
         window.dc = this.chart
     },
+    computed: {
+        colors() {
+            return this.$props.night ? {} : {
+                colorBack: '#fff',
+                colorGrid: '#eee',
+                colorText: '#333'
+            }
+        },
+    },
     beforeDestroy() {
         window.removeEventListener('resize', this.onResize)
     },
@@ -39,12 +49,7 @@ export default {
             chart: new DataCube(Data), // Data will be here,
             width: window.innerWidth,
             height: window.innerHeight,
-            overlays: [SplineUx],
-            colors: {
-                //colorBack: '#fff',
-                //colorGrid: '#eee',
-                //colorText: '#333',
-            }
+            overlays: [SplineUx]
         };
     }
 };

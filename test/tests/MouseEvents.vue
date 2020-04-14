@@ -16,6 +16,7 @@ import Earnings from './MouseEvents/Earnings.vue'
 export default {
     name: 'MouseEvents',
     description: 'Should display marker hints (click earnings icon)',
+    props: ['night'],
     components: {
         TradingVue
     },
@@ -33,6 +34,15 @@ export default {
         }, 0)
         this.onResize()
     },
+    computed: {
+        colors() {
+            return this.$props.night ? {} : {
+                colorBack: '#fff',
+                colorGrid: '#eee',
+                colorText: '#333'
+            }
+        },
+    },
     beforeDestroy() {
         window.removeEventListener('resize', this.onResize)
     },
@@ -41,11 +51,6 @@ export default {
             chart: {}, // Data will be here,
             width: window.innerWidth,
             height: window.innerHeight,
-            colors: {
-                colorBack: '#fff',
-                colorGrid: '#eee',
-                colorText: '#333',
-            },
             overlays: [Earnings]
         };
     }

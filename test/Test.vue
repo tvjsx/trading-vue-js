@@ -3,6 +3,10 @@
         <div id="test-title">
             <h1>{{current_test.name}}</h1>
             <p>{{current_test.description}} [{{test_index+1}}/{{len}}]</p>
+            <span class="night-mode">
+                <input type="checkbox" v-model="night">
+                <label>NM</label>
+            </span>
             <a href="#" class="test-btn prev-test"
                 v-on:click="prev_test">
                 Prev test
@@ -13,7 +17,9 @@
             </a>
         </div>
         <div id="test-container">
-            <component v-bind:is="current_test"></component>
+            <component v-bind:is="current_test"
+                :night="night">
+            </component>
         </div>
     </div>
 </template>
@@ -48,7 +54,8 @@ export default {
         return {
             len: Object.values(TESTS).length,
             test_index: 0,
-            current_test: 'Simple'
+            current_test: 'Simple',
+            night: true
         }
     },
     methods: {
@@ -143,5 +150,15 @@ body {
 	background-color:#44c767;
 }
 
+.night-mode {
+    position: absolute;
+    top: 17px;
+    right: 220px;
+    color: #888;
+    font: 11px -apple-system,BlinkMacSystemFont,
+        Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,
+        Fira Sans,Droid Sans,Helvetica Neue,
+        sans-serif
+}
 
 </style>

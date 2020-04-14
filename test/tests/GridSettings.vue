@@ -14,6 +14,7 @@ import Utils from '../../src/stuff/utils.js'
 export default {
     name: 'GridSettings',
     description: 'Custom grid heights',
+    props: ['night'],
     components: {
         TradingVue
     },
@@ -34,16 +35,20 @@ export default {
     beforeDestroy() {
         window.removeEventListener('resize', this.onResize)
     },
+    computed: {
+        colors() {
+            return this.$props.night ? {} : {
+                colorBack: '#fff',
+                colorGrid: '#eee',
+                colorText: '#333'
+            }
+        },
+    },
     data() {
         return {
             chart: {}, // Data will be here,
             width: window.innerWidth,
-            height: window.innerHeight,
-            colors: {
-                colorBack: '#fff',
-                colorGrid: '#eee',
-                colorText: '#333',
-            }
+            height: window.innerHeight
         };
     }
 };

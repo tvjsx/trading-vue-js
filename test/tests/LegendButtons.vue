@@ -16,6 +16,7 @@ import Utils from '../../src/stuff/utils.js'
 export default {
     name: 'LegendButtons',
     description: 'Legend buttons test (click the button, see console)',
+    props: ['night'],
     components: {
         TradingVue
     },
@@ -49,6 +50,15 @@ export default {
         }, 0)
         this.onResize()
     },
+    computed: {
+        colors() {
+            return this.$props.night ? {} : {
+                colorBack: '#fff',
+                colorGrid: '#eee',
+                colorText: '#333'
+            }
+        },
+    },
     beforeDestroy() {
         window.removeEventListener('resize', this.onResize)
     },
@@ -57,11 +67,6 @@ export default {
             chart: {}, // Data will be here,
             width: window.innerWidth,
             height: window.innerHeight,
-            colors: {
-                colorBack: '#fff',
-                colorGrid: '#eee',
-                colorText: '#333',
-            },
             buttons: [
                 'display', 'settings', 'remove'
             ]

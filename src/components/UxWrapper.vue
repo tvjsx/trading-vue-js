@@ -6,7 +6,7 @@
     + wrapper window controls
     * drag'n'drop
     * behaviour on screen edges (h/v): (pass, stick, close)
-    * background (trasnparent, backColor by default, etc...)
+    + background (trasnparent, backColor by default, etc...)
     * fullscreen mode
 -->
 
