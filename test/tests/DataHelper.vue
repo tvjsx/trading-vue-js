@@ -20,6 +20,7 @@ const WSS = 'ws://localhost:8080/ws/btcusdt@aggTrade'
 export default {
     name: 'DataHelper',
     description: 'Play with DataCube in console',
+    props: ['night'],
     components: {
         TradingVue
     },
@@ -109,16 +110,20 @@ export default {
         window.removeEventListener('resize', this.onResize)
         if (this.stream) this.stream.off()
     },
+    computed: {
+        colors() {
+            return this.$props.night ? {} : {
+                colorBack: '#fff',
+                colorGrid: '#eee',
+                colorText: '#333'
+            }
+        },
+    },
     data() {
         return {
             chart: {},
             width: window.innerWidth,
-            height: window.innerHeight,
-            colors: {
-                colorBack: '#fff',
-                colorGrid: '#eee',
-                colorText: '#333',
-            }
+            height: window.innerHeight
         };
     }
 };

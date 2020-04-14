@@ -22,6 +22,7 @@ import DataCube from '../../src/helpers/datacube.js'
 export default {
     name: 'Timeframes',
     description: 'Should display correct dates for every timeframe',
+    props: ['night'],
     components: {
         TradingVue, TfSelector
     },
@@ -46,6 +47,15 @@ export default {
         this.onResize()
         window.DataCube = this.chart // Debug
     },
+    computed: {
+        colors() {
+            return this.$props.night ? {} : {
+                colorBack: '#fff',
+                colorGrid: '#eee',
+                colorText: '#333'
+            }
+        },
+    },
     beforeDestroy() {
         window.removeEventListener('resize', this.onResize)
     },
@@ -54,12 +64,7 @@ export default {
             charts: Data,
             chart: new DataCube({}),
             width: window.innerWidth,
-            height: window.innerHeight,
-            colors: {
-                colorBack: '#fff',
-                colorGrid: '#eee',
-                colorText: '#333',
-            }
+            height: window.innerHeight
         };
     }
 };

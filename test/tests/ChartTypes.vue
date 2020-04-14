@@ -14,6 +14,7 @@ import Utils from '../../src/stuff/utils.js'
 export default {
     name: 'ChartTypes',
     description: 'Should allow you to switch between different chart types',
+    props: ['night'],
     components: {
         TradingVue
     },
@@ -27,6 +28,15 @@ export default {
         window.addEventListener('resize', this.onResize)
         this.onResize()
     },
+    computed: {
+        colors() {
+            return this.$props.night ? {} : {
+                colorBack: '#fff',
+                colorGrid: '#eee',
+                colorText: '#333'
+            }
+        },
+    },
     beforeDestroy() {
         window.removeEventListener('resize', this.onResize)
     },
@@ -34,12 +44,7 @@ export default {
         return {
             chart: Data,
             width: window.innerWidth,
-            height: window.innerHeight,
-            colors: {
-                colorBack: '#fff',
-                colorGrid: '#eee',
-                colorText: '#333',
-            }
+            height: window.innerHeight
         };
     }
 };

@@ -15,7 +15,7 @@ import TradingVue from '../../../src/TradingVue.vue'
 
 export default {
     name: 'Chartbox',
-    props: ['id', 'tf', 'data', 'width', 'height'],
+    props: ['id', 'tf', 'data', 'width', 'height', 'night'],
     components: {
         TradingVue
     },
@@ -31,17 +31,18 @@ export default {
         },
         title() {
             return 'Bitcoin ' + this.$props.tf
-        }
-    },
-    data() {
-        return {
-            colors: {
+        },
+        colors() {
+            return this.$props.night ? {} : {
                 colorBack: '#fff',
                 colorGrid: '#eee',
                 colorText: '#333',
                 colorTitle: '#333'
             }
-        };
+        },
+    },
+    data() {
+        return {}
     }
 };
 </script>

@@ -17,6 +17,7 @@ import DataCube from '../../src/helpers/datacube.js'
 export default {
     name: 'Toolbar',
     description: 'Toolbar & drawing tools',
+    props: ['night'],
     components: {
         TradingVue
     },
@@ -31,6 +32,15 @@ export default {
         this.onResize()
         window.DataCube = this.chart
     },
+    computed: {
+        colors() {
+            return this.$props.night ? {} : {
+                colorBack: '#fff',
+                colorGrid: '#eee',
+                colorText: '#333'
+            }
+        },
+    },
     beforeDestroy() {
         window.removeEventListener('resize', this.onResize)
     },
@@ -38,12 +48,7 @@ export default {
         return {
             chart: new DataCube(Data),
             width: window.innerWidth,
-            height: window.innerHeight,
-            colors: {
-                colorBack: '#fff',
-                colorGrid: '#eee',
-                colorText: '#333'
-            }
+            height: window.innerHeight
         }
     }
 }

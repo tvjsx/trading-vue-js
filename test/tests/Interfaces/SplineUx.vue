@@ -56,6 +56,7 @@ export default {
                 }
             })
 
+            /*
             this.$emit('new-interface', {
                 target: 'grid',
                 component: Ux2,
@@ -80,7 +81,7 @@ export default {
                     url: 'http://pngimg.com/uploads/gold/gold_PNG10998.png',
                     schiff_id
                 }
-            })
+            })*/
 
         },
         draw(ctx) {
