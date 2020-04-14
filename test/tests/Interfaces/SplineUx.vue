@@ -27,7 +27,8 @@ export default {
                 vars: {
                     p_text: 'Interface',
                     button_text: 'OKAY',
-                    custom_back: 'url(https://mir-s3-cdn-cf.behance.net/project_modules/disp/d58c4258730099.5a0726f0f1616.gif)'
+                    custom_back: 'url(https://mir-s3-cdn-cf.behance.net/project_modules/disp/d58c4258730099.5a0726f0f1616.gif)',
+                    color: 'white'
                 }
             })
 

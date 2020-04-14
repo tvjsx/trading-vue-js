@@ -27,7 +27,8 @@ export default {
         style() {
             return {
                 width: this.w + 'px',
-                background: this.uxr.vars.custom_back
+                background: this.uxr.vars.custom_back,
+                color: this.uxr.vars.color || this.$props.colors.colorText
             }
         }
     },
@@ -47,7 +48,6 @@ export default {
         background-position: center;
         width: 250px;
         height: 150px;
-        color: #ffffff;
         line-height: 0.25;
         padding: 0.5em 1em 1em 1em;
     }
