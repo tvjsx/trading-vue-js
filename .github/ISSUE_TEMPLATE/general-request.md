@@ -15,6 +15,8 @@ assignees: ''
 
 The data sample must follow the current [data structure](https://github.com/C451/trading-vue-js/tree/master/docs/api#data-structure-new).
 
+## Console errors (if any)
+
 ## Additional Info 
 
 (if needed to reproduce the issue) 
