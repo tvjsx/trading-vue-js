@@ -255,6 +255,13 @@ npm run test
 *Server is running on http://localhost:8080*
 
 
+**Automatic testing**
+
+```
+npm run auto-test
+```
+
+
 ## Contributing
 
 1. Fork ( https://github.com/tvjsx/trading-vue-js/fork )
