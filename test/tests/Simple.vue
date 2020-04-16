@@ -1,5 +1,6 @@
 <template>
 <trading-vue :data="chart" :width="this.width" :height="this.height"
+        :toolbar="true"
         :color-back="colors.colorBack"
         :color-grid="colors.colorGrid"
         :color-text="colors.colorText">
@@ -10,6 +11,7 @@
 import TradingVue from '../../src/TradingVue.vue'
 import Data from '../data/data_btc.json'
 import Utils from '../../src/stuff/utils.js'
+import DataCube from '../../src/helpers/datacube.js'
 
 export default {
     name: 'Simple',
@@ -29,7 +31,7 @@ export default {
         // TODO: simplify the data setup
         setTimeout(() => {
             // Async data setup
-            this.$set(this, 'chart', Data)
+            this.$set(this, 'chart', new DataCube(Data))
         }, 0)
         this.onResize()
     },
