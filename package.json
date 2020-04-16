@@ -5,9 +5,21 @@
   "main": "./dist/trading-vue.js",
   "scripts": {
     "test": "webpack-dev-server --config webpack/test.config.js --mode development --progress --hot",
+    "auto-test": "ava",
     "eslint": "./node_modules/.bin/eslint --ext .js,.vue src",
     "dev": "webpack-dev-server --config webpack/dev.config.js --mode development --progress --hot",
     "build": "webpack  --config webpack/build.config.js --mode production --progress"
+  },
+  "ava": {
+    "babel": {
+        "compileAsTests": [
+            "test/auto_tests/**/*",
+            "src/**/*"
+        ]
+    },
+    "files": [
+      "test/auto_tests/**/*"
+    ]
   },
   "author": "C451",
   "license": "MIT",
@@ -26,15 +38,17 @@
   "homepage": "https://github.com/C451/trading-vue-js#readme",
   "repository": "github:C451/trading-vue-js",
   "devDependencies": {
+    "@ava/babel": "^1.0.1",
     "@babel/core": "^7.9.0",
     "@babel/plugin-transform-runtime": "^7.9.0",
-    "@babel/preset-env": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
+    "ava": "^3.7.0",
     "babel-loader": "^8.1.0",
-    "css-loader": "^3.4.2",
+    "css-loader": "^3.5.2",
     "eslint": "^6.8.0",
     "eslint-config-eslint": "^6.0.0",
     "eslint-plugin-vue": "^6.2.2",
-    "html-webpack-plugin": "^3.2.0",
+    "html-webpack-plugin": "^4.2.0",
     "request": "^2.88.2",
     "terser-webpack-plugin": "^2.3.5",
     "tulind": "^0.8.18",
