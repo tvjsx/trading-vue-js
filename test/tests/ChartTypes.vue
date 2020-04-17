@@ -45,9 +45,9 @@ export default {
             chart: Data,
             width: window.innerWidth,
             height: window.innerHeight
-        };
+        }
     }
-};
+}
 </script>
 
 <style>

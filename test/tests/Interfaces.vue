@@ -50,9 +50,9 @@ export default {
             width: window.innerWidth,
             height: window.innerHeight,
             overlays: [SplineUx]
-        };
+        }
     }
-};
+}
 </script>
 
 <style>
