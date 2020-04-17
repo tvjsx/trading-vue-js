@@ -37,11 +37,12 @@ import DataHelper from './tests/DataHelper.vue'
 import Toolbar from './tests/Toolbar.vue'
 import GridSettings from './tests/GridSettings.vue'
 import Interfaces from './tests/Interfaces.vue'
+import Performance from './tests/Performance.vue'
 
 const TESTS = {
     Simple, Stocks, MouseEvents, Timeframes, Multichart,
     LegendButtons, ChartTypes, DataHelper, Toolbar,
-    GridSettings, Interfaces
+    GridSettings, Interfaces, Performance
 }
 
 export default {

@@ -65,9 +65,9 @@ export default {
             chart: new DataCube({}),
             width: window.innerWidth,
             height: window.innerHeight
-        };
+        }
     }
-};
+}
 </script>
 
 <style>

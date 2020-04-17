@@ -28,11 +28,6 @@ export default {
     },
     mounted() {
         window.addEventListener('resize', this.onResize)
-        // TODO: simplify the data setup
-        setTimeout(() => {
-            // Async data setup
-            this.$set(this, 'chart', new DataCube(Data))
-        }, 0)
         this.onResize()
     },
     computed: {
@@ -49,12 +44,12 @@ export default {
     },
     data() {
         return {
-            chart: {}, // Data will be here,
+            chart: new DataCube(Data),
             width: window.innerWidth,
             height: window.innerHeight
-        };
+        }
     }
-};
+}
 </script>
 
 <style>

@@ -1,7 +1,6 @@
 <template>
 <trading-vue :data="chart" :width="this.width" :height="this.height"
-        :legend-buttons="buttons"
-        v-on:legend-button-click="on_button_click"
+        :overlays="overlays"
         :color-back="colors.colorBack"
         :color-grid="colors.colorGrid"
         :color-text="colors.colorText">
@@ -10,12 +9,14 @@
 
 <script>
 import TradingVue from '../../src/TradingVue.vue'
-import Data from '../data/data_buttons.json'
+import Data from '../data/data_perf.json'
 import Utils from '../../src/stuff/utils.js'
+import DataCube from '../../src/helpers/datacube.js'
+import PerfTestUx from './Performance/PerfTestUx.vue'
 
 export default {
-    name: 'LegendButtons',
-    description: 'Legend buttons test (click the button, see console)',
+    name: 'Performance',
+    description: 'Several performance tests',
     props: ['night'],
     components: {
         TradingVue
@@ -24,22 +25,6 @@ export default {
         onResize(event) {
             this.width = window.innerWidth
             this.height = window.innerHeight - 50
-        },
-        on_button_click(event) {
-            if (event.button === 'display') {
-                let d = this.chart[event.type][event.dataIndex]
-                if (d) {
-                    if (!('display' in d.settings)) {
-                        this.$set(
-                            d.settings, 'display', true
-                        )
-                    }
-                    this.$set(
-                        d.settings, 'display', !d.settings.display
-                    )
-                }
-            }
-            console.log(event)
         }
     },
     mounted() {
@@ -60,12 +45,10 @@ export default {
     },
     data() {
         return {
-            chart: Data,
+            chart: new DataCube(Data),
             width: window.innerWidth,
             height: window.innerHeight,
-            buttons: [
-                'display', 'settings', 'remove'
-            ]
+            overlays: [PerfTestUx]
         }
     }
 }

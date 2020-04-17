@@ -124,7 +124,7 @@ export default {
             chart: {},
             width: window.innerWidth,
             height: window.innerHeight
-        };
+        }
     }
-};
+}
 </script>
