@@ -20,6 +20,7 @@ export function layout_cnv(self) {
     var x1, x2, w, avg_w, mid, prev = undefined
 
     // Subset interval against main interval
+    // TODO: interval detection can be incorrect in IB mode
     let interval2 = Utils.detect_interval(sub)
     let ratio = interval2 / $p.interval
     let px_step2 = layout.px_step * ratio
