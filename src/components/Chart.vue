@@ -32,12 +32,14 @@ import GridSection from './Section.vue'
 import Botbar from './Botbar.vue'
 import Keyboard from './Keyboard.vue'
 import Shaders from '../mixins/shaders.js'
+import TI from './js/ti_mapping.js'
+
 
 export default {
     name: 'Chart',
     props: [
         'title_txt', 'data', 'width', 'height', 'font', 'colors',
-        'overlays', 'tv_id', 'config', 'buttons', 'toolbar'
+        'overlays', 'tv_id', 'config', 'buttons', 'toolbar', 'ib'
     ],
     mixins: [Shaders],
     components: {
@@ -53,6 +55,7 @@ export default {
         // Initial layout (All measurments for the chart)
         this.init_range()
         this.sub = this.subset()
+        Utils.overwrite(this.range, this.range) // Fix for IB mode
         this._layout = new Layout(this)
 
         // Updates current cursor values
@@ -64,8 +67,10 @@ export default {
     methods: {
         range_changed(r) {
             // Overwite & keep the original references
+            // Quick fix for IB mode (switch 2 next lines)
+            // TODO: wtf?
+            var sub = this.subset(r)
             Utils.overwrite(this.range, r)
-            const sub = this.subset()
             Utils.overwrite(this.sub, sub)
             this.update_layout()
             this.$emit('range-changed', r)
@@ -86,7 +91,8 @@ export default {
         },
         calc_interval() {
             if (this.ohlcv.length < 2) return
-            this.interval = Utils.detect_interval(this.ohlcv)
+            this.interval_ms = Utils.detect_interval(this.ohlcv)
+            this.interval = this.$props.ib ? 1 : this.interval_ms
         },
         set_ytransform(s) {
             let obj = this.y_transforms[s.grid_id] || {}
@@ -101,23 +107,37 @@ export default {
             const l = this.ohlcv.length - 1
 
             if (this.ohlcv.length < 2) return
-            if (this.ohlcv.length < dl) {
+            if (this.ohlcv.length <= dl) {
                 var s = 0, d = ml
             } else {
                 s = l - dl, d = 0.5
             }
-
-            Utils.overwrite(this.range, [
-                this.ohlcv[s][0] - this.interval * d,
-                this.ohlcv[l][0] + this.interval * ml
-            ])
+            if (!this.$props.ib) {
+                Utils.overwrite(this.range, [
+                    this.ohlcv[s][0] - this.interval * d,
+                    this.ohlcv[l][0] + this.interval * ml
+                ])
+            } else {
+                Utils.overwrite(this.range, [
+                    s - this.interval * d,
+                    l + this.interval * ml
+                ])
+            }
         },
-        subset() {
-            return Utils.fast_filter(
+        subset(range = this.range) {
+            var [res, index] = this.filter(
                 this.ohlcv,
-                this.range[0] - this.interval,
-                this.range[1]
+                range[0] - this.interval,
+                range[1]
             )
+            this.ti_map = new TI()
+            if (res) {
+                this.sub_start = index
+                this.ti_map.init(this, res)
+                if (!this.$props.ib) return res || []
+                return this.ti_map.sub_i
+            }
+            return []
         },
         common_props() {
             return {
@@ -140,11 +160,11 @@ export default {
             return source.map(d => ({
                 type: d.type,
                 name: d.name,
-                data: Utils.fast_filter(
+                data: this.ti_map.parse(Utils.fast_filter(
                     d.data,
-                    this.range[0] - this.interval,
-                    this.range[1]
-                ),
+                    this.ti_map.i2t(this.range[0] - this.interval),
+                    this.ti_map.i2t(this.range[1])
+                )[0] || []),
                 settings: d.settings || this.settings_ov,
                 grid: d.grid || {}
             }))
@@ -231,7 +251,7 @@ export default {
             return p
         },
         offsub() {
-            return this.overlay_subset(this.offchart)
+             return this.overlay_subset(this.offchart)
         },
         // Datasets: candles, onchart, offchart indicators
         ohlcv() {
@@ -246,13 +266,18 @@ export default {
         offchart() {
             return this.$props.data.offchart || []
         },
+        filter() {
+            return this.$props.ib ?
+                Utils.fast_filter_i : Utils.fast_filter
+        },
         styles() {
             let w = this.$props.toolbar ? this.$props.config.TOOLBAR : 0
             return { 'margin-left': `${w}px` }
         },
         meta() {
             return {
-                last: this.last_candle
+                last: this.last_candle,
+                sub_start: this.sub_start
             }
         }
     },
@@ -289,7 +314,9 @@ export default {
             // Default overlay settings
             settings_ov: {},
 
-            last_candle: []
+            // Meta data
+            last_candle: [],
+            sub_start: undefined
         }
     },
     watch: {
@@ -298,6 +325,12 @@ export default {
         },
         height() {
             this.update_layout()
+        },
+        ib() {
+            // TODO: mode switch
+            //this.init_range()
+            //const sub = this.subset()
+            //this.update_layout(true)
         },
         colors() {
             Utils.overwrite(this.range, this.range)

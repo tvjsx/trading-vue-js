@@ -1,5 +1,6 @@
 <template>
 <trading-vue :data="chart" :width="this.width" :height="this.height"
+        :index-based="true"
         :overlays="overlays"
         :color-back="colors.colorBack"
         :color-grid="colors.colorGrid"

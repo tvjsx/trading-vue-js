@@ -144,6 +144,10 @@ export default {
         legendButtons: {
             type: Array,
             default: function () { return [] }
+        },
+        indexBased: {
+            type: Boolean,
+            default: false
         }
     },
     computed: {
@@ -160,6 +164,7 @@ export default {
                 font: this.$props.font,
                 buttons: this.$props.legendButtons,
                 toolbar: this.$props.toolbar,
+                ib: this.$props.indexBased,
                 colors: {}
             }
             for (var k in this.$props) {
