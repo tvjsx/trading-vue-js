@@ -34,7 +34,9 @@ export default function(self, range) {
         screen2t: x => {
             const dt = range[1] - range[0]
             const r = self.spacex / dt
-            return Math.floor(range[0] + x / r)
+            // TODO: most likely Math.floor not needed
+            // return Math.floor(range[0] + x / r)
+            return range[0] + x / r
         },
         // $-axis nearest step
         $_magnet: price => { },

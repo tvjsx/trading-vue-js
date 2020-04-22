@@ -11,7 +11,7 @@ function Layout(params) {
 
     let {
         chart, sub, offsub, interval, range, ctx, layers_meta,
-        $props:$p, y_transforms: y_ts
+        ti_map, $props:$p, y_transforms: y_ts
     } = params
 
     offsub = offsub.filter((x, i) => {
@@ -56,12 +56,6 @@ function Layout(params) {
         return hs
     }
 
-    function t2screen(t) {
-        const dt = range[1] - range[0]
-        const r = self.spacex / dt
-        return Math.floor((t - range[0]) * r)
-    }
-
     function candles_n_vol() {
 
         self.candles = []
@@ -75,7 +69,7 @@ function Layout(params) {
 
         for (var i = 0; i < sub.length; i++) {
             let p = sub[i]
-            mid = t2screen(p[0])
+            mid = self.t2screen(p[0]) + 0.5
             self.candles.push({
                 x: mid,
                 w: self.px_step * $p.config.CANDLEW,
@@ -105,8 +99,8 @@ function Layout(params) {
     // Main grid
     const hs = grid_hs()
     let specs = {
-        sub, interval, range, ctx, $p, layers_meta, height: hs[0],
-        y_t: y_ts[0]
+        sub, interval, range, ctx, $p, layers_meta,
+        ti_map, height: hs[0], y_t: y_ts[0]
     }
     let gms = [new GridMaker(0, specs)]
 

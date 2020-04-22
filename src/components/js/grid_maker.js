@@ -10,10 +10,10 @@ function GridMaker(id, params, master_grid = null) {
 
 
     let {
-        sub, interval, range, ctx, $p, layers_meta, height, y_t
+        sub, interval, range, ctx, $p, layers_meta, height, y_t, ti_map
     } = params
 
-    var self = {}
+    var self = { ti_map }
     var lm = layers_meta[id]
     var y_range_fn = null
 
@@ -152,10 +152,11 @@ function GridMaker(id, params, master_grid = null) {
 
     // Select nearest good-loking t step (m is target scale)
     function time_step() {
-        let xrange = range[1] - range[0]
+        let k = ti_map.ib ? 60000 : 1
+        let xrange = (range[1] - range[0]) * k
         let m = xrange * ($p.config.GRIDX / $p.width)
         let s = TIMESCALES
-        return Utils.nearest_a(m, s)[1]
+        return Utils.nearest_a(m, s)[1] / k
     }
 
     // Select nearest good-loking $ step (m is target scale)

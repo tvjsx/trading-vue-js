@@ -61,7 +61,8 @@ export default class Botbar {
 
         this.ctx.stroke()
         this.apply_shaders()
-        if (this.$p.cursor.x && this.$p.cursor.t) this.panel()
+        if (this.$p.cursor.x && this.$p.cursor.t !== undefined)
+            this.panel()
 
     }
 
@@ -94,6 +95,8 @@ export default class Botbar {
 
     // TODO: implement time zones
     format_date(t) {
+        t = this.grid_0.ti_map.i2t(t)
+
         t += new Date(t).getTimezoneOffset() * MINUTE
         let d = new Date(t)
 
@@ -110,6 +113,7 @@ export default class Botbar {
     format_cursor_x() {
 
         let t = this.$p.cursor.t
+        t = this.grid_0.ti_map.i2t(t)
         let ti = this.$p.interval
 
         t += new Date(t).getTimezoneOffset() * MINUTE
