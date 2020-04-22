@@ -19,8 +19,8 @@
 /* TODO: */
 
 import TradingVue from '../../src/TradingVue.vue'
-import Data from '../data/data_offchart.json'
-//import Data from '../data/data_spx_sample.json'
+//import Data from '../data/data_offchart.json'
+import Data from '../data/data_spx_sample.json'
 //import Data from '../data/data_earn.json'
 import Utils from '../../src/stuff/utils.js'
 

@@ -2,6 +2,8 @@
 
 import Utils from '../../stuff/utils.js'
 
+const MAX_ARR = Math.pow(2, 32)
+
 export default class TI {
 
     constructor() {
@@ -12,7 +14,7 @@ export default class TI {
     init(params, res) {
 
         let {
-            sub, offsub, onchart, interval, meta, $props:$p,
+            sub, onchart, interval, meta, $props:$p,
             interval_ms, sub_start, ib
         } = params
 
@@ -29,6 +31,7 @@ export default class TI {
         if (this.ib) {
             this.map_sub(res)
         }
+
     }
 
     // Make maps for the main subset
@@ -50,6 +53,7 @@ export default class TI {
     }
 
     // Map overlay data
+    // TODO: parse() called 3 times instead of 2 for 'spx_sample.json'
     parse(data) {
         if (!this.ib) return data
         let res = []
@@ -129,10 +133,44 @@ export default class TI {
 
     // time => index
     t2i(t) {
+
+        if (!this.sub.length) return undefined
+
         // Discrete mapping
         let res = this.ti_map[t]
         if (res !== undefined) return res
 
+        let t0 = this.sub[0][0]
+        let tN = this.sub[this.sub.length - 1][0]
+
+        // Linear extrapolation
+        if (t < t0) {
+            return this.ss - (t0 - t) / this.tf
+        }
+
+        else if (t > tN) {
+            let k = this.sub.length - 1
+            return this.ss + k - (tN - t) / this.tf
+        }
+
+        try {
+            let i = Utils.fast_nearest(this.sub, t)
+            let tk = this.sub[i[1]][0]
+            return i[1] - (tk - t) / this.tf
+        } catch(e) { }
+
+
+        return undefined
+    }
+
+    // Auto detect: is it time or index?
+    // Assuming that index-based mode is ON
+    smth2i(smth) {
+        if (smth > MAX_ARR) {
+            return this.t2i(smth) // it was time
+        } else {
+            return smth // it was an index
+        }
     }
 
 }
