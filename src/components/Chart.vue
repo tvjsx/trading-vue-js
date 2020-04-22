@@ -326,11 +326,21 @@ export default {
         height() {
             this.update_layout()
         },
-        ib() {
-            // TODO: mode switch
-            //this.init_range()
-            //const sub = this.subset()
-            //this.update_layout(true)
+        ib(nw) {
+            if (!nw) {
+                // Change range index => time
+                let t1 = this.ti_map.i2t(this.range[0])
+                let t2 = this.ti_map.i2t(this.range[1])
+                Utils.overwrite(this.range, [t1, t2])
+                this.interval = this.interval_ms
+            } else {
+                this.init_range() // TODO: calc index range instead
+                Utils.overwrite(this.range, this.range)
+                this.interval = 1
+            }
+            let sub = this.subset()
+            Utils.overwrite(this.sub, sub)
+            this.update_layout()
         },
         colors() {
             Utils.overwrite(this.range, this.range)
