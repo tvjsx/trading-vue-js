@@ -20,40 +20,9 @@
 /* TODO: */
 
 import TradingVue from '../../src/TradingVue.vue'
-//import Data from '../data/data_offchart.json'
-import Data from '../data/data_spx_sample.json'
-//import Data from '../data/data_earn.json'
+import Data from '../data/data_offchart.json'
 import Utils from '../../src/stuff/utils.js'
 import DataCube from '../../src/helpers/datacube.js'
-
-
-/*
-Data.ohlcv.forEach((x, i) => {
-    x[0] = i
-})
-
-Data.offchart.forEach(ov => {
-    ov.data.forEach((x, i) => {
-        x[0] = i
-    })
-
-})
-*/
-
-
-/*
-let offsub = []
-
-Data.ohlcv.forEach((x, i) => {
-    let sum = 0
-    for (var j = -12; j < 0; j++) {
-        if (Data.ohlcv[i + j]) {
-            sum += Data.ohlcv[i + j][4]
-        }
-    }
-    offsub.push([x[0], sum / 12])
-})*/
-
 
 export default {
     name: 'IndexBased',
