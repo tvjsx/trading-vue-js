@@ -39,6 +39,7 @@ This library is in alpha stage, API may change. This guide version is **0.4.5**
 | toolbar <sup style="color:#14b32a">new</sup>| Boolean | Show toolbar (works with DataCube) |
 | colorTbBack <sup style="color:#14b32a">new</sup> | String | Toolbar background color |
 | colorTbBorder <sup style="color:#14b32a">new</sup> | String | Toolbar border color |
+| indexBased <sup style="color:#14b32a">new</sup> | Boolean | Index-based rendering mode (global setting) |
 
 
 ### Legend Button Types
@@ -167,7 +168,7 @@ Event listener:
 
 ## Data structure <sup style="color:#14b32a">new</sup>
 
-Data structure v1.2
+Data structure v1.2.1
 
 IMPORTANT: All data must be sorted by time (in ascending order). The main OHLCV must not contain duplicate timestamps.
 
@@ -175,6 +176,7 @@ IMPORTANT: All data must be sorted by time (in ascending order). The main OHLCV 
 {
     "chart": {   // Mandatory
         "type": "<Candles|Spline>",
+        "indexBased": <true|false>, // Index-based rendereing mode
         "data": [
             [timestamp, open, high, low, close, volume],
             ...
