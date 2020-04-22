@@ -164,7 +164,7 @@ export default {
                 font: this.$props.font,
                 buttons: this.$props.legendButtons,
                 toolbar: this.$props.toolbar,
-                ib: this.$props.indexBased,
+                ib: this.$props.indexBased || this.index_based || false,
                 colors: {}
             }
             for (var k in this.$props) {
@@ -189,6 +189,16 @@ export default {
             } else {
                 return data
             }
+        },
+        index_based() {
+            const base = this.$props.data
+            if (base.chart) {
+                return base.chart.indexBased
+            }
+            else if (base.data) {
+                return base.data.chart.indexBased
+            }
+            return false
         }
     },
     data() {
@@ -206,12 +216,22 @@ export default {
             }
         },
         goto(t) {
+            if (this.chart_props.ib) {
+                const ti_map = this.$refs.chart.ti_map
+                t = ti_map.smth2i(t)
+            }
             this.$refs.chart.goto(t)
         },
         setRange(t1, t2) {
             this.$refs.chart.setRange(t1, t2)
         },
         getRange() {
+            if (this.chart_props.ib) {
+                // Time range => index range
+                const ti_map = this.$refs.chart.ti_map
+                return this.$refs.chart.range
+                    .map(x => ti_map.i2t(x))
+            }
             return this.$refs.chart.range
         },
         getCursor() {

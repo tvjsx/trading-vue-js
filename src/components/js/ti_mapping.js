@@ -55,7 +55,7 @@ export default class TI {
     // Map overlay data
     // TODO: parse() called 3 times instead of 2 for 'spx_sample.json'
     parse(data) {
-        if (!this.ib) return data
+        if (!this.ib || !this.sub[0]) return data
         let res = []
         let k = 0 // Candlestick index
 
@@ -132,8 +132,9 @@ export default class TI {
     }
 
     // time => index
+    // TODO: when switch from IB mode to regular tools
+    // disappear (bc there no more mapping)
     t2i(t) {
-
         if (!this.sub.length) return undefined
 
         // Discrete mapping

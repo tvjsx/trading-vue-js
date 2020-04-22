@@ -1,8 +1,9 @@
 <template>
 <span>
     <trading-vue :data="chart" :width="this.width" :height="this.height"
-        :key="index_based"
         :index-based="index_based"
+        :toolbar="true"
+        ref="tvjs"
         :color-back="colors.colorBack"
         :color-grid="colors.colorGrid"
         :color-text="colors.colorText">
@@ -23,6 +24,8 @@ import TradingVue from '../../src/TradingVue.vue'
 import Data from '../data/data_spx_sample.json'
 //import Data from '../data/data_earn.json'
 import Utils from '../../src/stuff/utils.js'
+import DataCube from '../../src/helpers/datacube.js'
+
 
 /*
 Data.ohlcv.forEach((x, i) => {
@@ -67,11 +70,8 @@ export default {
     },
     mounted() {
         window.addEventListener('resize', this.onResize)
-        setTimeout(() => {
-            // Async data setup
-            this.$set(this, 'chart', Data)
-        }, 0)
         this.onResize()
+        window.tvjs = this.$refs.tvjs
     },
     computed: {
         colors() {
@@ -87,7 +87,7 @@ export default {
     },
     data() {
         return {
-            chart: {}, // Data will be here,
+            chart: window.dc = new DataCube(Data),
             width: window.innerWidth,
             height: window.innerHeight,
             index_based: true
