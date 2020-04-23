@@ -223,6 +223,12 @@ export default {
             this.$refs.chart.goto(t)
         },
         setRange(t1, t2) {
+            if (this.chart_props.ib) {
+                const ti_map = this.$refs.chart.ti_map
+                t1 = ti_map.smth2i(t1)
+                t2 = ti_map.smth2i(t2)
+                console.log(t1, t2)
+            }
             this.$refs.chart.setRange(t1, t2)
         },
         getRange() {

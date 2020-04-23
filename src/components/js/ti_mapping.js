@@ -157,7 +157,8 @@ export default class TI {
         try {
             let i = Utils.fast_nearest(this.sub, t)
             let tk = this.sub[i[1]][0]
-            return i[1] - (tk - t) / this.tf
+            console.log('here', i)
+            return this.ss + i[1] - (tk - t) / this.tf
         } catch(e) { }
 
 
