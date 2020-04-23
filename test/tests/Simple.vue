@@ -9,7 +9,8 @@
 
 <script>
 import TradingVue from '../../src/TradingVue.vue'
-import Data from '../data/data_btc.json'
+//import Data from '../data/data_btc.json'
+import Data from '../data/log_scale.json'
 import Utils from '../../src/stuff/utils.js'
 import DataCube from '../../src/helpers/datacube.js'
 
