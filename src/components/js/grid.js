@@ -5,6 +5,7 @@
 import * as Hammer from 'hammerjs'
 import Hamster from 'hamsterjs'
 import Utils from '../../stuff/utils.js'
+import math from '../../stuff/math.js'
 
 // Grid is good.
 export default class Grid {
@@ -55,7 +56,8 @@ export default class Grid {
                 o: tfrm ?
                     (tfrm.offset || 0) : 0,
                 y_r: tfrm && tfrm.range ?
-                    tfrm.range.slice() : undefined
+                    tfrm.range.slice() : undefined,
+                B: this.layout.B
             }
             this.comp.$emit('cursor-changed', {
                 grid_id: this.id,
@@ -301,10 +303,22 @@ export default class Grid {
         d$ *= (this.drug.y - y) / this.layout.height
         let offset = this.drug.o + d$
 
+        let ls = this.layout.grid.logScale
+
+        if (ls && this.drug.y_r) {
+            let dy = this.drug.y - y
+            var range  = this.drug.y_r.slice()
+            range[0] = math.exp((0 - this.drug.B + dy) /
+                this.layout.A)
+            range[1] = math.exp(
+                (this.layout.height - this.drug.B + dy) /
+                this.layout.A)
+        }
+
         if (this.$p.y_transform && !this.$p.y_transform.auto) {
             this.comp.$emit('sidebar-transform', {
                 grid_id: this.id,
-                range: [
+                range: ls ? (range || this.drug.y_r) : [
                     this.drug.y_r[0] - offset,
                     this.drug.y_r[1] - offset,
                 ]

@@ -6,6 +6,10 @@
             :color-text="colors.colorText"
             ref="tradingVue">
     </trading-vue>
+    <span class="log-scale">
+        <input type="checkbox" v-model="log_scale">
+        <label>Log Scale</label>
+    </span>
     <tf-selector :charts="charts" v-on:selected="on_selected">
     </tf-selector>
 </div>
@@ -40,6 +44,7 @@ export default {
                 ohlcv: this.charts[tf.name]
             })
             this.$refs.tradingVue.resetChart()
+            this.log_scale = false
         }
     },
     mounted() {
@@ -64,12 +69,29 @@ export default {
             charts: Data,
             chart: new DataCube({}),
             width: window.innerWidth,
-            height: window.innerHeight
+            height: window.innerHeight,
+            log_scale: false
         };
+    },
+    watch: {
+        log_scale(value) {
+            this.$set(this.chart.data.chart, 'grid', {
+                logScale: value
+            })
+        }
     }
 };
 </script>
 
 <style>
-
+.log-scale {
+    position: absolute;
+    top: 60px;
+    right: 80px;
+    color: #888;
+    font: 11px -apple-system, BlinkMacSystemFont,
+        Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
+        Fira Sans, Droid Sans, Helvetica Neue,
+        sans-serif
+}
 </style>

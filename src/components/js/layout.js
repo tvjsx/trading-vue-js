@@ -6,6 +6,9 @@
 // So it's better to calc all in one place.
 
 import GridMaker from './grid_maker.js'
+import Utils from '../../stuff/utils.js'
+import math from '../../stuff/math.js'
+import log_scale from './log_scale.js'
 
 function Layout(params) {
 
@@ -13,6 +16,8 @@ function Layout(params) {
         chart, sub, offsub, interval, range, ctx, layers_meta,
         ti_map, $props:$p, y_transforms: y_ts
     } = params
+
+    let mgrid = chart.grid || {}
 
     offsub = offsub.filter((x, i) => {
         // Skip offchart overlays with custom grid id,
@@ -28,9 +33,8 @@ function Layout(params) {
 
         // When at least one height defined (default = 1),
         // Pxs calculated as: (sum of weights) / number
-        let grid = chart.grid || {}
-        if (grid.height || offsub.find(x => x.grid.height)) {
-            return weighted_hs(grid, height)
+        if (mgrid.height || offsub.find(x => x.grid.height)) {
+            return weighted_hs(mgrid, height)
         }
 
         const n = offsub.length
@@ -70,7 +74,8 @@ function Layout(params) {
         for (var i = 0; i < sub.length; i++) {
             let p = sub[i]
             mid = self.t2screen(p[0]) + 0.5
-            self.candles.push({
+            self.candles.push(mgrid.logScale ?
+                log_scale.candle(self, mid, p, $p): {
                 x: mid,
                 w: self.px_step * $p.config.CANDLEW,
                 o: p[1] * self.A + self.B,
@@ -100,15 +105,17 @@ function Layout(params) {
     const hs = grid_hs()
     let specs = {
         sub, interval, range, ctx, $p, layers_meta,
-        ti_map, height: hs[0], y_t: y_ts[0]
+        ti_map, height: hs[0], y_t: y_ts[0],
+        grid: mgrid
     }
     let gms = [new GridMaker(0, specs)]
 
     // Sub grids
-    for (var [i, { data }] of offsub.entries()) {
+    for (var [i, { data, grid }] of offsub.entries()) {
         specs.sub = data
         specs.height = hs[i + 1]
         specs.y_t = y_ts[i + 1]
+        specs.grid = grid || {}
         gms.push(new GridMaker(i + 1, specs, gms[0].get_layout()))
     }
 
