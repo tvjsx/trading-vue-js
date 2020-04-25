@@ -9,9 +9,7 @@
 
 <script>
 import TradingVue from '../../src/TradingVue.vue'
-//import Data from '../data/data_btc.json'
-import Data from '../data/log_scale.json'
-import Utils from '../../src/stuff/utils.js'
+import Data from '../data/data_btc.json'
 import DataCube from '../../src/helpers/datacube.js'
 
 export default {
@@ -32,7 +30,7 @@ export default {
         // TODO: simplify the data setup
         setTimeout(() => {
             // Async data setup
-            this.$set(this, 'chart', new DataCube(Data))
+            this.$set(this, 'chart', Data)
         }, 0)
         this.onResize()
     },
