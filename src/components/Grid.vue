@@ -54,7 +54,8 @@ export default {
         this.$emit('custom-event', {
             event: 'register-tools', args: tools
         })
-        this.$on('custom-event', this.emit_ux_event)
+        this.$on('custom-event', e =>
+            this.on_ux_event(e, 'grid'))
     },
     mounted() {
         const el = this.$refs['canvas']
@@ -163,7 +164,8 @@ export default {
             }
         },
         emit_ux_event(e) {
-            this.on_ux_event(e, 'grid')
+            let e_pass = this.on_ux_event(e, 'grid')
+            if (e_pass) this.$emit('custom-event', e)
         }
     },
     computed: {

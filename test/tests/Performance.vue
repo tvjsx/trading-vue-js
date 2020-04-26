@@ -1,5 +1,6 @@
 <template>
 <trading-vue :data="chart" :width="this.width" :height="this.height"
+        @scrolling-test="scrolling_test"
         :chart-config="{DEFAULT_LEN: 1000}"
         :overlays="overlays" ref="tvjs"
         :color-back="colors.colorBack"
@@ -45,33 +46,55 @@ export default {
                     let t = new Date().getTime()
                     this.$refs.tvjs.goto(t2 + Math.sin(t/1000) * 100000000)
                     this.grid.renderer.change_range()
+                    this.set_result('Rendering test', this.avg + ' ms')
                 }, 0)
             } else {
                 clearInterval(this.loop_id)
             }
+        },
+        average_dt(dt) {
+            this.dts.push([Date.now(), dt])
+            for (var dti of this.dts) {
+                if (Date.now() - dti[0] > 10000) this.dts.shift()
+                else break
+            }
+            this.avg = this.dts.reduce((a, b) => [0, a[1] + b[1]])[1] /
+                       this.dts.length
+
+            this.avg = Utils.round(this.avg, 1)
+
+        },
+        set_result(name, result) {
+            this.chart.merge('PerfTestUx.settings', {
+                [name]: result
+            })
         }
     },
     mounted() {
         window.addEventListener('resize', this.onResize)
         this.onResize()
 
-        var stats = new Stats()
+        var stats = this.stats = new Stats()
         stats.showPanel( 1 ) // 0: fps, 1: ms, 2: mb, 3+: custom
         document.body.appendChild( stats.dom )
+        stats.domElement.style.right = '65px'
+        stats.domElement.style.top = '55px'
+        stats.domElement.style.left = null
 
         let grid = this.search(this, '<Grid>')
         this.grid = grid
         // Inject stats.js
 
         let f = grid.renderer.change_range
+        let self = this
 
         grid.renderer.change_range = function() {
+            let t1 = ( performance || Date ).now();
             stats.begin()
             f.call(this)
-            stats.end()
+            let t2 = stats.end()
+            self.average_dt(t2 - t1)
         }
-
-        this.scrolling_test()
     },
     computed: {
         colors() {
@@ -84,7 +107,7 @@ export default {
     },
     beforeDestroy() {
         window.removeEventListener('resize', this.onResize)
-
+        document.body.removeChild(this.stats.domElement)
         this.scrolling_test(false)
     },
     data() {
@@ -92,7 +115,8 @@ export default {
             chart: new DataCube(Data),
             width: window.innerWidth,
             height: window.innerHeight,
-            overlays: [PerfTestUx]
+            overlays: [PerfTestUx],
+            dts: []
         }
     }
 }

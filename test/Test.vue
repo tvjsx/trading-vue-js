@@ -27,7 +27,6 @@
 <script>
 
 import Simple from './tests/Simple.vue'
-import Stocks from './tests/Stocks.vue'
 import MouseEvents from './tests/MouseEvents.vue'
 import Timeframes from './tests/Timeframes.vue'
 import Multichart from './tests/Multichart.vue'
@@ -38,11 +37,12 @@ import Toolbar from './tests/Toolbar.vue'
 import GridSettings from './tests/GridSettings.vue'
 import Interfaces from './tests/Interfaces.vue'
 import IndexBased from './tests/IndexBased.vue'
+import Performance from './tests/Performance.vue'
 
 const TESTS = {
-    Simple, Stocks, MouseEvents, Timeframes, Multichart,
+    Simple, MouseEvents, Timeframes, Multichart,
     LegendButtons, ChartTypes, DataHelper, Toolbar,
-    GridSettings, Interfaces, IndexBased
+    GridSettings, Interfaces, IndexBased, Performance
 }
 
 export default {

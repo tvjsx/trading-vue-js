@@ -13,11 +13,11 @@ export default {
                     // this.rerender++
                 }
             }
-            if (d.event === 'close-interface') {
+            else if (d.event === 'close-interface') {
                 this.uxs = this.uxs
                     .filter(x => x.uuid !== d.args[0])
             }
-            if (d.event === 'modify-interface') {
+            else if (d.event === 'modify-interface') {
                 let ux = this.uxs
                     .filter(x => x.uuid === d.args[0])
 
@@ -25,7 +25,7 @@ export default {
                     this.modify(ux[0], d.args[1])
                 }
             }
-            if (d.event === 'hide-interface') {
+            else if (d.event === 'hide-interface') {
                 let ux = this.uxs
                     .filter(x => x.uuid === d.args[0])
 
@@ -34,13 +34,16 @@ export default {
                     this.modify(ux[0], { hidden: true })
                 }
             }
-            if (d.event === 'show-interface') {
+            else if (d.event === 'show-interface') {
                 let ux = this.uxs
                     .filter(x => x.uuid === d.args[0])
 
                 if (ux.length) {
                     this.modify(ux[0], { hidden: false })
                 }
+            }
+            else {
+                return d
             }
         },
         modify(ux, obj = {}) {
