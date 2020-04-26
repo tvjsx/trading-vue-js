@@ -79,6 +79,11 @@ export default class Pin {
         this.t = this.comp.$props.cursor.t
         this.x =  this.comp.$props.cursor.x
 
+        // Save pin as time in IB mode
+        //if (this.layout.ti_map.ib) {
+        //    this.t = this.layout.ti_map.i2t(this.t )
+        //}
+
         // Reset the settings attahed to the pin (position)
         this.comp.$emit('change-settings', {
              [this.name]: [this.t, this.y$]
@@ -93,6 +98,11 @@ export default class Pin {
         this.y = this.layout.$2screen(this.y$)
         this.t = data[0]
         this.x = this.layout.t2screen(this.t)
+
+        // TODO: Save pin as time in IB mode
+        //if (this.layout.ti_map.ib) {
+        //    this.t = this.layout.ti_map.i2t(this.t )
+        //}
 
         if (emit) this.comp.$emit('change-settings', {
              [this.name]: [this.t, this.y$]

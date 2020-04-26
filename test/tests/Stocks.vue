@@ -1,9 +1,16 @@
 <template>
-<trading-vue :data="chart" :width="this.width" :height="this.height"
-        :color-back="colors.colorBack"
-        :color-grid="colors.colorGrid"
-        :color-text="colors.colorText">
-</trading-vue>
+<span>
+    <trading-vue :data="chart" :width="this.width" :height="this.height"
+            :index-based="index_based"
+            :color-back="colors.colorBack"
+            :color-grid="colors.colorGrid"
+            :color-text="colors.colorText">
+    </trading-vue>
+    <span class="gc-mode">
+        <input type="checkbox" v-model="index_based">
+        <label>Index Based</label>
+    </span>
+</span>
 </template>
 
 <script>
@@ -44,8 +51,14 @@ export default {
         return {
             chart: Data,
             width: window.innerWidth,
+<<<<<<< HEAD
             height: window.innerHeight
         }
+=======
+            height: window.innerHeight,
+            index_based: true
+        };
+>>>>>>> master
     }
 }
 </script>

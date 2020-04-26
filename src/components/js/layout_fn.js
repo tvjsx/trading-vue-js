@@ -1,18 +1,24 @@
 // Layout functional interface
 
 import Utils from '../../stuff/utils.js'
+import math from '../../stuff/math.js'
 
 export default function(self, range) {
+
+    const ib = self.ti_map.ib
+    const dt = range[1] - range[0]
+    const r = self.spacex / dt
+    const ls = self.grid.logScale || false
 
     Object.assign(self, {
         // Time to screen coordinates
         t2screen: t => {
-            const dt = range[1] - range[0]
-            const r = self.spacex / dt
+            if (ib) t = self.ti_map.smth2i(t)
             return Math.floor((t - range[0]) * r) - 0.5
         },
         // $ to screen coordinates
         $2screen: y => {
+            if (ls) y = math.log(y)
             return Math.floor(y * self.A + self.B) - 0.5
         },
         // Time-axis nearest step
@@ -25,16 +31,14 @@ export default function(self, range) {
         },
         // Screen-Y to dollar value (or whatever)
         screen2$: y => {
-            const range = self.height
-            const range$ = self.$_hi - self.$_lo
-            const y$ = (range - y) * (range$ / range)
-            return self.$_lo + y$
+            if (ls) return math.exp((y - self.B) / self.A)
+            return (y - self.B) / self.A
         },
         // Screen-X to timestamp
         screen2t: x => {
-            const dt = range[1] - range[0]
-            const r = self.spacex / dt
-            return Math.floor(range[0] + x / r)
+            // TODO: most likely Math.floor not needed
+            // return Math.floor(range[0] + x / r)
+            return range[0] + x / r
         },
         // $-axis nearest step
         $_magnet: price => { },

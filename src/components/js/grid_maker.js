@@ -1,7 +1,9 @@
 import Const from '../../stuff/constants.js'
 import Utils from '../../stuff/utils.js'
+import math from '../../stuff/math.js'
 
 import layout_fn from './layout_fn.js'
+import log_scale from './log_scale.js'
 
 const { TIMESCALES, $SCALES, WEEK } = Const
 
@@ -10,12 +12,14 @@ function GridMaker(id, params, master_grid = null) {
 
 
     let {
-        sub, interval, range, ctx, $p, layers_meta, height, y_t
+        sub, interval, range, ctx, $p, layers_meta, height, y_t, ti_map,
+        grid
     } = params
 
-    var self = {}
+    var self = { ti_map }
     var lm = layers_meta[id]
     var y_range_fn = null
+    var ls = grid.logScale
 
     if (lm && Object.keys(lm).length) {
         // Gets last y_range fn()
@@ -49,12 +53,22 @@ function GridMaker(id, params, master_grid = null) {
             self.$_hi = y_t.range[0]
             self.$_lo = y_t.range[1]
         } else {
-            self.$_hi = hi + (hi - lo) * $p.config.EXPAND
-            self.$_lo = lo - (hi - lo) * $p.config.EXPAND
+            if (!ls) {
+                self.$_hi = hi + (hi - lo) * $p.config.EXPAND
+                self.$_lo = lo - (hi - lo) * $p.config.EXPAND
+            } else {
+                self.$_hi = hi
+                self.$_lo = lo 
+                log_scale.expand(self, height)
+            }
 
             if (self.$_hi === self.$_lo) {
-                self.$_hi *= 1.05  // Expand if height range === 0
-                self.$_lo *= 0.95
+                if (!ls) {
+                    self.$_hi *= 1.05  // Expand if height range === 0
+                    self.$_lo *= 0.95
+                } else {
+                    log_scale.expand(self, height)
+                }
             }
         }
 
@@ -146,16 +160,24 @@ function GridMaker(id, params, master_grid = null) {
         self.startx = (sub[0][0] - range[0]) * r
 
         // Candle Y-transform: (A = scale, B = shift)
-        self.A = - height / (self.$_hi - self.$_lo)
-        self.B = - self.$_hi * self.A
+        if (!grid.logScale) {
+            self.A = - height / (self.$_hi - self.$_lo)
+            self.B = - self.$_hi * self.A
+        } else {
+            self.A = - height / (math.log(self.$_hi) -
+                       math.log(self.$_lo))
+            self.B = - math.log(self.$_hi) * self.A
+        }
+
     }
 
     // Select nearest good-loking t step (m is target scale)
     function time_step() {
-        let xrange = range[1] - range[0]
+        let k = ti_map.ib ? 60000 : 1
+        let xrange = (range[1] - range[0]) * k
         let m = xrange * ($p.config.GRIDX / $p.width)
         let s = TIMESCALES
-        return Utils.nearest_a(m, s)[1]
+        return Utils.nearest_a(m, s)[1] / k
     }
 
     // Select nearest good-loking $ step (m is target scale)
@@ -166,9 +188,55 @@ function GridMaker(id, params, master_grid = null) {
         let d = Math.pow(10, p)
         let s = $SCALES.map(x => x * d)
 
-        // TODO: center the range (look at RSI for eaxmple,
+        // TODO: center the range (look at RSI for example,
         // it looks ugly when "80" is near the top)
         return Utils.strip(Utils.nearest_a(m, s)[1])
+    }
+
+    function dollar_mult() {
+        let mult_hi = dollar_mult_hi()
+        let mult_lo = dollar_mult_lo()
+        return Math.max(mult_hi, mult_lo)
+    }
+
+    // Price step multiplier (for the log-scale mode)
+    function dollar_mult_hi() {
+
+        let h = Math.min(self.B, height)
+        if (h < $p.config.GRIDY) return 1
+        let n = h / $p.config.GRIDY // target grid N
+        let yrange = self.$_hi
+        if (self.$_lo > 0) {
+            var yratio = self.$_hi / self.$_lo
+        } else {
+            yratio = self.$_hi / 1 // TODO: small values
+        }
+        let m = yrange * ($p.config.GRIDY / h)
+        let p = parseInt(yrange.toExponential().split('e')[1])
+        return Math.pow(yratio, 1/n)
+    }
+
+    function dollar_mult_lo() {
+
+        let h = Math.min(height - self.B, height)
+        if (h < $p.config.GRIDY) return 1
+        let n = h / $p.config.GRIDY // target grid N
+        let yrange = Math.abs(self.$_lo)
+        if (self.$_hi < 0 && self.$_lo < 0) {
+            var yratio = Math.abs(self.$_lo / self.$_hi)
+        } else {
+            yratio = Math.abs(self.$_lo) / 1
+        }
+        let m = yrange * ($p.config.GRIDY / h)
+        let p = parseInt(yrange.toExponential().split('e')[1])
+        return Math.pow(yratio, 1/n)
+    }
+
+
+    // Adjust $_mult value to a nearest round number
+    function mult_adjustment(value) {
+
+        return Math.floor(value)
     }
 
     function grid_x() {
@@ -244,6 +312,7 @@ function GridMaker(id, params, master_grid = null) {
         self.ys = []
 
         let y1 = self.$_lo - self.$_lo % self.$_step
+
         for (var y$ = y1; y$ <= self.$_hi; y$ += self.$_step) {
             let y = Math.floor(y$ * self.A + self.B)
             if (y > height) continue
@@ -251,6 +320,46 @@ function GridMaker(id, params, master_grid = null) {
         }
 
     }
+
+    function grid_y_log() {
+
+        // TODO: Prevent duplicate levels, is this even
+        // a problem here ?
+        self.$_mult = dollar_mult()
+        self.ys = []
+
+        let y1 = self.$_hi
+        let y2 = self.$_lo
+        let yp = -Infinity // Previous y value
+        let n = height / $p.config.GRIDY // target grid N
+
+        // Over 0
+        for (var y$ = y1; y$ > 0; y$ /= self.$_mult) {
+            y$ = mult_adjustment(y$)
+            let y = Math.floor(math.log(y$) * self.A + self.B)
+            self.ys.push([y, Utils.strip(y$)])
+            if (y > height) break
+            if (y - yp < $p.config.GRIDY * 0.7) break
+            if (self.ys.length > n + 1) break
+            yp = y
+        }
+
+        // TODO: remove lines near 0
+
+        // Under 0
+        yp = Infinity
+        for (var y$ = y2; y$ < 0; y$ /= self.$_mult) {
+            y$ = mult_adjustment(y$)
+            let y = Math.floor(math.log(y$) * self.A + self.B)
+            self.ys.push([y, Utils.strip(y$)])
+            if (y < 0) break
+            if (yp - y < $p.config.GRIDY * 0.7) break
+            if (self.ys.length > n + 1) break
+            yp = y
+        }
+
+    }
+
 
     function apply_sizes() {
         self.width = $p.width - self.sb
@@ -267,13 +376,19 @@ function GridMaker(id, params, master_grid = null) {
             calc_$range()
             calc_positions()
             grid_x()
-            grid_y()
+            if (grid.logScale) {
+                grid_y_log()
+            } else {
+                grid_y()
+            }
             apply_sizes()
 
             // Link to the master grid (candlesticks)
             if (master_grid) {
                 self.master_grid = master_grid
             }
+
+            self.grid = grid // Grid params
 
             // Here we add some helpful functions for
             // plugin creators

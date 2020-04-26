@@ -128,15 +128,33 @@ export default {
     fast_filter(arr, t1, t2) {
         if (!arr.length) return arr
         try {
-            var ia = new IndexedArray(arr, "0")
-            return ia.getRange(t1, t2)
+            let ia = new IndexedArray(arr, "0")
+            let res = ia.getRange(t1, t2)
+            return [res]
         } catch(e) {
             // Something wrong with fancy slice lib
             // Fast fix: fallback to filter
-            return arr.filter(x =>
+            return [arr.filter(x =>
                 x[0] >= t1 && x[0] <= t2
-            )
+            )]
         }
+    },
+
+    // Fast filter (index-based)
+    fast_filter_i(arr, t1, t2) {
+        if (!arr.length) return arr
+        let i1 =  Math.floor(t1)
+        if (i1 < 0) i1 = 0
+        let i2 =  Math.floor(t2 + 1)
+        let res = arr.slice(i1, i2)
+        return [res, i1]
+    },
+
+    // Nearest indexes (left and right)
+    fast_nearest(arr, t1) {
+        let ia = new IndexedArray(arr, "0")
+        ia.fetch(t1)
+        return [ia.nextlow, ia.nexthigh]
     },
 
     now() { return (new Date()).getTime() },

@@ -1,5 +1,6 @@
 import * as Hammer from 'hammerjs'
 import Utils from '../../stuff/utils.js'
+import math from '../../stuff/math.js'
 
 var PANHEIGHT
 
@@ -38,14 +39,15 @@ export default class Sidebar {
             } else {
                 this.zoom = 1.0
             }
-            this.drug = {
-                y: event.center.y,
-                z: this.zoom
-            }
             this.y_range = [
                 this.layout.$_hi,
                 this.layout.$_lo
             ]
+            this.drug = {
+                y: event.center.y,
+                z: this.zoom,
+                mid: math.log_mid(this.y_range, this.layout.height)
+            }
         })
 
         mc.on('panmove', event => {
@@ -212,8 +214,15 @@ export default class Sidebar {
 
         let range = this.y_range.slice()
         let delta = range[0] - range[1]
-        range[0] = range[0] + delta * zk
-        range[1] = range[1] - delta * zk
+
+        if (!this.layout.grid.logScale) {
+            range[0] = range[0] + delta * zk
+            range[1] = range[1] - delta * zk
+        } else {
+            let copy = range.slice()
+            range[0] = range[0] + delta * zk
+            range[1] = math.re_range(copy, range[0], this.drug.mid)
+        }
 
         return range
     }
