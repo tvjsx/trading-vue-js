@@ -38,11 +38,13 @@ import GridSettings from './tests/GridSettings.vue'
 import Interfaces from './tests/Interfaces.vue'
 import IndexBased from './tests/IndexBased.vue'
 import Performance from './tests/Performance.vue'
+import ResizeableMultiCharts from "./tests/ResizeableMultiCharts.vue";
 
 const TESTS = {
     Simple, MouseEvents, Timeframes, Multichart,
     LegendButtons, ChartTypes, DataHelper, Toolbar,
-    GridSettings, Interfaces, IndexBased, Performance
+    GridSettings, Interfaces, IndexBased, Performance,
+    ResizeableMultiCharts
 }
 
 export default {
