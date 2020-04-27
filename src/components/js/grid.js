@@ -307,7 +307,7 @@ export default class Grid {
 
         if (ls && this.drug.y_r) {
             let dy = this.drug.y - y
-            var range  = this.drug.y_r.slice()
+            var range = this.drug.y_r.slice()
             range[0] = math.exp((0 - this.drug.B + dy) /
                 this.layout.A)
             range[1] = math.exp(
@@ -315,7 +315,8 @@ export default class Grid {
                 this.layout.A)
         }
 
-        if (this.$p.y_transform && !this.$p.y_transform.auto) {
+        if (this.drug.y_r && this.$p.y_transform &&
+            !this.$p.y_transform.auto) {
             this.comp.$emit('sidebar-transform', {
                 grid_id: this.id,
                 range: ls ? (range || this.drug.y_r) : [

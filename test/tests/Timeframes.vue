@@ -75,9 +75,11 @@ export default {
     },
     watch: {
         log_scale(value) {
-            this.$set(this.chart.data.chart, 'grid', {
-                logScale: value
-            })
+            if (this.chart.data.chart) {
+                this.$set(this.chart.data.chart, 'grid', {
+                    logScale: value
+                })
+            }
         }
     }
 }
