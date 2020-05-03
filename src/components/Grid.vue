@@ -133,7 +133,8 @@ export default {
                         cls: comp,
                         type: d.type,
                         data: d.data,
-                        settings: d.settings
+                        settings: d.settings,
+                        tf: d.tf
                     })
                     count[d.type] = 0
                 }
@@ -145,6 +146,7 @@ export default {
                         type: x.type,
                         data: x.data,
                         settings: x.settings,
+                        tf: x.tf,
                         num: i,
                         grid_id: this.$props.grid_id,
                         meta: this.$props.meta

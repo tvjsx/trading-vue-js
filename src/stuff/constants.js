@@ -1,11 +1,13 @@
 
 const SECOND = 1000
 const MINUTE = SECOND * 60
+const MINUTE3 = MINUTE * 3
 const MINUTE5 = MINUTE * 5
 const MINUTE15 = MINUTE * 15
 const MINUTE30 = MINUTE * 30
 const HOUR = MINUTE * 60
 const HOUR4 = HOUR * 4
+const HOUR12 = HOUR * 12
 const DAY = HOUR * 24
 const WEEK = DAY * 7
 const MONTH = WEEK * 4
@@ -58,6 +60,28 @@ ChartConfig.FONT =
     Fira Sans,Droid Sans,Helvetica Neue,
     sans-serif`
 
+const MAP_UNIT = {
+  "1s": SECOND,
+  "5s": SECOND * 5,
+  "10s": SECOND * 10,
+  "20s": SECOND * 20,
+  "30s": SECOND * 30,
+  "1m": MINUTE,
+  "3m": MINUTE3,
+  "5m": MINUTE5,
+  "15m": MINUTE15,
+  "30m": MINUTE30,
+  "1H": HOUR,
+  "2H": HOUR * 2,
+  "3H": HOUR * 3,
+  "4H": HOUR4,
+  "12H": HOUR12,
+  "1D": DAY,
+  "1W": WEEK,
+  "1M": MONTH,
+  "1Y": YEAR
+}
+
 export default {
     SECOND: SECOND,
     MINUTE: MINUTE,
@@ -73,5 +97,6 @@ export default {
     MONTHMAP: MONTHMAP,
     TIMESCALES: TIMESCALES,
     $SCALES: $SCALES,
-    ChartConfig: ChartConfig
+    ChartConfig: ChartConfig,
+    map_unit: MAP_UNIT
 }

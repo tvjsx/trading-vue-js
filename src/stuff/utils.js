@@ -1,5 +1,6 @@
 
 import IndexedArray from 'arrayslicer'
+import Const from './constants.js'
 
 export default {
 
@@ -111,14 +112,6 @@ export default {
         return min
     },
 
-    // Detects candles interval. (old version, slightly slower)
-    /*detect_interval(ohlcv) {
-        // Initial value of accumulator
-        let a0 = [Infinity, ohlcv[0][0]]
-        return ohlcv.slice(1, 99).reduce((a,x) =>
-        [Math.min(x[0] - a[1], a[0]), x[0]], a0)[0]
-    },*/
-
     // Gets numberic part of overlay id (e.g 'EMA_1' = > 1)
     get_num_id(id) {
         return parseInt(id.split('_').pop())
@@ -190,6 +183,15 @@ export default {
             c += n.toString(16)
         }
         return c
+    },
+
+    // Parse timeframe or return value in ms
+    parse_tf(smth) {
+        if (typeof smth === 'string') {
+            return Const.map_unit[smth]
+        } else {
+            return smth
+        }
     }
 
 }
