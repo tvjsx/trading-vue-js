@@ -28,6 +28,7 @@ export default {
     mounted() {
         window.addEventListener('resize', this.onResize)
         this.onResize()
+        window.dc = this.chart
     },
     computed: {
         colors() {
