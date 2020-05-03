@@ -191,11 +191,12 @@ export default class DCCore extends DCEvents {
         let field = tuple[2]
 
         let arr = this.data[side].filter(
-            x => x.id && x.name && (
+            x => x.id && x.name && x.settings && (
                  x.id === query ||
                  x.id.includes(path) ||
                  x.name === query ||
-                 x.name.includes(path)
+                 x.name.includes(path) ||
+                 query.includes(x.settings.$uuid)
             ))
 
         if (field) {

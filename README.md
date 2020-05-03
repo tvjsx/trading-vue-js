@@ -106,7 +106,7 @@ IMPORTANT: All data must be sorted by time (in ascending order). The main OHLCV 
 {
     "chart": {   // Mandatory
         "type": "<Chart Type, e.g. Candles>",
-        "indexBased": <true|false>, // Index-based rendereing mode
+        "indexBased": <true|false>, // Index-based rendering mode
         "data": [
             [timestamp, open, high, low, close, volume],
             ...
