@@ -12,6 +12,7 @@ export default class DCEvents {
             case 'register-tools': this.register_tools(args)
                 break
             case 'tool-selected':
+                if (!args[0]) break // TODO: Quick fix, investigate
                 if (args[0].split(':')[0] === 'System') {
                     this.system_tool(args[0].split(':')[1])
                     break
