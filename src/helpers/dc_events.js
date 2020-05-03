@@ -8,7 +8,6 @@ export default class DCEvents {
 
     // Called when overalay/tv emits 'custom-event'
     on_custom_event(event, args) {
-        console.log(event, args)
         switch(event) {
             case 'register-tools': this.register_tools(args)
                 break
@@ -124,7 +123,6 @@ export default class DCEvents {
         sett.$uuid = `${id}-${Utils.now()}`
 
         this.tv.$set(this.data, 'selected', sett.$uuid)
-        console.log(this.data.selected)
         this.add_trash_icon()
     }
 
