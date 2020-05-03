@@ -220,7 +220,7 @@ export default {
                     this.renderer.propagate('keyup', event)
                 },
                 'keydown': event => {
-                    if (!this.is_active) return
+                    if (!this.is_active) return // TODO: is this neeeded?
                     this.renderer.propagate('keydown', event)
                 },
                 'keypress': event => {
