@@ -20,9 +20,7 @@ export function layout_cnv(self) {
     var x1, x2, w, avg_w, mid, prev = undefined
 
     // Subset interval against main interval
-    // TODO: interval detection can be incorrect in IB mode
-    let interval2 = Utils.detect_interval(sub)
-    let ratio = interval2 / $p.interval
+    var [interval2, ratio] = new_interval(layout, $p, sub)
     let px_step2 = layout.px_step * ratio
 
     let splitter = px_step2 > 5 ? 1 : 0
@@ -41,6 +39,7 @@ export function layout_cnv(self) {
         x1 = prev || Math.floor(mid - px_step2 * 0.5)
         x2 = Math.floor(mid + px_step2 * 0.5) - 0.5
 
+        // TODO: add log scale support
         candles.push({
             x: mid,
             w: layout.px_step * $p.config.CANDLEW * ratio,
@@ -88,8 +87,7 @@ export function layout_vol(self) {
     var x1, x2, mid, prev = undefined
 
     // Subset interval against main interval
-    let interval2 = Utils.detect_interval(sub)
-    let ratio = interval2 / $p.interval
+    var [interval2, ratio] = new_interval(layout, $p, sub)
     let px_step2 = layout.px_step * ratio
 
     let splitter = px_step2 > 5 ? 1 : 0
@@ -118,4 +116,21 @@ export function layout_vol(self) {
     }
     return volume
 
+}
+
+function new_interval(layout, $p, sub) {
+    // Subset interval against main interval
+    if (!layout.ti_map.ib) {
+        var interval2 = $p.tf || Utils.detect_interval(sub)
+        var ratio = interval2 / $p.interval
+    } else {
+        if ($p.tf) {
+            var ratio = $p.tf / layout.ti_map.tf
+            var interval2 = ratio
+        } else {
+            var interval2 = Utils.detect_interval(sub)
+            var ratio = interval2 / $p.interval
+        }
+    }
+    return [interval2, ratio]
 }

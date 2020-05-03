@@ -91,7 +91,8 @@ export default {
         },
         calc_interval() {
             if (this.ohlcv.length < 2) return
-            this.interval_ms = Utils.detect_interval(this.ohlcv)
+            let tf = Utils.parse_tf(this.chart.tf)
+            this.interval_ms = tf || Utils.detect_interval(this.ohlcv)
             this.interval = this.$props.ib ? 1 : this.interval_ms
         },
         set_ytransform(s) {
@@ -166,7 +167,8 @@ export default {
                     this.ti_map.i2t(this.range[1])
                 )[0] || []),
                 settings: d.settings || this.settings_ov,
-                grid: d.grid || {}
+                grid: d.grid || {},
+                tf: Utils.parse_tf(d.tf)
             }))
         },
         section_props(i) {
