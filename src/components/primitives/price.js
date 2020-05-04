@@ -49,8 +49,9 @@ export default class Price {
         let layout = this.comp.$props.layout
         let last = this.comp.$props.meta.last
 
-        let color = last[4] >= last[1] ? this.green() : this.red()
-        let y = layout.$2screen(last[4]) - 1 // TODO: make more precise 
+        let dir = last[4] >= last[1]
+        let color = dir ? this.green() : this.red()
+        let y = layout.$2screen(last[4]) + (dir ? 1 : 0)
 
         ctx.strokeStyle = color
         ctx.setLineDash([1, 1])
@@ -69,7 +70,7 @@ export default class Price {
         let y = layout.$2screen(last[4])
         let cndl = layout.c_magnet(last[0])
         return {
-            y: Math.floor(cndl.c) - 1.5,
+            y: Math.floor(cndl.c) - 0.5,
             price: last[4],
             color: last[4] >= last[1] ? this.green() : this.red()
         }

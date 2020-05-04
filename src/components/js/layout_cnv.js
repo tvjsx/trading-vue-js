@@ -43,10 +43,10 @@ export function layout_cnv(self) {
         candles.push({
             x: mid,
             w: layout.px_step * $p.config.CANDLEW * ratio,
-            o: p[1] * layout.A + layout.B,
-            h: p[2] * layout.A + layout.B,
-            l: p[3] * layout.A + layout.B,
-            c: p[4] * layout.A + layout.B,
+            o: Math.floor(p[1] * layout.A + layout.B),
+            h: Math.floor(p[2] * layout.A + layout.B),
+            l: Math.floor(p[3] * layout.A + layout.B),
+            c: Math.floor(p[4] * layout.A + layout.B),
             raw: p
         })
 

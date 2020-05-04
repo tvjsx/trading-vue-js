@@ -38,11 +38,13 @@ import GridSettings from './tests/GridSettings.vue'
 import Interfaces from './tests/Interfaces.vue'
 import IndexBased from './tests/IndexBased.vue'
 import Performance from './tests/Performance.vue'
+import Renko from './tests/Renko.vue'
 
 const TESTS = {
     Simple, MouseEvents, Timeframes, Multichart,
     LegendButtons, ChartTypes, DataHelper, Toolbar,
-    GridSettings, Interfaces, IndexBased, Performance
+    GridSettings, Interfaces, IndexBased, Performance,
+    Renko
 }
 
 export default {
