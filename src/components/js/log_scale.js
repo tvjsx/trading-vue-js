@@ -9,10 +9,10 @@ export default {
         return {
             x: mid,
             w: self.px_step * $p.config.CANDLEW,
-            o: math.log(p[1]) * self.A + self.B,
-            h: math.log(p[2]) * self.A + self.B,
-            l: math.log(p[3]) * self.A + self.B,
-            c: math.log(p[4]) * self.A + self.B,
+            o: Math.floor(math.log(p[1]) * self.A + self.B),
+            h: Math.floor(math.log(p[2]) * self.A + self.B),
+            l: Math.floor(math.log(p[3]) * self.A + self.B),
+            c: Math.floor(math.log(p[4]) * self.A + self.B),
             raw: p
         }
     },

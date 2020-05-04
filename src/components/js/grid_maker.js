@@ -6,6 +6,8 @@ import layout_fn from './layout_fn.js'
 import log_scale from './log_scale.js'
 
 const { TIMESCALES, $SCALES, WEEK } = Const
+const MAX_INT = Number.MAX_SAFE_INTEGER
+
 
 // master_grid - ref to the master grid
 function GridMaker(id, params, master_grid = null) {
@@ -58,7 +60,7 @@ function GridMaker(id, params, master_grid = null) {
                 self.$_lo = lo - (hi - lo) * $p.config.EXPAND
             } else {
                 self.$_hi = hi
-                self.$_lo = lo 
+                self.$_lo = lo
                 log_scale.expand(self, height)
             }
 
@@ -232,13 +234,6 @@ function GridMaker(id, params, master_grid = null) {
         return Math.pow(yratio, 1/n)
     }
 
-
-    // Adjust $_mult value to a nearest round number
-    function mult_adjustment(value) {
-
-        return Math.floor(value)
-    }
-
     function grid_x() {
 
         // If this is a subgrid, no need to calc a timeline,
@@ -328,14 +323,17 @@ function GridMaker(id, params, master_grid = null) {
         self.$_mult = dollar_mult()
         self.ys = []
 
-        let y1 = self.$_hi
-        let y2 = self.$_lo
+        let v = Math.abs(sub[sub.length - 1][1] || 1)
+        let y1 = search_start_pos(v)
+        let y2 = search_start_neg(-v)
         let yp = -Infinity // Previous y value
         let n = height / $p.config.GRIDY // target grid N
 
+        let q = 1 + (self.$_mult - 1) / 2
+
         // Over 0
         for (var y$ = y1; y$ > 0; y$ /= self.$_mult) {
-            y$ = mult_adjustment(y$)
+            y$ = log_rounder(y$, q)
             let y = Math.floor(math.log(y$) * self.A + self.B)
             self.ys.push([y, Utils.strip(y$)])
             if (y > height) break
@@ -344,22 +342,67 @@ function GridMaker(id, params, master_grid = null) {
             yp = y
         }
 
-        // TODO: remove lines near 0
-
         // Under 0
         yp = Infinity
         for (var y$ = y2; y$ < 0; y$ /= self.$_mult) {
-            y$ = mult_adjustment(y$)
+            y$ = log_rounder(y$, q)
             let y = Math.floor(math.log(y$) * self.A + self.B)
+            if (yp - y < $p.config.GRIDY * 0.7) break
             self.ys.push([y, Utils.strip(y$)])
             if (y < 0) break
-            if (yp - y < $p.config.GRIDY * 0.7) break
-            if (self.ys.length > n + 1) break
+            if (self.ys.length > n * 3 + 1) break
             yp = y
         }
 
+        // TODO: remove lines near to 0
+
     }
 
+    // Search a start for the top grid so that
+    // the fixed value always included
+    function search_start_pos(value) {
+        var y = Infinity, y$ = value
+        while (y > 0) {
+            y = Math.floor(math.log(y$) * self.A + self.B)
+            y$ *= self.$_mult
+        }
+        return y$
+    }
+
+    function search_start_neg(value) {
+        var y = -Infinity, y$ = value
+        while (y < height) {
+            y = Math.floor(math.log(y$) * self.A + self.B)
+            y$ *= self.$_mult
+        }
+        return y$
+    }
+
+    // Make log scale levels look great again
+    function log_rounder(x, quality) {
+        let s = Math.sign(x)
+        x = Math.abs(x)
+        if (x > 10) {
+            for (var div = 10; div < MAX_INT; div *= 10) {
+                let nice = Math.floor(x / div) * div
+                if (x / nice > quality) {  // More than 10% off
+                    break
+                }
+            }
+            div /= 10
+            return s * Math.floor(x / div) * div
+        } else if (x < 1) {
+            for (var ro = 10; ro >= 1; ro--) {
+                let nice = Utils.round(x, ro)
+                if (x / nice > quality) {  // More than 10% off
+                    break
+                }
+            }
+            return s * Utils.round(x, ro + 1)
+        } else {
+            return s * Math.floor(x)
+        }
+    }
 
     function apply_sizes() {
         self.width = $p.width - self.sb
