@@ -78,10 +78,10 @@ function Layout(params) {
                 log_scale.candle(self, mid, p, $p): {
                 x: mid,
                 w: self.px_step * $p.config.CANDLEW,
-                o: p[1] * self.A + self.B,
-                h: p[2] * self.A + self.B,
-                l: p[3] * self.A + self.B,
-                c: p[4] * self.A + self.B,
+                o: Math.floor(p[1] * self.A + self.B),
+                h: Math.floor(p[2] * self.A + self.B),
+                l: Math.floor(p[3] * self.A + self.B),
+                c: Math.floor(p[4] * self.A + self.B),
                 raw: p
             })
             // Clear volume bar if there is a time gap
