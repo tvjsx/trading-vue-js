@@ -1,6 +1,8 @@
 
 // Log-scale mode helpers
 
+// TODO: all-negative numbers (sometimes wrong scaling)
+
 import math from '../../stuff/math.js'
 
 export default {
