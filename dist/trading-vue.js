@@ -1,7 +1,7 @@
 /*!
- * TradingVue.JS - v0.4.5 - Thu Mar 26 2020
- *     https://github.com/C451/trading-vue-js
- *     Copyright (c) 2019 c451 Code's All Right;
+ * TradingVue.JS - v0.5.0 - Tue May 05 2020
+ *     https://github.com/tvjsx/trading-vue-js
+ *     Copyright (c) 2019 C451 Code's All Right;
  *     Licensed under the MIT license
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -97,21 +97,23 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 50);
+/******/ 	return __webpack_require__(__webpack_require__.s = 56);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayWithoutHoles = __webpack_require__(24);
+var arrayWithoutHoles = __webpack_require__(28);
 
-var iterableToArray = __webpack_require__(25);
+var iterableToArray = __webpack_require__(29);
 
-var nonIterableSpread = __webpack_require__(26);
+var unsupportedIterableToArray = __webpack_require__(24);
+
+var nonIterableSpread = __webpack_require__(30);
 
 function _toConsumableArray(arr) {
-  return arrayWithoutHoles(arr) || iterableToArray(arr) || nonIterableSpread();
+  return arrayWithoutHoles(arr) || iterableToArray(arr) || unsupportedIterableToArray(arr) || nonIterableSpread();
 }
 
 module.exports = _toConsumableArray;
@@ -152,25 +154,27 @@ module.exports = _createClass;
 
 /***/ }),
 /* 3 */
-/***/ (function(module) {
-
-module.exports = JSON.parse("{\"extended.png\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZAQMAAAD+JxcgAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAZQTFRFAAAATU1NkJ+rOQAAAAJ0Uk5TAP9bkSK1AAAANElEQVR4nGNggABGEMEEIlhABAeI+AASF0AlHmAqA4kzKAAx8wGQuAMKwd6AoYzBAWonAwAcLwTgNfJ3RQAAAABJRU5ErkJggg==\",\"segment.png\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZAgMAAAC5h23wAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAlQTFRFAAAATU1NJCQkCxcHIQAAAAN0Uk5TAP8SmutI5AAAACxJREFUeJxjYMACGAMgNAsLdpoVKi8AVe8A1QblQlWRKt0AoULw2w1zGxoAABdiAviQhF/mAAAAAElFTkSuQmCC\",\"add.png\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAMAAADyHTlpAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAH5QTFRFAAAAAAAAAAAAAAAAAAAAAAAAAAAACgoKBgYGGxsbKioqPz8/Pj4+BQUFCQkJAQEBZGRkh4eHAgICEBAQNjY2g4ODgYGBAAAAAwMDeXl5d3d3GBgYERERgICAgICANDQ0PDw8Y2NjCAgIhYWFGhoaJycnOjo6YWFhgICAdXV14Y16sQAAACp0Uk5TAAILDxIKESEnJiYoKCgTKSkpKCAnKSkFKCkpJiDl/ycpKSA2JyYpKSkpOkQ+xgAAARdJREFUeJzllNt2gyAQRTWiRsHLoDU0GpPYmMv//2BMS+sgl6Z9bM8bi73gnJkBz/sn8lcBIUHofwtG8TpJKUuTLI6cYF7QEqRKynP71VX9AkhNXVlsbMQrLLQVGyPZLsGHWgPrCxMJwHUPlXa79NBp2et5d9f3u3m1XxatQNn7SagOXCUjCjYUDuqxcWlHj4MSfw12FDJchFViRN8+1qcQoUH6lR1L1mEMEErofB6WzEUwylzomfzOQGiOJdXiWH7mQoUyMa4WXJQWOBvLFvPCGxt6FSr5kyH0qi0YddNG2/pgCsOjff4ZTizXPNwKIzl56OoGg9d9Z/+5cs6On+CFCfevFQ3ZaTycx1YMbvDdRvjkp/lHdAcPXzokxcwfDwAAAABJRU5ErkJggg==\",\"cursor.png\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZAgMAAAC5h23wAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAxQTFRFAAAATU1NTU1NTU1NwlMHHwAAAAR0Uk5TAOvhxbpPrUkAAAAkSURBVHicY2BgYHBggAByabxg1WoGBq2pRCk9AKUbcND43AEAufYHlSuusE4AAAAASUVORK5CYII=\",\"display_off.png\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAMAAADyHTlpAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAU1QTFRFAAAAh4eHh4eHAAAAAAAAAAAAAwMDAAAAAAAAhoaGGBgYgYGBAAAAPz8/AgICg4ODCQkJhISEh4eHh4eHPj4+NjY2gYGBg4ODgYGBgYGBgoKCAQEBJycngoKChYWFEBAQg4ODCAgIKioqZGRkCgoKBQUFERERd3d3gYGBGxsbNDQ0hISEgYGBPDw8gYGBgYGBh4eHh4eHhYWFh4eHgoKChYWFgYGBgYGBg4ODhoaGg4ODYWFhgoKCBgYGdXV1goKCg4ODgYGBgICAgYGBAAAAg4ODhYWFhISEh4eHgoKChYWFOjo6goKCGhoah4eHh4eHh4eHgoKCh4eHeXl5hoaGgoKChISEgYGBgYGBgoKCY2NjgYGBgoKCh4eHgoKCgYGBhoaGg4ODhoaGhYWFh4eHgYGBhoaGhoaGhoaGg4ODgoKChISEgoKChYWFh4eHfKktUwAAAG90Uk5TACn/AhEFKA8SLCbxCigoVBNKUTYoJ/lh3PyAKSaTNiBtICYpISggKSkmJ0LEKef3lGxA8rn//+pcMSkpnCcptHPJKe0LUjnx5LzKKaMnX73hl64pLnhkzNSgKeLv17LQ+liIzaLe7PfTw5tFpz3K1fXR/gAAAgBJREFUeJzllNdXwjAUxknB0lIoCKVsGTIFQRAZ7r333nuv///R3LZ4mlDQZ/0ekp7b37n5bnITk+mfyDxv5Tir3fwjaElO5BIOKZFLJS1dQVfI0Y809TtEV+elo95RpFPWG+1go4fdQ5QybI8haaNBkM2ANbM09bnrwaPY7iFKrz7EMBdu7CHdVruXIt0M1hb+GKA3LTRKkp5lTA6Dg6xIkhaHhvQ1IlW/UCouQdJNJTRIpk1qO7+wUpcfpl537oBc7VNip3Gi/AmVPBAC1UrL6HXtSGVT+k2Yz0Focad07OMRf3P5BEbd63PFQx7HN+w61JoAm+uBlV48O/0jkLSMmtPCmQ8HwlYdykFV4/LJPp7e3hVyFdapHNehLk6PSjhSkBvwu/cFyJGIYvOyhoc1jjYQFGbygD4CWjoAMla/og3YoSw+KPhjPNoFcim4iFD+pFYA8zZ9WeYU5OBjZ3ORWyCfG03E+47kKpCIJTpGO4KP8XMgtw990xG/PBNTgmPEEXwf7P42oOdFIRAoBCtqTKL6Rcwq4Xsgh5xYC/mmSs6yJKk1YbnVeTq1NaEpmlHbmVn2EORkW2trF2ZzmHGTSUMGl1a9hp4ySRpdQ8yKGURpMmRIYg9pb1YPzg6kO79cLlE6bYFjEtv91bLEUxvhwbWwjY13BxUb9l8+mn9EX8x3Nki8ff5wAAAAAElFTkSuQmCC\",\"display_on.png\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAMAAADyHTlpAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAR1QTFRFAAAAh4eHgYGBAAAAAAAAgYGBAAAAAwMDAAAAAAAAgYGBg4ODGBgYgYGBhISEAAAAPz8/AgIChoaGCQkJhYWFPj4+NjY2goKCgYGBAQEBJycngYGBgoKCEBAQCAgIhISEKioqZGRkCgoKBQUFERERd3d3gYGBg4ODgYGBGxsbNDQ0hISEgoKCgoKChYWFPDw8gYGBgYGBhoaGgoKCg4ODgoKCgYGBgoKCgoKCgoKCg4ODgoKChoaGgoKCgYGBhoaGg4ODYWFhBgYGdXV1gYGBg4ODgoKCgICAg4ODg4ODhISEAAAAg4ODOjo6gYGBGhoaeXl5goKCgYGBgoKChYWFgoKChISEgoKCY2NjgYGBg4ODgYGBgYGBg4ODgYGBo8n54AAAAF90Uk5TACn/AhH3BSgPEuhUJvFACigoLBM2KCeA6ykm+pMgIEkmKSEoICn9XCkmJ0u6nDop4sUypGuEzLZ6vmCYLZ/dLykpJynUYa8pcllCC1Ip2ycpisl1PadFsintbsPQZdi/bTW7AAAB4UlEQVR4nOWUZ1fCMBSGSSGWFiq0UDbIkr2XbBwMxS0b1P//M0xK9XSiftX7oel585zkvfcmMRj+SRhvzRRlthm/BU3Ry3TYzofTsajpIOjw2iNAjIiddehvHXSdA0mkXEEdG0fkE1DEKXmkSVqVIA6rBmsktUgAWLWHoGp30UNclbtLmwQgoyya91wPTbFy0mQXJ5zJQO6BgXRjfH0iSkX5stHIXr5r0bB/lu8syjR8rzsFbR2SpX+5J2eMP3csLtYsEY2K8BeTFuE2jaVCBw7bHOBuxq16AXmpbui3LtIfbRLUHMY2q4lcFo2WB4KA1SUAlWumNEKCzyxBKZxVHvYGaFguCBx1vM/x0IPzoqQoj5SdP4mns2cCGhBsrgj0uaeUBtzMyxQN8w4mYROTW8+r0oANp8W5mf6WQw5aCYJ2o7ymPaKMi2uVpmWM4TW6tdImgGo1bT4nK6DbbsCc0AZSdmLEFszzHrh6riVvRrNA3/9SE8QLWQu+Gjto9+gE9NBMwr9zi83gFeeFTe11zpm1CHE3HeyVCSknf3MIDcFTbfJKdbR1L4xX49L+/BoillV5uPJqkshD3JWSgpNMXP/lcrD8+hO84MnDr5YpFHv0Fe99VjJ0GBRs2H74aP6R+ACr+TFvZNAQ1wAAAABJRU5ErkJggg==\",\"down.png\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAMAAADyHTlpAAAAAXNSR0IB2cksfwAAAKVQTFRFAAAAg4ODgICAAAAAAAAAAAAACAgIAAAAAAAAAAAAAAAAOTk5hYWFEBAQfHx8ODg4dnZ2NDQ0XV1dGxsbKCgogICAFBQUIiIiZGRkgICAgICAFRUVAAAAgICAgICAgICAf39/Li4ugICAcHBwgoKCgICAgoKCgICAg4ODgYGBPj4+goKCgICAhISEgYGBgICAgoKCgICAgYGBgYGBf39/gICAgICAIdPQHAAAADd0Uk5TACn/KAIRIBMFDwooKyApKSknKSYmzCcmKfL7JRCUi2L3J7IpcLUrr0VbKXntNEnkMbxrUcG56CMpi50AAAFZSURBVHic5ZRpf4MgDIeFKFatWm/tfW091u7evv9Hm1Acoujm2y0vFPH5Jf+EEE37J6bblmlatv4jaBCI4rMfR0CMXtAEJ0fccgfM7tAkQHXzArdDxggmqGETGCnJWROkNlOwOqhIhKCtgbSicw1uK/dATSK0aRatIzytA8ik4XSiyJnLSm+VPxULgeyLI3uHRJH+qcB4WZGrKb4c20WwI7b3iUt74OS6XD+xZWrXUCtme0uKTvfcJ65CZFa9VOebqwXmft+oT8yF+/VymT4XeGB+Xx8L+j4gBcoFIDT+oMz6Qp93Y74pCeBpUXaLuW0rUk6r1iv3nP322ewYkgv2nZIvgpSPQDrY5wTjRJDNg9XAE/+uSXIVX812GdKEmtvR2rtWaw+5MAOuofJy79SXu9TgBl4d9DZdI0NjgyiswNCB/qk1J5Bmvp+lQOa9IJNhW4bxm6H5R+wLQYMSQXZNzbcAAAAASUVORK5CYII=\",\"price_range.png\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZAQMAAAD+JxcgAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAZQTFRFAAAATU1NkJ+rOQAAAAJ0Uk5TAP9bkSK1AAAAIUlEQVR4nGNggAPm/w9gTA4QIQMitECEJ1yMEgLNDiAAADfgBMRu78GgAAAAAElFTkSuQmCC\",\"remove.png\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAMAAADyHTlpAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAK5QTFRFAAAAh4eHgICAAAAAAAAAh4eHAAAAAwMDAAAAAAAAgICAGBgYAAAAPz8/AgICgICACQkJhoaGhoaGgICAPj4+NjY2gYGBg4ODgYGBAQEBJycngoKCEBAQgICAgICACAgIKioqZGRkCgoKBQUFERERd3d3gYGBGxsbNDQ0gICAPDw8YWFhBgYGdXV1gICAg4ODgICAAAAAOjo6GhoaeXl5gICAhYWFY2NjhYWFgICA9O0oCgAAADp0Uk5TACn/AhErBSgPEvEmCigowxMuMcgoJ7hWrCkmdCD6vSAmKSEoICkpJie6KSknKSkp0wspJynCMik11rrLte8AAAFwSURBVHic5ZTXkoIwFIZNAAPSpKkoRQV7Wcva3v/FFiRmEwise7t7bs7MP98k/ylJq/VPQjjKiiJrwo+gON0uxro7XiRTsRHs+voE4JjoRrf+6sD7AFTMvaDGRht9glLMUJtLqmUwD5XDCohHAmBUPQSV27GHtFK7xycBWJab5uPaR+Hlmue7GfZxHwyWFHVMQghXFgD2A8IOZtfssdNJIXcyFEaSfchzp9BuMVP+Fhvr5Qh0nGfqYTGhm3BcYFUaQBKOhMWzRqHyGFRY03ppQ5lCFZ30RloVZGQTaa3QqEt0OyrQnkSkk8I1YJkvAwPCMgY0UpbzXRZhVbosIWGbZTLNQszGMCM42FJEjWDDjIAMtp+xj6x2K+/DqNDc0r4Yc8yGl3uer2aIyT1iyd8sYSuY8cldZbVrH4zPebTvP8OMNSoedj6XzDyk3pwG98u0/ufqGu7tBW5c1PxriXFyHq5PQxXFzeDThvbmp/lH4gt6WxfZ03H8DwAAAABJRU5ErkJggg==\",\"settings.png\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAMAAADyHTlpAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAW5QTFRFAAAAAAAAAAAAAAAAAAAAAAAAAAAACgoKBgYGGxsbKioqQEBAPj4+BQUFCAgIAQEBPz8/ZWVlh4eHZGRkAgICCQkJDw8PNjY2g4ODgoKCNTU1EBAQAAAAAwMDeXl5d3d3AAAAGBgYAAAAERERioqKgoKCgoKCgoKCgYGBgoKChISEhoaGNDQ0g4ODgICAgICAgICAgYGBgYGBhYWFgICAgICAPT09AAAAgYGBgICAgICAgICAgICAY2NjCAgIgICAgICAhYWFhYWFgYGBHBwcgICAhYWFGhoagYGBgYGBg4ODhoaGJycnAAAAhISEgICAg4ODPDw8AAAAgoKCgICAhISEOjo6h4eHgoKCgYGBgICAf39/gYGBgoKCgICAGBgYgYGBg4ODg4ODgICACwsLgYGBgICAgYGBgYGBgYGBgICAgYGBYWFhf39/g4ODPj4+gYGBg4ODgICAhYWFgoKCgYGBgICAgYGBgoKCdXV1T0kC9QAAAHp0Uk5TAAILDxMKESEnJiYpKSgTKSgpKSkoEyAnKSknIAYoKSkFJQEgKl94jYVvVC4nU9f/+K8pOu71KBCi3NPq/ikg0e01Nokm1UUnsZVqQSYOT9lrKRJz5lIpK12jyu+sesgnhGVLxCG55a6Um+GaKfJCKKRgKUt8ocergymDQ9knAAABsElEQVR4nOWUV1vCMBSGg1AQpBZrcVdE3KJxo4LgnuCoe4F7orjHv7doTk3bgF7rd5OnX94nZ+SkCP0TWQqsNpuVs/wI2h2FTleR2+XkHfa8YLHgKRGJSj2SN3fosvIKkVJlVXWONGrkWtEgn1zHJP1GMCs/g7XILFIUpXoTWmaKTnIImGovh72Gxqbmlta2dvgOGpsmQO0dnfhTXd3E6JH0pN1DNnr7MFE/HDsQ0qEO6Pxg9sCh4XDkGx2J6sovBD+G8eiYuo5PxLTKeLoJBZNgT2EcnjY0YYajUKsL7Fk1gcjU3PwChcYTFGorAnsRqlpa1tAVhUbdmr+6RtjIOlgbCjMBUdzc2t7ZzbJ7zAQ4p6GSfRVNwkeKLsvCg31w2JBdjlT0GDxZNzEnpcQ+xWfnFxeXVyp6Tay07gq+L/YUOoBvbomV0V8skiq//DutWfeEfJD1JPLCED4+Pb8kX986tApNQ4iqfSJT76bRzvlgBPODQXW/foYqK5lyeBeYJEL1gaoeGnwIBhjRoQ9SZgTAdEbO/9cKRfmZ+MpGPCVHQ3nBzzS4hKIkuNyh/5g+ALiAXSSas9hwAAAAAElFTkSuQmCC\",\"trash.png\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZAQMAAAD+JxcgAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAZQTFRFAAAATU1NkJ+rOQAAAAJ0Uk5TAP9bkSK1AAAALUlEQVR4nGNgAIN6ENHQACX4//9gYBBgYIESYC4LkA0lPEkmGFAI5v8PILYCAHygDJxlK0RUAAAAAElFTkSuQmCC\",\"up.png\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAMAAADyHTlpAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAMZQTFRFAAAAh4eHgICAAAAAAAAAAAAAAwMDAAAAAAAAGBgYAAAAPz8/AgICCQkJgICAh4eHPj4+NjY2AQEBJycnEBAQgICAgICACAgIKioqZGRkCgoKBQUFgYGBERERd3d3gYGBGxsbNDQ0gICAgYGBPDw8gYGBh4eHgICAYWFhBgYGgYGBdXV1goKCg4ODhYWFgICAgoKCAAAAhISEOjo6gICAGhoagYGBeXl5hoaGgICAY2Njg4ODgoKCgoKCgYGBgoKCg4ODgoKC64uw1gAAAEJ0Uk5TACn/AhEFKA8SJgooKBP7KignKSYg9c0gJikhKLQgKSkmJ7ywKY8s5SknlClxKTMpXwtFKe0neiku8ClKWmSbbFFjM5GHSgAAAW5JREFUeJzllGd/gjAQxk3AMFWWOHDvVa2rVbu//5cqhJWQQO3b9nkVjv/v7rnLKJX+iYS9JMuSKvwIiu3loKkZzYHXFgvBiqW1QKSWplfySzvmAyDUN50cG2X0DDLqoTKXVLJgIIXDCohHAqCzHhymeuShy/Ru8kkAhtmhWUTvW9fdEnPQaVLU0n8XF0L3kn5P6LTtZPKgNoK+RrUkcGtQ7S9TsgOxxinrkUPYD+LwLCIh7CTsWSVQqRmTuPqpitlZFLQlApXjrsYBc335wOw47ksmUSMMrgKi/gnAE/awCqNHmTUwDf5X34LlBuedsgbUsK15kPMxTIXzzvFSIdsSPBw7nGD1K+7bL3F9xStEnZhoCw71TbpL71GBBbUF1MZmZWTOi97PI3eIJn9zCEtOj0+umaOde2EszqW9/xr6rM54WFtc0vfQNak57Ibd/Jerohu3GFwYqPjVEhve2Z4cbQU1ikFsQ73z0fwj+ga3VBezGuggFQAAAABJRU5ErkJggg==\"}");
-
-/***/ }),
-/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayWithHoles = __webpack_require__(27);
+var arrayWithHoles = __webpack_require__(31);
 
-var iterableToArrayLimit = __webpack_require__(28);
+var iterableToArrayLimit = __webpack_require__(32);
 
-var nonIterableRest = __webpack_require__(29);
+var unsupportedIterableToArray = __webpack_require__(24);
+
+var nonIterableRest = __webpack_require__(33);
 
 function _slicedToArray(arr, i) {
-  return arrayWithHoles(arr) || iterableToArrayLimit(arr, i) || nonIterableRest();
+  return arrayWithHoles(arr) || iterableToArrayLimit(arr, i) || unsupportedIterableToArray(arr, i) || nonIterableRest();
 }
 
 module.exports = _slicedToArray;
+
+/***/ }),
+/* 4 */
+/***/ (function(module) {
+
+module.exports = JSON.parse("{\"extended.png\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZAQMAAAD+JxcgAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAZQTFRFAAAATU1NkJ+rOQAAAAJ0Uk5TAP9bkSK1AAAANElEQVR4nGNggABGEMEEIlhABAeI+AASF0AlHmAqA4kzKAAx8wGQuAMKwd6AoYzBAWonAwAcLwTgNfJ3RQAAAABJRU5ErkJggg==\",\"segment.png\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZAgMAAAC5h23wAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAlQTFRFAAAATU1NJCQkCxcHIQAAAAN0Uk5TAP8SmutI5AAAACxJREFUeJxjYMACGAMgNAsLdpoVKi8AVe8A1QblQlWRKt0AoULw2w1zGxoAABdiAviQhF/mAAAAAElFTkSuQmCC\",\"add.png\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAMAAADyHTlpAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAH5QTFRFAAAAAAAAAAAAAAAAAAAAAAAAAAAACgoKBgYGGxsbKioqPz8/Pj4+BQUFCQkJAQEBZGRkh4eHAgICEBAQNjY2g4ODgYGBAAAAAwMDeXl5d3d3GBgYERERgICAgICANDQ0PDw8Y2NjCAgIhYWFGhoaJycnOjo6YWFhgICAdXV14Y16sQAAACp0Uk5TAAILDxIKESEnJiYoKCgTKSkpKCAnKSkFKCkpJiDl/ycpKSA2JyYpKSkpOkQ+xgAAARdJREFUeJzllNt2gyAQRTWiRsHLoDU0GpPYmMv//2BMS+sgl6Z9bM8bi73gnJkBz/sn8lcBIUHofwtG8TpJKUuTLI6cYF7QEqRKynP71VX9AkhNXVlsbMQrLLQVGyPZLsGHWgPrCxMJwHUPlXa79NBp2et5d9f3u3m1XxatQNn7SagOXCUjCjYUDuqxcWlHj4MSfw12FDJchFViRN8+1qcQoUH6lR1L1mEMEErofB6WzEUwylzomfzOQGiOJdXiWH7mQoUyMa4WXJQWOBvLFvPCGxt6FSr5kyH0qi0YddNG2/pgCsOjff4ZTizXPNwKIzl56OoGg9d9Z/+5cs6On+CFCfevFQ3ZaTycx1YMbvDdRvjkp/lHdAcPXzokxcwfDwAAAABJRU5ErkJggg==\",\"cursor.png\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZAgMAAAC5h23wAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAxQTFRFAAAATU1NTU1NTU1NwlMHHwAAAAR0Uk5TAOvhxbpPrUkAAAAkSURBVHicY2BgYHBggAByabxg1WoGBq2pRCk9AKUbcND43AEAufYHlSuusE4AAAAASUVORK5CYII=\",\"display_off.png\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAMAAADyHTlpAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAU1QTFRFAAAAh4eHh4eHAAAAAAAAAAAAAwMDAAAAAAAAhoaGGBgYgYGBAAAAPz8/AgICg4ODCQkJhISEh4eHh4eHPj4+NjY2gYGBg4ODgYGBgYGBgoKCAQEBJycngoKChYWFEBAQg4ODCAgIKioqZGRkCgoKBQUFERERd3d3gYGBGxsbNDQ0hISEgYGBPDw8gYGBgYGBh4eHh4eHhYWFh4eHgoKChYWFgYGBgYGBg4ODhoaGg4ODYWFhgoKCBgYGdXV1goKCg4ODgYGBgICAgYGBAAAAg4ODhYWFhISEh4eHgoKChYWFOjo6goKCGhoah4eHh4eHh4eHgoKCh4eHeXl5hoaGgoKChISEgYGBgYGBgoKCY2NjgYGBgoKCh4eHgoKCgYGBhoaGg4ODhoaGhYWFh4eHgYGBhoaGhoaGhoaGg4ODgoKChISEgoKChYWFh4eHfKktUwAAAG90Uk5TACn/AhEFKA8SLCbxCigoVBNKUTYoJ/lh3PyAKSaTNiBtICYpISggKSkmJ0LEKef3lGxA8rn//+pcMSkpnCcptHPJKe0LUjnx5LzKKaMnX73hl64pLnhkzNSgKeLv17LQ+liIzaLe7PfTw5tFpz3K1fXR/gAAAgBJREFUeJzllNdXwjAUxknB0lIoCKVsGTIFQRAZ7r333nuv///R3LZ4mlDQZ/0ekp7b37n5bnITk+mfyDxv5Tir3fwjaElO5BIOKZFLJS1dQVfI0Y809TtEV+elo95RpFPWG+1go4fdQ5QybI8haaNBkM2ANbM09bnrwaPY7iFKrz7EMBdu7CHdVruXIt0M1hb+GKA3LTRKkp5lTA6Dg6xIkhaHhvQ1IlW/UCouQdJNJTRIpk1qO7+wUpcfpl537oBc7VNip3Gi/AmVPBAC1UrL6HXtSGVT+k2Yz0Focad07OMRf3P5BEbd63PFQx7HN+w61JoAm+uBlV48O/0jkLSMmtPCmQ8HwlYdykFV4/LJPp7e3hVyFdapHNehLk6PSjhSkBvwu/cFyJGIYvOyhoc1jjYQFGbygD4CWjoAMla/og3YoSw+KPhjPNoFcim4iFD+pFYA8zZ9WeYU5OBjZ3ORWyCfG03E+47kKpCIJTpGO4KP8XMgtw990xG/PBNTgmPEEXwf7P42oOdFIRAoBCtqTKL6Rcwq4Xsgh5xYC/mmSs6yJKk1YbnVeTq1NaEpmlHbmVn2EORkW2trF2ZzmHGTSUMGl1a9hp4ySRpdQ8yKGURpMmRIYg9pb1YPzg6kO79cLlE6bYFjEtv91bLEUxvhwbWwjY13BxUb9l8+mn9EX8x3Nki8ff5wAAAAAElFTkSuQmCC\",\"display_on.png\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAMAAADyHTlpAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAR1QTFRFAAAAh4eHgYGBAAAAAAAAgYGBAAAAAwMDAAAAAAAAgYGBg4ODGBgYgYGBhISEAAAAPz8/AgIChoaGCQkJhYWFPj4+NjY2goKCgYGBAQEBJycngYGBgoKCEBAQCAgIhISEKioqZGRkCgoKBQUFERERd3d3gYGBg4ODgYGBGxsbNDQ0hISEgoKCgoKChYWFPDw8gYGBgYGBhoaGgoKCg4ODgoKCgYGBgoKCgoKCgoKCg4ODgoKChoaGgoKCgYGBhoaGg4ODYWFhBgYGdXV1gYGBg4ODgoKCgICAg4ODg4ODhISEAAAAg4ODOjo6gYGBGhoaeXl5goKCgYGBgoKChYWFgoKChISEgoKCY2NjgYGBg4ODgYGBgYGBg4ODgYGBo8n54AAAAF90Uk5TACn/AhH3BSgPEuhUJvFACigoLBM2KCeA6ykm+pMgIEkmKSEoICn9XCkmJ0u6nDop4sUypGuEzLZ6vmCYLZ/dLykpJynUYa8pcllCC1Ip2ycpisl1PadFsintbsPQZdi/bTW7AAAB4UlEQVR4nOWUZ1fCMBSGSSGWFiq0UDbIkr2XbBwMxS0b1P//M0xK9XSiftX7oel585zkvfcmMRj+SRhvzRRlthm/BU3Ry3TYzofTsajpIOjw2iNAjIiddehvHXSdA0mkXEEdG0fkE1DEKXmkSVqVIA6rBmsktUgAWLWHoGp30UNclbtLmwQgoyya91wPTbFy0mQXJ5zJQO6BgXRjfH0iSkX5stHIXr5r0bB/lu8syjR8rzsFbR2SpX+5J2eMP3csLtYsEY2K8BeTFuE2jaVCBw7bHOBuxq16AXmpbui3LtIfbRLUHMY2q4lcFo2WB4KA1SUAlWumNEKCzyxBKZxVHvYGaFguCBx1vM/x0IPzoqQoj5SdP4mns2cCGhBsrgj0uaeUBtzMyxQN8w4mYROTW8+r0oANp8W5mf6WQw5aCYJ2o7ymPaKMi2uVpmWM4TW6tdImgGo1bT4nK6DbbsCc0AZSdmLEFszzHrh6riVvRrNA3/9SE8QLWQu+Gjto9+gE9NBMwr9zi83gFeeFTe11zpm1CHE3HeyVCSknf3MIDcFTbfJKdbR1L4xX49L+/BoillV5uPJqkshD3JWSgpNMXP/lcrD8+hO84MnDr5YpFHv0Fe99VjJ0GBRs2H74aP6R+ACr+TFvZNAQ1wAAAABJRU5ErkJggg==\",\"down.png\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAMAAADyHTlpAAAAAXNSR0IB2cksfwAAAKVQTFRFAAAAg4ODgICAAAAAAAAAAAAACAgIAAAAAAAAAAAAAAAAOTk5hYWFEBAQfHx8ODg4dnZ2NDQ0XV1dGxsbKCgogICAFBQUIiIiZGRkgICAgICAFRUVAAAAgICAgICAgICAf39/Li4ugICAcHBwgoKCgICAgoKCgICAg4ODgYGBPj4+goKCgICAhISEgYGBgICAgoKCgICAgYGBgYGBf39/gICAgICAIdPQHAAAADd0Uk5TACn/KAIRIBMFDwooKyApKSknKSYmzCcmKfL7JRCUi2L3J7IpcLUrr0VbKXntNEnkMbxrUcG56CMpi50AAAFZSURBVHic5ZRpf4MgDIeFKFatWm/tfW091u7evv9Hm1Acoujm2y0vFPH5Jf+EEE37J6bblmlatv4jaBCI4rMfR0CMXtAEJ0fccgfM7tAkQHXzArdDxggmqGETGCnJWROkNlOwOqhIhKCtgbSicw1uK/dATSK0aRatIzytA8ik4XSiyJnLSm+VPxULgeyLI3uHRJH+qcB4WZGrKb4c20WwI7b3iUt74OS6XD+xZWrXUCtme0uKTvfcJ65CZFa9VOebqwXmft+oT8yF+/VymT4XeGB+Xx8L+j4gBcoFIDT+oMz6Qp93Y74pCeBpUXaLuW0rUk6r1iv3nP322ewYkgv2nZIvgpSPQDrY5wTjRJDNg9XAE/+uSXIVX812GdKEmtvR2rtWaw+5MAOuofJy79SXu9TgBl4d9DZdI0NjgyiswNCB/qk1J5Bmvp+lQOa9IJNhW4bxm6H5R+wLQYMSQXZNzbcAAAAASUVORK5CYII=\",\"price_range.png\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZAQMAAAD+JxcgAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAZQTFRFAAAATU1NkJ+rOQAAAAJ0Uk5TAP9bkSK1AAAAIUlEQVR4nGNggAPm/w9gTA4QIQMitECEJ1yMEgLNDiAAADfgBMRu78GgAAAAAElFTkSuQmCC\",\"remove.png\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAMAAADyHTlpAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAK5QTFRFAAAAh4eHgICAAAAAAAAAh4eHAAAAAwMDAAAAAAAAgICAGBgYAAAAPz8/AgICgICACQkJhoaGhoaGgICAPj4+NjY2gYGBg4ODgYGBAQEBJycngoKCEBAQgICAgICACAgIKioqZGRkCgoKBQUFERERd3d3gYGBGxsbNDQ0gICAPDw8YWFhBgYGdXV1gICAg4ODgICAAAAAOjo6GhoaeXl5gICAhYWFY2NjhYWFgICA9O0oCgAAADp0Uk5TACn/AhErBSgPEvEmCigowxMuMcgoJ7hWrCkmdCD6vSAmKSEoICkpJie6KSknKSkp0wspJynCMik11rrLte8AAAFwSURBVHic5ZTXkoIwFIZNAAPSpKkoRQV7Wcva3v/FFiRmEwise7t7bs7MP98k/ylJq/VPQjjKiiJrwo+gON0uxro7XiRTsRHs+voE4JjoRrf+6sD7AFTMvaDGRht9glLMUJtLqmUwD5XDCohHAmBUPQSV27GHtFK7xycBWJab5uPaR+Hlmue7GfZxHwyWFHVMQghXFgD2A8IOZtfssdNJIXcyFEaSfchzp9BuMVP+Fhvr5Qh0nGfqYTGhm3BcYFUaQBKOhMWzRqHyGFRY03ppQ5lCFZ30RloVZGQTaa3QqEt0OyrQnkSkk8I1YJkvAwPCMgY0UpbzXRZhVbosIWGbZTLNQszGMCM42FJEjWDDjIAMtp+xj6x2K+/DqNDc0r4Yc8yGl3uer2aIyT1iyd8sYSuY8cldZbVrH4zPebTvP8OMNSoedj6XzDyk3pwG98u0/ufqGu7tBW5c1PxriXFyHq5PQxXFzeDThvbmp/lH4gt6WxfZ03H8DwAAAABJRU5ErkJggg==\",\"settings.png\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAMAAADyHTlpAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAW5QTFRFAAAAAAAAAAAAAAAAAAAAAAAAAAAACgoKBgYGGxsbKioqQEBAPj4+BQUFCAgIAQEBPz8/ZWVlh4eHZGRkAgICCQkJDw8PNjY2g4ODgoKCNTU1EBAQAAAAAwMDeXl5d3d3AAAAGBgYAAAAERERioqKgoKCgoKCgoKCgYGBgoKChISEhoaGNDQ0g4ODgICAgICAgICAgYGBgYGBhYWFgICAgICAPT09AAAAgYGBgICAgICAgICAgICAY2NjCAgIgICAgICAhYWFhYWFgYGBHBwcgICAhYWFGhoagYGBgYGBg4ODhoaGJycnAAAAhISEgICAg4ODPDw8AAAAgoKCgICAhISEOjo6h4eHgoKCgYGBgICAf39/gYGBgoKCgICAGBgYgYGBg4ODg4ODgICACwsLgYGBgICAgYGBgYGBgYGBgICAgYGBYWFhf39/g4ODPj4+gYGBg4ODgICAhYWFgoKCgYGBgICAgYGBgoKCdXV1T0kC9QAAAHp0Uk5TAAILDxMKESEnJiYpKSgTKSgpKSkoEyAnKSknIAYoKSkFJQEgKl94jYVvVC4nU9f/+K8pOu71KBCi3NPq/ikg0e01Nokm1UUnsZVqQSYOT9lrKRJz5lIpK12jyu+sesgnhGVLxCG55a6Um+GaKfJCKKRgKUt8ocergymDQ9knAAABsElEQVR4nOWUV1vCMBSGg1AQpBZrcVdE3KJxo4LgnuCoe4F7orjHv7doTk3bgF7rd5OnX94nZ+SkCP0TWQqsNpuVs/wI2h2FTleR2+XkHfa8YLHgKRGJSj2SN3fosvIKkVJlVXWONGrkWtEgn1zHJP1GMCs/g7XILFIUpXoTWmaKTnIImGovh72Gxqbmlta2dvgOGpsmQO0dnfhTXd3E6JH0pN1DNnr7MFE/HDsQ0qEO6Pxg9sCh4XDkGx2J6sovBD+G8eiYuo5PxLTKeLoJBZNgT2EcnjY0YYajUKsL7Fk1gcjU3PwChcYTFGorAnsRqlpa1tAVhUbdmr+6RtjIOlgbCjMBUdzc2t7ZzbJ7zAQ4p6GSfRVNwkeKLsvCg31w2JBdjlT0GDxZNzEnpcQ+xWfnFxeXVyp6Tay07gq+L/YUOoBvbomV0V8skiq//DutWfeEfJD1JPLCED4+Pb8kX986tApNQ4iqfSJT76bRzvlgBPODQXW/foYqK5lyeBeYJEL1gaoeGnwIBhjRoQ9SZgTAdEbO/9cKRfmZ+MpGPCVHQ3nBzzS4hKIkuNyh/5g+ALiAXSSas9hwAAAAAElFTkSuQmCC\",\"trash.png\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZAQMAAAD+JxcgAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAZQTFRFAAAATU1NkJ+rOQAAAAJ0Uk5TAP9bkSK1AAAALUlEQVR4nGNgAIN6ENHQACX4//9gYBBgYIESYC4LkA0lPEkmGFAI5v8PILYCAHygDJxlK0RUAAAAAElFTkSuQmCC\",\"up.png\":\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAMAAADyHTlpAAAAAXNSR0IB2cksfwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAMZQTFRFAAAAh4eHgICAAAAAAAAAAAAAAwMDAAAAAAAAGBgYAAAAPz8/AgICCQkJgICAh4eHPj4+NjY2AQEBJycnEBAQgICAgICACAgIKioqZGRkCgoKBQUFgYGBERERd3d3gYGBGxsbNDQ0gICAgYGBPDw8gYGBh4eHgICAYWFhBgYGgYGBdXV1goKCg4ODhYWFgICAgoKCAAAAhISEOjo6gICAGhoagYGBeXl5hoaGgICAY2Njg4ODgoKCgoKCgYGBgoKCg4ODgoKC64uw1gAAAEJ0Uk5TACn/AhEFKA8SJgooKBP7KignKSYg9c0gJikhKLQgKSkmJ7ywKY8s5SknlClxKTMpXwtFKe0neiku8ClKWmSbbFFjM5GHSgAAAW5JREFUeJzllGd/gjAQxk3AMFWWOHDvVa2rVbu//5cqhJWQQO3b9nkVjv/v7rnLKJX+iYS9JMuSKvwIiu3loKkZzYHXFgvBiqW1QKSWplfySzvmAyDUN50cG2X0DDLqoTKXVLJgIIXDCohHAqCzHhymeuShy/Ru8kkAhtmhWUTvW9fdEnPQaVLU0n8XF0L3kn5P6LTtZPKgNoK+RrUkcGtQ7S9TsgOxxinrkUPYD+LwLCIh7CTsWSVQqRmTuPqpitlZFLQlApXjrsYBc335wOw47ksmUSMMrgKi/gnAE/awCqNHmTUwDf5X34LlBuedsgbUsK15kPMxTIXzzvFSIdsSPBw7nGD1K+7bL3F9xStEnZhoCw71TbpL71GBBbUF1MZmZWTOi97PI3eIJn9zCEtOj0+umaOde2EszqW9/xr6rM54WFtc0vfQNak57Ibd/Jerohu3GFwYqPjVEhve2Z4cbQU1ikFsQ73z0fwj+ga3VBezGuggFQAAAABJRU5ErkJggg==\"}");
 
 /***/ }),
 /* 5 */
@@ -3185,136 +3189,6 @@ function applyToTag (styleElement, obj) {
 
 /***/ }),
 /* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(34);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var add = __webpack_require__(7).default
-var update = add("68f243ea", content, false, {});
-// Hot Module Replacement
-if(false) {}
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(36);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var add = __webpack_require__(7).default
-var update = add("9895d3a6", content, false, {});
-// Hot Module Replacement
-if(false) {}
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(38);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var add = __webpack_require__(7).default
-var update = add("1db01c0b", content, false, {});
-// Hot Module Replacement
-if(false) {}
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(40);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var add = __webpack_require__(7).default
-var update = add("12d2309d", content, false, {});
-// Hot Module Replacement
-if(false) {}
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(42);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var add = __webpack_require__(7).default
-var update = add("1b34bfeb", content, false, {});
-// Hot Module Replacement
-if(false) {}
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(44);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var add = __webpack_require__(7).default
-var update = add("604bf5ef", content, false, {});
-// Hot Module Replacement
-if(false) {}
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(46);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var add = __webpack_require__(7).default
-var update = add("f32fd36e", content, false, {});
-// Hot Module Replacement
-if(false) {}
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var _typeof = __webpack_require__(18);
-
-var assertThisInitialized = __webpack_require__(47);
-
-function _possibleConstructorReturn(self, call) {
-  if (call && (_typeof(call) === "object" || typeof call === "function")) {
-    return call;
-  }
-
-  return assertThisInitialized(self);
-}
-
-module.exports = _possibleConstructorReturn;
-
-/***/ }),
-/* 16 */
 /***/ (function(module, exports) {
 
 function _getPrototypeOf(o) {
@@ -3327,10 +3201,138 @@ function _getPrototypeOf(o) {
 module.exports = _getPrototypeOf;
 
 /***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(38);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var add = __webpack_require__(7).default
+var update = add("21fde573", content, false, {});
+// Hot Module Replacement
+if(false) {}
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(40);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var add = __webpack_require__(7).default
+var update = add("68f243ea", content, false, {});
+// Hot Module Replacement
+if(false) {}
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(42);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var add = __webpack_require__(7).default
+var update = add("9895d3a6", content, false, {});
+// Hot Module Replacement
+if(false) {}
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(44);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var add = __webpack_require__(7).default
+var update = add("1db01c0b", content, false, {});
+// Hot Module Replacement
+if(false) {}
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(46);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var add = __webpack_require__(7).default
+var update = add("12d2309d", content, false, {});
+// Hot Module Replacement
+if(false) {}
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(48);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var add = __webpack_require__(7).default
+var update = add("1b34bfeb", content, false, {});
+// Hot Module Replacement
+if(false) {}
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(50);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var add = __webpack_require__(7).default
+var update = add("604bf5ef", content, false, {});
+// Hot Module Replacement
+if(false) {}
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(52);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var add = __webpack_require__(7).default
+var update = add("f32fd36e", content, false, {});
+// Hot Module Replacement
+if(false) {}
+
+/***/ }),
 /* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var setPrototypeOf = __webpack_require__(48);
+var setPrototypeOf = __webpack_require__(53);
 
 function _inherits(subClass, superClass) {
   if (typeof superClass !== "function" && superClass !== null) {
@@ -3351,6 +3353,24 @@ module.exports = _inherits;
 
 /***/ }),
 /* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var _typeof = __webpack_require__(19);
+
+var assertThisInitialized = __webpack_require__(54);
+
+function _possibleConstructorReturn(self, call) {
+  if (call && (_typeof(call) === "object" || typeof call === "function")) {
+    return call;
+  }
+
+  return assertThisInitialized(self);
+}
+
+module.exports = _possibleConstructorReturn;
+
+/***/ }),
+/* 19 */
 /***/ (function(module, exports) {
 
 function _typeof(obj) {
@@ -3372,35 +3392,7 @@ function _typeof(obj) {
 module.exports = _typeof;
 
 /***/ }),
-/* 19 */
-/***/ (function(module, exports) {
-
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-module.exports = _defineProperty;
-
-/***/ }),
 /* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(49);
-
-
-/***/ }),
-/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -3410,9 +3402,9 @@ module.exports = __webpack_require__(49);
 /**
  * Dependencies
  */
-var util = __webpack_require__(30),
-    cmp = __webpack_require__(31),
-    bin = __webpack_require__(32);
+var util = __webpack_require__(34),
+    cmp = __webpack_require__(35),
+    bin = __webpack_require__(36);
 
 /**
  * Module interface definition
@@ -3624,7 +3616,68 @@ IndexedArray.prototype.getRange = function (begin, end) {
 
 
 /***/ }),
+/* 21 */
+/***/ (function(module, exports) {
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+module.exports = _defineProperty;
+
+/***/ }),
 /* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(55);
+
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports) {
+
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+    arr2[i] = arr[i];
+  }
+
+  return arr2;
+}
+
+module.exports = _arrayLikeToArray;
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var arrayLikeToArray = __webpack_require__(23);
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(n);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return arrayLikeToArray(o, minLen);
+}
+
+module.exports = _unsupportedIterableToArray;
+
+/***/ }),
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -3954,7 +4007,7 @@ if (typeof window.define === 'function' && window.define.amd) {
 
 
 /***/ }),
-/* 23 */
+/* 26 */
 /***/ (function(module, exports) {
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
@@ -3996,43 +4049,45 @@ function _asyncToGenerator(fn) {
 module.exports = _asyncToGenerator;
 
 /***/ }),
-/* 24 */
+/* 27 */
 /***/ (function(module, exports) {
 
-function _arrayWithoutHoles(arr) {
-  if (Array.isArray(arr)) {
-    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {
-      arr2[i] = arr[i];
-    }
+// Draws a ray, adds corresponding collision f-n
 
-    return arr2;
-  }
+/***/ }),
+/* 28 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var arrayLikeToArray = __webpack_require__(23);
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) return arrayLikeToArray(arr);
 }
 
 module.exports = _arrayWithoutHoles;
 
 /***/ }),
-/* 25 */
+/* 29 */
 /***/ (function(module, exports) {
 
 function _iterableToArray(iter) {
-  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+  if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
 }
 
 module.exports = _iterableToArray;
 
 /***/ }),
-/* 26 */
+/* 30 */
 /***/ (function(module, exports) {
 
 function _nonIterableSpread() {
-  throw new TypeError("Invalid attempt to spread non-iterable instance");
+  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 
 module.exports = _nonIterableSpread;
 
 /***/ }),
-/* 27 */
+/* 31 */
 /***/ (function(module, exports) {
 
 function _arrayWithHoles(arr) {
@@ -4042,14 +4097,11 @@ function _arrayWithHoles(arr) {
 module.exports = _arrayWithHoles;
 
 /***/ }),
-/* 28 */
+/* 32 */
 /***/ (function(module, exports) {
 
 function _iterableToArrayLimit(arr, i) {
-  if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) {
-    return;
-  }
-
+  if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
   var _arr = [];
   var _n = true;
   var _d = false;
@@ -4078,17 +4130,17 @@ function _iterableToArrayLimit(arr, i) {
 module.exports = _iterableToArrayLimit;
 
 /***/ }),
-/* 29 */
+/* 33 */
 /***/ (function(module, exports) {
 
 function _nonIterableRest() {
-  throw new TypeError("Invalid attempt to destructure non-iterable instance");
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 
 module.exports = _nonIterableRest;
 
 /***/ }),
-/* 30 */
+/* 34 */
 /***/ (function(module, exports) {
 
 /**
@@ -4133,7 +4185,7 @@ module.exports.isSortableArrayLike = function (o) {
 
 
 /***/ }),
-/* 31 */
+/* 35 */
 /***/ (function(module, exports) {
 
 /**
@@ -4168,7 +4220,7 @@ module.exports = {
 
 
 /***/ }),
-/* 32 */
+/* 36 */
 /***/ (function(module, exports) {
 
 /**
@@ -4230,17 +4282,40 @@ module.exports.search = search;
 
 
 /***/ }),
-/* 33 */
+/* 37 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_LegendButton_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_UxWrapper_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_UxWrapper_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_UxWrapper_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* unused harmony reexport * */
+ /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_UxWrapper_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+/* 38 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(6);
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, "\n.trading-vue-ux-wrapper {\n    position: absolute;\n    display: flex;\n}\n.tvjs-ux-wrapper-pin {\n    position: absolute;\n    width: 9px;\n    height: 9px;\n    z-index: 100;\n    background-color: #23a776;\n    border-radius: 10px;\n    margin-left: -6px;\n    margin-top: -6px;\n    pointer-events: none;\n}\n.tvjs-ux-wrapper-head {\n    position: absolute;\n    height: 23px;\n    width: 100%;\n}\n.tvjs-ux-wrapper-close {\n    position: absolute;\n    width: 11px;\n    height: 11px;\n    font-size: 1.5em;\n    line-height: 0.5em;\n    padding: 1px 0px 1px 2px;\n    border-radius: 10px;\n    right: 5px;\n    top: 5px;\n    user-select: none;\n}\n.tvjs-ux-wrapper-close-hb {\n}\n.tvjs-ux-wrapper-close:hover {\n    background-color: #FF605C !important;\n    color: #692324 !important;\n}\n.tvjs-ux-wrapper-full {\n}\n", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+/* 39 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_LegendButton_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(10);
 /* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_LegendButton_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_LegendButton_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
  /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_LegendButton_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
-/* 34 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Imports
@@ -4253,17 +4328,17 @@ module.exports = exports;
 
 
 /***/ }),
-/* 35 */
+/* 41 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ButtonGroup_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ButtonGroup_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(11);
 /* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ButtonGroup_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ButtonGroup_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
  /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ButtonGroup_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
-/* 36 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Imports
@@ -4276,17 +4351,17 @@ module.exports = exports;
 
 
 /***/ }),
-/* 37 */
+/* 43 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Legend_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(10);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Legend_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
 /* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Legend_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Legend_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
  /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Legend_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
-/* 38 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Imports
@@ -4299,17 +4374,17 @@ module.exports = exports;
 
 
 /***/ }),
-/* 39 */
+/* 45 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Section_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(11);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Section_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(13);
 /* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Section_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Section_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
  /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Section_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
-/* 40 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Imports
@@ -4322,17 +4397,17 @@ module.exports = exports;
 
 
 /***/ }),
-/* 41 */
+/* 47 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Botbar_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Botbar_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(14);
 /* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Botbar_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Botbar_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
  /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Botbar_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
-/* 42 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Imports
@@ -4345,17 +4420,17 @@ module.exports = exports;
 
 
 /***/ }),
-/* 43 */
+/* 49 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ToolbarItem_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(13);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ToolbarItem_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
 /* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ToolbarItem_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ToolbarItem_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
  /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_ToolbarItem_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
-/* 44 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Imports
@@ -4368,17 +4443,17 @@ module.exports = exports;
 
 
 /***/ }),
-/* 45 */
+/* 51 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Toolbar_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(14);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Toolbar_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(16);
 /* harmony import */ var _node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Toolbar_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Toolbar_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
 /* unused harmony reexport * */
  /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_vue_style_loader_index_js_node_modules_css_loader_dist_cjs_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Toolbar_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
-/* 46 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // Imports
@@ -4391,21 +4466,7 @@ module.exports = exports;
 
 
 /***/ }),
-/* 47 */
-/***/ (function(module, exports) {
-
-function _assertThisInitialized(self) {
-  if (self === void 0) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }
-
-  return self;
-}
-
-module.exports = _assertThisInitialized;
-
-/***/ }),
-/* 48 */
+/* 53 */
 /***/ (function(module, exports) {
 
 function _setPrototypeOf(o, p) {
@@ -4420,7 +4481,21 @@ function _setPrototypeOf(o, p) {
 module.exports = _setPrototypeOf;
 
 /***/ }),
-/* 49 */
+/* 54 */
+/***/ (function(module, exports) {
+
+function _assertThisInitialized(self) {
+  if (self === void 0) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return self;
+}
+
+module.exports = _assertThisInitialized;
+
+/***/ }),
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -5155,7 +5230,7 @@ try {
 
 
 /***/ }),
-/* 50 */
+/* 56 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5172,6 +5247,9 @@ __webpack_require__.d(__webpack_exports__, "Volbar", function() { return /* reex
 __webpack_require__.d(__webpack_exports__, "layout_cnv", function() { return /* reexport */ layout_cnv; });
 __webpack_require__.d(__webpack_exports__, "layout_vol", function() { return /* reexport */ layout_vol; });
 __webpack_require__.d(__webpack_exports__, "DataCube", function() { return /* reexport */ datacube_DataCube; });
+__webpack_require__.d(__webpack_exports__, "Tool", function() { return /* reexport */ mixins_tool; });
+__webpack_require__.d(__webpack_exports__, "Interface", function() { return /* reexport */ mixins_interface; });
+__webpack_require__.d(__webpack_exports__, "primitives", function() { return /* binding */ primitives; });
 
 // CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/TradingVue.vue?vue&type=template&id=235c0ade&
 var TradingVuevue_type_template_id_235c0ade_render = function() {
@@ -5241,11 +5319,13 @@ var toConsumableArray_default = /*#__PURE__*/__webpack_require__.n(toConsumableA
 // CONCATENATED MODULE: ./src/stuff/constants.js
 var SECOND = 1000;
 var MINUTE = SECOND * 60;
+var MINUTE3 = MINUTE * 3;
 var MINUTE5 = MINUTE * 5;
 var MINUTE15 = MINUTE * 15;
 var MINUTE30 = MINUTE * 30;
 var HOUR = MINUTE * 60;
 var HOUR4 = HOUR * 4;
+var HOUR12 = HOUR * 12;
 var DAY = HOUR * 24;
 var WEEK = DAY * 7;
 var MONTH = WEEK * 4;
@@ -5292,10 +5372,33 @@ var ChartConfig = {
   // candles
   MAX_ZOOM: 1000,
   // candles,
-  VOLSCALE: 0.15 // %/100 of height
+  VOLSCALE: 0.15,
+  // %/100 of height
+  UX_OPACITY: 0.9 // Ux background opacity
 
 };
 ChartConfig.FONT = "11px -apple-system,BlinkMacSystemFont,\n    Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,\n    Fira Sans,Droid Sans,Helvetica Neue,\n    sans-serif";
+var MAP_UNIT = {
+  "1s": SECOND,
+  "5s": SECOND * 5,
+  "10s": SECOND * 10,
+  "20s": SECOND * 20,
+  "30s": SECOND * 30,
+  "1m": MINUTE,
+  "3m": MINUTE3,
+  "5m": MINUTE5,
+  "15m": MINUTE15,
+  "30m": MINUTE30,
+  "1H": HOUR,
+  "2H": HOUR * 2,
+  "3H": HOUR * 3,
+  "4H": HOUR4,
+  "12H": HOUR12,
+  "1D": DAY,
+  "1W": WEEK,
+  "1M": MONTH,
+  "1Y": YEAR
+};
 /* harmony default export */ var constants = ({
   SECOND: SECOND,
   MINUTE: MINUTE,
@@ -5311,7 +5414,8 @@ ChartConfig.FONT = "11px -apple-system,BlinkMacSystemFont,\n    Segoe UI,Roboto,
   MONTHMAP: MONTHMAP,
   TIMESCALES: TIMESCALES,
   $SCALES: $SCALES,
-  ChartConfig: ChartConfig
+  ChartConfig: ChartConfig,
+  map_unit: MAP_UNIT
 });
 // CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chart.vue?vue&type=template&id=4d06a4de&
 var Chartvue_type_template_id_4d06a4de_render = function() {
@@ -5361,6 +5465,10 @@ Chartvue_type_template_id_4d06a4de_render._withStripped = true
 
 // CONCATENATED MODULE: ./src/components/Chart.vue?vue&type=template&id=4d06a4de&
 
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/slicedToArray.js
+var slicedToArray = __webpack_require__(3);
+var slicedToArray_default = /*#__PURE__*/__webpack_require__.n(slicedToArray);
+
 // CONCATENATED MODULE: ./src/stuff/context.js
 // Canvas context for text measurments
 function Context($p) {
@@ -5371,15 +5479,12 @@ function Context($p) {
 }
 
 /* harmony default export */ var context = (Context);
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/slicedToArray.js
-var slicedToArray = __webpack_require__(4);
-var slicedToArray_default = /*#__PURE__*/__webpack_require__.n(slicedToArray);
-
 // EXTERNAL MODULE: ./node_modules/arrayslicer/lib/index.js
-var lib = __webpack_require__(21);
+var lib = __webpack_require__(20);
 var lib_default = /*#__PURE__*/__webpack_require__.n(lib);
 
 // CONCATENATED MODULE: ./src/stuff/utils.js
+
 
 
 /* harmony default export */ var utils = ({
@@ -5479,14 +5584,6 @@ var lib_default = /*#__PURE__*/__webpack_require__.n(lib);
     });
     return min;
   },
-  // Detects candles interval. (old version, slightly slower)
-
-  /*detect_interval(ohlcv) {
-      // Initial value of accumulator
-      let a0 = [Infinity, ohlcv[0][0]]
-      return ohlcv.slice(1, 99).reduce((a,x) =>
-      [Math.min(x[0] - a[1], a[0]), x[0]], a0)[0]
-  },*/
   // Gets numberic part of overlay id (e.g 'EMA_1' = > 1)
   get_num_id: function get_num_id(id) {
     return parseInt(id.split('_').pop());
@@ -5497,14 +5594,30 @@ var lib_default = /*#__PURE__*/__webpack_require__.n(lib);
 
     try {
       var ia = new lib_default.a(arr, "0");
-      return ia.getRange(t1, t2);
+      var res = ia.getRange(t1, t2);
+      return [res];
     } catch (e) {
       // Something wrong with fancy slice lib
       // Fast fix: fallback to filter
-      return arr.filter(function (x) {
+      return [arr.filter(function (x) {
         return x[0] >= t1 && x[0] <= t2;
-      });
+      })];
     }
+  },
+  // Fast filter (index-based)
+  fast_filter_i: function fast_filter_i(arr, t1, t2) {
+    if (!arr.length) return arr;
+    var i1 = Math.floor(t1);
+    if (i1 < 0) i1 = 0;
+    var i2 = Math.floor(t2 + 1);
+    var res = arr.slice(i1, i2);
+    return [res, i1];
+  },
+  // Nearest indexes (left and right)
+  fast_nearest: function fast_nearest(arr, t1) {
+    var ia = new lib_default.a(arr, "0");
+    ia.fetch(t1);
+    return [ia.nextlow, ia.nexthigh];
   },
   now: function now() {
     return new Date().getTime();
@@ -5531,21 +5644,158 @@ var lib_default = /*#__PURE__*/__webpack_require__.n(lib);
   // Parse the original mouse event to find deltaY
   get_deltaY: function get_deltaY(event) {
     return event.originalEvent.deltaY / 12;
+  },
+  // Apply opacity to a hex color
+  apply_opacity: function apply_opacity(c, op) {
+    if (c.length === 7) {
+      var n = Math.floor(op * 255);
+      n = this.clamp(n, 0, 255);
+      c += n.toString(16);
+    }
+
+    return c;
+  },
+  // Parse timeframe or return value in ms
+  parse_tf: function parse_tf(smth) {
+    if (typeof smth === 'string') {
+      return constants.map_unit[smth];
+    } else {
+      return smth;
+    }
   }
+});
+// CONCATENATED MODULE: ./src/stuff/math.js
+// Math/Geometry
+/* harmony default export */ var math = ({
+  // Distance from point to line
+  // p1 = point, (p2, p3) = line
+  point2line: function point2line(p1, p2, p3) {
+    var _this$tri = this.tri(p1, p2, p3),
+        area = _this$tri.area,
+        base = _this$tri.base;
+
+    return Math.abs(this.tri_h(area, base));
+  },
+  // Distance from point to segment
+  // p1 = point, (p2, p3) = segment
+  point2seg: function point2seg(p1, p2, p3) {
+    var _this$tri2 = this.tri(p1, p2, p3),
+        area = _this$tri2.area,
+        base = _this$tri2.base; // Vector projection
+
+
+    var proj = this.dot_prod(p1, p2, p3) / base; // Distance from left pin
+
+    var l1 = Math.max(-proj, 0); // Distance from right pin
+
+    var l2 = Math.max(proj - base, 0); // Normal
+
+    var h = Math.abs(this.tri_h(area, base));
+    return Math.max(h, l1, l2);
+  },
+  // Distance from point to ray
+  // p1 = point, (p2, p3) = ray
+  point2ray: function point2ray(p1, p2, p3) {
+    var _this$tri3 = this.tri(p1, p2, p3),
+        area = _this$tri3.area,
+        base = _this$tri3.base; // Vector projection
+
+
+    var proj = this.dot_prod(p1, p2, p3) / base; // Distance from left pin
+
+    var l1 = Math.max(-proj, 0); // Normal
+
+    var h = Math.abs(this.tri_h(area, base));
+    return Math.max(h, l1);
+  },
+  tri: function tri(p1, p2, p3) {
+    var area = this.area(p1, p2, p3);
+    var dx = p3[0] - p2[0];
+    var dy = p3[1] - p2[1];
+    var base = Math.sqrt(dx * dx + dy * dy);
+    return {
+      area: area,
+      base: base
+    };
+  },
+
+  /* Area of triangle:
+          p1
+        /    \
+      p2  _  p3
+  */
+  area: function area(p1, p2, p3) {
+    return p1[0] * (p2[1] - p3[1]) + p2[0] * (p3[1] - p1[1]) + p3[0] * (p1[1] - p2[1]);
+  },
+  // Triangle height
+  tri_h: function tri_h(area, base) {
+    return area / base;
+  },
+  // Dot product of (p2, p3) and (p2, p1)
+  dot_prod: function dot_prod(p1, p2, p3) {
+    var v1 = [p3[0] - p2[0], p3[1] - p2[1]];
+    var v2 = [p1[0] - p2[0], p1[1] - p2[1]];
+    return v1[0] * v2[0] + v1[1] * v2[1];
+  },
+  // Symmetrical log
+  log: function log(x) {
+    // TODO: log for small values
+    return Math.sign(x) * Math.log(Math.abs(x) + 1);
+  },
+  // Symmetrical exp
+  exp: function exp(x) {
+    return Math.sign(x) * (Math.exp(Math.abs(x)) - 1);
+  },
+  // Middle line on log scale based on range & px height
+  log_mid: function log_mid(r, h) {
+    var log_hi = this.log(r[0]);
+    var log_lo = this.log(r[1]);
+    var px = h / 2;
+    var gx = log_hi - px * (log_hi - log_lo) / h;
+    return this.exp(gx);
+  },
+  // Return new adjusted range, based on the previous
+  // range, new $_hi, target middle line
+  re_range: function re_range(r1, hi2, mid) {
+    var log_hi1 = this.log(r1[0]);
+    var log_lo1 = this.log(r1[1]);
+    var log_hi2 = this.log(hi2);
+    var log_$ = this.log(mid);
+    var W = (log_hi2 - log_$) * (log_hi1 - log_lo1) / (log_hi1 - log_$);
+    return this.exp(log_hi2 - W);
+  } // Return new adjusted range, based on the previous
+  // range, new $_hi, target middle line + dy (shift)
+  // WASTE
+
+  /*range_shift(r1, hi2, mid, dy, h) {
+      let log_hi1 = this.log(r1[0])
+      let log_lo1 = this.log(r1[1])
+      let log_hi2 = this.log(hi2)
+      let log_$ = this.log(mid)
+       let W = h * (log_hi2 - log_$) /
+              (h * (log_hi1 - log_$) / (log_hi1 - log_lo1) + dy)
+       return this.exp(log_hi2 - W)
+   }*/
+
 });
 // CONCATENATED MODULE: ./src/components/js/layout_fn.js
 // Layout functional interface
 
+
 /* harmony default export */ var layout_fn = (function (self, range) {
+  var ib = self.ti_map.ib;
+  var dt = range[1] - range[0];
+  var r = self.spacex / dt;
+  var ls = self.grid.logScale || false;
   Object.assign(self, {
     // Time to screen coordinates
     t2screen: function t2screen(t) {
-      var dt = range[1] - range[0];
-      var r = self.spacex / dt;
+      if (ib) t = self.ti_map.smth2i(t);
       return Math.floor((t - range[0]) * r) - 0.5;
     },
     // $ to screen coordinates
     $2screen: function $2screen(y) {
+      if (ls) y = math.log(y);
       return Math.floor(y * self.A + self.B) - 0.5;
     },
     // Time-axis nearest step
@@ -5560,16 +5810,14 @@ var lib_default = /*#__PURE__*/__webpack_require__.n(lib);
     },
     // Screen-Y to dollar value (or whatever)
     screen2$: function screen2$(y) {
-      var range = self.height;
-      var range$ = self.$_hi - self.$_lo;
-      var y$ = (range - y) * (range$ / range);
-      return self.$_lo + y$;
+      if (ls) return math.exp((y - self.B) / self.A);
+      return (y - self.B) / self.A;
     },
     // Screen-X to timestamp
     screen2t: function screen2t(x) {
-      var dt = range[1] - range[0];
-      var r = self.spacex / dt;
-      return Math.floor(range[0] + x / r);
+      // TODO: most likely Math.floor not needed
+      // return Math.floor(range[0] + x / r)
+      return range[0] + x / r;
     },
     // $-axis nearest step
     $_magnet: function $_magnet(price) {},
@@ -5589,7 +5837,35 @@ var lib_default = /*#__PURE__*/__webpack_require__.n(lib);
   });
   return self;
 });
+// CONCATENATED MODULE: ./src/components/js/log_scale.js
+// Log-scale mode helpers
+// TODO: all-negative numbers (sometimes wrong scaling)
+
+/* harmony default export */ var log_scale = ({
+  candle: function candle(self, mid, p, $p) {
+    return {
+      x: mid,
+      w: self.px_step * $p.config.CANDLEW,
+      o: Math.floor(math.log(p[1]) * self.A + self.B),
+      h: Math.floor(math.log(p[2]) * self.A + self.B),
+      l: Math.floor(math.log(p[3]) * self.A + self.B),
+      c: Math.floor(math.log(p[4]) * self.A + self.B),
+      raw: p
+    };
+  },
+  expand: function expand(self, height) {
+    // expand log scale
+    var A = -height / (math.log(self.$_hi) - math.log(self.$_lo));
+    var B = -math.log(self.$_hi) * A;
+    var top = -height * 0.1;
+    var bot = height * 1.1;
+    self.$_hi = math.exp((top - B) / A);
+    self.$_lo = math.exp((bot - B) / A);
+  }
+});
 // CONCATENATED MODULE: ./src/components/js/grid_maker.js
+
+
 
 
 
@@ -5597,7 +5873,8 @@ var lib_default = /*#__PURE__*/__webpack_require__.n(lib);
 
 var grid_maker_TIMESCALES = constants.TIMESCALES,
     grid_maker_$SCALES = constants.$SCALES,
-    grid_maker_WEEK = constants.WEEK; // master_grid - ref to the master grid
+    grid_maker_WEEK = constants.WEEK;
+var MAX_INT = Number.MAX_SAFE_INTEGER; // master_grid - ref to the master grid
 
 function GridMaker(id, params) {
   var master_grid = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
@@ -5608,10 +5885,15 @@ function GridMaker(id, params) {
       $p = params.$p,
       layers_meta = params.layers_meta,
       height = params.height,
-      y_t = params.y_t;
-  var self = {};
+      y_t = params.y_t,
+      ti_map = params.ti_map,
+      grid = params.grid;
+  var self = {
+    ti_map: ti_map
+  };
   var lm = layers_meta[id];
   var y_range_fn = null;
+  var ls = grid.logScale;
 
   if (lm && Object.keys(lm).length) {
     // Gets last y_range fn()
@@ -5662,13 +5944,23 @@ function GridMaker(id, params) {
       self.$_hi = y_t.range[0];
       self.$_lo = y_t.range[1];
     } else {
-      self.$_hi = hi + (hi - lo) * $p.config.EXPAND;
-      self.$_lo = lo - (hi - lo) * $p.config.EXPAND;
+      if (!ls) {
+        self.$_hi = hi + (hi - lo) * $p.config.EXPAND;
+        self.$_lo = lo - (hi - lo) * $p.config.EXPAND;
+      } else {
+        self.$_hi = hi;
+        self.$_lo = lo;
+        log_scale.expand(self, height);
+      }
 
       if (self.$_hi === self.$_lo) {
-        self.$_hi *= 1.05; // Expand if height range === 0
+        if (!ls) {
+          self.$_hi *= 1.05; // Expand if height range === 0
 
-        self.$_lo *= 0.95;
+          self.$_lo *= 0.95;
+        } else {
+          log_scale.expand(self, height);
+        }
       }
     }
   }
@@ -5693,6 +5985,8 @@ function GridMaker(id, params) {
     var lens = subn.map(function (x) {
       return x[1].toFixed(self.prec).length;
     });
+    lens.push(self.$_hi.toFixed(self.prec).length);
+    lens.push(self.$_lo.toFixed(self.prec).length);
     var str = '0'.repeat(Math.max.apply(Math, toConsumableArray_default()(lens))) + '    ';
     self.sb = ctx.measureText(str).width;
     self.sb = Math.max(Math.floor(self.sb), $p.config.SBMIN);
@@ -5766,16 +6060,22 @@ function GridMaker(id, params) {
     var r = self.spacex / dt;
     self.startx = (sub[0][0] - range[0]) * r; // Candle Y-transform: (A = scale, B = shift)
 
-    self.A = -height / (self.$_hi - self.$_lo);
-    self.B = -self.$_hi * self.A;
+    if (!grid.logScale) {
+      self.A = -height / (self.$_hi - self.$_lo);
+      self.B = -self.$_hi * self.A;
+    } else {
+      self.A = -height / (math.log(self.$_hi) - math.log(self.$_lo));
+      self.B = -math.log(self.$_hi) * self.A;
+    }
   } // Select nearest good-loking t step (m is target scale)
 
 
   function time_step() {
-    var xrange = range[1] - range[0];
+    var k = ti_map.ib ? 60000 : 1;
+    var xrange = (range[1] - range[0]) * k;
     var m = xrange * ($p.config.GRIDX / $p.width);
     var s = grid_maker_TIMESCALES;
-    return utils.nearest_a(m, s)[1];
+    return utils.nearest_a(m, s)[1] / k;
   } // Select nearest good-loking $ step (m is target scale)
 
 
@@ -5786,10 +6086,53 @@ function GridMaker(id, params) {
     var d = Math.pow(10, p);
     var s = grid_maker_$SCALES.map(function (x) {
       return x * d;
-    }); // TODO: center the range (look at RSI for eaxmple,
+    }); // TODO: center the range (look at RSI for example,
     // it looks ugly when "80" is near the top)
 
     return utils.strip(utils.nearest_a(m, s)[1]);
+  }
+
+  function dollar_mult() {
+    var mult_hi = dollar_mult_hi();
+    var mult_lo = dollar_mult_lo();
+    return Math.max(mult_hi, mult_lo);
+  } // Price step multiplier (for the log-scale mode)
+
+
+  function dollar_mult_hi() {
+    var h = Math.min(self.B, height);
+    if (h < $p.config.GRIDY) return 1;
+    var n = h / $p.config.GRIDY; // target grid N
+
+    var yrange = self.$_hi;
+
+    if (self.$_lo > 0) {
+      var yratio = self.$_hi / self.$_lo;
+    } else {
+      yratio = self.$_hi / 1; // TODO: small values
+    }
+
+    var m = yrange * ($p.config.GRIDY / h);
+    var p = parseInt(yrange.toExponential().split('e')[1]);
+    return Math.pow(yratio, 1 / n);
+  }
+
+  function dollar_mult_lo() {
+    var h = Math.min(height - self.B, height);
+    if (h < $p.config.GRIDY) return 1;
+    var n = h / $p.config.GRIDY; // target grid N
+
+    var yrange = Math.abs(self.$_lo);
+
+    if (self.$_hi < 0 && self.$_lo < 0) {
+      var yratio = Math.abs(self.$_lo / self.$_hi);
+    } else {
+      yratio = Math.abs(self.$_lo) / 1;
+    }
+
+    var m = yrange * ($p.config.GRIDY / h);
+    var p = parseInt(yrange.toExponential().split('e')[1]);
+    return Math.pow(yratio, 1 / n);
   }
 
   function grid_x() {
@@ -5867,28 +6210,144 @@ function GridMaker(id, params) {
     }
   }
 
+  function grid_y_log() {
+    // TODO: Prevent duplicate levels, is this even
+    // a problem here ?
+    self.$_mult = dollar_mult();
+    self.ys = [];
+    var v = Math.abs(sub[sub.length - 1][1] || 1);
+    var y1 = search_start_pos(v);
+    var y2 = search_start_neg(-v);
+    var yp = -Infinity; // Previous y value
+
+    var n = height / $p.config.GRIDY; // target grid N
+
+    var q = 1 + (self.$_mult - 1) / 2; // Over 0
+
+    for (var y$ = y1; y$ > 0; y$ /= self.$_mult) {
+      y$ = log_rounder(y$, q);
+      var y = Math.floor(math.log(y$) * self.A + self.B);
+      self.ys.push([y, utils.strip(y$)]);
+      if (y > height) break;
+      if (y - yp < $p.config.GRIDY * 0.7) break;
+      if (self.ys.length > n + 1) break;
+      yp = y;
+    } // Under 0
+
+
+    yp = Infinity;
+
+    for (var y$ = y2; y$ < 0; y$ /= self.$_mult) {
+      y$ = log_rounder(y$, q);
+
+      var _y = Math.floor(math.log(y$) * self.A + self.B);
+
+      if (yp - _y < $p.config.GRIDY * 0.7) break;
+      self.ys.push([_y, utils.strip(y$)]);
+      if (_y < 0) break;
+      if (self.ys.length > n * 3 + 1) break;
+      yp = _y;
+    } // TODO: remove lines near to 0
+
+  } // Search a start for the top grid so that
+  // the fixed value always included
+
+
+  function search_start_pos(value) {
+    var N = height / $p.config.GRIDY; // target grid N
+
+    var y = Infinity,
+        y$ = value,
+        count = 0;
+
+    while (y > 0) {
+      y = Math.floor(math.log(y$) * self.A + self.B);
+      y$ *= self.$_mult;
+      if (count++ > N * 3) return 0; // Prevents deadloops
+    }
+
+    return y$;
+  }
+
+  function search_start_neg(value) {
+    var N = height / $p.config.GRIDY; // target grid N
+
+    var y = -Infinity,
+        y$ = value,
+        count = 0;
+
+    while (y < height) {
+      y = Math.floor(math.log(y$) * self.A + self.B);
+      y$ *= self.$_mult;
+      if (count++ > N * 3) break; // Prevents deadloops
+    }
+
+    return y$;
+  } // Make log scale levels look great again
+
+
+  function log_rounder(x, quality) {
+    var s = Math.sign(x);
+    x = Math.abs(x);
+
+    if (x > 10) {
+      for (var div = 10; div < MAX_INT; div *= 10) {
+        var nice = Math.floor(x / div) * div;
+
+        if (x / nice > quality) {
+          // More than 10% off
+          break;
+        }
+      }
+
+      div /= 10;
+      return s * Math.floor(x / div) * div;
+    } else if (x < 1) {
+      for (var ro = 10; ro >= 1; ro--) {
+        var _nice = utils.round(x, ro);
+
+        if (x / _nice > quality) {
+          // More than 10% off
+          break;
+        }
+      }
+
+      return s * utils.round(x, ro + 1);
+    } else {
+      return s * Math.floor(x);
+    }
+  }
+
   function apply_sizes() {
     self.width = $p.width - self.sb;
     self.height = height;
   }
 
+  calc_$range();
   calc_sidebar();
   return {
     // First we need to calculate max sidebar width
     // (among all grids). Then we can actually make
     // them
     create: function create() {
-      calc_$range();
       calc_positions();
       grid_x();
-      grid_y();
+
+      if (grid.logScale) {
+        grid_y_log();
+      } else {
+        grid_y();
+      }
+
       apply_sizes(); // Link to the master grid (candlesticks)
 
       if (master_grid) {
         self.master_grid = master_grid;
-      } // Here we add some helpful functions for
-      // plugin creators
+      }
 
+      self.grid = grid; // Grid params
+      // Here we add some helpful functions for
+      // plugin creators
 
       return layout_fn(self, range);
     },
@@ -5908,12 +6367,22 @@ function GridMaker(id, params) {
 // CONCATENATED MODULE: ./src/components/js/layout.js
 
 
+
+function _createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 // Calculates all necessary s*it to build the chart
 // Heights, widths, transforms, ... = everything
 // Why such a mess you ask? Well, that's because
 // one components size can depend on other component
 // data formatting (e.g. grid width depends on sidebar precision)
 // So it's better to calc all in one place.
+
+
+
 
 
 function Layout(params) {
@@ -5924,8 +6393,10 @@ function Layout(params) {
       range = params.range,
       ctx = params.ctx,
       layers_meta = params.layers_meta,
+      ti_map = params.ti_map,
       $p = params.$props,
       y_ts = params.y_transforms;
+  var mgrid = chart.grid || {};
   offsub = offsub.filter(function (x, i) {
     // Skip offchart overlays with custom grid id,
     // because they will be mergred with the existing grids
@@ -5937,12 +6408,10 @@ function Layout(params) {
     var height = $p.height - $p.config.BOTBAR; // When at least one height defined (default = 1),
     // Pxs calculated as: (sum of weights) / number
 
-    var grid = chart.grid || {};
-
-    if (grid.height || offsub.find(function (x) {
+    if (mgrid.height || offsub.find(function (x) {
       return x.grid.height;
     })) {
-      return weighted_hs(grid, height);
+      return weighted_hs(mgrid, height);
     }
 
     var n = offsub.length;
@@ -5978,12 +6447,6 @@ function Layout(params) {
     return hs;
   }
 
-  function t2screen(t) {
-    var dt = range[1] - range[0];
-    var r = self.spacex / dt;
-    return Math.floor((t - range[0]) * r);
-  }
-
   function candles_n_vol() {
     self.candles = [];
     self.volume = [];
@@ -5999,14 +6462,14 @@ function Layout(params) {
 
     for (var i = 0; i < sub.length; i++) {
       var p = sub[i];
-      mid = t2screen(p[0]);
-      self.candles.push({
+      mid = self.t2screen(p[0]) + 0.5;
+      self.candles.push(mgrid.logScale ? log_scale.candle(self, mid, p, $p) : {
         x: mid,
         w: self.px_step * $p.config.CANDLEW,
-        o: p[1] * self.A + self.B,
-        h: p[2] * self.A + self.B,
-        l: p[3] * self.A + self.B,
-        c: p[4] * self.A + self.B,
+        o: Math.floor(p[1] * self.A + self.B),
+        h: Math.floor(p[2] * self.A + self.B),
+        l: Math.floor(p[3] * self.A + self.B),
+        c: Math.floor(p[4] * self.A + self.B),
         raw: p
       }); // Clear volume bar if there is a time gap
 
@@ -6036,40 +6499,35 @@ function Layout(params) {
     ctx: ctx,
     $p: $p,
     layers_meta: layers_meta,
+    ti_map: ti_map,
     height: hs[0],
-    y_t: y_ts[0]
+    y_t: y_ts[0],
+    grid: mgrid
   };
   var gms = [new grid_maker(0, specs)]; // Sub grids
 
-  var _iteratorNormalCompletion = true;
-  var _didIteratorError = false;
-  var _iteratorError = undefined;
+  var _iterator = _createForOfIteratorHelper(offsub.entries()),
+      _step;
 
   try {
-    for (var _iterator = offsub.entries()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
       var _step$value = slicedToArray_default()(_step.value, 2),
           i = _step$value[0],
-          data = _step$value[1].data;
+          _step$value$ = _step$value[1],
+          data = _step$value$.data,
+          grid = _step$value$.grid;
 
       specs.sub = data;
       specs.height = hs[i + 1];
       specs.y_t = y_ts[i + 1];
+      specs.grid = grid || {};
       gms.push(new grid_maker(i + 1, specs, gms[0].get_layout()));
     } // Max sidebar among all grinds
 
   } catch (err) {
-    _didIteratorError = true;
-    _iteratorError = err;
+    _iterator.e(err);
   } finally {
-    try {
-      if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-        _iterator["return"]();
-      }
-    } finally {
-      if (_didIteratorError) {
-        throw _iteratorError;
-      }
-    }
+    _iterator.f();
   }
 
   var sb = Math.max.apply(Math, toConsumableArray_default()(gms.map(function (x) {
@@ -6111,6 +6569,13 @@ var createClass_default = /*#__PURE__*/__webpack_require__.n(createClass);
 // CONCATENATED MODULE: ./src/components/js/updater.js
 
 
+
+function updater_createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = updater_unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function updater_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return updater_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return updater_arrayLikeToArray(o, minLen); }
+
+function updater_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 // Cursor updater: calculates current values for
 // OHLCV and all other indicators
 
@@ -6127,12 +6592,12 @@ var updater_CursorUpdater = /*#__PURE__*/function () {
     value: function sync(e) {
       this.cursor.grid_id = e.grid_id;
       var once = true;
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
+
+      var _iterator = updater_createForOfIteratorHelper(this.grids),
+          _step;
 
       try {
-        for (var _iterator = this.grids[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
           var grid = _step.value;
           var c = this.cursor_data(grid, e);
 
@@ -6154,18 +6619,9 @@ var updater_CursorUpdater = /*#__PURE__*/function () {
           this.cursor.y$ = c.y$;
         }
       } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
+        _iterator.e(err);
       } finally {
-        try {
-          if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-            _iterator["return"]();
-          }
-        } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
-          }
-        }
+        _iterator.f();
       }
     }
   }, {
@@ -6178,12 +6634,12 @@ var updater_CursorUpdater = /*#__PURE__*/function () {
       var t = grid.screen2t(e.x);
       var ids = {},
           res = {};
-      var _iteratorNormalCompletion2 = true;
-      var _didIteratorError2 = false;
-      var _iteratorError2 = undefined;
+
+      var _iterator2 = updater_createForOfIteratorHelper(data),
+          _step2;
 
       try {
-        for (var _iterator2 = data[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
           var d = _step2.value;
           var ts = d.data.map(function (x) {
             return x[0];
@@ -6193,18 +6649,9 @@ var updater_CursorUpdater = /*#__PURE__*/function () {
           res["".concat(d.type, "_").concat(ids[d.type])] = d.data[i];
         }
       } catch (err) {
-        _didIteratorError2 = true;
-        _iteratorError2 = err;
+        _iterator2.e(err);
       } finally {
-        try {
-          if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
-            _iterator2["return"]();
-          }
-        } finally {
-          if (_didIteratorError2) {
-            throw _iteratorError2;
-          }
-        }
+        _iterator2.f();
       }
 
       return res;
@@ -6323,7 +6770,7 @@ Sectionvue_type_template_id_8fbe9336_render._withStripped = true
 var hammer = __webpack_require__(5);
 
 // EXTERNAL MODULE: ./node_modules/hamsterjs/hamster.js
-var hamsterjs_hamster = __webpack_require__(22);
+var hamsterjs_hamster = __webpack_require__(25);
 var hamster_default = /*#__PURE__*/__webpack_require__.n(hamsterjs_hamster);
 
 // CONCATENATED MODULE: ./src/components/js/grid.js
@@ -6331,9 +6778,17 @@ var hamster_default = /*#__PURE__*/__webpack_require__.n(hamsterjs_hamster);
 
 
 
+
+function grid_createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = grid_unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function grid_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return grid_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return grid_arrayLikeToArray(o, minLen); }
+
+function grid_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 // Grid.js listens to various user-generated events,
 // emits Vue-events if something has changed (e.g. range)
 // Think of it as an I/O system for Grid.vue
+
 
 
  // Grid is good.
@@ -6387,7 +6842,8 @@ var grid_Grid = /*#__PURE__*/function () {
           r: _this.range.slice(),
           t: _this.range[1] - _this.range[0],
           o: tfrm ? tfrm.offset || 0 : 0,
-          y_r: tfrm && tfrm.range ? tfrm.range.slice() : undefined
+          y_r: tfrm && tfrm.range ? tfrm.range.slice() : undefined,
+          B: _this.layout.B
         };
 
         _this.comp.$emit('cursor-changed', {
@@ -6558,12 +7014,12 @@ var grid_Grid = /*#__PURE__*/function () {
       this.ctx.strokeStyle = this.$p.colors.colorGrid;
       this.ctx.beginPath();
       var ymax = this.layout.height;
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
+
+      var _iterator = grid_createForOfIteratorHelper(this.layout.xs),
+          _step;
 
       try {
-        for (var _iterator = this.layout.xs[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
           var _step$value = slicedToArray_default()(_step.value, 2),
               x = _step$value[0],
               p = _step$value[1];
@@ -6572,26 +7028,16 @@ var grid_Grid = /*#__PURE__*/function () {
           this.ctx.lineTo(x - 0.5, ymax);
         }
       } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
+        _iterator.e(err);
       } finally {
-        try {
-          if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-            _iterator["return"]();
-          }
-        } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
-          }
-        }
+        _iterator.f();
       }
 
-      var _iteratorNormalCompletion2 = true;
-      var _didIteratorError2 = false;
-      var _iteratorError2 = undefined;
+      var _iterator2 = grid_createForOfIteratorHelper(this.layout.ys),
+          _step2;
 
       try {
-        for (var _iterator2 = this.layout.ys[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
           var _step2$value = slicedToArray_default()(_step2.value, 2),
               y = _step2$value[0],
               y$ = _step2$value[1];
@@ -6600,18 +7046,9 @@ var grid_Grid = /*#__PURE__*/function () {
           this.ctx.lineTo(this.layout.width, y - 0.5);
         }
       } catch (err) {
-        _didIteratorError2 = true;
-        _iteratorError2 = err;
+        _iterator2.e(err);
       } finally {
-        try {
-          if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
-            _iterator2["return"]();
-          }
-        } finally {
-          if (_didIteratorError2) {
-            throw _iteratorError2;
-          }
-        }
+        _iterator2.f();
       }
 
       this.ctx.stroke();
@@ -6673,11 +7110,19 @@ var grid_Grid = /*#__PURE__*/function () {
       var d$ = this.layout.$_hi - this.layout.$_lo;
       d$ *= (this.drug.y - y) / this.layout.height;
       var offset = this.drug.o + d$;
+      var ls = this.layout.grid.logScale;
 
-      if (this.$p.y_transform && !this.$p.y_transform.auto) {
+      if (ls && this.drug.y_r) {
+        var dy = this.drug.y - y;
+        var range = this.drug.y_r.slice();
+        range[0] = math.exp((0 - this.drug.B + dy) / this.layout.A);
+        range[1] = math.exp((this.layout.height - this.drug.B + dy) / this.layout.A);
+      }
+
+      if (this.drug.y_r && this.$p.y_transform && !this.$p.y_transform.auto) {
         this.comp.$emit('sidebar-transform', {
           grid_id: this.id,
-          range: [this.drug.y_r[0] - offset, this.drug.y_r[1] - offset]
+          range: ls ? range || this.drug.y_r : [this.drug.y_r[0] - offset, this.drug.y_r[1] - offset]
         });
       }
 
@@ -6732,12 +7177,11 @@ var grid_Grid = /*#__PURE__*/function () {
   }, {
     key: "propagate",
     value: function propagate(name, event) {
-      var _iteratorNormalCompletion3 = true;
-      var _didIteratorError3 = false;
-      var _iteratorError3 = undefined;
+      var _iterator3 = grid_createForOfIteratorHelper(this.overlays),
+          _step3;
 
       try {
-        for (var _iterator3 = this.overlays[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+        for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
           var layer = _step3.value;
 
           if (layer.renderer[name]) {
@@ -6756,18 +7200,9 @@ var grid_Grid = /*#__PURE__*/function () {
           }
         }
       } catch (err) {
-        _didIteratorError3 = true;
-        _iteratorError3 = err;
+        _iterator3.e(err);
       } finally {
-        try {
-          if (!_iteratorNormalCompletion3 && _iterator3["return"] != null) {
-            _iterator3["return"]();
-          }
-        } finally {
-          if (_didIteratorError3) {
-            throw _iteratorError3;
-          }
-        }
+        _iterator3.f();
       }
     }
   }]);
@@ -6849,6 +7284,74 @@ var grid_Grid = /*#__PURE__*/function () {
       this._attrs.height = val;
       this.setup();
     }
+  }
+});
+// CONCATENATED MODULE: ./src/mixins/uxlist.js
+// Manager for Inteerface objects
+/* harmony default export */ var uxlist = ({
+  methods: {
+    on_ux_event: function on_ux_event(d, target) {
+      if (d.event === 'new-interface') {
+        if (d.args[0].target === target) {
+          d.args[0].vars = d.args[0].vars || {};
+          d.args[0].grid_id = d.args[1];
+          d.args[0].overlay_id = d.args[2];
+          this.uxs.push(d.args[0]); // this.rerender++
+        }
+      } else if (d.event === 'close-interface') {
+        this.uxs = this.uxs.filter(function (x) {
+          return x.uuid !== d.args[0];
+        });
+      } else if (d.event === 'modify-interface') {
+        var ux = this.uxs.filter(function (x) {
+          return x.uuid === d.args[0];
+        });
+
+        if (ux.length) {
+          this.modify(ux[0], d.args[1]);
+        }
+      } else if (d.event === 'hide-interface') {
+        var _ux = this.uxs.filter(function (x) {
+          return x.uuid === d.args[0];
+        });
+
+        if (_ux.length) {
+          _ux[0].hidden = true;
+          this.modify(_ux[0], {
+            hidden: true
+          });
+        }
+      } else if (d.event === 'show-interface') {
+        var _ux2 = this.uxs.filter(function (x) {
+          return x.uuid === d.args[0];
+        });
+
+        if (_ux2.length) {
+          this.modify(_ux2[0], {
+            hidden: false
+          });
+        }
+      } else {
+        return d;
+      }
+    },
+    modify: function modify(ux) {
+      var obj = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+      for (var k in obj) {
+        if (k in ux) {
+          this.$set(ux, k, obj[k]);
+        }
+      }
+    },
+    remove_all_ux: function remove_all_ux() {
+      this.uxs = [];
+    }
+  },
+  data: function data() {
+    return {
+      uxs: []
+    };
   }
 });
 // CONCATENATED MODULE: ./src/components/js/crosshair.js
@@ -7137,9 +7640,452 @@ var KeyboardListener_component = normalizeComponent(
 if (false) { var KeyboardListener_api; }
 KeyboardListener_component.options.__file = "src/components/KeyboardListener.vue"
 /* harmony default export */ var KeyboardListener = (KeyboardListener_component.exports);
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/components/UxLayer.vue?vue&type=template&id=390ccf6e&
+var UxLayervue_type_template_id_390ccf6e_render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "span",
+    { class: "trading-vue-grid-ux-" + _vm.id, style: _vm.style },
+    _vm._l(_vm.uxs, function(ux) {
+      return _c("ux-wrapper", {
+        key: ux.uuid,
+        attrs: {
+          ux: ux,
+          updater: _vm.updater,
+          colors: _vm.colors,
+          config: _vm.config
+        },
+        on: { "custom-event": _vm.on_custom_event }
+      })
+    }),
+    1
+  )
+}
+var UxLayervue_type_template_id_390ccf6e_staticRenderFns = []
+UxLayervue_type_template_id_390ccf6e_render._withStripped = true
+
+
+// CONCATENATED MODULE: ./src/components/UxLayer.vue?vue&type=template&id=390ccf6e&
+
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/components/UxWrapper.vue?vue&type=template&id=4bc32070&
+var UxWrappervue_type_template_id_4bc32070_render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.visible
+    ? _c(
+        "div",
+        {
+          staticClass: "trading-vue-ux-wrapper",
+          style: _vm.style,
+          attrs: { id: "tvjs-ux-wrapper-" + _vm.ux.uuid }
+        },
+        [
+          _c(_vm.ux.component, {
+            tag: "component",
+            attrs: {
+              ux: _vm.ux,
+              updater: _vm.updater,
+              wrapper: _vm.wrapper,
+              colors: _vm.colors
+            },
+            on: { "custom-event": _vm.on_custom_event }
+          }),
+          _vm._v(" "),
+          _vm.ux.show_pin
+            ? _c("div", {
+                staticClass: "tvjs-ux-wrapper-pin",
+                style: _vm.pin_style
+              })
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.ux.win_header !== false
+            ? _c("div", { staticClass: "tvjs-ux-wrapper-head" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "tvjs-ux-wrapper-close",
+                    style: _vm.btn_style,
+                    on: { click: _vm.close }
+                  },
+                  [_vm._v("×")]
+                )
+              ])
+            : _vm._e()
+        ],
+        1
+      )
+    : _vm._e()
+}
+var UxWrappervue_type_template_id_4bc32070_staticRenderFns = []
+UxWrappervue_type_template_id_4bc32070_render._withStripped = true
+
+
+// CONCATENATED MODULE: ./src/components/UxWrapper.vue?vue&type=template&id=4bc32070&
+
+// CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/components/UxWrapper.vue?vue&type=script&lang=js&
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ var UxWrappervue_type_script_lang_js_ = ({
+  name: 'UxWrapper',
+  props: ['ux', 'updater', 'colors', 'config'],
+  mounted: function mounted() {
+    this.self = document.getElementById(this.uuid);
+    this.w = this.self.offsetWidth; // TODO: => width: "content"
+
+    this.h = this.self.offsetHeight; // TODO: => height: "content"
+
+    this.update_position();
+  },
+  created: function created() {
+    this.mouse.on('mousemove', this.mousemove);
+    this.mouse.on('mouseout', this.mouseout);
+  },
+  beforeDestroy: function beforeDestroy() {
+    this.mouse.off('mousemove', this.mousemove);
+    this.mouse.off('mouseout', this.mouseout);
+  },
+  methods: {
+    update_position: function update_position() {
+      if (this.uxr.hidden) return;
+      var lw = this.layout.width;
+      var lh = this.layout.height;
+      var pin = this.uxr.pin;
+
+      switch (pin[0]) {
+        case 'cursor':
+          var x = this.uxr.overlay.cursor.x;
+          break;
+
+        case 'mouse':
+          x = this.mouse.x;
+          break;
+
+        default:
+          if (typeof pin[0] === 'string') {
+            x = this.parse_coord(pin[0], lw);
+          } else {
+            x = this.layout.t2screen(pin[0]);
+          }
+
+      }
+
+      switch (pin[1]) {
+        case 'cursor':
+          var y = this.uxr.overlay.cursor.y;
+          break;
+
+        case 'mouse':
+          y = this.mouse.y;
+          break;
+
+        default:
+          if (typeof pin[1] === 'string') {
+            y = this.parse_coord(pin[1], lh);
+          } else {
+            y = this.layout.$2screen(pin[1]);
+          }
+
+      }
+
+      this.x = x + this.ox;
+      this.y = y + this.oy;
+    },
+    parse_coord: function parse_coord(str, scale) {
+      if (str === '0' || str === '') return 0;
+      var plus = str.split('+');
+
+      if (plus.length === 2) {
+        return this.parse_coord(plus[0], scale) + this.parse_coord(plus[1], scale);
+      }
+
+      var minus = str.split('-');
+
+      if (minus.length === 2) {
+        return this.parse_coord(minus[0], scale) - this.parse_coord(minus[1], scale);
+      }
+
+      var per = str.split('%');
+
+      if (per.length === 2) {
+        return scale * parseInt(per[0]) / 100;
+      }
+
+      var px = str.split('px');
+
+      if (px.length === 2) {
+        return parseInt(px[0]);
+      }
+
+      return undefined;
+    },
+    mousemove: function mousemove() {
+      this.update_position();
+      this.visible = true;
+    },
+    mouseout: function mouseout() {
+      if (this.uxr.pin.includes('cursor') || this.uxr.pin.includes('mouse')) this.visible = false;
+    },
+    on_custom_event: function on_custom_event(event) {
+      this.$emit('custom-event', event);
+
+      if (event.event === 'modify-interface') {
+        if (this.self) {
+          this.w = this.self.offsetWidth;
+          this.h = this.self.offsetHeight;
+        }
+
+        this.update_position();
+      }
+    },
+    close: function close() {
+      this.$emit('custom-event', {
+        event: 'close-interface',
+        args: [this.$props.ux.uuid]
+      });
+    }
+  },
+  computed: {
+    uxr: function uxr() {
+      return this.$props.ux; // just a ref
+    },
+    layout: function layout() {
+      return this.$props.ux.overlay.layout;
+    },
+    settings: function settings() {
+      return this.$props.ux.overlay.settings;
+    },
+    uuid: function uuid() {
+      return "tvjs-ux-wrapper-".concat(this.uxr.uuid);
+    },
+    mouse: function mouse() {
+      return this.uxr.overlay.mouse;
+    },
+    style: function style() {
+      var st = {
+        'display': this.uxr.hidden ? 'none' : undefined,
+        'left': "".concat(this.x, "px"),
+        'top': "".concat(this.y, "px"),
+        'pointer-events': this.uxr.pointer_events || 'all',
+        'z-index': this.z_index
+      };
+      if (this.uxr.win_styling !== false) st = Object.assign(st, {
+        'border': "1px solid ".concat(this.$props.colors.colorGrid),
+        'border-radius': '3px',
+        'background': "".concat(this.background)
+      });
+      return st;
+    },
+    pin_style: function pin_style() {
+      return {
+        'left': "".concat(-this.ox, "px"),
+        'top': "".concat(-this.oy, "px"),
+        'background-color': this.uxr.pin_color
+      };
+    },
+    btn_style: function btn_style() {
+      return {
+        'background': "".concat(this.inactive_btn_color),
+        'color': "".concat(this.inactive_btn_color)
+      };
+    },
+    pin_pos: function pin_pos() {
+      return this.uxr.pin_position ? this.uxr.pin_position.split(',') : ['0', '0'];
+    },
+    // Offset x
+    ox: function ox() {
+      if (this.pin_pos.length !== 2) return undefined;
+      var x = this.parse_coord(this.pin_pos[0], this.w);
+      return -x;
+    },
+    // Offset y
+    oy: function oy() {
+      if (this.pin_pos.length !== 2) return undefined;
+      var y = this.parse_coord(this.pin_pos[1], this.h);
+      return -y;
+    },
+    z_index: function z_index() {
+      var base_index = this.settings['z-index'] || this.settings['zIndex'] || 0;
+      var ux_index = this.uxr['z_index'] || 0;
+      return base_index + ux_index;
+    },
+    background: function background() {
+      var c = this.uxr.background || this.$props.colors.colorBack;
+      return utils.apply_opacity(c, this.uxr.background_opacity || this.$props.config.UX_OPACITY);
+    },
+    inactive_btn_color: function inactive_btn_color() {
+      return this.uxr.inactive_btn_color || this.$props.colors.colorGrid;
+    },
+    wrapper: function wrapper() {
+      return {
+        x: this.x,
+        y: this.y,
+        pin_x: this.x - this.ox,
+        pin_y: this.y - this.oy
+      };
+    }
+  },
+  watch: {
+    updater: function updater() {
+      this.update_position();
+    }
+  },
+  data: function data() {
+    return {
+      x: 0,
+      y: 0,
+      w: 0,
+      h: 0,
+      visible: true
+    };
+  }
+});
+// CONCATENATED MODULE: ./src/components/UxWrapper.vue?vue&type=script&lang=js&
+ /* harmony default export */ var components_UxWrappervue_type_script_lang_js_ = (UxWrappervue_type_script_lang_js_); 
+// EXTERNAL MODULE: ./src/components/UxWrapper.vue?vue&type=style&index=0&lang=css&
+var UxWrappervue_type_style_index_0_lang_css_ = __webpack_require__(37);
+
+// CONCATENATED MODULE: ./src/components/UxWrapper.vue
+
+
+
+
+
+
+/* normalize component */
+
+var UxWrapper_component = normalizeComponent(
+  components_UxWrappervue_type_script_lang_js_,
+  UxWrappervue_type_template_id_4bc32070_render,
+  UxWrappervue_type_template_id_4bc32070_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var UxWrapper_api; }
+UxWrapper_component.options.__file = "src/components/UxWrapper.vue"
+/* harmony default export */ var UxWrapper = (UxWrapper_component.exports);
+// CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/components/UxLayer.vue?vue&type=script&lang=js&
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ var UxLayervue_type_script_lang_js_ = ({
+  name: 'UxLayer',
+  props: ['tv_id', 'id', 'uxs', 'updater', 'colors', 'config'],
+  components: {
+    UxWrapper: UxWrapper
+  },
+  created: function created() {},
+  mounted: function mounted() {},
+  beforeDestroy: function beforeDestroy() {},
+  methods: {
+    on_custom_event: function on_custom_event(event) {
+      this.$emit('custom-event', event);
+    }
+  },
+  computed: {
+    style: function style() {
+      return {
+        'top': this.$props.id !== 0 ? '1px' : 0,
+        'left': 0,
+        'width': '100%',
+        'height': 'calc(100% - 2px)',
+        'position': 'absolute',
+        'z-index': '1',
+        'pointer-events': 'none',
+        'overflow': 'hidden'
+      };
+    }
+  }
+});
+// CONCATENATED MODULE: ./src/components/UxLayer.vue?vue&type=script&lang=js&
+ /* harmony default export */ var components_UxLayervue_type_script_lang_js_ = (UxLayervue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./src/components/UxLayer.vue
+
+
+
+
+
+/* normalize component */
+
+var UxLayer_component = normalizeComponent(
+  components_UxLayervue_type_script_lang_js_,
+  UxLayervue_type_template_id_390ccf6e_render,
+  UxLayervue_type_template_id_390ccf6e_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var UxLayer_api; }
+UxLayer_component.options.__file = "src/components/UxLayer.vue"
+/* harmony default export */ var UxLayer = (UxLayer_component.exports);
 // CONCATENATED MODULE: ./src/stuff/mouse.js
 
 
+
+function mouse_createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = mouse_unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function mouse_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return mouse_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return mouse_arrayLikeToArray(o, minLen); }
+
+function mouse_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 // Mouse event handler for overlay
 var mouse_Mouse = /*#__PURE__*/function () {
@@ -7166,6 +8112,15 @@ var mouse_Mouse = /*#__PURE__*/function () {
       this.map[name] = this.map[name] || [];
       this.map[name][dir](handler);
       this.listeners++;
+    }
+  }, {
+    key: "off",
+    value: function off(name, handler) {
+      if (!this.map[name]) return;
+      var i = this.map[name].indexOf(handler);
+      if (i < 0) return;
+      this.map[name].splice(i, 1);
+      this.listeners--;
     } // Called by grid.js
 
   }, {
@@ -7174,28 +8129,18 @@ var mouse_Mouse = /*#__PURE__*/function () {
       var l = this.comp.layout;
 
       if (name in this.map) {
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
+        var _iterator = mouse_createForOfIteratorHelper(this.map[name]),
+            _step;
 
         try {
-          for (var _iterator = this.map[name][Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          for (_iterator.s(); !(_step = _iterator.n()).done;) {
             var f = _step.value;
             f(event);
           }
         } catch (err) {
-          _didIteratorError = true;
-          _iteratorError = err;
+          _iterator.e(err);
         } finally {
-          try {
-            if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-              _iterator["return"]();
-            }
-          } finally {
-            if (_didIteratorError) {
-              throw _iteratorError;
-            }
-          }
+          _iterator.f();
         }
       }
 
@@ -7224,7 +8169,7 @@ var mouse_Mouse = /*#__PURE__*/function () {
 // Usuful stuff for creating overlays. Include as mixin
 
 /* harmony default export */ var mixins_overlay = ({
-  props: ['id', 'num', 'interval', 'cursor', 'colors', 'layout', 'sub', 'data', 'settings', 'grid_id', 'font', 'config', 'meta'],
+  props: ['id', 'num', 'interval', 'cursor', 'colors', 'layout', 'sub', 'data', 'settings', 'grid_id', 'font', 'config', 'meta', 'tf'],
   mounted: function mounted() {
     // Main chart?
     var main = this.$props.sub === this.$props.data;
@@ -7277,9 +8222,19 @@ var mouse_Mouse = /*#__PURE__*/function () {
         args[_key - 1] = arguments[_key];
       }
 
-      if (event === 'change-settings' || event === 'object-selected' || event === 'new-shader' || event === 'remove-tool') {
+      if (event === 'change-settings' || event === 'object-selected' || event === 'new-shader' || event === 'new-interface' || event === 'remove-tool') {
         args.push(this.grid_id, this.id);
+
+        if (this.$props.settings.$uuid) {
+          args.push(this.$props.settings.$uuid);
+        }
       }
+
+      if (event === 'new-interface') {
+        args[0].overlay = this;
+        args[0].uuid = this.last_ux_id = "".concat(this.grid_id, "-").concat(this.id, "-").concat(this.uxs_count++);
+      } // TODO: add a namespace to the event name
+
 
       this._$emit('custom-event', {
         event: event,
@@ -7300,11 +8255,23 @@ var mouse_Mouse = /*#__PURE__*/function () {
       deep: true
     }
   },
+  data: function data() {
+    return {
+      uxs_count: 0,
+      last_ux_id: null
+    };
+  },
   render: function render(h) {
     return h();
   }
 });
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/components/overlays/Spline.vue?vue&type=script&lang=js&
+function Splinevue_type_script_lang_js_createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = Splinevue_type_script_lang_js_unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function Splinevue_type_script_lang_js_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return Splinevue_type_script_lang_js_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return Splinevue_type_script_lang_js_arrayLikeToArray(o, minLen); }
+
+function Splinevue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 // Spline renderer. (SMAs, EMAs, TEMAs...
 // you know what I mean)
 // TODO: make a real spline, not a bunch of lines...
@@ -7344,30 +8311,21 @@ var mouse_Mouse = /*#__PURE__*/function () {
       ctx.beginPath();
       var layout = this.$props.layout;
       var i = this.data_index;
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
+
+      var _iterator = Splinevue_type_script_lang_js_createForOfIteratorHelper(this.$props.data),
+          _step;
 
       try {
-        for (var _iterator = this.$props.data[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
           var p = _step.value;
           var x = layout.t2screen(p[0]);
           var y = layout.$2screen(p[i]);
           ctx.lineTo(x, y);
         }
       } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
+        _iterator.e(err);
       } finally {
-        try {
-          if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-            _iterator["return"]();
-          }
-        } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
-          }
-        }
+        _iterator.f();
       }
 
       ctx.stroke();
@@ -7436,6 +8394,12 @@ if (false) { var Spline_api; }
 Spline_component.options.__file = "src/components/overlays/Spline.vue"
 /* harmony default export */ var Spline = (Spline_component.exports);
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/components/overlays/Splines.vue?vue&type=script&lang=js&
+function Splinesvue_type_script_lang_js_createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = Splinesvue_type_script_lang_js_unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function Splinesvue_type_script_lang_js_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return Splinesvue_type_script_lang_js_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return Splinesvue_type_script_lang_js_arrayLikeToArray(o, minLen); }
+
+function Splinesvue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 // Channel renderer. (Keltner, Bollinger)
 
 /* harmony default export */ var Splinesvue_type_script_lang_js_ = ({
@@ -7455,30 +8419,21 @@ Spline_component.options.__file = "src/components/overlays/Spline.vue"
         ctx.strokeStyle = this.clrx[i];
         ctx.lineWidth = this.widths[i] || this.line_width;
         ctx.beginPath();
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
+
+        var _iterator = Splinesvue_type_script_lang_js_createForOfIteratorHelper(this.$props.data),
+            _step;
 
         try {
-          for (var _iterator = this.$props.data[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          for (_iterator.s(); !(_step = _iterator.n()).done;) {
             var p = _step.value;
             var x = layout.t2screen(p[0]);
             var y = layout.$2screen(p[i + 1]);
             ctx.lineTo(x, y);
           }
         } catch (err) {
-          _didIteratorError = true;
-          _iteratorError = err;
+          _iterator.e(err);
         } finally {
-          try {
-            if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-              _iterator["return"]();
-            }
-          } finally {
-            if (_didIteratorError) {
-              throw _iteratorError;
-            }
-          }
+          _iterator.f();
         }
 
         ctx.stroke();
@@ -7551,6 +8506,12 @@ if (false) { var Splines_api; }
 Splines_component.options.__file = "src/components/overlays/Splines.vue"
 /* harmony default export */ var Splines = (Splines_component.exports);
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/components/overlays/Range.vue?vue&type=script&lang=js&
+function Rangevue_type_script_lang_js_createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = Rangevue_type_script_lang_js_unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function Rangevue_type_script_lang_js_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return Rangevue_type_script_lang_js_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return Rangevue_type_script_lang_js_arrayLikeToArray(o, minLen); }
+
+function Rangevue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 // R S I . Because we love it
 // Adds all necessary stuff for you.
 
@@ -7590,30 +8551,21 @@ Splines_component.options.__file = "src/components/overlays/Splines.vue"
       ctx.lineWidth = this.line_width;
       ctx.strokeStyle = this.color;
       ctx.beginPath();
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
+
+      var _iterator = Rangevue_type_script_lang_js_createForOfIteratorHelper(this.$props.data),
+          _step;
 
       try {
-        for (var _iterator = this.$props.data[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
           var p = _step.value;
           var x = layout.t2screen(p[0]);
           var y = layout.$2screen(p[1]);
           ctx.lineTo(x, y);
         }
       } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
+        _iterator.e(err);
       } finally {
-        try {
-          if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-            _iterator["return"]();
-          }
-        } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
-          }
-        }
+        _iterator.f();
       }
 
       ctx.stroke();
@@ -7699,6 +8651,12 @@ if (false) { var Range_api; }
 Range_component.options.__file = "src/components/overlays/Range.vue"
 /* harmony default export */ var Range = (Range_component.exports);
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/components/overlays/Trades.vue?vue&type=script&lang=js&
+function Tradesvue_type_script_lang_js_createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = Tradesvue_type_script_lang_js_unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function Tradesvue_type_script_lang_js_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return Tradesvue_type_script_lang_js_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return Tradesvue_type_script_lang_js_arrayLikeToArray(o, minLen); }
+
+function Tradesvue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 
 /* harmony default export */ var Tradesvue_type_script_lang_js_ = ({
   name: 'Trades',
@@ -7714,12 +8672,12 @@ Range_component.options.__file = "src/components/overlays/Range.vue"
       var layout = this.$props.layout;
       ctx.lineWidth = 1.5;
       ctx.strokeStyle = 'black';
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
+
+      var _iterator = Tradesvue_type_script_lang_js_createForOfIteratorHelper(this.$props.data),
+          _step;
 
       try {
-        for (var _iterator = this.$props.data[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
           var p = _step.value;
           ctx.fillStyle = p[1] ? this.buy_color : this.sell_color;
           ctx.beginPath();
@@ -7736,18 +8694,9 @@ Range_component.options.__file = "src/components/overlays/Range.vue"
           }
         }
       } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
+        _iterator.e(err);
       } finally {
-        try {
-          if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-            _iterator["return"]();
-          }
-        } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
-          }
-        }
+        _iterator.f();
       }
     },
     draw_label: function draw_label(ctx, x, y, p) {
@@ -8034,6 +8983,7 @@ Segment_component.options.__file = "src/components/overlays/Segment.vue"
 /* harmony default export */ var Segment = (Segment_component.exports);
 // CONCATENATED MODULE: ./src/components/js/layout_cnv.js
 
+
 // Claculates postions and sizes for candlestick
 // and volume bars for the given subset of data
 
@@ -8057,8 +9007,11 @@ function layout_cnv(self) {
       mid,
       prev = undefined; // Subset interval against main interval
 
-  var interval2 = utils.detect_interval(sub);
-  var ratio = interval2 / $p.interval;
+  var _new_interval = new_interval(layout, $p, sub),
+      _new_interval2 = slicedToArray_default()(_new_interval, 2),
+      interval2 = _new_interval2[0],
+      ratio = _new_interval2[1];
+
   var px_step2 = layout.px_step * ratio;
   var splitter = px_step2 > 5 ? 1 : 0; // A & B are current chart tranformations:
   // A === scale,  B === Y-axis shift
@@ -8072,14 +9025,15 @@ function layout_cnv(self) {
     }
 
     x1 = prev || Math.floor(mid - px_step2 * 0.5);
-    x2 = Math.floor(mid + px_step2 * 0.5) - 0.5;
+    x2 = Math.floor(mid + px_step2 * 0.5) - 0.5; // TODO: add log scale support
+
     candles.push({
       x: mid,
       w: layout.px_step * $p.config.CANDLEW * ratio,
-      o: p[1] * layout.A + layout.B,
-      h: p[2] * layout.A + layout.B,
-      l: p[3] * layout.A + layout.B,
-      c: p[4] * layout.A + layout.B,
+      o: Math.floor(p[1] * layout.A + layout.B),
+      h: Math.floor(p[2] * layout.A + layout.B),
+      l: Math.floor(p[3] * layout.A + layout.B),
+      c: Math.floor(p[4] * layout.A + layout.B),
       raw: p
     });
     volume.push({
@@ -8123,8 +9077,11 @@ function layout_vol(self) {
       mid,
       prev = undefined; // Subset interval against main interval
 
-  var interval2 = utils.detect_interval(sub);
-  var ratio = interval2 / $p.interval;
+  var _new_interval3 = new_interval(layout, $p, sub),
+      _new_interval4 = slicedToArray_default()(_new_interval3, 2),
+      interval2 = _new_interval4[0],
+      ratio = _new_interval4[1];
+
   var px_step2 = layout.px_step * ratio;
   var splitter = px_step2 > 5 ? 1 : 0; // A & B are current chart tranformations:
   // A === scale,  B === Y-axis shift
@@ -8151,6 +9108,24 @@ function layout_vol(self) {
 
   return volume;
 }
+
+function new_interval(layout, $p, sub) {
+  // Subset interval against main interval
+  if (!layout.ti_map.ib) {
+    var interval2 = $p.tf || utils.detect_interval(sub);
+    var ratio = interval2 / $p.interval;
+  } else {
+    if ($p.tf) {
+      var ratio = $p.tf / layout.ti_map.tf;
+      var interval2 = ratio;
+    } else {
+      var interval2 = utils.detect_interval(sub);
+      var ratio = interval2 / $p.interval;
+    }
+  }
+
+  return [interval2, ratio];
+}
 // CONCATENATED MODULE: ./src/components/primitives/candle.js
 
 
@@ -8169,8 +9144,9 @@ var candle_CandleExt = /*#__PURE__*/function () {
   createClass_default()(CandleExt, [{
     key: "draw",
     value: function draw(data) {
-      var body_color = data.c <= data.o ? this.style.colorCandleUp : this.style.colorCandleDw;
-      var wick_color = data.c <= data.o ? this.style.colorWickUp : this.style.colorWickDw;
+      var green = data.raw[4] >= data.raw[1];
+      var body_color = green ? this.style.colorCandleUp : this.style.colorCandleDw;
+      var wick_color = green ? this.style.colorWickUp : this.style.colorWickDw;
       var wick_color_sm = this.style.colorWickSm;
       var w = Math.max(data.w, 1);
       var hw = Math.max(Math.floor(w * 0.5), 1);
@@ -8185,8 +9161,8 @@ var candle_CandleExt = /*#__PURE__*/function () {
       if (data.w > 1.5 || data.o === data.c) {
         this.ctx.fillStyle = body_color; // TODO: Move common calculations to layout.js
 
-        var s = data.c >= data.o ? 1 : -1;
-        this.ctx.fillRect(Math.floor(data.x - hw - 1), Math.floor(data.o - 1), Math.floor(hw * 2 + 1), Math.floor(s * Math.max(h, max_h)));
+        var s = green ? 1 : -1;
+        this.ctx.fillRect(Math.floor(data.x - hw - 1), data.c, Math.floor(hw * 2 + 1), s * Math.max(h, max_h));
       } else {
         this.ctx.strokeStyle = body_color;
         this.ctx.beginPath();
@@ -8287,8 +9263,9 @@ var price_Price = /*#__PURE__*/function () {
       if (!this.shader) this.init_shader();
       var layout = this.comp.$props.layout;
       var last = this.comp.$props.meta.last;
-      var color = last[4] >= last[1] ? this.green() : this.red();
-      var y = layout.$2screen(last[4]) - 1;
+      var dir = last[4] >= last[1];
+      var color = dir ? this.green() : this.red();
+      var y = layout.$2screen(last[4]) + (dir ? 1 : 0);
       ctx.strokeStyle = color;
       ctx.setLineDash([1, 1]);
       ctx.beginPath();
@@ -8306,7 +9283,7 @@ var price_Price = /*#__PURE__*/function () {
       var y = layout.$2screen(last[4]);
       var cndl = layout.c_magnet(last[0]);
       return {
-        y: Math.floor(cndl.c) - 1.5,
+        y: Math.floor(cndl.c) - 0.5,
         price: last[4],
         color: last[4] >= last[1] ? this.green() : this.red()
       };
@@ -8333,6 +9310,13 @@ var price_Price = /*#__PURE__*/function () {
 
 
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/components/overlays/Candles.vue?vue&type=script&lang=js&
+
+
+function Candlesvue_type_script_lang_js_createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = Candlesvue_type_script_lang_js_unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function Candlesvue_type_script_lang_js_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return Candlesvue_type_script_lang_js_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return Candlesvue_type_script_lang_js_arrayLikeToArray(o, minLen); }
+
+function Candlesvue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 // Renedrer for candlesticks + volume (optional)
 // It can be used as the main chart or an indicator
@@ -8367,53 +9351,33 @@ var price_Price = /*#__PURE__*/function () {
       }
 
       if (this.show_volume) {
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
+        var _iterator = Candlesvue_type_script_lang_js_createForOfIteratorHelper(cnv.volume),
+            _step;
 
         try {
-          for (var _iterator = cnv.volume[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          for (_iterator.s(); !(_step = _iterator.n()).done;) {
             var v = _step.value;
             new volbar_VolbarExt(this, ctx, v);
           }
         } catch (err) {
-          _didIteratorError = true;
-          _iteratorError = err;
+          _iterator.e(err);
         } finally {
-          try {
-            if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-              _iterator["return"]();
-            }
-          } finally {
-            if (_didIteratorError) {
-              throw _iteratorError;
-            }
-          }
+          _iterator.f();
         }
       }
 
-      var _iteratorNormalCompletion2 = true;
-      var _didIteratorError2 = false;
-      var _iteratorError2 = undefined;
+      var _iterator2 = Candlesvue_type_script_lang_js_createForOfIteratorHelper(cnv.candles),
+          _step2;
 
       try {
-        for (var _iterator2 = cnv.candles[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
           var c = _step2.value;
           new candle_CandleExt(this, ctx, c);
         }
       } catch (err) {
-        _didIteratorError2 = true;
-        _iteratorError2 = err;
+        _iterator2.e(err);
       } finally {
-        try {
-          if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
-            _iterator2["return"]();
-          }
-        } finally {
-          if (_didIteratorError2) {
-            throw _iteratorError2;
-          }
-        }
+        _iterator2.f();
       }
 
       if (this.price_line) this.price.draw(ctx);
@@ -8496,6 +9460,13 @@ Candles_component.options.__file = "src/components/overlays/Candles.vue"
 /* harmony default export */ var Candles = (Candles_component.exports);
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/components/overlays/Volume.vue?vue&type=script&lang=js&
 
+
+function Volumevue_type_script_lang_js_createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = Volumevue_type_script_lang_js_unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function Volumevue_type_script_lang_js_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return Volumevue_type_script_lang_js_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return Volumevue_type_script_lang_js_arrayLikeToArray(o, minLen); }
+
+function Volumevue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 // Standalone renedrer for the volume
 
 
@@ -8513,28 +9484,18 @@ Candles_component.options.__file = "src/components/overlays/Candles.vue"
     draw: function draw(ctx) {
       // TODO: volume average
       // TODO: Y-axis scaling
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
+      var _iterator = Volumevue_type_script_lang_js_createForOfIteratorHelper(layout_vol(this)),
+          _step;
 
       try {
-        for (var _iterator = layout_vol(this)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
           var v = _step.value;
           new volbar_VolbarExt(this, ctx, v);
         }
       } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
+        _iterator.e(err);
       } finally {
-        try {
-          if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-            _iterator["return"]();
-          }
-        } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
-          }
-        }
+        _iterator.f();
       }
     },
     use_for: function use_for() {
@@ -8727,6 +9688,12 @@ Splitters_component.options.__file = "src/components/overlays/Splitters.vue"
 
 
 
+function keys_createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = keys_unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function keys_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return keys_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return keys_arrayLikeToArray(o, minLen); }
+
+function keys_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 // Keyboard event handler for overlay
 var keys_Keys = /*#__PURE__*/function () {
   function Keys(comp) {
@@ -8751,28 +9718,18 @@ var keys_Keys = /*#__PURE__*/function () {
     key: "emit",
     value: function emit(name, event) {
       if (name in this.map) {
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
+        var _iterator = keys_createForOfIteratorHelper(this.map[name]),
+            _step;
 
         try {
-          for (var _iterator = this.map[name][Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          for (_iterator.s(); !(_step = _iterator.n()).done;) {
             var f = _step.value;
             f(event);
           }
         } catch (err) {
-          _didIteratorError = true;
-          _iteratorError = err;
+          _iterator.e(err);
         } finally {
-          try {
-            if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-              _iterator["return"]();
-            }
-          } finally {
-            if (_didIteratorError) {
-              throw _iteratorError;
-            }
-          }
+          _iterator.f();
         }
       }
 
@@ -8800,6 +9757,12 @@ var keys_Keys = /*#__PURE__*/function () {
 
 
 // CONCATENATED MODULE: ./src/mixins/tool.js
+function tool_createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = tool_unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function tool_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return tool_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return tool_arrayLikeToArray(o, minLen); }
+
+function tool_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 // Usuful stuff for creating tools. Include as mixin
 
 /* harmony default export */ var mixins_tool = ({
@@ -8867,28 +9830,18 @@ var keys_Keys = /*#__PURE__*/function () {
       // If layer $uuid is changed, then re-init
       // pins & collisions
       if (n.$uuid !== p.$uuid) {
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
+        var _iterator = tool_createForOfIteratorHelper(this.pins),
+            _step;
 
         try {
-          for (var _iterator = this.pins[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          for (_iterator.s(); !(_step = _iterator.n()).done;) {
             var p = _step.value;
             p.re_init();
           }
         } catch (err) {
-          _didIteratorError = true;
-          _iteratorError = err;
+          _iterator.e(err);
         } finally {
-          try {
-            if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-              _iterator["return"]();
-            }
-          } finally {
-            if (_didIteratorError) {
-              throw _iteratorError;
-            }
-          }
+          _iterator.f();
         }
 
         this.collisions = [];
@@ -8935,10 +9888,10 @@ var keys_Keys = /*#__PURE__*/function () {
   }
 });
 // EXTERNAL MODULE: ./src/stuff/icons.json
-var icons = __webpack_require__(3);
+var icons = __webpack_require__(4);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/defineProperty.js
-var defineProperty = __webpack_require__(19);
+var defineProperty = __webpack_require__(21);
 var defineProperty_default = /*#__PURE__*/__webpack_require__.n(defineProperty);
 
 // CONCATENATED MODULE: ./src/components/primitives/pin.js
@@ -9034,7 +9987,11 @@ var pin_Pin = /*#__PURE__*/function () {
       this.y$ = this.comp.$props.cursor.y$;
       this.y = this.comp.$props.cursor.y;
       this.t = this.comp.$props.cursor.t;
-      this.x = this.comp.$props.cursor.x; // Reset the settings attahed to the pin (position)
+      this.x = this.comp.$props.cursor.x; // Save pin as time in IB mode
+      //if (this.layout.ti_map.ib) {
+      //    this.t = this.layout.ti_map.i2t(this.t )
+      //}
+      // Reset the settings attahed to the pin (position)
 
       this.comp.$emit('change-settings', defineProperty_default()({}, this.name, [this.t, this.y$]));
     }
@@ -9046,7 +10003,11 @@ var pin_Pin = /*#__PURE__*/function () {
       this.y$ = data[1];
       this.y = this.layout.$2screen(this.y$);
       this.t = data[0];
-      this.x = this.layout.t2screen(this.t);
+      this.x = this.layout.t2screen(this.t); // TODO: Save pin as time in IB mode
+      //if (this.layout.ti_map.ib) {
+      //    this.t = this.layout.ti_map.i2t(this.t )
+      //}
+
       if (emit) this.comp.$emit('change-settings', defineProperty_default()({}, this.name, [this.t, this.y$]));
     }
   }, {
@@ -9127,80 +10088,6 @@ var pin_Pin = /*#__PURE__*/function () {
 }();
 
 
-// CONCATENATED MODULE: ./src/stuff/math.js
-// Math/Geometry
-/* harmony default export */ var math = ({
-  // Distance from point to line
-  // p1 = point, (p2, p3) = line
-  point2line: function point2line(p1, p2, p3) {
-    var _this$tri = this.tri(p1, p2, p3),
-        area = _this$tri.area,
-        base = _this$tri.base;
-
-    return Math.abs(this.tri_h(area, base));
-  },
-  // Distance from point to segment
-  // p1 = point, (p2, p3) = segment
-  point2seg: function point2seg(p1, p2, p3) {
-    var _this$tri2 = this.tri(p1, p2, p3),
-        area = _this$tri2.area,
-        base = _this$tri2.base; // Vector projection
-
-
-    var proj = this.dot_prod(p1, p2, p3) / base; // Distance from left pin
-
-    var l1 = Math.max(-proj, 0); // Distance from right pin
-
-    var l2 = Math.max(proj - base, 0); // Normal
-
-    var h = Math.abs(this.tri_h(area, base));
-    return Math.max(h, l1, l2);
-  },
-  // Distance from point to ray
-  // p1 = point, (p2, p3) = ray
-  point2ray: function point2ray(p1, p2, p3) {
-    var _this$tri3 = this.tri(p1, p2, p3),
-        area = _this$tri3.area,
-        base = _this$tri3.base; // Vector projection
-
-
-    var proj = this.dot_prod(p1, p2, p3) / base; // Distance from left pin
-
-    var l1 = Math.max(-proj, 0); // Normal
-
-    var h = Math.abs(this.tri_h(area, base));
-    return Math.max(h, l1);
-  },
-  tri: function tri(p1, p2, p3) {
-    var area = this.area(p1, p2, p3);
-    var dx = p3[0] - p2[0];
-    var dy = p3[1] - p2[1];
-    var base = Math.sqrt(dx * dx + dy * dy);
-    return {
-      area: area,
-      base: base
-    };
-  },
-
-  /* Area of triangle:
-          p1
-        /    \
-      p2  _  p3
-  */
-  area: function area(p1, p2, p3) {
-    return p1[0] * (p2[1] - p3[1]) + p2[0] * (p3[1] - p1[1]) + p3[0] * (p1[1] - p2[1]);
-  },
-  // Triangle height
-  tri_h: function tri_h(area, base) {
-    return area / base;
-  },
-  // Dot product of (p2, p3) and (p2, p1)
-  dot_prod: function dot_prod(p1, p2, p3) {
-    var v1 = [p3[0] - p2[0], p3[1] - p2[1]];
-    var v2 = [p1[0] - p2[0], p1[1] - p2[1]];
-    return v1[0] * v2[0] + v1[1] * v2[1];
-  }
-});
 // CONCATENATED MODULE: ./src/components/primitives/seg.js
 
 
@@ -9599,7 +10486,15 @@ if (false) { var RangeTool_api; }
 RangeTool_component.options.__file = "src/components/overlays/RangeTool.vue"
 /* harmony default export */ var RangeTool = (RangeTool_component.exports);
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Grid.vue?vue&type=script&lang=js&
+function Gridvue_type_script_lang_js_createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = Gridvue_type_script_lang_js_unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function Gridvue_type_script_lang_js_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return Gridvue_type_script_lang_js_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return Gridvue_type_script_lang_js_arrayLikeToArray(o, minLen); }
+
+function Gridvue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 // Sets up all layers/overlays for the grid with 'grid_id'
+
+
 
 
 
@@ -9618,7 +10513,7 @@ RangeTool_component.options.__file = "src/components/overlays/RangeTool.vue"
 /* harmony default export */ var Gridvue_type_script_lang_js_ = ({
   name: 'Grid',
   props: ['sub', 'layout', 'range', 'interval', 'cursor', 'colors', 'overlays', 'width', 'height', 'data', 'grid_id', 'y_transform', 'font', 'tv_id', 'config', 'meta'],
-  mixins: [mixins_canvas],
+  mixins: [mixins_canvas, uxlist],
   components: {
     Crosshair: components_Crosshair,
     KeyboardListener: KeyboardListener
@@ -9648,6 +10543,9 @@ RangeTool_component.options.__file = "src/components/overlays/RangeTool.vue"
       event: 'register-tools',
       args: tools
     });
+    this.$on('custom-event', function (e) {
+      return _this.on_ux_event(e, 'grid');
+    });
   },
   mounted: function mounted() {
     var _this2 = this;
@@ -9669,7 +10567,8 @@ RangeTool_component.options.__file = "src/components/overlays/RangeTool.vue"
       },
       attrs: {
         width: layout.width,
-        height: layout.height
+        height: layout.height,
+        overflow: 'hidden'
       },
       style: {
         backgroundColor: this.$props.colors.colorBack
@@ -9679,6 +10578,18 @@ RangeTool_component.options.__file = "src/components/overlays/RangeTool.vue"
         on: this.layer_events
       }), h(KeyboardListener, {
         on: this.keyboard_events
+      }), h(UxLayer, {
+        props: {
+          id: id,
+          tv_id: this.$props.tv_id,
+          uxs: this.uxs,
+          colors: this.$props.colors,
+          config: this.$props.config,
+          updater: Math.random()
+        },
+        on: {
+          'custom-event': this.emit_ux_event
+        }
       })].concat(this.get_overlays(h))
     });
   },
@@ -9700,11 +10611,13 @@ RangeTool_component.options.__file = "src/components/overlays/RangeTool.vue"
       this.$emit('custom-event', {
         event: 'remove-shaders',
         args: [grid_id, layer]
-      });
+      }); // TODO: close all interfaces
+
       this.$emit('custom-event', {
         event: 'remove-layer-meta',
         args: [grid_id, layer]
       });
+      this.remove_all_ux();
     },
     get_overlays: function get_overlays(h) {
       var _this5 = this;
@@ -9713,12 +10626,12 @@ RangeTool_component.options.__file = "src/components/overlays/RangeTool.vue"
       // to this._registry; returns compo list
       var comp_list = [],
           count = {};
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
+
+      var _iterator = Gridvue_type_script_lang_js_createForOfIteratorHelper(this.$props.data),
+          _step;
 
       try {
-        for (var _iterator = this.$props.data[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
           var d = _step.value;
           var comp = this._list[this._registry[d.type]];
 
@@ -9727,24 +10640,16 @@ RangeTool_component.options.__file = "src/components/overlays/RangeTool.vue"
               cls: comp,
               type: d.type,
               data: d.data,
-              settings: d.settings
+              settings: d.settings,
+              tf: d.tf
             });
             count[d.type] = 0;
           }
         }
       } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
+        _iterator.e(err);
       } finally {
-        try {
-          if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-            _iterator["return"]();
-          }
-        } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
-          }
-        }
+        _iterator.f();
       }
 
       return comp_list.map(function (x, i) {
@@ -9755,6 +10660,7 @@ RangeTool_component.options.__file = "src/components/overlays/RangeTool.vue"
             type: x.type,
             data: x.data,
             settings: x.settings,
+            tf: x.tf,
             num: i,
             grid_id: _this5.$props.grid_id,
             meta: _this5.$props.meta
@@ -9772,6 +10678,10 @@ RangeTool_component.options.__file = "src/components/overlays/RangeTool.vue"
         font: this.$props.font,
         config: this.$props.config
       };
+    },
+    emit_ux_event: function emit_ux_event(e) {
+      var e_pass = this.on_ux_event(e, 'grid');
+      if (e_pass) this.$emit('custom-event', e);
     }
   },
   computed: {
@@ -9835,7 +10745,7 @@ RangeTool_component.options.__file = "src/components/overlays/RangeTool.vue"
           _this7.renderer.propagate('keyup', event);
         },
         'keydown': function keydown(event) {
-          if (!_this7.is_active) return;
+          if (!_this7.is_active) return; // TODO: is this neeeded?
 
           _this7.renderer.propagate('keydown', event);
         },
@@ -9874,6 +10784,14 @@ if (false) { var Grid_api; }
 Grid_component.options.__file = "src/components/Grid.vue"
 /* harmony default export */ var components_Grid = (Grid_component.exports);
 // CONCATENATED MODULE: ./src/components/js/sidebar.js
+
+
+
+function sidebar_createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = sidebar_unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function sidebar_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return sidebar_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return sidebar_arrayLikeToArray(o, minLen); }
+
+function sidebar_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 
 
@@ -9920,11 +10838,14 @@ var sidebar_Sidebar = /*#__PURE__*/function () {
           _this.zoom = 1.0;
         }
 
+        _this.y_range = [_this.layout.$_hi, _this.layout.$_lo];
         _this.drug = {
           y: event.center.y,
-          z: _this.zoom
+          z: _this.zoom,
+          mid: math.log_mid(_this.y_range, _this.layout.height),
+          A: _this.layout.A,
+          B: _this.layout.B
         };
-        _this.y_range = [_this.layout.$_hi, _this.layout.$_lo];
       });
       mc.on('panmove', function (event) {
         if (_this.drug) {
@@ -10006,12 +10927,12 @@ var sidebar_Sidebar = /*#__PURE__*/function () {
 
       this.ctx.fillStyle = this.$p.colors.colorText;
       this.ctx.beginPath();
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
+
+      var _iterator = sidebar_createForOfIteratorHelper(points),
+          _step;
 
       try {
-        for (var _iterator = points[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
           var p = _step.value;
           if (p[0] > this.layout.height) continue;
           var x1 = side === 'left' ? w - 0.5 : x - 0.5;
@@ -10024,18 +10945,9 @@ var sidebar_Sidebar = /*#__PURE__*/function () {
           this.ctx.fillText(p[1].toFixed(d), x1 + offst, p[0] + 4);
         }
       } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
+        _iterator.e(err);
       } finally {
-        try {
-          if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-            _iterator["return"]();
-          }
-        } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
-          }
-        }
+        _iterator.f();
       }
 
       this.ctx.stroke();
@@ -10046,30 +10958,20 @@ var sidebar_Sidebar = /*#__PURE__*/function () {
   }, {
     key: "apply_shaders",
     value: function apply_shaders() {
-      var _iteratorNormalCompletion2 = true;
-      var _didIteratorError2 = false;
-      var _iteratorError2 = undefined;
+      var _iterator2 = sidebar_createForOfIteratorHelper(this.$p.shaders),
+          _step2;
 
       try {
-        for (var _iterator2 = this.$p.shaders[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
           var s = _step2.value;
           this.ctx.save();
           s.draw(this.ctx);
           this.ctx.restore();
         }
       } catch (err) {
-        _didIteratorError2 = true;
-        _iteratorError2 = err;
+        _iterator2.e(err);
       } finally {
-        try {
-          if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
-            _iterator2["return"]();
-          }
-        } finally {
-          if (_didIteratorError2) {
-            throw _iteratorError2;
-          }
-        }
+        _iterator2.f();
       }
     }
   }, {
@@ -10114,12 +11016,30 @@ var sidebar_Sidebar = /*#__PURE__*/function () {
   }, {
     key: "calc_range",
     value: function calc_range() {
+      var _this2 = this;
+
       var z = this.zoom / this.drug.z;
       var zk = (1 / z - 1) / 2;
       var range = this.y_range.slice();
       var delta = range[0] - range[1];
-      range[0] = range[0] + delta * zk;
-      range[1] = range[1] - delta * zk;
+
+      if (!this.layout.grid.logScale) {
+        range[0] = range[0] + delta * zk;
+        range[1] = range[1] - delta * zk;
+      } else {
+        var px_mid = this.layout.height / 2;
+        var new_hi = px_mid - px_mid * (1 / z);
+        var new_lo = px_mid + px_mid * (1 / z); // Use old mapping to get a new range
+
+        var f = function f(y) {
+          return math.exp((y - _this2.drug.B) / _this2.drug.A);
+        };
+
+        var copy = range.slice();
+        range[0] = f(new_hi);
+        range[1] = f(new_lo);
+      }
+
       return range;
     }
   }, {
@@ -10438,7 +11358,7 @@ LegendButtonvue_type_template_id_1ad87362_render._withStripped = true
 // CONCATENATED MODULE: ./src/components/LegendButton.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_LegendButtonvue_type_script_lang_js_ = (LegendButtonvue_type_script_lang_js_); 
 // EXTERNAL MODULE: ./src/components/LegendButton.vue?vue&type=style&index=0&lang=css&
-var LegendButtonvue_type_style_index_0_lang_css_ = __webpack_require__(33);
+var LegendButtonvue_type_style_index_0_lang_css_ = __webpack_require__(39);
 
 // CONCATENATED MODULE: ./src/components/LegendButton.vue
 
@@ -10496,7 +11416,7 @@ LegendButton_component.options.__file = "src/components/LegendButton.vue"
 // CONCATENATED MODULE: ./src/components/ButtonGroup.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_ButtonGroupvue_type_script_lang_js_ = (ButtonGroupvue_type_script_lang_js_); 
 // EXTERNAL MODULE: ./src/components/ButtonGroup.vue?vue&type=style&index=0&lang=css&
-var ButtonGroupvue_type_style_index_0_lang_css_ = __webpack_require__(35);
+var ButtonGroupvue_type_style_index_0_lang_css_ = __webpack_require__(41);
 
 // CONCATENATED MODULE: ./src/components/ButtonGroup.vue
 
@@ -10648,7 +11568,7 @@ ButtonGroup_component.options.__file = "src/components/ButtonGroup.vue"
 // CONCATENATED MODULE: ./src/components/Legend.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_Legendvue_type_script_lang_js_ = (Legendvue_type_script_lang_js_); 
 // EXTERNAL MODULE: ./src/components/Legend.vue?vue&type=style&index=0&lang=css&
-var Legendvue_type_style_index_0_lang_css_ = __webpack_require__(37);
+var Legendvue_type_style_index_0_lang_css_ = __webpack_require__(43);
 
 // CONCATENATED MODULE: ./src/components/Legend.vue
 
@@ -10858,7 +11778,7 @@ Legend_component.options.__file = "src/components/Legend.vue"
 // CONCATENATED MODULE: ./src/components/Section.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_Sectionvue_type_script_lang_js_ = (Sectionvue_type_script_lang_js_); 
 // EXTERNAL MODULE: ./src/components/Section.vue?vue&type=style&index=0&lang=css&
-var Sectionvue_type_style_index_0_lang_css_ = __webpack_require__(39);
+var Sectionvue_type_style_index_0_lang_css_ = __webpack_require__(45);
 
 // CONCATENATED MODULE: ./src/components/Section.vue
 
@@ -10886,6 +11806,13 @@ Section_component.options.__file = "src/components/Section.vue"
 /* harmony default export */ var Section = (Section_component.exports);
 // CONCATENATED MODULE: ./src/components/js/botbar.js
 
+
+
+function botbar_createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = botbar_unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function botbar_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return botbar_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return botbar_arrayLikeToArray(o, minLen); }
+
+function botbar_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 
 
@@ -10927,12 +11854,12 @@ var botbar_Botbar = /*#__PURE__*/function () {
       this.ctx.stroke();
       this.ctx.fillStyle = this.$p.colors.colorText;
       this.ctx.beginPath();
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
+
+      var _iterator = botbar_createForOfIteratorHelper(this.layout.botbar.xs),
+          _step;
 
       try {
-        for (var _iterator = this.layout.botbar.xs[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
           var p = _step.value;
           var lbl = this.format_date(p[1][0]);
           if (p[0] > width - sb) continue;
@@ -10948,51 +11875,32 @@ var botbar_Botbar = /*#__PURE__*/function () {
           this.ctx.globalAlpha = 1;
         }
       } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
+        _iterator.e(err);
       } finally {
-        try {
-          if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-            _iterator["return"]();
-          }
-        } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
-          }
-        }
+        _iterator.f();
       }
 
       this.ctx.stroke();
       this.apply_shaders();
-      if (this.$p.cursor.x && this.$p.cursor.t) this.panel();
+      if (this.$p.cursor.x && this.$p.cursor.t !== undefined) this.panel();
     }
   }, {
     key: "apply_shaders",
     value: function apply_shaders() {
-      var _iteratorNormalCompletion2 = true;
-      var _didIteratorError2 = false;
-      var _iteratorError2 = undefined;
+      var _iterator2 = botbar_createForOfIteratorHelper(this.$p.shaders),
+          _step2;
 
       try {
-        for (var _iterator2 = this.$p.shaders[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
           var s = _step2.value;
           this.ctx.save();
           s.draw(this.ctx);
           this.ctx.restore();
         }
       } catch (err) {
-        _didIteratorError2 = true;
-        _iteratorError2 = err;
+        _iterator2.e(err);
       } finally {
-        try {
-          if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
-            _iterator2["return"]();
-          }
-        } finally {
-          if (_didIteratorError2) {
-            throw _iteratorError2;
-          }
-        }
+        _iterator2.f();
       }
     }
   }, {
@@ -11015,6 +11923,7 @@ var botbar_Botbar = /*#__PURE__*/function () {
   }, {
     key: "format_date",
     value: function format_date(t) {
+      t = this.grid_0.ti_map.i2t(t);
       t += new Date(t).getTimezoneOffset() * botbar_MINUTE;
       var d = new Date(t);
       if (utils.year_start(t) === t) return d.getFullYear();
@@ -11028,6 +11937,7 @@ var botbar_Botbar = /*#__PURE__*/function () {
     key: "format_cursor_x",
     value: function format_cursor_x() {
       var t = this.$p.cursor.t;
+      t = this.grid_0.ti_map.i2t(t);
       var ti = this.$p.interval;
       t += new Date(t).getTimezoneOffset() * botbar_MINUTE;
       var d = new Date(t);
@@ -11143,7 +12053,7 @@ var botbar_Botbar = /*#__PURE__*/function () {
 // CONCATENATED MODULE: ./src/components/Botbar.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_Botbarvue_type_script_lang_js_ = (Botbarvue_type_script_lang_js_); 
 // EXTERNAL MODULE: ./src/components/Botbar.vue?vue&type=style&index=0&lang=css&
-var Botbarvue_type_style_index_0_lang_css_ = __webpack_require__(41);
+var Botbarvue_type_style_index_0_lang_css_ = __webpack_require__(47);
 
 // CONCATENATED MODULE: ./src/components/Botbar.vue
 var Botbar_render, Botbar_staticRenderFns
@@ -11257,7 +12167,184 @@ var Keyboard_component = normalizeComponent(
 if (false) { var Keyboard_api; }
 Keyboard_component.options.__file = "src/components/Keyboard.vue"
 /* harmony default export */ var Keyboard = (Keyboard_component.exports);
+// CONCATENATED MODULE: ./src/components/js/ti_mapping.js
+
+
+
+// Time-index mapping (for non-linear t-axis)
+
+var MAX_ARR = Math.pow(2, 32);
+
+var ti_mapping_TI = /*#__PURE__*/function () {
+  function TI() {
+    classCallCheck_default()(this, TI);
+
+    this.ib = false;
+  }
+
+  createClass_default()(TI, [{
+    key: "init",
+    value: function init(params, res) {
+      var sub = params.sub,
+          onchart = params.onchart,
+          interval = params.interval,
+          meta = params.meta,
+          $p = params.$props,
+          interval_ms = params.interval_ms,
+          sub_start = params.sub_start,
+          ib = params.ib;
+      this.ti_map = [];
+      this.it_map = [];
+      this.sub_i = [];
+      this.ib = ib;
+      this.sub = res;
+      this.ss = sub_start;
+      this.tf = interval_ms;
+      var start = meta.sub_start; // Skip mapping for the regular mode
+
+      if (this.ib) {
+        this.map_sub(res);
+      }
+    } // Make maps for the main subset
+
+  }, {
+    key: "map_sub",
+    value: function map_sub(res) {
+      for (var i = 0; i < res.length; i++) {
+        var t = res[i][0];
+
+        var _i = this.ss + i;
+
+        this.ti_map[t] = _i;
+        this.it_map[_i] = t; // Overwrite t with i
+
+        var copy = toConsumableArray_default()(res[i]);
+
+        copy[0] = _i;
+        this.sub_i.push(copy);
+      }
+    } // Map overlay data
+    // TODO: parse() called 3 times instead of 2 for 'spx_sample.json'
+
+  }, {
+    key: "parse",
+    value: function parse(data) {
+      if (!this.ib || !this.sub[0]) return data;
+      var res = [];
+      var k = 0; // Candlestick index
+
+      var t0 = this.sub[0][0];
+      var tN = this.sub[this.sub.length - 1][0];
+
+      for (var i = 0; i < data.length; i++) {
+        var copy = toConsumableArray_default()(data[i]);
+
+        var _i = this.ss + i;
+
+        var tk = this.sub[k][0];
+        var t = data[i][0];
+        var index = this.ti_map[t];
+
+        if (index === undefined) {
+          // Linear extrapolation
+          if (t < t0 || t > tN) {
+            index = this.ss + k - (tk - t) / this.tf;
+          } // Linear interpolation
+          else {
+              var tk2 = this.sub[k + 1][0];
+              index = this.ss + k + (t - tk) / (tk2 - tk);
+            }
+        }
+
+        if (t > tk && k < this.sub.length - 2) k++;
+        copy[0] = index;
+        res.push(copy);
+      }
+
+      return res;
+    } // index => time
+
+  }, {
+    key: "i2t",
+    value: function i2t(i) {
+      if (!this.ib || !this.sub.length) return i; // Regular mode
+      // Discrete mapping
+
+      var res = this.it_map[i];
+      if (res !== undefined) return res; // Linear extrapolation
+      else if (i >= this.ss + this.sub_i.length) {
+          var di = i - (this.ss + this.sub_i.length) + 1;
+          var last = this.sub[this.sub.length - 1];
+          return last[0] + di * this.tf;
+        } else if (i < this.ss) {
+          var _di = i - this.ss;
+
+          return this.sub[0][0] + _di * this.tf;
+        } // Linear Interpolation
+
+      var i1 = Math.floor(i) - this.ss;
+      var i2 = i1 + 1;
+      var len = this.sub.length;
+      if (i2 >= len) i2 = len - 1;
+      var sub1 = this.sub[i1];
+      var sub2 = this.sub[i2];
+
+      if (sub1 && sub2) {
+        var t1 = sub1[0];
+        var t2 = sub2[0];
+        return t1 + (t2 - t1) * (i - i1 - this.ss);
+      }
+
+      return undefined;
+    } // time => index
+    // TODO: when switch from IB mode to regular tools
+    // disappear (bc there no more mapping)
+
+  }, {
+    key: "t2i",
+    value: function t2i(t) {
+      if (!this.sub.length) return undefined; // Discrete mapping
+
+      var res = this.ti_map[t];
+      if (res !== undefined) return res;
+      var t0 = this.sub[0][0];
+      var tN = this.sub[this.sub.length - 1][0]; // Linear extrapolation
+
+      if (t < t0) {
+        return this.ss - (t0 - t) / this.tf;
+      } else if (t > tN) {
+        var k = this.sub.length - 1;
+        return this.ss + k - (tN - t) / this.tf;
+      }
+
+      try {
+        var i = utils.fast_nearest(this.sub, t);
+        var tk = this.sub[i[1]][0];
+        console.log('here', i);
+        return this.ss + i[1] - (tk - t) / this.tf;
+      } catch (e) {}
+
+      return undefined;
+    } // Auto detect: is it time or index?
+    // Assuming that index-based mode is ON
+
+  }, {
+    key: "smth2i",
+    value: function smth2i(smth) {
+      if (smth > MAX_ARR) {
+        return this.t2i(smth); // it was time
+      } else {
+          return smth; // it was an index
+        }
+    }
+  }]);
+
+  return TI;
+}();
+
+
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Chart.vue?vue&type=script&lang=js&
+
 
 //
 //
@@ -11283,6 +12370,7 @@ Keyboard_component.options.__file = "src/components/Keyboard.vue"
 //
 //
 //
+
 
 
 
@@ -11293,7 +12381,7 @@ Keyboard_component.options.__file = "src/components/Keyboard.vue"
 
 /* harmony default export */ var Chartvue_type_script_lang_js_ = ({
   name: 'Chart',
-  props: ['title_txt', 'data', 'width', 'height', 'font', 'colors', 'overlays', 'tv_id', 'config', 'buttons', 'toolbar'],
+  props: ['title_txt', 'data', 'width', 'height', 'font', 'colors', 'overlays', 'tv_id', 'config', 'buttons', 'toolbar', 'ib'],
   mixins: [shaders],
   components: {
     GridSection: Section,
@@ -11306,6 +12394,8 @@ Keyboard_component.options.__file = "src/components/Keyboard.vue"
 
     this.init_range();
     this.sub = this.subset();
+    utils.overwrite(this.range, this.range); // Fix for IB mode
+
     this._layout = new js_layout(this); // Updates current cursor values
 
     this.updater = new updater(this);
@@ -11314,8 +12404,10 @@ Keyboard_component.options.__file = "src/components/Keyboard.vue"
   methods: {
     range_changed: function range_changed(r) {
       // Overwite & keep the original references
+      // Quick fix for IB mode (switch 2 next lines)
+      // TODO: wtf?
+      var sub = this.subset(r);
       utils.overwrite(this.range, r);
-      var sub = this.subset();
       utils.overwrite(this.sub, sub);
       this.update_layout();
       this.$emit('range-changed', r);
@@ -11336,7 +12428,9 @@ Keyboard_component.options.__file = "src/components/Keyboard.vue"
     },
     calc_interval: function calc_interval() {
       if (this.ohlcv.length < 2) return;
-      this.interval = utils.detect_interval(this.ohlcv);
+      var tf = utils.parse_tf(this.chart.tf);
+      this.interval_ms = tf || utils.detect_interval(this.ohlcv);
+      this.interval = this.$props.ib ? 1 : this.interval_ms;
     },
     set_ytransform: function set_ytransform(s) {
       var obj = this.y_transforms[s.grid_id] || {};
@@ -11351,21 +12445,41 @@ Keyboard_component.options.__file = "src/components/Keyboard.vue"
       var l = this.ohlcv.length - 1;
       if (this.ohlcv.length < 2) return;
 
-      if (this.ohlcv.length < dl) {
+      if (this.ohlcv.length <= dl) {
         var s = 0,
             d = ml;
       } else {
         s = l - dl, d = 0.5;
       }
 
-      utils.overwrite(this.range, [this.ohlcv[s][0] - this.interval * d, this.ohlcv[l][0] + this.interval * ml]);
+      if (!this.$props.ib) {
+        utils.overwrite(this.range, [this.ohlcv[s][0] - this.interval * d, this.ohlcv[l][0] + this.interval * ml]);
+      } else {
+        utils.overwrite(this.range, [s - this.interval * d, l + this.interval * ml]);
+      }
     },
     subset: function subset() {
-      return utils.fast_filter(this.ohlcv, this.range[0] - this.interval, this.range[1]);
+      var range = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.range;
+
+      var _this$filter = this.filter(this.ohlcv, range[0] - this.interval, range[1]),
+          _this$filter2 = slicedToArray_default()(_this$filter, 2),
+          res = _this$filter2[0],
+          index = _this$filter2[1];
+
+      this.ti_map = new ti_mapping_TI();
+
+      if (res) {
+        this.sub_start = index;
+        this.ti_map.init(this, res);
+        if (!this.$props.ib) return res || [];
+        return this.ti_map.sub_i;
+      }
+
+      return [];
     },
     common_props: function common_props() {
       return {
-        title_txt: this.$props.title_txt,
+        title_txt: this.chart.name || this.$props.title_txt,
         layout: this._layout,
         sub: this.sub,
         range: this.range,
@@ -11387,9 +12501,10 @@ Keyboard_component.options.__file = "src/components/Keyboard.vue"
         return {
           type: d.type,
           name: d.name,
-          data: utils.fast_filter(d.data, _this.range[0] - _this.interval, _this.range[1]),
+          data: _this.ti_map.parse(utils.fast_filter(d.data, _this.ti_map.i2t(_this.range[0] - _this.interval), _this.ti_map.i2t(_this.range[1]))[0] || []),
           settings: d.settings || _this.settings_ov,
-          grid: d.grid || {}
+          grid: d.grid || {},
+          tf: utils.parse_tf(d.tf)
         };
       });
     },
@@ -11440,6 +12555,7 @@ Keyboard_component.options.__file = "src/components/Keyboard.vue"
       this.$refs.keyboard.remove(event);
     },
     update_last_candle: function update_last_candle() {
+      // TODO: add last values for all overlays
       this.last_candle = this.ohlcv ? this.ohlcv[this.ohlcv.length - 1] : undefined;
     }
   },
@@ -11489,6 +12605,9 @@ Keyboard_component.options.__file = "src/components/Keyboard.vue"
     offchart: function offchart() {
       return this.$props.data.offchart || [];
     },
+    filter: function filter() {
+      return this.$props.ib ? utils.fast_filter_i : utils.fast_filter;
+    },
     styles: function styles() {
       var w = this.$props.toolbar ? this.$props.config.TOOLBAR : 0;
       return {
@@ -11497,7 +12616,8 @@ Keyboard_component.options.__file = "src/components/Keyboard.vue"
     },
     meta: function meta() {
       return {
-        last: this.last_candle
+        last: this.last_candle,
+        sub_start: this.sub_start
       };
     }
   },
@@ -11530,7 +12650,9 @@ Keyboard_component.options.__file = "src/components/Keyboard.vue"
       settings_ohlcv: {},
       // Default overlay settings
       settings_ov: {},
-      last_candle: []
+      // Meta data
+      last_candle: [],
+      sub_start: undefined
     };
   },
   watch: {
@@ -11538,6 +12660,24 @@ Keyboard_component.options.__file = "src/components/Keyboard.vue"
       this.update_layout();
     },
     height: function height() {
+      this.update_layout();
+    },
+    ib: function ib(nw) {
+      if (!nw) {
+        // Change range index => time
+        var t1 = this.ti_map.i2t(this.range[0]);
+        var t2 = this.ti_map.i2t(this.range[1]);
+        utils.overwrite(this.range, [t1, t2]);
+        this.interval = this.interval_ms;
+      } else {
+        this.init_range(); // TODO: calc index range instead
+
+        utils.overwrite(this.range, this.range);
+        this.interval = 1;
+      }
+
+      var sub = this.subset();
+      utils.overwrite(this.sub, sub);
       this.update_layout();
     },
     colors: function colors() {
@@ -11727,7 +12867,7 @@ ToolbarItemvue_type_template_id_227b3c2e_render._withStripped = true
 // CONCATENATED MODULE: ./src/components/ToolbarItem.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_ToolbarItemvue_type_script_lang_js_ = (ToolbarItemvue_type_script_lang_js_); 
 // EXTERNAL MODULE: ./src/components/ToolbarItem.vue?vue&type=style&index=0&lang=css&
-var ToolbarItemvue_type_style_index_0_lang_css_ = __webpack_require__(43);
+var ToolbarItemvue_type_style_index_0_lang_css_ = __webpack_require__(49);
 
 // CONCATENATED MODULE: ./src/components/ToolbarItem.vue
 
@@ -11824,7 +12964,7 @@ ToolbarItem_component.options.__file = "src/components/ToolbarItem.vue"
 // CONCATENATED MODULE: ./src/components/Toolbar.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_Toolbarvue_type_script_lang_js_ = (Toolbarvue_type_script_lang_js_); 
 // EXTERNAL MODULE: ./src/components/Toolbar.vue?vue&type=style&index=0&lang=css&
-var Toolbarvue_type_style_index_0_lang_css_ = __webpack_require__(45);
+var Toolbarvue_type_style_index_0_lang_css_ = __webpack_require__(51);
 
 // CONCATENATED MODULE: ./src/components/Toolbar.vue
 
@@ -12002,6 +13142,10 @@ Toolbar_component.options.__file = "src/components/Toolbar.vue"
       "default": function _default() {
         return [];
       }
+    },
+    indexBased: {
+      type: Boolean,
+      "default": false
     }
   },
   computed: {
@@ -12017,6 +13161,7 @@ Toolbar_component.options.__file = "src/components/Toolbar.vue"
         font: this.$props.font,
         buttons: this.$props.legendButtons,
         toolbar: this.$props.toolbar,
+        ib: this.$props.indexBased || this.index_based || false,
         colors: {}
       };
 
@@ -12041,6 +13186,17 @@ Toolbar_component.options.__file = "src/components/Toolbar.vue"
       } else {
         return data;
       }
+    },
+    index_based: function index_based() {
+      var base = this.$props.data;
+
+      if (base.chart) {
+        return base.chart.indexBased;
+      } else if (base.data) {
+        return base.data.chart.indexBased;
+      }
+
+      return false;
     }
   },
   data: function data() {
@@ -12068,16 +13224,47 @@ Toolbar_component.options.__file = "src/components/Toolbar.vue"
       }
     },
     "goto": function goto(t) {
+      // TODO: limit goto & setRange (out of data error)
+      if (this.chart_props.ib) {
+        var ti_map = this.$refs.chart.ti_map;
+        t = ti_map.smth2i(t);
+      }
+
       this.$refs.chart["goto"](t);
     },
     setRange: function setRange(t1, t2) {
+      if (this.chart_props.ib) {
+        var ti_map = this.$refs.chart.ti_map;
+        t1 = ti_map.smth2i(t1);
+        t2 = ti_map.smth2i(t2);
+        console.log(t1, t2);
+      }
+
       this.$refs.chart.setRange(t1, t2);
     },
     getRange: function getRange() {
+      if (this.chart_props.ib) {
+        // Time range => index range
+        var ti_map = this.$refs.chart.ti_map;
+        return this.$refs.chart.range.map(function (x) {
+          return ti_map.i2t(x);
+        });
+      }
+
       return this.$refs.chart.range;
     },
     getCursor: function getCursor() {
-      return this.$refs.chart.cursor;
+      var cursor = this.$refs.chart.cursor;
+
+      if (this.chart_props.ib) {
+        var ti_map = this.$refs.chart.ti_map;
+        var copy = Object.assign({}, cursor);
+        copy.i = copy.t;
+        copy.t = ti_map.i2t(copy.t);
+        return copy;
+      }
+
+      return cursor;
     },
     legend_button: function legend_button(event) {
       this.$emit('legend-button-click', event);
@@ -12135,31 +13322,38 @@ if (false) { var TradingVue_api; }
 TradingVue_component.options.__file = "src/TradingVue.vue"
 /* harmony default export */ var TradingVue = (TradingVue_component.exports);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/typeof.js
-var helpers_typeof = __webpack_require__(18);
+var helpers_typeof = __webpack_require__(19);
 var typeof_default = /*#__PURE__*/__webpack_require__.n(helpers_typeof);
-
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js
-var possibleConstructorReturn = __webpack_require__(15);
-var possibleConstructorReturn_default = /*#__PURE__*/__webpack_require__.n(possibleConstructorReturn);
-
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/getPrototypeOf.js
-var getPrototypeOf = __webpack_require__(16);
-var getPrototypeOf_default = /*#__PURE__*/__webpack_require__.n(getPrototypeOf);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/inherits.js
 var inherits = __webpack_require__(17);
 var inherits_default = /*#__PURE__*/__webpack_require__.n(inherits);
 
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js
+var possibleConstructorReturn = __webpack_require__(18);
+var possibleConstructorReturn_default = /*#__PURE__*/__webpack_require__.n(possibleConstructorReturn);
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/getPrototypeOf.js
+var getPrototypeOf = __webpack_require__(8);
+var getPrototypeOf_default = /*#__PURE__*/__webpack_require__.n(getPrototypeOf);
+
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/regenerator/index.js
-var regenerator = __webpack_require__(20);
+var regenerator = __webpack_require__(22);
 var regenerator_default = /*#__PURE__*/__webpack_require__.n(regenerator);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/asyncToGenerator.js
-var asyncToGenerator = __webpack_require__(23);
+var asyncToGenerator = __webpack_require__(26);
 var asyncToGenerator_default = /*#__PURE__*/__webpack_require__.n(asyncToGenerator);
 
 // CONCATENATED MODULE: ./src/helpers/dc_events.js
 
+
+
+function dc_events_createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = dc_events_unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function dc_events_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return dc_events_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return dc_events_arrayLikeToArray(o, minLen); }
+
+function dc_events_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 // DataCube event handlers
 
@@ -12180,6 +13374,8 @@ var dc_events_DCEvents = /*#__PURE__*/function () {
           break;
 
         case 'tool-selected':
+          if (!args[0]) break; // TODO: Quick fix, investigate
+
           if (args[0].split(':')[0] === 'System') {
             this.system_tool(args[0].split(':')[1]);
             break;
@@ -12234,29 +13430,20 @@ var dc_events_DCEvents = /*#__PURE__*/function () {
     key: "register_tools",
     value: function register_tools(tools) {
       var preset = {};
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
+
+      var _iterator = dc_events_createForOfIteratorHelper(this.data.tools || []),
+          _step;
 
       try {
-        for (var _iterator = (this.data.tools || [])[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
           var tool = _step.value;
           preset[tool.type] = tool;
           delete tool.type;
         }
       } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
+        _iterator.e(err);
       } finally {
-        try {
-          if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-            _iterator["return"]();
-          }
-        } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
-          }
-        }
+        _iterator.f();
       }
 
       this.data.tools = [];
@@ -12264,12 +13451,12 @@ var dc_events_DCEvents = /*#__PURE__*/function () {
         type: 'Cursor',
         icon: icons['cursor.png']
       }];
-      var _iteratorNormalCompletion2 = true;
-      var _didIteratorError2 = false;
-      var _iteratorError2 = undefined;
+
+      var _iterator2 = dc_events_createForOfIteratorHelper(tools),
+          _step2;
 
       try {
-        for (var _iterator2 = tools[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
           var tool = _step2.value;
           var proto = Object.assign({}, tool.info);
           var type = tool.info.type || 'Default';
@@ -12289,18 +13476,9 @@ var dc_events_DCEvents = /*#__PURE__*/function () {
           }
         }
       } catch (err) {
-        _didIteratorError2 = true;
-        _iteratorError2 = err;
+        _iterator2.e(err);
       } finally {
-        try {
-          if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
-            _iterator2["return"]();
-          }
-        } finally {
-          if (_didIteratorError2) {
-            throw _iteratorError2;
-          }
-        }
+        _iterator2.f();
       }
 
       this.tv.$set(this.data, 'tools', list);
@@ -12352,7 +13530,7 @@ var dc_events_DCEvents = /*#__PURE__*/function () {
         }
       });
       sett.$uuid = "".concat(id, "-").concat(utils.now());
-      this.tv.$set(this.data, 'selected', id);
+      this.tv.$set(this.data, 'selected', sett.$uuid);
       this.add_trash_icon();
     } // Remove selected / Remove all, etc
 
@@ -12378,8 +13556,7 @@ var dc_events_DCEvents = /*#__PURE__*/function () {
       var settings = args[0];
       delete settings.id;
       var grid_id = args[1];
-      var q = this.layer_query(args[1], args[2]);
-      this.merge("".concat(q, ".settings"), settings);
+      this.merge("".concat(args[3], ".settings"), settings);
     } // Lock the scrolling mechanism
 
   }, {
@@ -12405,19 +13582,11 @@ var dc_events_DCEvents = /*#__PURE__*/function () {
 
       this.tv.$set(this.data, 'selected', null);
       if (!args.length) return;
-      var q = this.layer_query(args[0], args[1]);
-      this.tv.$set(this.data, 'selected', q);
-      this.merge("".concat(q, ".settings"), {
+      this.tv.$set(this.data, 'selected', args[2]);
+      this.merge("".concat(args[2], ".settings"), {
         $selected: true
       });
       this.add_trash_icon();
-    } // Form query for given grid and layer id
-
-  }, {
-    key: "layer_query",
-    value: function layer_query(grid_id, id) {
-      var side = grid_id ? 'offchart' : 'onchart';
-      return "".concat(side, ".").concat(id.replace('_', ''));
     }
   }, {
     key: "add_trash_icon",
@@ -12473,6 +13642,17 @@ var dc_events_DCEvents = /*#__PURE__*/function () {
 
 
 
+
+function dc_core_createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = dc_core_unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function dc_core_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return dc_core_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return dc_core_arrayLikeToArray(o, minLen); }
+
+function dc_core_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _createSuper(Derived) { return function () { var Super = getPrototypeOf_default()(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = getPrototypeOf_default()(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn_default()(this, result); }; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
 // DataCube private methods
 
 
@@ -12480,10 +13660,12 @@ var dc_events_DCEvents = /*#__PURE__*/function () {
 var dc_core_DCCore = /*#__PURE__*/function (_DCEvents) {
   inherits_default()(DCCore, _DCEvents);
 
+  var _super = _createSuper(DCCore);
+
   function DCCore() {
     classCallCheck_default()(this, DCCore);
 
-    return possibleConstructorReturn_default()(this, getPrototypeOf_default()(DCCore).apply(this, arguments));
+    return _super.apply(this, arguments);
   }
 
   createClass_default()(DCCore, [{
@@ -12633,12 +13815,12 @@ var dc_core_DCCore = /*#__PURE__*/function (_DCEvents) {
     value: function update_ids() {
       this.data.chart.id = "chart.".concat(this.data.chart.type);
       var count = {};
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
+
+      var _iterator = dc_core_createForOfIteratorHelper(this.data.onchart),
+          _step;
 
       try {
-        for (var _iterator = this.data.onchart[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
           var ov = _step.value;
 
           if (count[ov.type] === undefined) {
@@ -12651,27 +13833,18 @@ var dc_core_DCCore = /*#__PURE__*/function (_DCEvents) {
           if (!ov.settings) ov.settings = {};
         }
       } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
+        _iterator.e(err);
       } finally {
-        try {
-          if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-            _iterator["return"]();
-          }
-        } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
-          }
-        }
+        _iterator.f();
       }
 
       count = {};
-      var _iteratorNormalCompletion2 = true;
-      var _didIteratorError2 = false;
-      var _iteratorError2 = undefined;
+
+      var _iterator2 = dc_core_createForOfIteratorHelper(this.data.offchart),
+          _step2;
 
       try {
-        for (var _iterator2 = this.data.offchart[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
           var ov = _step2.value;
 
           if (count[ov.type] === undefined) {
@@ -12685,18 +13858,9 @@ var dc_core_DCCore = /*#__PURE__*/function (_DCEvents) {
           if (!ov.settings) ov.settings = {};
         }
       } catch (err) {
-        _didIteratorError2 = true;
-        _iteratorError2 = err;
+        _iterator2.e(err);
       } finally {
-        try {
-          if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
-            _iterator2["return"]();
-          }
-        } finally {
-          if (_didIteratorError2) {
-            throw _iteratorError2;
-          }
-        }
+        _iterator2.f();
       }
     } // Updates all overlays with given values.
 
@@ -12776,7 +13940,7 @@ var dc_core_DCCore = /*#__PURE__*/function (_DCEvents) {
       var path = tuple[1] || '';
       var field = tuple[2];
       var arr = this.data[side].filter(function (x) {
-        return x.id && x.name && (x.id === query || x.id.includes(path) || x.name === query || x.name.includes(path));
+        return x.id && x.name && x.settings && (x.id === query || x.id.includes(path) || x.name === query || x.name.includes(path) || query.includes(x.settings.$uuid));
       });
 
       if (field) {
@@ -12954,6 +14118,17 @@ var dc_core_DCCore = /*#__PURE__*/function (_DCEvents) {
 
 
 
+
+function datacube_createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = datacube_unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function datacube_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return datacube_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return datacube_arrayLikeToArray(o, minLen); }
+
+function datacube_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function datacube_createSuper(Derived) { return function () { var Super = getPrototypeOf_default()(Derived), result; if (datacube_isNativeReflectConstruct()) { var NewTarget = getPrototypeOf_default()(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return possibleConstructorReturn_default()(this, result); }; }
+
+function datacube_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
 // Main DataHelper class. A container for data,
 // which works as a proxy and CRUD interface
 
@@ -12962,6 +14137,8 @@ var dc_core_DCCore = /*#__PURE__*/function (_DCEvents) {
 var datacube_DataCube = /*#__PURE__*/function (_DCCore) {
   inherits_default()(DataCube, _DCCore);
 
+  var _super = datacube_createSuper(DataCube);
+
   function DataCube() {
     var _this;
 
@@ -12969,7 +14146,7 @@ var datacube_DataCube = /*#__PURE__*/function (_DCCore) {
 
     classCallCheck_default()(this, DataCube);
 
-    _this = possibleConstructorReturn_default()(this, getPrototypeOf_default()(DataCube).call(this));
+    _this = _super.call(this);
     _this.data = data;
     return _this;
   } // Add new overlay
@@ -13007,12 +14184,12 @@ var datacube_DataCube = /*#__PURE__*/function (_DCCore) {
     key: "set",
     value: function set(query, data) {
       var objects = this.get_by_query(query);
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
+
+      var _iterator = datacube_createForOfIteratorHelper(objects),
+          _step;
 
       try {
-        for (var _iterator = objects[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
           var obj = _step.value;
           var i = obj.i !== undefined ? obj.i : obj.p.indexOf(obj.v);
 
@@ -13021,18 +14198,9 @@ var datacube_DataCube = /*#__PURE__*/function (_DCCore) {
           }
         }
       } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
+        _iterator.e(err);
       } finally {
-        try {
-          if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-            _iterator["return"]();
-          }
-        } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
-          }
-        }
+        _iterator.f();
       }
 
       this.update_ids();
@@ -13042,12 +14210,12 @@ var datacube_DataCube = /*#__PURE__*/function (_DCCore) {
     key: "merge",
     value: function merge(query, data) {
       var objects = this.get_by_query(query);
-      var _iteratorNormalCompletion2 = true;
-      var _didIteratorError2 = false;
-      var _iteratorError2 = undefined;
+
+      var _iterator2 = datacube_createForOfIteratorHelper(objects),
+          _step2;
 
       try {
-        for (var _iterator2 = objects[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
           var obj = _step2.value;
 
           if (Array.isArray(obj.v)) {
@@ -13064,18 +14232,9 @@ var datacube_DataCube = /*#__PURE__*/function (_DCCore) {
           }
         }
       } catch (err) {
-        _didIteratorError2 = true;
-        _iteratorError2 = err;
+        _iterator2.e(err);
       } finally {
-        try {
-          if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
-            _iterator2["return"]();
-          }
-        } finally {
-          if (_didIteratorError2) {
-            throw _iteratorError2;
-          }
-        }
+        _iterator2.f();
       }
 
       this.update_ids();
@@ -13085,12 +14244,12 @@ var datacube_DataCube = /*#__PURE__*/function (_DCCore) {
     key: "del",
     value: function del(query) {
       var objects = this.get_by_query(query);
-      var _iteratorNormalCompletion3 = true;
-      var _didIteratorError3 = false;
-      var _iteratorError3 = undefined;
+
+      var _iterator3 = datacube_createForOfIteratorHelper(objects),
+          _step3;
 
       try {
-        for (var _iterator3 = objects[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+        for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
           var obj = _step3.value;
           // Find current index of the field (if not defined)
           var i = obj.i !== undefined ? obj.i : obj.p.indexOf(obj.v);
@@ -13100,18 +14259,9 @@ var datacube_DataCube = /*#__PURE__*/function (_DCCore) {
           }
         }
       } catch (err) {
-        _didIteratorError3 = true;
-        _iteratorError3 = err;
+        _iterator3.e(err);
       } finally {
-        try {
-          if (!_iteratorNormalCompletion3 && _iterator3["return"] != null) {
-            _iterator3["return"]();
-          }
-        } finally {
-          if (_didIteratorError3) {
-            throw _iteratorError3;
-          }
-        }
+        _iterator3.f();
       }
 
       this.update_ids();
@@ -13125,7 +14275,8 @@ var datacube_DataCube = /*#__PURE__*/function (_DCCore) {
       var tick = data['price'];
       var volume = data['volume'] || 0;
       var candle = data['candle'];
-      var tf = utils.detect_interval(ohlcv);
+      var tfx = utils.parse_tf(this.data.chart.tf);
+      var tf = tfx || utils.detect_interval(ohlcv);
       var t_next = last[0] + tf;
       var now = utils.now();
       var t = now >= t_next ? now - now % tf : last[0];
@@ -13222,6 +14373,64 @@ var datacube_DataCube = /*#__PURE__*/function (_DCCore) {
 }(dc_core_DCCore);
 
 
+// CONCATENATED MODULE: ./src/mixins/interface.js
+// Html interface, shown on top of the grid.
+// Can be static (a tooltip) or interactive,
+// e.g. a control panel.
+/* harmony default export */ var mixins_interface = ({
+  props: ['ux', 'updater', 'colors', 'wrapper'],
+  mounted: function mounted() {
+    this._$emit = this.$emit;
+    this.$emit = this.custom_event;
+    if (this.init) this.init();
+  },
+  methods: {
+    close: function close() {
+      this.$emit('custom-event', {
+        event: 'close-interface',
+        args: [this.$props.ux.uuid]
+      });
+    },
+    // TODO: emit all the way to the uxlist
+    // add apply the changes there
+    modify: function modify(obj) {
+      this.$emit('custom-event', {
+        event: 'modify-interface',
+        args: [this.$props.ux.uuid, obj]
+      });
+    },
+    custom_event: function custom_event(event) {
+      if (event.split(':')[0] === 'hook') return;
+
+      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+      }
+
+      this._$emit('custom-event', {
+        event: event,
+        args: args
+      });
+    }
+  },
+  computed: {
+    overlay: function overlay() {
+      return this.$props.ux.overlay;
+    },
+    layout: function layout() {
+      return this.overlay.layout;
+    },
+    uxr: function uxr() {
+      return this.$props.ux;
+    }
+  },
+  data: function data() {
+    return {};
+  }
+});
+// EXTERNAL MODULE: ./src/components/primitives/ray.js
+var ray = __webpack_require__(27);
+var ray_default = /*#__PURE__*/__webpack_require__.n(ray);
+
 // CONCATENATED MODULE: ./src/index.js
 
 
@@ -13231,6 +14440,22 @@ var datacube_DataCube = /*#__PURE__*/function (_DCCore) {
 
 
 
+
+
+
+
+
+
+
+var primitives = {
+  Candle: candle_CandleExt,
+  Volbar: volbar_VolbarExt,
+  Line: line_Line,
+  Pin: pin_Pin,
+  Price: price_Price,
+  Ray: ray_default.a,
+  Seg: seg_Seg
+};
 
 TradingVue.install = function (Vue) {
   Vue.component(TradingVue.name, TradingVue);
@@ -13247,7 +14472,10 @@ if (typeof window !== 'undefined' && window.Vue) {
     Volbar: volbar_VolbarExt,
     layout_cnv: layout_cnv,
     layout_vol: layout_vol,
-    DataCube: datacube_DataCube
+    DataCube: datacube_DataCube,
+    Tool: mixins_tool,
+    Interface: mixins_interface,
+    primitives: primitives
   };
 }
 
