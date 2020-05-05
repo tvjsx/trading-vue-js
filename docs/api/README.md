@@ -1,7 +1,7 @@
 # API Book
 
 ::: warning
-This library is in alpha stage, API may change. This guide version is **0.4.5**
+This library is in alpha stage, API may change. This guide version is **0.5.0**
 :::
 
 ![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=Current%20lib%20version)
@@ -168,7 +168,7 @@ Event listener:
 
 ## Data structure <sup style="color:#14b32a">new</sup>
 
-Data structure v1.2.1
+Data structure v1.2.2
 
 IMPORTANT: All data must be sorted by time (in ascending order). The main OHLCV must not contain duplicate timestamps.
 
@@ -181,6 +181,11 @@ IMPORTANT: All data must be sorted by time (in ascending order). The main OHLCV 
             [timestamp, open, high, low, close, volume],
             ...
         ],
+        "tf": <Number|'1s'...'1Y'>, // Forced timeframe
+        "grid": { // Grid settings (optional)
+            "logScale": <true|false>,
+            "height": <Number> // Grid height (weight)
+        }
         "settings": { } // Settings (depending on "type")
     },
     "onchart": [ // Displayed ON the chart
@@ -343,6 +348,7 @@ Defined in `layout.js`, accessed through overlay's `this.$props.layout`.
 | $_hi | Number | Upper bound of price-range |
 | $_lo | Number | Lower bound of price-range |
 | $_step | Number | Grid price step |
+| $_mult <sup style="color:#14b32a">new</sup> | Number | Grid price multipler ([log-scale mode]()) |
 | t_step | Number | Grid time step  |
 | A | Number | Scale transform coefficient |
 | B | Number | Offset transform coefficient |
@@ -355,6 +361,7 @@ Defined in `layout.js`, accessed through overlay's `this.$props.layout`.
 | sb |  Number | Sidebar width |
 | spacex | Number | Drawing area width (px) |
 | startx | Number | First candle position (px) |
+| ti_map <sup style="color:#14b32a">new</sup> | Object | Time-index mapping for [IB mode]() |
 | candles | Array | Candles subset |
 | volume | Array | Volume bars positions and sizes |
 | xs | Array | vertical grid lines `[[x, candle], ...]` |

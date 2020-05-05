@@ -37,7 +37,7 @@ If you create trading software - this lib is probably for you. If you like to ma
 
 ## Demo & Docs
 
-### [Demo](https://tvjsx.github.io/trading-vue-demo/) | [Getting Started](https://github.com/tvjsx/trading-vue-js/tree/master/docs/guide#getting-started) | [API Book](https://github.com/tvjsx/trading-vue-js/tree/master/docs/api#api-book) | [Built-in Overlays](https://github.com/tvjsx/trading-vue-js/tree/master/docs/overlays#built-in-overlays) | [Examples](https://github.com/tvjsx/trading-vue-js/tree/master/test/tests) | [101 Project](https://github.com/tvjsx/trading-vue-101) | [llll Gitter](https://gitter.im/Trading-Vue-js)
+### [Demo](https://tvjsx.github.io/trading-vue-demo/) | [Getting Started](https://github.com/tvjsx/trading-vue-js/tree/master/docs/guide#getting-started) | [API Book](https://github.com/tvjsx/trading-vue-js/tree/master/docs/api#api-book) | [Built-in Overlays](https://github.com/tvjsx/trading-vue-js/tree/master/docs/overlays#built-in-overlays) | [Examples](https://github.com/tvjsx/trading-vue-js/tree/master/test/tests) | [101 Project](https://github.com/tvjsx/trading-vue-101) | [llll Gitter](https://gitter.im/Trading-Vue-js) | [FAQ](https://github.com/tvjsx/trading-vue-js/tree/master/docs/faq)
 
 ## Install
 
@@ -102,11 +102,12 @@ PRO TIP: **chart** is mandatory if you want to see something other than a white 
 
 IMPORTANT: All data must be sorted by time (in ascending order). The main OHLCV must not contain duplicate timestamps.
 
+[Full version of DataStructure](https://github.com/tvjsx/trading-vue-js/tree/master/docs/api#data-structure-new)
+
 ```js
 {
     "chart": {   // Mandatory
         "type": "<Chart Type, e.g. Candles>",
-        "indexBased": <true|false>, // Index-based rendering mode
         "data": [
             [timestamp, open, high, low, close, volume],
             ...
