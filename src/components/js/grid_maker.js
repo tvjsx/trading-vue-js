@@ -95,8 +95,9 @@ function GridMaker(id, params, master_grid = null) {
         self.prec = calc_precision(sub)
         let subn = sub.filter(x => typeof x[1] === 'number')
         let lens = subn.map(x => x[1].toFixed(self.prec).length)
+        lens.push(self.$_hi.toFixed(self.prec).length)
+        lens.push(self.$_lo.toFixed(self.prec).length)
         let str = '0'.repeat(Math.max(...lens)) + '    '
-
         self.sb = ctx.measureText(str).width
         self.sb = Math.max(Math.floor(self.sb), $p.config.SBMIN)
 
@@ -361,19 +362,23 @@ function GridMaker(id, params, master_grid = null) {
     // Search a start for the top grid so that
     // the fixed value always included
     function search_start_pos(value) {
-        var y = Infinity, y$ = value
+        let N = height / $p.config.GRIDY // target grid N
+        var y = Infinity, y$ = value, count = 0
         while (y > 0) {
             y = Math.floor(math.log(y$) * self.A + self.B)
             y$ *= self.$_mult
+            if (count++ > N * 3) return 0 // Prevents deadloops
         }
         return y$
     }
 
     function search_start_neg(value) {
-        var y = -Infinity, y$ = value
+        let N = height / $p.config.GRIDY // target grid N
+        var y = -Infinity, y$ = value, count = 0
         while (y < height) {
             y = Math.floor(math.log(y$) * self.A + self.B)
             y$ *= self.$_mult
+            if (count++ > N * 3) break // Prevents deadloops
         }
         return y$
     }
@@ -409,6 +414,7 @@ function GridMaker(id, params, master_grid = null) {
         self.height = height
     }
 
+    calc_$range()
     calc_sidebar()
 
     return {
@@ -416,7 +422,6 @@ function GridMaker(id, params, master_grid = null) {
         // (among all grids). Then we can actually make
         // them
         create: () => {
-            calc_$range()
             calc_positions()
             grid_x()
             if (grid.logScale) {
