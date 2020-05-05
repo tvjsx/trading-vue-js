@@ -38,5 +38,5 @@ export default TradingVue
 export {
     TradingVue, Overlay, Utils, Constants,
     Candle, Volbar, layout_cnv, layout_vol,
-    DataCubem, Tool, Interface, primitives
+    DataCube, Tool, Interface, primitives
 }

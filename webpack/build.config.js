@@ -9,8 +9,8 @@ const DATE = new Date().toDateString()
 const BANNER =
 
 `TradingVue.JS - v${VERS} - ${DATE}\n` +
-`    https://github.com/C451/trading-vue-js\n` +
-`    Copyright (c) 2019 c451 Code's All Right;\n` +
+`    https://github.com/tvjsx/trading-vue-js\n` +
+`    Copyright (c) 2019 C451 Code's All Right;\n` +
 `    Licensed under the MIT license`
 
 let common = {

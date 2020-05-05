@@ -1,6 +1,22 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.5.0] - 2019-5-5
+### Changes
+- Index-based rendering mode (hides weekend gaps + sup Renko)
+- Log-scale mode
+- Interfaces (preview)
+- Performance fixes
+- Zoom to the current candle mode
+- Pixel-perfect candles, candle wicks
+- Offchart drawing tools
+- Price level
+- Custom grid heights
+- Sidear & Botbar inline shaders
+- Added RangeTool
+- Forced chart timeframe (overwrites the auto-detected one)
+- Updated DataCube
+
 ## [0.4.0] - 2019-11-2
 ### Changes
 - Multiple bug fixes and improvements
