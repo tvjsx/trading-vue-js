@@ -111,7 +111,8 @@ export default {
 
     // Return new adjusted range, based on the previous
     // range, new $_hi, target middle line + dy (shift)
-    range_shift(r1, hi2, mid, dy, h) {
+    // WASTE
+    /*range_shift(r1, hi2, mid, dy, h) {
         let log_hi1 = this.log(r1[0])
         let log_lo1 = this.log(r1[1])
         let log_hi2 = this.log(hi2)
@@ -122,6 +123,6 @@ export default {
 
         return this.exp(log_hi2 - W)
 
-    }
+    }*/
 
 }
