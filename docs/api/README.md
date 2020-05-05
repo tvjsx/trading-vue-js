@@ -348,7 +348,7 @@ Defined in `layout.js`, accessed through overlay's `this.$props.layout`.
 | $_hi | Number | Upper bound of price-range |
 | $_lo | Number | Lower bound of price-range |
 | $_step | Number | Grid price step |
-| $_mult <sup style="color:#14b32a">new</sup> | Number | Grid price multipler ([log-scale mode]()) |
+| $_mult <sup style="color:#14b32a">new</sup> | Number | Grid price multipler ([log-scale mode](https://github.com/tvjsx/trading-vue-js/blob/master/docs/faq/README.md#log-scale-no)) |
 | t_step | Number | Grid time step  |
 | A | Number | Scale transform coefficient |
 | B | Number | Offset transform coefficient |
@@ -361,7 +361,7 @@ Defined in `layout.js`, accessed through overlay's `this.$props.layout`.
 | sb |  Number | Sidebar width |
 | spacex | Number | Drawing area width (px) |
 | startx | Number | First candle position (px) |
-| ti_map <sup style="color:#14b32a">new</sup> | Object | Time-index mapping for [IB mode]() |
+| ti_map <sup style="color:#14b32a">new</sup> | Object | Time-index mapping for [IB mode](https://github.com/tvjsx/trading-vue-js/blob/master/docs/faq/README.md#what-is-the-index-based-ib-rendering-mode) |
 | candles | Array | Candles subset |
 | volume | Array | Volume bars positions and sizes |
 | xs | Array | vertical grid lines `[[x, candle], ...]` |
