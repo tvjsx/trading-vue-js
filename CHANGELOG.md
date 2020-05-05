@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [0.5.0] - 2019-5-5
+## [0.5.0] - 2020-5-5
 ### Changes
 - Index-based rendering mode (hides weekend gaps + sup Renko)
 - Log-scale mode
