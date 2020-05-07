@@ -15,7 +15,7 @@ Set a new value in the overlay settings object:
 Add this prop to the TradingVue component:
 
 ```html
-<trading-vue chart-config=" { DEFAULT_LEN: 200 } "/>
+<trading-vue :chart-config=" { DEFAULT_LEN: 200 } "/>
 ```
 
 ## My chart looks ugly / glitchy, what can I do?
