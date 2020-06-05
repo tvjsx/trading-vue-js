@@ -235,7 +235,7 @@ Our data-object will have the following format:
             4124.0
         ]
     ],
-    settings: {}
+    "settings": {}
 }
 ```
 
