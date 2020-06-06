@@ -255,7 +255,7 @@ function GridMaker(id, params, master_grid = null) {
             }
 
             // TODO: fix grid extention for bigger timeframes
-            if (interval < WEEK) {
+            if (interval < WEEK && r > 0) {
                 extend_left(dt, r)
                 extend_right(dt, r)
             }
