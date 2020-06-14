@@ -2,7 +2,7 @@
 import Const from '../../stuff/constants.js'
 import Utils from '../../stuff/utils.js'
 
-const { MINUTE15, MINUTE, HOUR, DAY, WEEK, YEAR, MONTHMAP } = Const
+const { MINUTE15, MINUTE, HOUR, DAY, WEEK, MONTH, YEAR, MONTHMAP } = Const
 
 export default class Botbar {
 
@@ -43,7 +43,7 @@ export default class Botbar {
 
         for (var p of this.layout.botbar.xs) {
 
-            let lbl = this.format_date(p[1][0])
+            let lbl = this.format_date(p)
 
             if (p[0] > width - sb) continue
 
@@ -94,18 +94,23 @@ export default class Botbar {
     }
 
     // TODO: implement time zones
-    format_date(t) {
+    format_date(p) {
+        let t = p[1][0]
         t = this.grid_0.ti_map.i2t(t)
 
-        t += new Date(t).getTimezoneOffset() * MINUTE
+        //t += new Date(t).getTimezoneOffset() * MINUTE
         let d = new Date(t)
 
-        if (Utils.year_start(t) === t) return d.getFullYear()
-        if (Utils.month_start(t) === t) return MONTHMAP[d.getMonth()]
+        if (p[2] === YEAR || Utils.year_start(t) === t) {
+            return d.getUTCFullYear()
+        }
+        if (p[2] === MONTH || Utils.month_start(t) === t) {
+            return MONTHMAP[d.getUTCMonth()]
+        }
         if (Utils.day_start(t) === t) return d.getDate()
 
-        let h = Utils.add_zero(d.getHours())
-        let m = Utils.add_zero(d.getMinutes())
+        let h = Utils.add_zero(d.getUTCHours())
+        let m = Utils.add_zero(d.getUTCMinutes())
         return h + ":" + m
 
     }
@@ -115,17 +120,16 @@ export default class Botbar {
         let t = this.$p.cursor.t
         t = this.grid_0.ti_map.i2t(t)
         let ti = this.$p.interval
-
-        t += new Date(t).getTimezoneOffset() * MINUTE
+        //t += new Date(t).getTimezoneOffset() * MINUTE
         let d = new Date(t)
 
         if (ti === YEAR) {
-            return d.getFullYear()
+            return d.getUTCFullYear()
         }
 
         if (ti < YEAR) {
-            var yr = '`' + `${d.getFullYear()}`.slice(-2)
-            var mo = MONTHMAP[d.getMonth()]
+            var yr = '`' + `${d.getUTCFullYear()}`.slice(-2)
+            var mo = MONTHMAP[d.getUTCMonth()]
             var dd = '01'
         }
         if (ti <= WEEK) dd = d.getDate()
@@ -133,8 +137,8 @@ export default class Botbar {
         let time = ''
 
         if (ti < DAY) {
-            let h = Utils.add_zero(d.getHours())
-            let m = Utils.add_zero(d.getMinutes())
+            let h = Utils.add_zero(d.getUTCHours())
+            let m = Utils.add_zero(d.getUTCMinutes())
             time = h + ":" + m
         }
 

@@ -11,7 +11,7 @@ const HOUR12 = HOUR * 12
 const DAY = HOUR * 24
 const WEEK = DAY * 7
 const MONTH = WEEK * 4
-const YEAR = MONTH * 12
+const YEAR = DAY * 365
 
 const MONTHMAP = [
     "Jan", "Feb", "Mar", "Apr",
