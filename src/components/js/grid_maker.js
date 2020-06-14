@@ -5,7 +5,7 @@ import math from '../../stuff/math.js'
 import layout_fn from './layout_fn.js'
 import log_scale from './log_scale.js'
 
-const { TIMESCALES, $SCALES, WEEK } = Const
+const { TIMESCALES, $SCALES, WEEK, MONTH, YEAR } = Const
 const MAX_INT = Number.MAX_SAFE_INTEGER
 
 
@@ -248,9 +248,26 @@ function GridMaker(id, params, master_grid = null) {
 
             for (var i = 0; i < sub.length; i++) {
                 let p = sub[i]
-                if (p[0] % self.t_step === 0) {
-                    let x = Math.floor((p[0] - range[0]) * r)
-                    self.xs.push([x, p])
+                let prev = sub[i-1] || []
+                let prev_xs = self.xs[self.xs.length - 1] || [0,[]]
+                let x = Math.floor((p[0] - range[0]) * r)
+
+                insert_line(prev, p, x)
+
+                // Filtering lines that are too near
+                let xs = self.xs[self.xs.length - 1] || [0, []]
+
+                if (prev_xs === xs) continue
+
+                if (xs[1][0] - prev_xs[1][0] < self.t_step * 0.8) {
+
+                    // prev_xs is a higher "rank" label
+                    if (xs[2] <= prev_xs[2]) {
+                        self.xs.pop()
+                    } else {
+                        // Otherwise
+                        self.xs.splice(self.xs.length - 2, 1)
+                    }
                 }
             }
 
@@ -270,6 +287,25 @@ function GridMaker(id, params, master_grid = null) {
         }
     }
 
+    function insert_line(prev, p, x) {
+
+        let prev_t = ti_map.ib ? ti_map.i2t(prev[0]) : prev[0]
+        let p_t = ti_map.ib ? ti_map.i2t(p[0]) : p[0]
+
+        // TODO: take this block =========>
+        if ((prev[0] || interval === YEAR) &&
+            Utils.get_year(p_t) !== Utils.get_year(prev_t)) {
+            self.xs.push([x, p, YEAR]) // [px, [...], rank]
+        }
+        else if (prev[0] &&
+            Utils.get_month(p_t) !== Utils.get_month(prev_t)) {
+            self.xs.push([x, p, MONTH])
+        }
+        else if (p[0] % self.t_step === 0) {
+            self.xs.push([x, p, interval])
+        }
+    }
+
     function extend_left(dt, r) {
 
         if (!self.xs.length || !isFinite(r)) return
@@ -279,8 +315,9 @@ function GridMaker(id, params, master_grid = null) {
             t -= self.t_step
             let x = Math.floor((t  - range[0]) * r)
             if (x < 0) break
+            // TODO: ==========> And insert here
             if (t % interval === 0) {
-                self.xs.unshift([x,[t]])
+                self.xs.unshift([x,[t], interval])
             }
         }
     }
@@ -295,7 +332,7 @@ function GridMaker(id, params, master_grid = null) {
             let x = Math.floor((t  - range[0]) * r)
             if (x > self.spacex) break
             if (t % interval === 0) {
-                self.xs.push([x,[t]])
+                self.xs.push([x,[t], interval])
             }
         }
     }

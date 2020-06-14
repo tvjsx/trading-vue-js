@@ -18,24 +18,31 @@ export default {
     // Start of the day (zero millisecond)
     day_start(t) {
         let start = new Date(t)
-        start.setHours(0,0,0,0)
-        return start.getTime()
+        return start.setUTCHours(0,0,0,0)
     },
 
     // Start of the month
     month_start(t) {
         let date = new Date(t)
-        let start = new Date(
+        return Date.UTC(
             date.getFullYear(),
             date.getMonth(), 1
         )
-        return start.getTime()
     },
 
     // Start of the year
     year_start(t) {
-        let start = new Date(new Date(t).getFullYear(), 0, 1)
-        return start.getTime()
+        return Date.UTC(new Date(t).getFullYear())
+    },
+
+    get_year(t) {
+        if (!t) return undefined
+        return new Date(t).getUTCFullYear()
+    },
+
+    get_month(t) {
+        if (!t) return undefined
+        return new Date(t).getUTCMonth()
     },
 
     // Nearest in array
