@@ -1,5 +1,5 @@
 /*!
- * TradingVue.JS - v0.5.0 - Tue May 05 2020
+ * TradingVue.JS - v0.5.1 - Mon Jun 15 2020
  *     https://github.com/tvjsx/trading-vue-js
  *     Copyright (c) 2019 C451 Code's All Right;
  *     Licensed under the MIT license
@@ -5329,7 +5329,7 @@ var HOUR12 = HOUR * 12;
 var DAY = HOUR * 24;
 var WEEK = DAY * 7;
 var MONTH = WEEK * 4;
-var YEAR = MONTH * 12;
+var YEAR = DAY * 365;
 var MONTHMAP = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]; // Grid time steps
 
 var TIMESCALES = [YEAR * 10, YEAR * 5, YEAR * 3, YEAR * 2, YEAR, MONTH * 6, MONTH * 4, MONTH * 3, MONTH * 2, MONTH, DAY * 15, DAY * 10, DAY * 7, DAY * 5, DAY * 3, DAY * 2, DAY, HOUR * 12, HOUR * 6, HOUR * 3, HOUR * 1.5, HOUR, MINUTE30, MINUTE15, MINUTE * 10, MINUTE5, MINUTE * 2, MINUTE]; // Grid $ steps
@@ -5501,19 +5501,24 @@ var lib_default = /*#__PURE__*/__webpack_require__.n(lib);
   // Start of the day (zero millisecond)
   day_start: function day_start(t) {
     var start = new Date(t);
-    start.setHours(0, 0, 0, 0);
-    return start.getTime();
+    return start.setUTCHours(0, 0, 0, 0);
   },
   // Start of the month
   month_start: function month_start(t) {
     var date = new Date(t);
-    var start = new Date(date.getFullYear(), date.getMonth(), 1);
-    return start.getTime();
+    return Date.UTC(date.getFullYear(), date.getMonth(), 1);
   },
   // Start of the year
   year_start: function year_start(t) {
-    var start = new Date(new Date(t).getFullYear(), 0, 1);
-    return start.getTime();
+    return Date.UTC(new Date(t).getFullYear());
+  },
+  get_year: function get_year(t) {
+    if (!t) return undefined;
+    return new Date(t).getUTCFullYear();
+  },
+  get_month: function get_month(t) {
+    if (!t) return undefined;
+    return new Date(t).getUTCMonth();
   },
   // Nearest in array
   nearest_a: function nearest_a(x, array) {
@@ -5581,7 +5586,12 @@ var lib_default = /*#__PURE__*/__webpack_require__.n(lib);
     ohlcv.slice(0, len).forEach(function (x, i) {
       var d = ohlcv[i + 1][0] - x[0];
       if (d === d && d < min) min = d;
-    });
+    }); // This saves monthly chart from being awkward 
+
+    if (min >= constants.MONTH && min <= constants.DAY * 30) {
+      return constants.DAY * 31;
+    }
+
     return min;
   },
   // Gets numberic part of overlay id (e.g 'EMA_1' = > 1)
@@ -5873,7 +5883,9 @@ var lib_default = /*#__PURE__*/__webpack_require__.n(lib);
 
 var grid_maker_TIMESCALES = constants.TIMESCALES,
     grid_maker_$SCALES = constants.$SCALES,
-    grid_maker_WEEK = constants.WEEK;
+    grid_maker_WEEK = constants.WEEK,
+    grid_maker_MONTH = constants.MONTH,
+    grid_maker_YEAR = constants.YEAR;
 var MAX_INT = Number.MAX_SAFE_INTEGER; // master_grid - ref to the master grid
 
 function GridMaker(id, params) {
@@ -6143,18 +6155,34 @@ function GridMaker(id, params) {
       self.xs = [];
       var dt = range[1] - range[0];
       var r = self.spacex / dt;
+      /* TODO: remove the left-side glitch
+       let year_0 = Utils.get_year(sub[0][0])
+      for (var t0 = year_0; t0 < range[0]; t0 += self.t_step) {}
+       let m0 = Utils.get_month(t0)*/
 
       for (var i = 0; i < sub.length; i++) {
         var p = sub[i];
+        var prev = sub[i - 1] || [];
+        var prev_xs = self.xs[self.xs.length - 1] || [0, []];
+        var x = Math.floor((p[0] - range[0]) * r);
+        insert_line(prev, p, x); // Filtering lines that are too near
 
-        if (p[0] % self.t_step === 0) {
-          var x = Math.floor((p[0] - range[0]) * r);
-          self.xs.push([x, p]);
+        var xs = self.xs[self.xs.length - 1] || [0, []];
+        if (prev_xs === xs) continue;
+
+        if (xs[1][0] - prev_xs[1][0] < self.t_step * 0.8) {
+          // prev_xs is a higher "rank" label
+          if (xs[2] <= prev_xs[2]) {
+            self.xs.pop();
+          } else {
+            // Otherwise
+            self.xs.splice(self.xs.length - 2, 1);
+          }
         }
       } // TODO: fix grid extention for bigger timeframes
 
 
-      if (interval < grid_maker_WEEK) {
+      if (interval < grid_maker_WEEK && r > 0) {
         extend_left(dt, r);
         extend_right(dt, r);
       }
@@ -6166,6 +6194,19 @@ function GridMaker(id, params) {
     }
   }
 
+  function insert_line(prev, p, x, m0) {
+    var prev_t = ti_map.ib ? ti_map.i2t(prev[0]) : prev[0];
+    var p_t = ti_map.ib ? ti_map.i2t(p[0]) : p[0]; // TODO: take this block =========> (see below)
+
+    if ((prev[0] || interval === grid_maker_YEAR) && utils.get_year(p_t) !== utils.get_year(prev_t)) {
+      self.xs.push([x, p, grid_maker_YEAR]); // [px, [...], rank]
+    } else if (prev[0] && utils.get_month(p_t) !== utils.get_month(prev_t)) {
+      self.xs.push([x, p, grid_maker_MONTH]);
+    } else if (p[0] % self.t_step === 0) {
+      self.xs.push([x, p, interval]);
+    }
+  }
+
   function extend_left(dt, r) {
     if (!self.xs.length || !isFinite(r)) return;
     var t = self.xs[0][1][0];
@@ -6173,10 +6214,10 @@ function GridMaker(id, params) {
     while (true) {
       t -= self.t_step;
       var x = Math.floor((t - range[0]) * r);
-      if (x < 0) break;
+      if (x < 0) break; // TODO: ==========> And insert it here somehow
 
       if (t % interval === 0) {
-        self.xs.unshift([x, [t]]);
+        self.xs.unshift([x, [t], interval]);
       }
     }
   }
@@ -6191,7 +6232,7 @@ function GridMaker(id, params) {
       if (x > self.spacex) break;
 
       if (t % interval === 0) {
-        self.xs.push([x, [t]]);
+        self.xs.push([x, [t], interval]);
       }
     }
   }
@@ -11821,6 +11862,7 @@ var botbar_MINUTE15 = constants.MINUTE15,
     botbar_HOUR = constants.HOUR,
     botbar_DAY = constants.DAY,
     botbar_WEEK = constants.WEEK,
+    botbar_MONTH = constants.MONTH,
     botbar_YEAR = constants.YEAR,
     botbar_MONTHMAP = constants.MONTHMAP;
 
@@ -11861,7 +11903,7 @@ var botbar_Botbar = /*#__PURE__*/function () {
       try {
         for (_iterator.s(); !(_step = _iterator.n()).done;) {
           var p = _step.value;
-          var lbl = this.format_date(p[1][0]);
+          var lbl = this.format_date(p);
           if (p[0] > width - sb) continue;
           this.ctx.moveTo(p[0] - 0.5, 0);
           this.ctx.lineTo(p[0] - 0.5, 4.5);
@@ -11922,15 +11964,23 @@ var botbar_Botbar = /*#__PURE__*/function () {
 
   }, {
     key: "format_date",
-    value: function format_date(t) {
-      t = this.grid_0.ti_map.i2t(t);
-      t += new Date(t).getTimezoneOffset() * botbar_MINUTE;
+    value: function format_date(p) {
+      var t = p[1][0];
+      t = this.grid_0.ti_map.i2t(t); //t += new Date(t).getTimezoneOffset() * MINUTE
+
       var d = new Date(t);
-      if (utils.year_start(t) === t) return d.getFullYear();
-      if (utils.month_start(t) === t) return botbar_MONTHMAP[d.getMonth()];
+
+      if (p[2] === botbar_YEAR || utils.year_start(t) === t) {
+        return d.getUTCFullYear();
+      }
+
+      if (p[2] === botbar_MONTH || utils.month_start(t) === t) {
+        return botbar_MONTHMAP[d.getUTCMonth()];
+      }
+
       if (utils.day_start(t) === t) return d.getDate();
-      var h = utils.add_zero(d.getHours());
-      var m = utils.add_zero(d.getMinutes());
+      var h = utils.add_zero(d.getUTCHours());
+      var m = utils.add_zero(d.getUTCMinutes());
       return h + ":" + m;
     }
   }, {
@@ -11938,17 +11988,17 @@ var botbar_Botbar = /*#__PURE__*/function () {
     value: function format_cursor_x() {
       var t = this.$p.cursor.t;
       t = this.grid_0.ti_map.i2t(t);
-      var ti = this.$p.interval;
-      t += new Date(t).getTimezoneOffset() * botbar_MINUTE;
+      var ti = this.$p.interval; //t += new Date(t).getTimezoneOffset() * MINUTE
+
       var d = new Date(t);
 
       if (ti === botbar_YEAR) {
-        return d.getFullYear();
+        return d.getUTCFullYear();
       }
 
       if (ti < botbar_YEAR) {
-        var yr = '`' + "".concat(d.getFullYear()).slice(-2);
-        var mo = botbar_MONTHMAP[d.getMonth()];
+        var yr = '`' + "".concat(d.getUTCFullYear()).slice(-2);
+        var mo = botbar_MONTHMAP[d.getUTCMonth()];
         var dd = '01';
       }
 
@@ -11957,8 +12007,8 @@ var botbar_Botbar = /*#__PURE__*/function () {
       var time = '';
 
       if (ti < botbar_DAY) {
-        var h = utils.add_zero(d.getHours());
-        var m = utils.add_zero(d.getMinutes());
+        var h = utils.add_zero(d.getUTCHours());
+        var m = utils.add_zero(d.getUTCMinutes());
         time = h + ":" + m;
       }
 
