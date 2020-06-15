@@ -116,6 +116,10 @@ export default {
             let d = ohlcv[i+1][0] - x[0]
             if (d === d && d < min) min = d
         })
+        // This saves monthly chart from being awkward 
+        if (min >= Const.MONTH && min <= Const.DAY * 30) {
+            return Const.DAY * 31
+        }
         return min
     },
 
