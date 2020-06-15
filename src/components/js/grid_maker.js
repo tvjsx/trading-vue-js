@@ -246,6 +246,13 @@ function GridMaker(id, params, master_grid = null) {
             const dt = range[1] - range[0]
             const r = self.spacex / dt
 
+            /* TODO: remove the left-side glitch
+
+            let year_0 = Utils.get_year(sub[0][0])
+            for (var t0 = year_0; t0 < range[0]; t0 += self.t_step) {}
+
+            let m0 = Utils.get_month(t0)*/
+
             for (var i = 0; i < sub.length; i++) {
                 let p = sub[i]
                 let prev = sub[i-1] || []
@@ -287,12 +294,12 @@ function GridMaker(id, params, master_grid = null) {
         }
     }
 
-    function insert_line(prev, p, x) {
+    function insert_line(prev, p, x, m0) {
 
         let prev_t = ti_map.ib ? ti_map.i2t(prev[0]) : prev[0]
         let p_t = ti_map.ib ? ti_map.i2t(p[0]) : p[0]
 
-        // TODO: take this block =========>
+        // TODO: take this block =========> (see below)
         if ((prev[0] || interval === YEAR) &&
             Utils.get_year(p_t) !== Utils.get_year(prev_t)) {
             self.xs.push([x, p, YEAR]) // [px, [...], rank]
@@ -315,7 +322,7 @@ function GridMaker(id, params, master_grid = null) {
             t -= self.t_step
             let x = Math.floor((t  - range[0]) * r)
             if (x < 0) break
-            // TODO: ==========> And insert here
+            // TODO: ==========> And insert it here somehow
             if (t % interval === 0) {
                 self.xs.unshift([x,[t], interval])
             }
