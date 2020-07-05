@@ -132,7 +132,7 @@ export default class Botbar {
             var mo = MONTHMAP[d.getUTCMonth()]
             var dd = '01'
         }
-        if (ti <= WEEK) dd = d.getDate()
+        if (ti <= WEEK) dd = d.getUTCDate()
         let date = `${dd} ${mo} ${yr}`
         let time = ''
 
