@@ -116,7 +116,7 @@ export default {
             let d = ohlcv[i+1][0] - x[0]
             if (d === d && d < min) min = d
         })
-        // This saves monthly chart from being awkward 
+        // This saves monthly chart from being awkward
         if (min >= Const.MONTH && min <= Const.DAY * 30) {
             return Const.DAY * 31
         }
@@ -202,6 +202,30 @@ export default {
             return Const.map_unit[smth]
         } else {
             return smth
+        }
+    },
+
+    // Fallback fix for Brave browser
+    // https://github.com/brave/brave-browser/issues/1738
+    measureText(ctx, text, tv_id) {
+        let w = ctx.measureTextOrg(text)
+        if (w === 0) {
+            const doc = document
+            const id = 'tvjs-measure-text'
+            let el = doc.getElementById(id)
+            if (!el) {
+                let base = doc.getElementById(tv_id)
+                el = doc.createElement("div")
+                el.id = id
+                el.style.position = 'absolute'
+                base.appendChild(el)
+            }
+            if(ctx.font) el.style.font = ctx.font
+            el.innerText = text.replace(/ /g, '.');
+            console.log(text)
+            return { width: el.offsetWidth }
+        } else {
+            return w
         }
     }
 

@@ -1,6 +1,8 @@
 // Interactive canvas-based component
 // Should implement: mousemove, mouseout, mouseup, mousedown, click
 
+import Utils from '../stuff/utils.js'
+
 export default {
     methods: {
         setup() {
@@ -17,6 +19,13 @@ export default {
                 const ctx = canvas.getContext('2d')
                 ctx.scale(dpr, dpr)
                 this.redraw()
+                // Fallback fix for Brave browser
+                // https://github.com/brave/brave-browser/issues/1738
+                if (!ctx.measureTextOrg) {
+                    ctx.measureTextOrg = ctx.measureText
+                }
+                ctx.measureText = text =>
+                    Utils.measureText(ctx, text, this.$props.tv_id)
             })
         },
         create_canvas(h, id, props) {
