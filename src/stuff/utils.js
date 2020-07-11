@@ -208,8 +208,8 @@ export default {
     // Fallback fix for Brave browser
     // https://github.com/brave/brave-browser/issues/1738
     measureText(ctx, text, tv_id) {
-        let w = ctx.measureTextOrg(text)
-        if (w === 0) {
+        let m = ctx.measureTextOrg(text)
+        if (m.width === 0) {
             const doc = document
             const id = 'tvjs-measure-text'
             let el = doc.getElementById(id)
@@ -222,10 +222,13 @@ export default {
             }
             if(ctx.font) el.style.font = ctx.font
             el.innerText = text.replace(/ /g, '.');
-            console.log(text)
+            console.log({
+                width: el.offsetWidth,
+                height: el.offsetHeight
+            })
             return { width: el.offsetWidth }
         } else {
-            return w
+            return m
         }
     }
 
