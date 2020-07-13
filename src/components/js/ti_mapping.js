@@ -54,10 +54,20 @@ export default class TI {
 
     // Map overlay data
     // TODO: parse() called 3 times instead of 2 for 'spx_sample.json'
+    // TODO: make possible to use indicies as timestamps
     parse(data) {
+
         if (!this.ib || !this.sub[0]) return data
         let res = []
         let k = 0 // Candlestick index
+
+        // If indicator data starts after ohlcv, calc the first index
+        if (data.length) {
+            try {
+                let k1 = Utils.fast_nearest(this.sub, data[0][0])[0]
+                if (k1 !== null) k = k1
+            } catch(e) { }
+        }
 
         let t0 = this.sub[0][0]
         let tN = this.sub[this.sub.length - 1][0]
@@ -69,6 +79,7 @@ export default class TI {
             let t = data[i][0]
             let index = this.ti_map[t]
 
+
             if (index === undefined) {
 
                 // Linear extrapolation
@@ -79,16 +90,21 @@ export default class TI {
                 // Linear interpolation
                 else {
                     let tk2 = this.sub[k + 1][0]
-                    index = this.ss + k + (t - tk) / (tk2 - tk)
+                    index = tk === tk2 ?  this.ss + k :
+                        this.ss + k + (t - tk) / (tk2 - tk)
+                    t = data[i+1] ? data[i+1][0] : undefined
                 }
 
             }
-
-            if (t > tk && k < this.sub.length - 2) k++
+            // Race of data points & sub points (ohlcv)
+            // (like turn based increments)
+            while (t > tk && k < this.sub.length - 2) {
+                k++
+                tk = this.sub[k][0]
+            }
             copy[0] = index
             res.push(copy)
         }
-
         return res
     }
 
@@ -157,10 +173,8 @@ export default class TI {
         try {
             let i = Utils.fast_nearest(this.sub, t)
             let tk = this.sub[i[1]][0]
-            console.log('here', i)
             return this.ss + i[1] - (tk - t) / this.tf
         } catch(e) { }
-
 
         return undefined
     }
