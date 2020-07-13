@@ -13,6 +13,7 @@ export default function(self, range) {
     Object.assign(self, {
         // Time to screen coordinates
         t2screen: t => {
+            if (ib) t = self.ti_map.smth2i(t)
             return Math.floor((t - range[0]) * r) - 0.5
         },
         // $ to screen coordinates
