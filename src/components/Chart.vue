@@ -33,6 +33,7 @@ import Botbar from './Botbar.vue'
 import Keyboard from './Keyboard.vue'
 import Shaders from '../mixins/shaders.js'
 import TI from './js/ti_mapping.js'
+import Const from '../stuff/constants.js'
 
 
 export default {
@@ -62,6 +63,10 @@ export default {
         this.updater = new CursorUpdater(this)
 
         this.update_last_candle()
+        
+        if (this.$props.ib && !this.chart.tf) {
+            console.warn(Const.IB_TF_WARN)
+        }
 
     },
     methods: {
