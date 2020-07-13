@@ -60,6 +60,11 @@ ChartConfig.FONT =
     Fira Sans,Droid Sans,Helvetica Neue,
     sans-serif`
 
+const IB_TF_WARN =
+    `When using IB mode you should specify ` +
+    `timeframe ('tf' filed in 'chart' object),` +
+    `otherwise you can get an unexpected behaviour`
+
 const MAP_UNIT = {
   "1s": SECOND,
   "5s": SECOND * 5,
@@ -98,5 +103,6 @@ export default {
     TIMESCALES: TIMESCALES,
     $SCALES: $SCALES,
     ChartConfig: ChartConfig,
-    map_unit: MAP_UNIT
+    map_unit: MAP_UNIT,
+    IB_TF_WARN
 }
