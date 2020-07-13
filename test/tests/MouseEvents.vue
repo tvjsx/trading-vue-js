@@ -1,6 +1,7 @@
 <template>
 <span>
     <trading-vue :data="chart" :width="this.width" :height="this.height"
+            ref="tvjs"
             :index-based="index_based"
             :overlays="overlays"
             :color-back="colors.colorBack"
@@ -36,6 +37,7 @@ export default {
     mounted() {
         window.addEventListener('resize', this.onResize)
         this.onResize()
+        window.tv = this.$refs.tvjs
     },
     computed: {
         colors() {
