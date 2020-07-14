@@ -28,7 +28,7 @@ By default TVJS uses time as the x-coordinate. For candlestick charts like BTCUS
 
 
 The solution is to use the candle index instead of time, so the gaps are collapsed.
-You can enable the index-based mode in the TVJS props or in your data:
+You can enable the index-based mode in the TVJS [props](https://github.com/tvjsx/trading-vue-js/tree/master/docs/api#props) or in your data:
 
 ```js
 "chart": {
