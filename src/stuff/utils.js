@@ -205,6 +205,31 @@ export default {
         }
     },
 
+    // Detect index shift between the main data sub
+    // and the overlay's sub (for IB-mode)
+    index_shift(sub, data) {
+
+        // Find the second timestamp (by value)
+        if (!data.length) return 0
+        let first = data[0][0]
+        let second
+
+        for (var i = 1; i < data.length; i++) {
+            if (data[i][0] !== first) {
+                second = data[i][0]
+                break
+            }
+        }
+
+        for (var j = 0; j < sub.length; j++) {
+            if (sub[j][0] === second) {
+                return j - i
+            }
+        }
+
+        return 0
+    },
+
     // Fallback fix for Brave browser
     // https://github.com/brave/brave-browser/issues/1738
     measureText(ctx, text, tv_id) {

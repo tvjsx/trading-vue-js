@@ -4,6 +4,19 @@ import Utils from '../../stuff/utils.js'
 
 const MAX_ARR = Math.pow(2, 32)
 
+// 3 MODES of index calculation for overlays/subcharts:
+// ::: indexSrc :::
+// * "map"      -> use TI mapping functions to detect index
+//                 (slowest, for stocks only. DEFAULT)
+//
+// * "calc"     -> calculate shift between sub & data
+//                 (faster, but overlay data should be perfectly
+//                  align with the main chart,
+//                  1-1 candle/data point. Supports Renko)
+//
+// * "data"     -> overlay data should come with candle index
+//                 (fastest, supports Renko)
+
 export default class TI {
 
     constructor() {
@@ -14,8 +27,7 @@ export default class TI {
     init(params, res) {
 
         let {
-            sub, onchart, interval, meta, $props:$p,
-            interval_ms, sub_start, ib
+            sub, interval, meta, $props:$p, interval_ms, sub_start, ib
         } = params
 
         this.ti_map = []
@@ -55,11 +67,23 @@ export default class TI {
     // Map overlay data
     // TODO: parse() called 3 times instead of 2 for 'spx_sample.json'
     // TODO: make possible to use indicies as timestamps
-    parse(data) {
+    parse(data, mode) {
 
-        if (!this.ib || !this.sub[0]) return data
+        if (!this.ib || !this.sub[0] || mode === 'data') return data
+
         let res = []
         let k = 0 // Candlestick index
+
+        if (mode === 'calc') {
+            let shift = Utils.index_shift(this.sub, data)
+            for (var i = 0; i < data.length; i++) {
+                let _i = (this.ss + i)
+                let copy = [...data[i]]
+                copy[0] = _i + shift
+                res.push(copy)
+            }
+            return res
+        }
 
         // If indicator data starts after ohlcv, calc the first index
         if (data.length) {
@@ -74,11 +98,9 @@ export default class TI {
 
         for (var i = 0; i < data.length; i++) {
             let copy = [...data[i]]
-            let _i = (this.ss + i)
             let tk = this.sub[k][0]
             let t = data[i][0]
             let index = this.ti_map[t]
-
 
             if (index === undefined) {
 
@@ -145,6 +167,11 @@ export default class TI {
         }
         return undefined
 
+    }
+
+    // Map or bypass depending on the mode
+    i2t_mode(i, mode) {
+        return mode === 'data' ? i : this.i2t(i)
     }
 
     // time => index

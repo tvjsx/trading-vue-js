@@ -63,7 +63,7 @@ export default {
         this.updater = new CursorUpdater(this)
 
         this.update_last_candle()
-        
+
         if (this.$props.ib && !this.chart.tf) {
             console.warn(Const.IB_TF_WARN)
         }
@@ -168,9 +168,10 @@ export default {
                 name: d.name,
                 data: this.ti_map.parse(Utils.fast_filter(
                     d.data,
-                    this.ti_map.i2t(this.range[0] - this.interval),
-                    this.ti_map.i2t(this.range[1])
-                )[0] || []),
+                    this.ti_map.i2t_mode(this.range[0] - this.interval,
+                        d.indexSrc),
+                    this.ti_map.i2t_mode(this.range[1], d.indexSrc)
+                )[0] || [], d.indexSrc || 'map'),
                 settings: d.settings || this.settings_ov,
                 grid: d.grid || {},
                 tf: Utils.parse_tf(d.tf)
