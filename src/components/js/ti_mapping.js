@@ -66,7 +66,6 @@ export default class TI {
 
     // Map overlay data
     // TODO: parse() called 3 times instead of 2 for 'spx_sample.json'
-    // TODO: make possible to use indicies as timestamps
     parse(data, mode) {
 
         if (!this.ib || !this.sub[0] || mode === 'data') return data
