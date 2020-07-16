@@ -37,7 +37,7 @@ export default class DCCore extends DCEvents {
             this.tv.$set(this.data.chart,'settings', {})
         }
 
-        // Remove ohlcv cuz we have Data v1.1
+        // Remove ohlcv cuz we have Data v1.1^
         delete this.data.ohlcv
 
     }

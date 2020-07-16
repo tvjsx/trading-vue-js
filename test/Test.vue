@@ -51,13 +51,18 @@ export default {
     name: 'app',
     components: TESTS,
     mounted() {
-        this.current_test = Object.values(TESTS)[0]
+        let index = parseInt(location.hash.slice(1))
+        index = (index === index) ? index - 1 : 0
+        let list = Object.values(TESTS)
+        if (!list[index]) index = 0
+        this.current_test = list[index]
+        this.test_index = index
     },
     data() {
         return {
             len: Object.values(TESTS).length,
             test_index: 0,
-            current_test: 'Simple',
+            current_test: '',
             night: true
         }
     },
@@ -77,6 +82,11 @@ export default {
                 this.test_index = 0
             }
             this.current_test = list[this.test_index]
+        }
+    },
+    watch: {
+        test_index(v) {
+            setTimeout(() => location.hash = `${v+1}`)
         }
     }
 };
