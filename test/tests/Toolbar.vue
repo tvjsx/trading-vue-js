@@ -1,5 +1,6 @@
 <template>
 <trading-vue :data="chart" :width="this.width" :height="this.height"
+        ref="tvjs"
         title-txt="The King"
         :toolbar="true"
         :color-back="colors.colorBack"
@@ -31,6 +32,8 @@ export default {
         window.addEventListener('resize', this.onResize)
         this.onResize()
         window.DataCube = this.chart
+        window.tv = this.$refs.tvjs
+        setTimeout(() => this.$set(this, 'chart', new DataCube(Data)), 1000)
     },
     computed: {
         colors() {
@@ -46,7 +49,7 @@ export default {
     },
     data() {
         return {
-            chart: new DataCube(Data),
+            chart: {},
             width: window.innerWidth,
             height: window.innerHeight
         }
