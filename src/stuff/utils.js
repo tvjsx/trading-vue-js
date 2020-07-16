@@ -100,14 +100,6 @@ export default {
         }
     },
 
-    // Checks if the ohlcv data is changed (given the new
-    // and old dataset values)
-    data_changed(n, p) {
-        n = n.ohlcv || (n.chart ? n.chart.data : []) || []
-        p = p.ohlcv || (p.chart ? p.chart.data : []) || []
-        return n.length !== p.length && n[0] !== p[0]
-    },
-
     // Detects candles interval
     detect_interval(ohlcv) {
         let len = Math.min(ohlcv.length - 1, 99)
@@ -247,10 +239,6 @@ export default {
             }
             if(ctx.font) el.style.font = ctx.font
             el.innerText = text.replace(/ /g, '.');
-            console.log({
-                width: el.offsetWidth,
-                height: el.offsetHeight
-            })
             return { width: el.offsetWidth }
         } else {
             return m

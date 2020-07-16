@@ -1,9 +1,17 @@
 <template>
-<trading-vue :data="chart" :width="this.width" :height="this.height"
-        :color-back="colors.colorBack"
-        :color-grid="colors.colorGrid"
-        :color-text="colors.colorText">
-</trading-vue>
+<span>
+    <trading-vue :data="chart" :width="this.width" :height="this.height"
+            ref="tvjs"
+            :index-based="index_based"
+            :color-back="colors.colorBack"
+            :color-grid="colors.colorGrid"
+            :color-text="colors.colorText">
+    </trading-vue>
+    <span class="gc-mode">
+        <input type="checkbox" v-model="index_based">
+        <label>Index Based</label>
+    </span>
+</span>
 </template>
 
 <script>
@@ -45,6 +53,7 @@ export default {
             this.stream = new Stream(WSS)
             this.stream.ontrades = this.on_trades
             window.dc = this.chart // Debug
+            window.tv = this.$refs.tvjs // Debug
         })
 
     },
@@ -124,7 +133,8 @@ export default {
         return {
             chart: {},
             width: window.innerWidth,
-            height: window.innerHeight
+            height: window.innerHeight,
+            index_based: true
         }
     }
 }

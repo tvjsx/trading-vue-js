@@ -25,7 +25,6 @@ export default class TI {
     }
 
     init(params, res) {
-
         let {
             sub, interval, meta, $props:$p, interval_ms, sub_start, ib
         } = params
@@ -43,7 +42,6 @@ export default class TI {
         if (this.ib) {
             this.map_sub(res)
         }
-
     }
 
     // Make maps for the main subset
@@ -88,7 +86,7 @@ export default class TI {
         if (data.length) {
             try {
                 let k1 = Utils.fast_nearest(this.sub, data[0][0])[0]
-                if (k1 !== null) k = k1
+                if (k1 !== null && k1 >= 0) k = k1
             } catch(e) { }
         }
 
@@ -106,6 +104,7 @@ export default class TI {
                 // Linear extrapolation
                 if (t < t0 || t > tN) {
                     index = this.ss + k - (tk - t) / this.tf
+                    t = data[i+1] ? data[i+1][0] : undefined
                 }
 
                 // Linear interpolation
@@ -137,7 +136,6 @@ export default class TI {
         // Discrete mapping
         let res = this.it_map[i]
         if (res !== undefined) return res
-
         // Linear extrapolation
         else if (i >= this.ss + this.sub_i.length) {
             let di = i - (this.ss + this.sub_i.length) + 1
@@ -175,8 +173,9 @@ export default class TI {
 
     // time => index
     // TODO: when switch from IB mode to regular tools
-    // disappear (bc there no more mapping)
+    // disappear (bc there is no more mapping)
     t2i(t) {
+
         if (!this.sub.length) return undefined
 
         // Discrete mapping

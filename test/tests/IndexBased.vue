@@ -17,8 +17,6 @@
 
 <script>
 
-/* TODO: */
-
 import TradingVue from '../../src/TradingVue.vue'
 import Data from '../data/data_offchart.json'
 import Utils from '../../src/stuff/utils.js'
@@ -35,12 +33,16 @@ export default {
         onResize(event) {
             this.width = window.innerWidth
             this.height = window.innerHeight - 50
+        },
+        add() {
+            this.chart.merge('chart.data', Data.ohlcv.slice())
         }
     },
     mounted() {
         window.addEventListener('resize', this.onResize)
         this.onResize()
-        window.tvjs = this.$refs.tvjs
+        window.tv = this.$refs.tvjs
+        window.test = this
     },
     computed: {
         colors() {
