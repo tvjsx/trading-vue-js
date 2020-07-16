@@ -43,6 +43,7 @@ export default class DCCore extends DCEvents {
     }
 
     // Range change callback (called by TradingVue)
+    // TODO: improve (reliablity + chunk with limited size)
     async range_changed(range, tf, check=false) {
 
         if (!this.loader) return

@@ -32,6 +32,7 @@ import GridSection from './Section.vue'
 import Botbar from './Botbar.vue'
 import Keyboard from './Keyboard.vue'
 import Shaders from '../mixins/shaders.js'
+import DataTrack from '../mixins/datatrack.js'
 import TI from './js/ti_mapping.js'
 import Const from '../stuff/constants.js'
 
@@ -42,7 +43,7 @@ export default {
         'title_txt', 'data', 'width', 'height', 'font', 'colors',
         'overlays', 'tv_id', 'config', 'buttons', 'toolbar', 'ib'
     ],
-    mixins: [Shaders],
+    mixins: [Shaders, DataTrack],
     components: {
         GridSection,
         Botbar,
@@ -79,6 +80,7 @@ export default {
             Utils.overwrite(this.sub, sub)
             this.update_layout()
             this.$emit('range-changed', r)
+            if (this.$props.ib) this.save_data_t()
         },
         goto(t) {
             const dt = this.range[1] - this.range[0]
@@ -362,12 +364,13 @@ export default {
                 if (this.sub.length || sub.length) {
                     Utils.overwrite(this.sub, sub)
                 }
-                this.update_layout(Utils.data_changed(n, p))
+                this.update_layout()
                 Utils.overwrite(this.range, this.range)
                 this.cursor.scroll_lock = !!n.scrollLock
                 if (n.scrollLock && this.cursor.locked) {
                     this.cursor.locked = false
                 }
+                this.data_changed()
                 this.update_last_candle()
                 // TODO: update legend values for overalys
                 this.rerender++

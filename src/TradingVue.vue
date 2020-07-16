@@ -233,17 +233,18 @@ export default {
         },
         getRange() {
             if (this.chart_props.ib) {
-                // Time range => index range
                 const ti_map = this.$refs.chart.ti_map
+                // Time range => index range
                 return this.$refs.chart.range
                     .map(x => ti_map.i2t(x))
             }
             return this.$refs.chart.range
         },
         getCursor() {
+
             let cursor = this.$refs.chart.cursor
             if (this.chart_props.ib) {
-                let ti_map = this.$refs.chart.ti_map
+                const ti_map = this.$refs.chart.ti_map
                 let copy = Object.assign({}, cursor)
                 copy.i = copy.t
                 copy.t = ti_map.i2t(copy.t)
@@ -267,15 +268,24 @@ export default {
             }
         },
         range_changed(r) {
+            if (this.chart_props.ib) {
+                const ti_map = this.$refs.chart.ti_map
+                r = r.map(x => ti_map.i2t(x))
+            }
             this.$emit('range-changed', r)
         },
         set_loader(dc) {
+            const self = this
             this.$refs.chart.$off('range-changed')
-            if (dc) this.$refs.chart.$on('range-changed',
-                r => dc.range_changed(
-                    r, this.$refs.chart.interval
-                )
-            )
+            if (dc) this.$refs.chart.$on('range-changed', r => {
+                let tf = this.$refs.chart.interval
+                if (self.chart_props.ib) {
+                    const ti_map = this.$refs.chart.ti_map
+                    r = r.map(x => ti_map.i2t(x))
+                    tf = this.$refs.chart.interval_ms
+                }
+                dc.range_changed(r, tf)
+            })
         }
     }
 }

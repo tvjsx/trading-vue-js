@@ -74,7 +74,6 @@ export default {
             return this.$props.settings
         },
         default_font() {
-            //console.log(this.$props.font.split('px').pop())
             return '12px ' + this.$props.font.split('px').pop()
         },
         buy_color() {

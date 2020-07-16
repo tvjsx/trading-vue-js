@@ -2,6 +2,7 @@
 <div>
     <trading-vue :data="chart" :width="this.width" :height="this.height"
             :toolbar="true"
+            :index-based="index_based"
             :color-back="colors.colorBack"
             :color-grid="colors.colorGrid"
             :color-text="colors.colorText"
@@ -10,6 +11,10 @@
     <span class="log-scale">
         <input type="checkbox" v-model="log_scale">
         <label>Log Scale</label>
+    </span>
+    <span class="gc-mode" style="top: 80px; right: 80px">
+        <input type="checkbox" v-model="index_based">
+        <label>Index Based</label>
     </span>
     <tf-selector :charts="charts" v-on:selected="on_selected">
     </tf-selector>
@@ -71,7 +76,8 @@ export default {
             chart: new DataCube({}),
             width: window.innerWidth,
             height: window.innerHeight,
-            log_scale: false
+            log_scale: false,
+            index_based: false
         };
     },
     watch: {
