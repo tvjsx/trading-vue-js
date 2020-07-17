@@ -28,6 +28,7 @@ const WSS = `ws://localhost:${PORT}/ws/btcusdt@aggTrade`
 
 export default {
     name: 'DataHelper',
+    icon: '⚡',
     description: 'Play with DataCube in console',
     props: ['night'],
     components: {

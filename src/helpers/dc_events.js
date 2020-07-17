@@ -11,6 +11,8 @@ export default class DCEvents {
         switch(event) {
             case 'register-tools': this.register_tools(args)
                 break
+            case 'register-scripts': this.register_scripts(args)
+                break
             case 'tool-selected':
                 if (!args[0]) break // TODO: Quick fix, investigate
                 if (args[0].split(':')[0] === 'System') {
@@ -78,6 +80,10 @@ export default class DCEvents {
         }
         this.tv.$set(this.data, 'tools', list)
         this.tv.$set(this.data, 'tool', 'Cursor')
+    }
+
+    register_scripts(scripts) {
+        console.log(scripts)
     }
 
     merge_presets(proto, preset) {
