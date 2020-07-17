@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div id="test-title">
-            <h1>{{current_test.name}}</h1>
+        <div id="test-title" :style="{'background': (night ? null : '#fff')}">
+            <h1>{{current_test.icon}} {{current_test.name}}</h1>
             <p>{{current_test.description}} [{{test_index+1}}/{{len}}]</p>
             <span class="night-mode">
                 <input type="checkbox" v-model="night">
@@ -39,12 +39,13 @@ import Interfaces from './tests/Interfaces.vue'
 import IndexBased from './tests/IndexBased.vue'
 import Performance from './tests/Performance.vue'
 import Renko from './tests/Renko.vue'
+import Scripts from './tests/Scripts.vue'
 
 const TESTS = {
     Simple, MouseEvents, Timeframes, Multichart,
     LegendButtons, ChartTypes, DataHelper, Toolbar,
     GridSettings, Interfaces, IndexBased, Performance,
-    Renko
+    Renko, Scripts
 }
 
 export default {
@@ -105,6 +106,13 @@ body {
     height: 50px;
     color: #ddd;
     width: 100%;
+    font-family: -apple-system,BlinkMacSystemFont,
+    Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,
+    Fira Sans,Droid Sans,Helvetica Neue,
+    sans-serif;
+    background: #12192c;
+    border-bottom: 1px solid #8080804f;
+    z-index: 1000;
 }
 
 #test-container{
@@ -112,19 +120,18 @@ body {
     top: 50px;
 }
 #test-title h1 {
-    color: #9b9ca0;
-    margin: 5px 0 0 10px;
+    color: #c5c5c5;
+    margin: 7px 0 0 10px;
+    font-weight: 600;
+    font-size: 1.75em;
 }
 #test-title p {
     position: absolute;
     width: 100%;
     top: 1px;
     text-align: center;
-    font-family: -apple-system,BlinkMacSystemFont,
-    Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,
-    Fira Sans,Droid Sans,Helvetica Neue,
-    sans-serif;
     font-weight: 200;
+    color: #b7b7b7;
 }
 
 .test-btn {

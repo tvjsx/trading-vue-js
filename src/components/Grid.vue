@@ -41,11 +41,14 @@ export default {
 
         // We need to know which components we will use.
         // Custom overlay components overwrite built-ins:
-        let tools = []
+        var tools = [], scripts = []
         this._list.forEach((x, i) => {
             let use_for = x.methods.use_for()
             if (x.methods.tool) tools.push({
                 use_for, info: x.methods.tool()
+            })
+            if (x.methods.calc) scripts.push({
+                use_for, info: x.methods.calc()
             })
             use_for.forEach(indicator => {
                 this._registry[indicator] = i
@@ -53,6 +56,9 @@ export default {
         })
         this.$emit('custom-event', {
             event: 'register-tools', args: tools
+        })
+        this.$emit('custom-event', {
+            event: 'register-scripts', args: scripts
         })
         this.$on('custom-event', e =>
             this.on_ux_event(e, 'grid'))

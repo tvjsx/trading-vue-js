@@ -18,6 +18,7 @@ import PerfTestUx from './Performance/PerfTestUx.vue'
 
 export default {
     name: 'Performance',
+    icon: '🔥',
     description: 'Several performance tests',
     props: ['night'],
     components: {

@@ -1,8 +1,6 @@
 <template>
 <trading-vue :data="chart" :width="this.width" :height="this.height"
-        ref="tvjs"
-        title-txt="The King"
-        :toolbar="true"
+        :toolbar="true" :overlays="ov"
         :color-back="colors.colorBack"
         :color-grid="colors.colorGrid"
         :color-text="colors.colorText">
@@ -11,14 +9,14 @@
 
 <script>
 import TradingVue from '../../src/TradingVue.vue'
-import Data from '../data/data_tools.json'
-import Utils from '../../src/stuff/utils.js'
+import Data from '../data/data_scripts.json'
 import DataCube from '../../src/helpers/datacube.js'
+import ScriptOverlay from './Scripts/ScriptOverlay.vue'
 
 export default {
-    name: 'Toolbar',
-    icon: '🔪',
-    description: 'Toolbar & drawing tools',
+    name: 'Scripts',
+    icon: '',
+    description: 'Supposed to be precisely calculated',
     props: ['night'],
     components: {
         TradingVue
@@ -32,9 +30,7 @@ export default {
     mounted() {
         window.addEventListener('resize', this.onResize)
         this.onResize()
-        window.DataCube = this.chart
-        window.tv = this.$refs.tvjs
-        setTimeout(() => this.$set(this, 'chart', new DataCube(Data)), 1000)
+        window.dc = this.chart
     },
     computed: {
         colors() {
@@ -50,14 +46,14 @@ export default {
     },
     data() {
         return {
-            chart: {},
+            chart: new DataCube(Data),
             width: window.innerWidth,
-            height: window.innerHeight
+            height: window.innerHeight,
+            ov: [ScriptOverlay]
         }
     }
 }
 </script>
 
 <style>
-
 </style>
