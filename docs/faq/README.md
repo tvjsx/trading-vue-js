@@ -38,7 +38,7 @@ You can enable the index-based mode in the TVJS [props](https://github.com/tvjsx
 }
 ```
 
-It must be `true` for Renko charts.
+It must be `true` for Renko charts. More info [here](https://github.com/tvjsx/trading-vue-js/blob/master/docs/api/IB.md)
 
 ## See weekend gaps?
 
@@ -97,9 +97,8 @@ or,
 
 Did you give each instance a unique id?
 
-Do you use `translate3d`? Currenty the lib doesn't support it.   
+Do you use `translate3d`? Currenty the lib doesn't support it.
 
 ## How to use real-time data?
 
 See https://github.com/tvjsx/trading-vue-js/blob/master/test/tests/DataHelper.vue
-

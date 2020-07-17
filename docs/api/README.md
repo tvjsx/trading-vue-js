@@ -1,12 +1,14 @@
 # API Book
 
 ::: warning
-This library is in alpha stage, API may change. This guide version is **0.5.0**
+This library is in alpha stage, API may change. This guide version is **0.5.2**
 :::
 
 ![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=Current%20lib%20version)
 
 ### DataCube API is [here](https://github.com/C451/trading-vue-js/tree/master/docs/datacube)
+### Inline Shaders API is [here](https://github.com/C451/trading-vue-js/tree/master/docs/api/SHADERS.md)
+### Index-Based mode API is [there](https://github.com/tvjsx/trading-vue-js/blob/master/docs/api/IB.md)
 
 ## Props
 
@@ -276,8 +278,6 @@ IMPORTANT: All data must be sorted by time (in ascending order). The main OHLCV 
 ## Overlay api
 
 Data for building overlays. Defined in `mixins/overlay.js`, accessed through overlay's `this.$props`.
-
-### Inline Shaders API is [here](https://github.com/C451/trading-vue-js/tree/master/docs/api/SHADERS.md)
 
 *All properties reactive*
 
