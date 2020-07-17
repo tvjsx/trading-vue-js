@@ -39,7 +39,7 @@ Inside overlay you'll find it in the `layout` [object](https://github.com/tvjsx/
 
 ## 3 MODES of index calculation for overlays/subcharts
 
-There 3 ways the library can calculate indices for overlays (form the main chart data):
+There are 3 ways the library can calculate indices for overlays (form the main chart data):
 
 ```js
 {
@@ -55,13 +55,19 @@ There 3 ways the library can calculate indices for overlays (form the main chart
 
   This method matches the timestamps between the main chart and the overlay, detecting the shift between index spaces (`*` means data timestamp):
 
-`Main data: [ * * * * * * * * * * * * * ]`
-`Overlayzz: [ <shift> * * * * * * * * * ]`
+```
+Main data: [ * * * * * * * * * * * * * ]
+Overlayzz: [ <shift> * * * * * * * * * ]
+```
 
 Sadly, it doesn't support scenerios like this one:
 
-`Main data: [ * * * * * * * * * * * * * ]`
-`Overlayzz: [ <shft> * * * * * * * * * ]`
+```
+Main data: [ * * * * * * * * * * * * * ]
+Overlayzz: [ <shft> * * * * * * * * * ]
+```
+
+<br>
 
 * **data** -> overlay data should come with candle indices (fastest, supports Renko).
 
