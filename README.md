@@ -29,15 +29,19 @@ If you create trading software - this lib is probably for you. If you like to ma
 
 * Scrolling & zooming as we all like
 * Simple API for making new overlays
-* No need for fancy math
+* Custom drawing tools 
+* Non-time based charts (e.g. Renko)
 * One overlay === one .vue component
 * Fully reactive
 * Fully responsive
 * Customizable colors and fonts
+* Quite fast (works even with 3 mil candles)
 
 ## Demo & Docs
 
 ### [Demo](https://tvjsx.github.io/trading-vue-demo/) | [Getting Started](https://github.com/tvjsx/trading-vue-js/tree/master/docs/guide#getting-started) | [API Book](https://github.com/tvjsx/trading-vue-js/tree/master/docs/api#api-book) | [Built-in Overlays](https://github.com/tvjsx/trading-vue-js/tree/master/docs/overlays#built-in-overlays) | [Examples](https://github.com/tvjsx/trading-vue-js/tree/master/test/tests) | [101 Project](https://github.com/tvjsx/trading-vue-101) | [llll Gitter](https://gitter.im/Trading-Vue-js) | [FAQ](https://github.com/tvjsx/trading-vue-js/tree/master/docs/faq)
+
+*To run the examples, download the repo & `npm run test`*
 
 ## Install
 
