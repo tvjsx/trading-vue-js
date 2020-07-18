@@ -40,9 +40,9 @@ class Overlay1 {
 
                 let sum = close[0]
                 for (var i = 1; i < length; i++) {
-                    sum = sum + nw(close[i])
+                    sum = sum + nz(close[i])
                 }
-                return sum / length // Returns
+                return sum / length // Returns the last value
             }
         }
     }

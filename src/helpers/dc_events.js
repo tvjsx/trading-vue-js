@@ -4,6 +4,8 @@
 import Utils from '../stuff/utils.js'
 import Icons from '../stuff/icons.json'
 
+import se from './script_engine.js'
+
 export default class DCEvents {
 
     // Called when overalay/tv emits 'custom-event'
@@ -83,7 +85,7 @@ export default class DCEvents {
     }
 
     register_scripts(scripts) {
-        console.log(scripts)
+        if (scripts.length) se.register(scripts)
     }
 
     merge_presets(proto, preset) {

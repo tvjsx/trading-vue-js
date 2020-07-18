@@ -26,7 +26,23 @@ export default {
         },
 
         use_for() { return ['ScriptOverlay', 'EMA', 'SMA'] },
-        data_colors() { return [this.color] }
+        data_colors() { return [this.color] },
+        calc() {
+            return {
+                props: {
+                    length: { def: 50, range: [2, 200, 1] }
+                },
+                init() {
+                },
+                update(length) {
+                    let sum = 0
+                    for (var i = 0; i < length; i++) {
+                        sum = sum + nw(close[i])
+                    }
+                    return sum / length
+                }
+            }
+        }
     },
     // Define internal setting & constants here
     computed: {

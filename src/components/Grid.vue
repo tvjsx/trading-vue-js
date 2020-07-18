@@ -48,7 +48,7 @@ export default {
                 use_for, info: x.methods.tool()
             })
             if (x.methods.calc) scripts.push({
-                use_for, info: x.methods.calc()
+                use_for, src: x.methods.calc()
             })
             use_for.forEach(indicator => {
                 this._registry[indicator] = i

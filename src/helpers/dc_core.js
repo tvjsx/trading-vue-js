@@ -4,6 +4,8 @@
 import Utils from '../stuff/utils.js'
 import DCEvents from './dc_events.js'
 
+import se from './script_engine.js'
+
 export default class DCCore extends DCEvents {
 
     // Set TV instance (once). Called by TradingVue itself
@@ -39,6 +41,7 @@ export default class DCCore extends DCEvents {
 
         // Remove ohlcv cuz we have Data v1.1^
         delete this.data.ohlcv
+        se.init_data(this)
 
     }
 
