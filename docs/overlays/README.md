@@ -6,6 +6,16 @@ This library is in alpha stage, API may change. This guide's version is **0.5.0*
 
 ![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=Current%20lib%20version)
 
+## General Settings
+
+Available in any overlay:
+
+| Type name | Aliases | Description |
+|---|---|---|
+| **z-index** | Number | 0 = candlestick layer, default = -1 |
+| **legend** | Boolean  | Show legend, default = true |
+| **display**  | Boolean  | Show overlay, default = true |
+
 ## Candles
 
 | Type name | Aliases | Description |
@@ -32,8 +42,6 @@ This library is in alpha stage, API may change. This guide's version is **0.5.0*
 
 | Prop | Type | Description |
 |---|---|---|
-| *z-index* | Number | 0 = candlestick layer, default = -1 |
-| *legend* | Boolean  | Show legend, default = true |
 | showVolume | Boolean | Show volume below the chart, default **true** |
 | colorCandleUp | String | Green candles color, hex |
 | colorCandleDw | String | Red candles color, hex |
@@ -85,8 +93,6 @@ The Style object, if defined, overwrites all the color settings of a particular 
 
 | Prop | Type | Description |
 |---|---|---|
-| *z-index* | Number | 0 = candlestick layer, default = -1 |
-| *legend* | Boolean  | Show legend, default = true |
 | colorVolUp | String | Green volume color, hex |
 | colorVolDw | String | Red volume color, hex |
 | colorVolUpLegend | String | Legend green bar color, hex |
@@ -120,8 +126,6 @@ The Style object, if defined, overwrites all the color settings of a particular 
 
 | Prop | Type | Description |
 |---|---|---|
-| *z-index* | Number | 0 = candlestick layer, default = -1 |
-| *legend* | Boolean  | Show legend, default = true |
 | lineWidth | Number | Line width, px |
 | color | String | Line color, hex |
 
@@ -151,8 +155,6 @@ The Style object, if defined, overwrites all the color settings of a particular 
 
 | Prop | Type | Description |
 |---|---|---|
-| *z-index* | Number | 0 = candlestick layer, default = -1 |
-| *legend* | Boolean  | Show legend, default = true |
 | lineWidth | Number | General line width, px |
 | lineWidths | Array of Numbers | Line widths, [px]|
 | colors | Array of Strings | Line colors, [hex] |
@@ -183,8 +185,6 @@ The Style object, if defined, overwrites all the color settings of a particular 
 
 | Prop | Type | Description |
 |---|---|---|
-| *z-index* | Number | 0 = candlestick layer, default = -1 |
-| *legend* | Boolean  | Show legend, default = true |
 | lineWidth | Number | Line width, px |
 | color | String | Lines color, hex |
 | backColor | String | Channel body color, hex |
@@ -216,8 +216,6 @@ The Style object, if defined, overwrites all the color settings of a particular 
 
 | Prop | Type | Description |
 |---|---|---|
-| *z-index* | Number | 0 = candlestick layer, default = -1 |
-| *legend* | Boolean  | Show legend, default = true |
 | lineWidth | Number | Line width, px |
 | color | String | Lines color, hex |
 | backColor  | String | Background color, hex |
@@ -257,8 +255,6 @@ Type:
 
 | Prop | Type | Description |
 |---|---|---|
-| *z-index* | Number | 0 = candlestick layer, default = -1 |
-| *legend* | Boolean  | Show legend, default = true |
 | buyColor | String | Buy marker color, hex |
 | sellColor | String | Sell marker color, hex  |
 | labelColor | String | Marker label color, hex  |
@@ -291,8 +287,6 @@ Type:
 
 | Prop | Type | Description |
 |---|---|---|
-| *z-index* | Number | 0 = candlestick layer, default = -1 |
-| *legend* | Boolean  | Show legend, default = true |
 |  p1 | Array |  Coordinate of the first point  |
 |  p2 | Array |  Coordinate of the second point  |
 | lineWidth | Number | Line width, px |
@@ -323,8 +317,6 @@ Type:
 
 | Prop | Type | Description |
 |---|---|---|
-| *z-index* | Number | 0 = candlestick layer, default = -1 |
-| *legend* | Boolean  | Show legend, default = true |
 | lineWidth | Number | Line width, px |
 | yPosition | Number | Label y-postion [0,1], default = 0.9 |
 | lineColor | String | Line color, hex |
