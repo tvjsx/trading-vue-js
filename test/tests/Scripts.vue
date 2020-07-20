@@ -46,7 +46,10 @@ export default {
     },
     data() {
         return {
-            chart: new DataCube(Data),
+            chart: new DataCube(Data, {
+                scripts: true,
+                //scriptDepth: 50
+            }),
             width: window.innerWidth,
             height: window.innerHeight,
             ov: [ScriptOverlay]

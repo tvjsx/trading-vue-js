@@ -58,6 +58,18 @@ class Overlay2 {
             // Assuming this is an overlay without draw(),
             // so we can specify an overlay for rendering:
             renderer: 'Spline',
+
+            // Use update() to for the init, or just for
+            // the live updates
+            precalc: true,
+
+            // Inverted buffer leng (autodetect?)
+            bufflen: 200,
+
+            // (Future feature)  Place the result on a chart's
+            // view instead of the main chart
+            saveAsView: 'heikin', 
+
             init(length) {
                 // Non-inverted data array of this Overlay
                 // Will be filled during the calculation

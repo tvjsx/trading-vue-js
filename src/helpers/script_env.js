@@ -10,9 +10,10 @@ export default class ScriptEnv {
 
     constructor(src, data) {
 
-        this.std = new ScriptStd()
+        this.std = new ScriptStd(this)
         this.output = []
         this.data = []
+        this.tss = {}
         this.output.box_maker = this.make_box(src)
         this.output.box_maker(this, data)
         delete this.output.box_maker
@@ -22,11 +23,11 @@ export default class ScriptEnv {
     // A small sandbox for a particular script
     make_box(src) {
 
-        let std_lib = ``
         let proto = Object.getPrototypeOf(this.std)
+        let std = ``
         for (var k of Object.getOwnPropertyNames(proto)) {
             if (k === 'constructor') continue
-            std_lib += `const ${k} = self.std.${k}\n`
+            std += `const ${k} = self.std.${k}.bind(self.std)\n`
         }
 
         let props = ``
@@ -39,7 +40,7 @@ export default class ScriptEnv {
             'use strict';
 
             // Built-in functions (aliases)
-            ${std_lib}
+            ${std}
 
             // Timeseries
             const open = tsdata.open
@@ -48,8 +49,9 @@ export default class ScriptEnv {
             const close = tsdata.close
             const vol = tsdata.vol
 
-            // Overlay data
+            // Dierct data ts
             const data = self.data
+            const ohlcv = tsdata.ohlcv
 
             // Script's properties (init)
             ${props}

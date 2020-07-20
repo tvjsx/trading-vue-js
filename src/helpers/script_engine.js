@@ -1,5 +1,6 @@
 
-// Script manager
+// Script engine, aka 🌴 Palm Script Engine
+// Fuck yeah
 
 import ScriptEnv from './script_env.js'
 import Utils from '../stuff/utils.js'
@@ -30,7 +31,8 @@ class ScriptEngine {
                 high: this.high,
                 low: this.low,
                 close: this.close,
-                vol: this.vol
+                vol: this.vol,
+                ohlcv: this.data.chart.data
             })
         }
         let t1 = Utils.now()
@@ -61,12 +63,13 @@ class ScriptEngine {
 
     run(script) {
         try {
+
+            this.env.output.init()
             let ohlcv = this.data.chart.data
-            for (var i = 0; i < ohlcv.length; i++) {
+            for (var i = this.start(ohlcv); i < ohlcv.length; i++) {
                 this.iter = i
                 this.t = ohlcv[i][0]
                 this.step(ohlcv[i])
-                this.env.output.init()
                 let v = this.env.output.update()
 
                 if (this.skip) {
@@ -81,6 +84,7 @@ class ScriptEngine {
             console.log(e)
         }
 
+        // DEBUG
         this.dc.set(`onchart.ScriptOverlay.data`, this.env.data)
 
     }
@@ -92,6 +96,11 @@ class ScriptEngine {
         this.close.unshift(data[4])
         this.vol.unshift(data[5])
         this.env.output.unshift(undefined)
+
+        // Update all temp symbols
+        for (var id in this.env.tss) {
+            this.env.tss[id].unshift(undefined)
+        }
     }
 
     // Copy the recent value to the direct buff
@@ -108,6 +117,12 @@ class ScriptEngine {
         this.close.length = DEF_LIMIT
         this.vol.length = DEF_LIMIT
         this.env.output.length = DEF_LIMIT
+    }
+
+    start(ohlcv) {
+        let depth = this.dc.sett.scriptDepth
+        return depth ?
+            Math.max(ohlcv.length - depth, 0) : 0
     }
 }
 
