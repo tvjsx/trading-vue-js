@@ -181,4 +181,9 @@ body {
         sans-serif
 }
 
+.night-mode label {
+    vertical-align: top;
+    line-height: 1.75em;
+}
+
 </style>

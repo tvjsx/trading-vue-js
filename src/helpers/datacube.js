@@ -8,11 +8,11 @@ import DCCore from './dc_core.js'
 // Interface methods. Private methods in dc_core.js
 export default class DataCube extends DCCore {
 
-    constructor(data = {}) {
+    constructor(data = {}, sett = {}) {
 
         super()
         this.data = data
-
+        this.sett = sett
     }
 
     // Add new overlay

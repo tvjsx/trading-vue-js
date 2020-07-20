@@ -35,11 +35,12 @@ export default {
                 init() {
                 },
                 update(length) {
-                    let sum = 0
+                    /*let sum = 0
                     for (var i = 0; i < length; i++) {
                         sum = sum + nw(close[i])
                     }
-                    return sum / length
+                    return sum / length*/
+                    return highest(close, 50, "d57s65d")[0]
                 }
             }
         }
