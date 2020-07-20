@@ -11,6 +11,11 @@ export default class ScriptStd {
         this.SWMA = [1/6, 2/6, 2/6, 1/6]
     }
 
+    // Generate the next timeseries id
+    _tsid(prev, next) {
+        return `${prev}<-${next}`
+    }
+
     // Wait for a value !== undefined
     nw(x) {
         if (x === undefined || x !== x) {
@@ -45,21 +50,15 @@ export default class ScriptStd {
 
     // Creates a new time-series & records each x.
     // Return the an array. Id is auto-genrated
-    ts(x, id) {
-        let ts = this.env.tss[id]
+    ts(x, _id) {
+        let ts = this.env.tss[_id]
         if (!ts) {
-            ts = this.env.tss[id] = [x]
-            ts.__id__ = id
+            ts = this.env.tss[_id] = [x]
+            ts.__id__ = _id
         } else {
             ts[0] = x
         }
         return ts
-    }
-
-    // Generate the next timeseries id
-    _tsid(args, next) {
-        let prev = args[args.length - 1]
-        return `${prev}<-${next}`
     }
 
     abs(x) {
@@ -195,8 +194,14 @@ export default class ScriptStd {
         // TODO: this
     }
 
-    ema() {
-        // TODO: this
+    ema(src, len, _id) {
+        let id = this._tsid(_id, `ema(${len})`)
+        let a = 2 / (len + 1)
+        let ema = this.ts(id, 0)
+        ema[0] = this.na(ema[1]) ?
+            this.sma(src, len, id)[0] :
+            a * src[0] + (1 - a) * this.nz(ema[1])
+        return ema
     }
 
     exp(x) {
@@ -215,8 +220,8 @@ export default class ScriptStd {
         Math.floor(x)
     }
 
-    highest(src, len) {
-        let id = this._tsid(arguments, `highest(${len})`)
+    highest(src, len, _id) {
+        let id = this._tsid(_id, `highest(${len})`)
         let high = -Infinity
         for (var i = 0; i < len; i++) {
             if (src[i] > high) high = src[i]
@@ -260,8 +265,8 @@ export default class ScriptStd {
         Math.log10(x)
     }
 
-    lowest(src, len) {
-        let id = this._tsid(arguments, `lowest(${len})`)
+    lowest(src, len, _id) {
+        let id = this._tsid(_id, `lowest(${len})`)
         let low = Infinity
         for (var i = 0; i < len; i++) {
             if (src[i] < low) low = src[i]
@@ -372,8 +377,8 @@ export default class ScriptStd {
         return Math.sin(x)
     }
 
-    sma(src, len) {
-        let id = this._tsid(arguments, `sma(${len})`)
+    sma(src, len, _id) {
+        let id = this._tsid(_id, `sma(${len})`)
         let sum = 0
         for (var i = 0; i < len; i++) {
             sum = sum + src[i]
@@ -393,8 +398,8 @@ export default class ScriptStd {
         // TODO: this
     }
 
-    sum(src, len) {
-        let id = this._tsid(arguments, `sum(${len})`)
+    sum(src, len, _id) {
+        let id = this._tsid(_id, `sum(${len})`)
         let sum = 0
         for (var i = 0; i < len; i++) {
             sum = sum + src[i]
@@ -406,8 +411,8 @@ export default class ScriptStd {
         // TODO: this
     }
 
-    swma(src) {
-        let id = this._tsid(arguments, `swma`)
+    swma(src, _id) {
+        let id = this._tsid(_id, `swma`)
         let sum = src[3] * this.SWMA[0] + src[2] * this.SWMA[1] +
                   src[1] * this.SWMA[2] + src[0] * this.SWMA[3]
         return this.ts(sum, id)
@@ -454,8 +459,17 @@ export default class ScriptStd {
         // TODO: this
     }
 
-    wma(src, len) {
-        // TODO: this
+    wma(src, len, _id) {
+        // TODO: not precise
+        let id = this._tsid(_id, `wma(${len})`)
+        let norm = 0
+        let sum = 0
+        for (var i = 0; i < len - 1; i++) {
+            let w = (len - i) * len
+            norm += w
+            sum += src[i] * w
+        }
+        return this.ts(sum / norm, id)
     }
 
     wpr(len) {
