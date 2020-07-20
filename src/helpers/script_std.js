@@ -7,10 +7,23 @@ export default class ScriptStd {
 
     constructor(env) {
         this.env = env
+
+        this.SWMA = [1/6, 2/6, 2/6, 1/6]
     }
 
     // Wait for a value !== undefined
     nw(x) {
+        if (x === undefined || x !== x) {
+            // Skip a dependend indicators + don't
+            // add the current value to the final output
+            // TODO: only when ts starts?
+            se.skip = true
+        }
+        return x
+    }
+
+    // Skip undefined values
+    ns(x) {
         if (x === undefined || x !== x) {
             // Skip a dependend indicators + don't
             // add the current value to the final output
@@ -206,7 +219,7 @@ export default class ScriptStd {
         let id = this._tsid(arguments, `highest(${len})`)
         let high = -Infinity
         for (var i = 0; i < len; i++) {
-            if (this.nw(src[i]) > high) high = src[i]
+            if (src[i] > high) high = src[i]
         }
         return this.ts(high, id)
     }
@@ -251,7 +264,7 @@ export default class ScriptStd {
         let id = this._tsid(arguments, `lowest(${len})`)
         let low = Infinity
         for (var i = 0; i < len; i++) {
-            if (this.nw(src[i]) < low) low = src[i]
+            if (src[i] < low) low = src[i]
         }
         return this.ts(low, id)
     }
@@ -269,7 +282,7 @@ export default class ScriptStd {
     }
 
     // max_bars_back
-    tsdepth(src, len) {
+    buffsize(src, len) {
         // TODO: this
     }
 
@@ -295,6 +308,162 @@ export default class ScriptStd {
 
     offset() {
         // TODO: this
+    }
+
+    // percentile_linear_interpolation
+    linearint() {
+        // TODO: this
+    }
+
+    // percentile_nearest_rank
+    nearestrank() {
+        // TODO: this
+    }
+
+    percentrank() {
+        // TODO: this
+    }
+
+    pivothigh(src, left, right) {
+        // TODO: this
+    }
+
+    pivotlow(src, left, right) {
+        // TODO: this
+    }
+
+    pow(x) {
+        return Math.pow(x)
+    }
+
+    rising(src, len) {
+        // TODO: this
+    }
+
+    rma(src, len) {
+        // TODO: this
+    }
+
+    roc(src, len) {
+        // TODO: this
+    }
+
+    round(x) {
+        return Math.round(x)
+    }
+
+    rsi(src, len) {
+        // TODO: this
+    }
+
+    sar(start, inc, max) {
+        // TODO: this
+    }
+
+    second(time) {
+        return new Date(time || se.t).getUTCSeconds()
+    }
+
+    sign(x) {
+        return Math.sign(x)
+    }
+
+    sin(x) {
+        return Math.sin(x)
+    }
+
+    sma(src, len) {
+        let id = this._tsid(arguments, `sma(${len})`)
+        let sum = 0
+        for (var i = 0; i < len; i++) {
+            sum = sum + src[i]
+        }
+        return this.ts(sum / len, id)
+    }
+
+    sqrt(x) {
+        return Math.sqrt(x)
+    }
+
+    stdev(src, len) {
+        // TODO: this
+    }
+
+    stoch(src, high, low, len) {
+        // TODO: this
+    }
+
+    sum(src, len) {
+        let id = this._tsid(arguments, `sum(${len})`)
+        let sum = 0
+        for (var i = 0; i < len; i++) {
+            sum = sum + src[i]
+        }
+        return this.ts(sum, id)
+    }
+
+    supertrend(factor, atrlen) {
+        // TODO: this
+    }
+
+    swma(src) {
+        let id = this._tsid(arguments, `swma`)
+        let sum = src[3] * this.SWMA[0] + src[2] * this.SWMA[1] +
+                  src[1] * this.SWMA[2] + src[0] * this.SWMA[3]
+        return this.ts(sum, id)
+    }
+
+    tan(x) {
+        return Math.tan(x)
+    }
+
+    time() {
+        // TODO: this
+    }
+
+    timestamp() {
+        // TODO: this
+    }
+
+    tr(fixnan = false) {
+        // TODO: this
+        //max(high - low, abs(high - close[1]), abs(low - close[1]))
+    }
+
+    tsi() {
+        // TODO: this
+    }
+
+    valuewhen() {
+        // TODO: this
+    }
+
+    variance(src, len) {
+        // TODO: this
+    }
+
+    vwap(src) {
+        // TODO: this
+    }
+
+    vwma(src, len) {
+        // TODO: this
+    }
+
+    weekofyear() {
+        // TODO: this
+    }
+
+    wma(src, len) {
+        // TODO: this
+    }
+
+    wpr(len) {
+        // TODO: this
+    }
+
+    year(time) {
+        return new Date(time || se.t).getUTCFullYear()
     }
 
 }
