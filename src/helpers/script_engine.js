@@ -26,7 +26,7 @@ class ScriptEngine {
                 s.src.upd_src = this.get_raw_src(s.src.update)
             }
 
-            this.env = new ScriptEnv(s.src, {
+            this.env = new ScriptEnv(s, {
                 open: this.open,
                 high: this.high,
                 low: this.low,

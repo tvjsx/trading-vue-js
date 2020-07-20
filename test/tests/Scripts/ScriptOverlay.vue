@@ -33,9 +33,38 @@ export default {
                     length: { def: 50, range: [2, 200, 1] }
                 },
                 init() {
+                    this.extf = function(a, b=500, flag = true) {
+                        return 1
+                    }
                 },
                 update(length) {
-                    return sma(swma(close, '123'), 10, '123')[0]
+
+                    function regf(a = 7, b = 2000) {
+
+                    }
+
+                    let f = (a, b = 1000) => {
+                        return a + b
+                    }
+
+                    let xxx = ts (1)
+
+                    let yyy = ts (1)
+
+                    let ya = this.extf(123)
+
+                    let zzz = f(
+
+                        1,
+                        2
+
+                    )
+
+                    stoch(1)
+
+                    bb()
+
+                    return wma(close, 10)[0]
                 }
             }
         }
