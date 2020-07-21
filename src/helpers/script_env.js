@@ -17,6 +17,7 @@ export default class ScriptEnv {
         this.output = []
         this.data = []
         this.tss = {}
+        this.shared = data
         this.output.box_maker = this.make_box(s.src)
         this.output.box_maker(this, data)
         delete this.output.box_maker
@@ -39,6 +40,7 @@ export default class ScriptEnv {
             props += `var ${k} = ${src.props[k].def}\n`
         }
         // TODO: add argument values to _id
+        // TODO: prefix all function by ns, e.g std_nz()
 
         return Function('self,tsdata', `
             'use strict';
@@ -91,7 +93,7 @@ export default class ScriptEnv {
                 let fargs = m[3]
 
                 if (fkeyword === 'function') {
-                    // TODO: addinf _ids to inline functions
+                    // TODO: add _ids to inline functions
                 } else {
                     if (this.std[fname]) {
                         src = this.postfix(src, m, ++call_id)
@@ -100,7 +102,7 @@ export default class ScriptEnv {
             }
         } while (m)
 
-        //console.log('After ----->\n', src)
+         //console.log('After ----->\n', src)
 
         return src
     }
@@ -123,7 +125,7 @@ export default class ScriptEnv {
     }
 
     // Get the function definition
-    // TODO: parse path names like 'this.module1.method(1,2,3)'
+    // TODO: add support of modules
     fdef(fname) {
         return this.std[fname].toString()
     }

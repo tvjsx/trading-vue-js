@@ -42,7 +42,8 @@ function GridMaker(id, params, master_grid = null) {
             let arr = []
             for (var i = 1; i < dim; i++) {
                 arr.push(...sub.map(x => x[i])
-                    .filter(x => typeof x !== 'string'))
+                    .filter(x => typeof x === 'number' &&
+                    x === x)) // Fix NaNs & undefineds
             }
             hi = Math.max(...arr)
             lo = Math.min(...arr)
@@ -110,7 +111,8 @@ function GridMaker(id, params, master_grid = null) {
 
         // Get max lengths of integer and fractional parts
         data.forEach(x => {
-            var str = x[1].toString()
+            // Fix undefined bug
+            var str = x[1] != null ? x[1].toString() : ''
             if (x[1] < 0.000001) {
                 // Parsing the exponential form. Gosh this
                 // smells trickily

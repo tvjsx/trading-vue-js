@@ -2,7 +2,11 @@
     <div>
         <div id="test-title" :style="{'background': (night ? null : '#fff')}">
             <h1>{{current_test.icon}} {{current_test.name}}</h1>
-            <p>{{current_test.description}} [{{test_index+1}}/{{len}}]</p>
+            <p>{{current_test.description}} [{{test_index+1}}/{{len}}]
+                <span v-if="current_test.early" class="early-test">
+                    ⚠️ <label>EARLY TEST</label>
+                </span>
+            </p>
             <span class="night-mode">
                 <input type="checkbox" v-model="night">
                 <label>NM</label>
@@ -184,6 +188,14 @@ body {
 .night-mode label {
     vertical-align: top;
     line-height: 1.75em;
+}
+
+.early-test {
+    line-height: 0;
+    font-weight: 500;
+}
+.early-test label {
+    margin-left: 5px;
 }
 
 </style>

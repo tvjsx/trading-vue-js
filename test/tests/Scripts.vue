@@ -18,6 +18,7 @@ export default {
     name: 'Scripts',
     icon: '',
     description: 'Supposed to be precisely calculated',
+    early: true,
     props: ['night'],
     components: {
         TradingVue
@@ -50,7 +51,7 @@ export default {
         return {
             chart: new DataCube(Data, {
                 scripts: true,
-                //scriptDepth: 50
+                //scriptDepth: 1000
             }),
             width: window.innerWidth,
             height: window.innerHeight,

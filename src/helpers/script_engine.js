@@ -1,5 +1,5 @@
 
-// Script engine, aka 🌴 Palm Script Engine
+// Script engine, aka 🌴 Script Engine
 // Fuck yeah
 
 import ScriptEnv from './script_env.js'
@@ -16,8 +16,15 @@ class ScriptEngine {
     }
 
     register(scripts) {
+
+        // DEBUG
+        if (Utils.now() - this.__t < 1000) return
+        this.__t = Utils.now()
+
         this.init_state()
         for (var s of scripts) {
+
+            if (!s.conf) s.conf = {}
 
             if (s.src.init) {
                 s.src.init_src = this.get_raw_src(s.src.init)
@@ -35,7 +42,7 @@ class ScriptEngine {
                 ohlcv: this.data.chart.data
             })
         }
-        let t1 = Utils.now()
+        var t1 = Utils.now()
         this.run(s)
         console.log('Perf', Utils.now() - t1)
     }
@@ -54,6 +61,7 @@ class ScriptEngine {
     }
 
     get_raw_src(f) {
+        if (typeof f === 'string') return f
         let src = f.toString()
         return src.slice(
             src.indexOf("{") + 1,
@@ -85,7 +93,10 @@ class ScriptEngine {
         }
 
         // DEBUG
-        this.dc.set(`onchart.ScriptOverlay.data`, this.env.data)
+        if (script.src.conf.renderer) {
+            this.dc.set(`Squeeze Momentum Indicator [LazyBear].type`, script.src.conf.renderer)
+        }
+        this.dc.set(`Squeeze Momentum Indicator [LazyBear].data`, this.env.data)
 
     }
 
@@ -107,7 +118,13 @@ class ScriptEngine {
     copy(v) {
         if (v !== undefined) this.env.output[0] = v
         let val = this.env.output[0]
-        this.env.data.push([this.t, val])
+        if (val == null || !val.length) {
+            // Number / object
+            this.env.data.push([this.t, val])
+        } else {
+            // Array
+            this.env.data.push([this.t, ...val])
+        }
     }
 
     limit() {

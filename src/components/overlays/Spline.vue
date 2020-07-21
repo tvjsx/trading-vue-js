@@ -40,6 +40,8 @@ export default {
             const i = this.data_index
 
             for (var p of this.$props.data) {
+                // TODO: when offchart NaNs kill the chart,
+                // onchart everything is ok
                 let x = layout.t2screen(p[0])
                 let y = layout.$2screen(p[i])
                 ctx.lineTo(x, y)

@@ -16,7 +16,8 @@ import SplineUx from './interfaces/SplineUx.vue'
 
 export default {
     name: 'Interfaces',
-    description: 'Html interfaces: static & interactive',
+    description: 'Html interfaces: static & interactive]',
+    early: true,
     props: ['night'],
     components: {
         TradingVue
