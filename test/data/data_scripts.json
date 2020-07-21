@@ -7813,10 +7813,10 @@
         "settings": {},
         "grid": {}
     },
-    "onchart": [
+    "offchart": [
         {
             "type": "ScriptOverlay",
-            "name": "Skrrr Exec",
+            "name": "Squeeze Momentum Indicator [LazyBear]",
             "data": []
         }
     ]

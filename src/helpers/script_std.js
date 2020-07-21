@@ -2,6 +2,7 @@
 // Script std-lib (built-in functions)
 
 import se from './script_engine.js'
+import linreg from '../stuff/linreg.js'
 
 export default class ScriptStd {
 
@@ -9,6 +10,8 @@ export default class ScriptStd {
         this.env = env
 
         this.SWMA = [1/6, 2/6, 2/6, 1/6]
+        this.STDEV_EPS = 1e-10
+        this.STDEV_Z = 1e-4
     }
 
     // Generate the next timeseries id
@@ -81,8 +84,18 @@ export default class ScriptStd {
         }
     }
 
-    alma() {
-        // TODO: this
+    alma(src, len, offset, sigma, _id) {
+        let id = this._tsid(_id, `alma(${len},${offset},${sigma})`)
+        let m = Math.floor(offset * (len - 1))
+        let s = len / sigma
+        let norm = 0
+        let sum = 0
+        for (var i = 0; i < len; i++) {
+            let w = Math.exp(-1 * Math.pow(i - m, 2) / (2 * Math.pow(s, 2)))
+            norm = norm + w
+            sum = sum + src[len - i - 1] * w
+        }
+        return this.ts(sum / norm, id)
     }
 
     asin(x) {
@@ -93,8 +106,21 @@ export default class ScriptStd {
         return Math.atan(x)
     }
 
-    atr() {
-        // TODO: this
+    atr(len, _id) {
+        let id = this._tsid(_id, `atr(${len})`)
+        let high = this.env.shared.high
+        let low = this.env.shared.low
+        let close = this.env.shared.close
+        let tr = this.ts(0, id)
+        tr[0] = this.na(high[1]) ? high[0] - low[0] :
+            Math.max(
+                Math.max(
+                    high[0] - low[0],
+                    Math.abs(high[0] - close[1])
+                ),
+                Math.abs(low[0] - close[1])
+            )
+        return this.rma(tr, len, id)
     }
 
     avg(...args) {
@@ -110,8 +136,15 @@ export default class ScriptStd {
         // TODO: this
     }
 
-    bb() {
-        // TODO: this
+    bb(src, len, mult, _id) {
+        let id = this._tsid(_id, `bb(${len},${mult})`)
+        let basis = this.sma(src, len, id)
+        let dev = this.stdev(src, len, id)[0] * mult
+        return [
+            basis,
+            this.ts(basis[0] + dev, id + '1'),
+            this.ts(basis[0] - dev, id + '2')
+        ]
     }
 
     // Tuple version, faster
@@ -119,16 +152,24 @@ export default class ScriptStd {
         // TODO: this
     }
 
-    bbw() {
-        // TODO: this
+    bbw(src, len, mult, _id) {
+        let id = this._tsid(_id, `bbw(${len},${mult})`)
+        let basis = this.sma(src, len, id)[0]
+        let dev = this.stdev(src, len, id)[0] * mult
+        return this.ts(2 * dev / basis, id)
     }
 
     bool(x) {
         return !!x
     }
 
-    cci() {
-        // TODO: this
+    cci(src, len, _id) {
+        // TODO: Not exactly precise, but pretty damn close
+        let id = this._tsid(_id, `cci(${len})`)
+        let ma = this.sma(src, len, id)
+        let dev = this.dev(src, len, id)
+        let cci = (src[0] - ma[0]) / (0.015 * dev[0])
+        return this.ts(cci, id)
     }
 
     ceil(x) {
@@ -136,16 +177,32 @@ export default class ScriptStd {
     }
 
     // x[0] - x[len]
-    change(src, len = 1) {
-        // TODO: this
+    change(src, len = 1, _id) {
+        let id = this._tsid(_id, `change(${len})`)
+        return this.ts(src[0] - src[len], id)
     }
 
-    cmo() {
-        // TODO: this
+    cmo(src, len, _id) {
+        let id = this._tsid(_id, `cmo(${len})`)
+        let mom = this.change(src, 1, id)
+
+        let g = this.ts(mom[0] >= 0 ? mom[0] : 0.0, id+"g")
+        let l = this.ts(mom[0] >= 0 ? 0.0 : -mom[0], id+"l")
+
+        let sm1 = this.sum(g, len, id+'1')[0]
+        let sm2 = this.sum(l, len, id+'2')[0]
+
+        return this.ts(100 * (sm1 - sm2) / (sm1 + sm2), id)
     }
 
-    cog() {
-        // TODO: this
+    cog(src, len, _id) {
+        let id = this._tsid(_id, `cmo(${len})`)
+        let sum = this.sum(src, len, id)[0]
+        let num = 0
+        for (var i = 0; i < len; i++) {
+            num += src[i] * (i + 1)
+        }
+        return this.ts(-num / sum, id)
     }
 
     // correlation
@@ -157,20 +214,29 @@ export default class ScriptStd {
         return Math.cos(x)
     }
 
-    cross(x, y) {
-        // TODO: this
+    cross(src1, src2, _id) {
+        let id = this._tsid(_id, `cross`)
+        let x = (src1[0] > src2[0]) !== (src1[1] > src2[1])
+        return this.ts(x, id)
     }
 
-    crossover(x, y) {
-        // TODO: this
+    crossover(src1, src2, _id) {
+        let id = this._tsid(_id, `crossover`)
+        let x = (src1[0] > src2[0]) && (src1[1] <= src2[1])
+        return this.ts(x, id)
     }
 
-    crossunder(x, y) {
-        // TODO: this
+    crossunder(src1, src2, _id) {
+        let id = this._tsid(_id, `crossunder`)
+        let x = (src1[0] < src2[0]) && (src1[1] >= src2[1])
+        return this.ts(x, id)
     }
 
-    cum() {
-        // TODO: this
+    cum(src, _id) {
+        let id = this._tsid(_id, `cum`)
+        let res = this.ts(0, id)
+        res[0] = this.nz(src[0]) + this.nz(res[1])
+        return res
     }
 
     dayofmonth(time) {
@@ -181,16 +247,22 @@ export default class ScriptStd {
         return new Date(time || se.t).getUTCDay() + 1
     }
 
-    dev() {
-        // TODO: this
+    dev(src, len, _id) {
+        let id = this._tsid(_id, `dev(${len})`)
+        let mean = this.sma(src, len, id)[0]
+        let sum = 0
+        for (var i = 0; i < len; i++) {
+            sum += Math.abs(src[i] - mean)
+        }
+        return this.ts(sum / len, id)
     }
 
-    dmi(len, smooth) {
+    dmi(len, smooth, _id) {
         // TODO: this
     }
 
     // Tuple version, faster
-    dmi2(len, smooth) {
+    dmi2(len, smooth, _id) {
         // TODO: this
     }
 
@@ -253,8 +325,12 @@ export default class ScriptStd {
         // TODO: this
     }
 
-    linreg(src, len, offset) {
-        // TODO: this
+    linreg(src, len, offset = 0, _id) {
+        let id = this._tsid(_id, `highest(${len})`)
+
+        let lr = linreg(src, len, offset)
+
+        return this.ts(lr, id)
     }
 
     log(x) {
@@ -345,8 +421,14 @@ export default class ScriptStd {
         // TODO: this
     }
 
-    rma(src, len) {
-        // TODO: this
+    rma(src, len, _id) {
+        let id = this._tsid(_id, `rma(${len})`)
+        let a = len
+        let sum = this.ts(0, id)
+        sum[0] = this.na(sum[1]) ?
+            this.sma(src, len, id)[0] :
+            (src[0] + (a - 1) * this.nz(sum[1])) / a
+        return sum
     }
 
     roc(src, len) {
@@ -390,8 +472,28 @@ export default class ScriptStd {
         return Math.sqrt(x)
     }
 
-    stdev(src, len) {
-        // TODO: this
+    stdev(src, len, _id) {
+
+        let sumf = (x, y) => {
+            let res = x + y
+            if (Math.abs(res) <= this.STDEV_EPS) {
+                return 0
+            }
+            else if (Math.abs(res) > this.STDEV_Z) {
+                return res
+            } else {
+                return 15 // wtf?
+            }
+        }
+
+        let id = this._tsid(_id, `stdev(${len})`)
+        let avg = this.sma(src, len, id)
+        let sqd = 0
+        for (var i = 0; i < len; i++) {
+            let sum = sumf(src[i], -avg[0])
+            sqd += sum * sum
+        }
+        return this.ts(Math.sqrt(sqd / len), id)
     }
 
     stoch(src, high, low, len) {
@@ -430,9 +532,25 @@ export default class ScriptStd {
         // TODO: this
     }
 
-    tr(fixnan = false) {
+    tr(fixnan = false, _id) {
         // TODO: this
-        //max(high - low, abs(high - close[1]), abs(low - close[1]))
+        let id = this._tsid(_id, `tr(${fixnan})`)
+        let high = this.env.shared.high
+        let low = this.env.shared.low
+        let close = this.env.shared.close
+        let res = 0
+        if (this.na(close[1]) && fixnan) {
+            res = high[0] - low[0]
+        } else {
+            res = Math.max(
+                high[0] - low[0],
+                Math.abs(high[0] - close[1]),
+                Math.abs(low[0] - close[1])
+            )
+        }
+
+        return this.ts(res, id)
+
     }
 
     tsi() {
@@ -460,11 +578,10 @@ export default class ScriptStd {
     }
 
     wma(src, len, _id) {
-        // TODO: not precise
         let id = this._tsid(_id, `wma(${len})`)
         let norm = 0
         let sum = 0
-        for (var i = 0; i < len - 1; i++) {
+        for (var i = 0; i < len; i++) {
             let w = (len - i) * len
             norm += w
             sum += src[i] * w

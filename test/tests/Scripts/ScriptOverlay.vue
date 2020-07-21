@@ -1,6 +1,8 @@
 <script>
 
 import Overlay from '../../../src/mixins/overlay.js'
+import SqueezeMometum from './lazybear.js'
+
 
 export default {
     name: 'ScriptOverlay',
@@ -30,42 +32,20 @@ export default {
         calc() {
             return {
                 props: {
-                    length: { def: 50, range: [2, 200, 1] }
+                    'length': { def: 20 },
+                    'mult': { def: 2.0 },
+                    'lengthKC': { def:20 },
+                    'multKC': { def:1.5 },
+                    'useTrueRange': { def: true }
                 },
-                init() {
-                    this.extf = function(a, b=500, flag = true) {
-                        return 1
-                    }
+                conf: {
+                    'renderer': 'Splines',
+                    'plugin1.setting1': 1000
                 },
-                update(length) {
-
-                    function regf(a = 7, b = 2000) {
-
-                    }
-
-                    let f = (a, b = 1000) => {
-                        return a + b
-                    }
-
-                    let xxx = ts (1)
-
-                    let yyy = ts (1)
-
-                    let ya = this.extf(123)
-
-                    let zzz = f(
-
-                        1,
-                        2
-
-                    )
-
-                    stoch(1)
-
-                    bb()
-
-                    return wma(close, 10)[0]
-                }
+                init: `
+                    console.log('init script')
+                `,
+                update: SqueezeMometum
             }
         }
     },

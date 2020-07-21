@@ -10,7 +10,7 @@ class Overlay1 {
             },
             // init() called before all update()s
             // Can precalculate the all overlay data at once
-            init(length) {
+            init() {
                 // Import indicator + set the default params
                 this.ind1 = dep('SomeIndicator1', [12])
 
@@ -28,7 +28,7 @@ class Overlay1 {
             // + Helper functions:
             // nw() -> skip until value !== undefined
             // nz() -> replace with 0 if undefined
-            update(length) {
+            update() {
 
                 // Explicit update otherwise there will
                 // an auto-update before the current update() call
@@ -55,29 +55,31 @@ class Overlay2 {
             props: {
                 length: { def: 25, range: [2, 200, 1] }
             },
-            // Assuming this is an overlay without draw(),
-            // so we can specify an overlay for rendering:
-            renderer: 'Spline',
+            conf: {
+                // Assuming this is an overlay without draw(),
+                // so we can specify an overlay for rendering:
+                renderer: 'Spline',
 
-            // Use update() to for the init, or just for
-            // the live updates
-            precalc: true,
+                // Use update() to for the init, or just for
+                // the live updates
+                precalc: true,
 
-            // Inverted buffer leng (autodetect?)
-            bufflen: 200,
+                // Inverted buffer leng (autodetect?)
+                bufflen: 200,
 
-            // (Future feature)  Place the result on a chart's
-            // view instead of the main chart
-            saveAsView: 'heikin', 
+                // (Future feature)  Place the result on a chart's
+                // view instead of the main chart
+                save_as_view: 'heikin'
+            },
 
-            init(length) {
+            init() {
                 // Non-inverted data array of this Overlay
                 // Will be filled during the calculation
                 data[0] = 1
                 data[0] = 2
                 // 1.5, 1.75 , ....
             },
-            update(length) {
+            update() {
 
                 this[0] = (this[1] + this[2]) / 2
 
