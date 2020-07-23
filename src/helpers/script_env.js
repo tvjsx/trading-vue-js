@@ -5,6 +5,7 @@
 // other overlays & dependencies
 
 import ScriptStd from './script_std.js'
+import se from './script_engine.js'
 
 const FDEFS = /(function |)([$A-Z_][0-9A-Z_$\.]*)[\s]*?\((.*?)\)/gmi
 
@@ -42,22 +43,22 @@ export default class ScriptEnv {
         // TODO: add argument values to _id
         // TODO: prefix all function by ns, e.g std_nz()
 
-        return Function('self,tsdata', `
+        return Function('self,shared', `
             'use strict';
 
             // Built-in functions (aliases)
             ${std}
 
             // Timeseries
-            const open = tsdata.open
-            const high = tsdata.high
-            const low = tsdata.low
-            const close = tsdata.close
-            const vol = tsdata.vol
+            const open = shared.open
+            const high = shared.high
+            const low = shared.low
+            const close = shared.close
+            const vol = shared.vol
 
             // Direct data ts
             const data = self.data
-            const ohlcv = tsdata.ohlcv
+            const ohlcv = shared.ohlcv
 
             // Script's properties (init)
             ${props}
@@ -67,6 +68,8 @@ export default class ScriptEnv {
             }
 
             this.update = (_id = 'root') => {
+                const t = shared.t()
+                const iter = shared.iter()
                 ${this.prep(src.upd_src)}
             }
         `)

@@ -2,7 +2,6 @@
 // @author LazyBear
 // List of all my indicators: https://www.tradingview.com/v/4IneGo8h/
 //
-
 export default () => {
 
     // Calculate BB

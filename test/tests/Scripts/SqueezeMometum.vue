@@ -1,13 +1,15 @@
 <script>
 
 import Overlay from '../../../src/mixins/overlay.js'
+import SqueezeMometum from './lazybear.js'
+
 
 export default {
-    name: 'ScriptOverlay',
+    name: 'SqueezeMometum',
     mixins: [Overlay],
     methods: {
         meta_info() {
-            return { author: 'C451', version: '1.0.0' }
+            return { author: 'C451/LazyBear', version: '1.0.0' }
         },
         draw(ctx) {
             ctx.lineWidth = this.line_width
@@ -25,11 +27,16 @@ export default {
             ctx.stroke()
         },
 
-        use_for() { return ['ScriptOverlay', 'EMA', 'SMA'] },
+        use_for() { return ['SqueezeMometum', 'EMA', 'SMA'] },
         data_colors() { return [this.color] },
         calc() {
             return {
                 props: {
+                    'length': { def: 20 },
+                    'mult': { def: 2.0 },
+                    'lengthKC': { def:20 },
+                    'multKC': { def:1.5 },
+                    'useTrueRange': { def: true }
                 },
                 conf: {
                     'renderer': 'Splines',
@@ -38,10 +45,7 @@ export default {
                 init: `
                     console.log('init script')
                 `,
-                update: `
-                    let [a,b,c] = dmi(14, 14)
-                    return [a[0], b[0], c[0]]
-                `
+                update: SqueezeMometum
             }
         }
     },

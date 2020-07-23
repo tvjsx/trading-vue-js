@@ -39,7 +39,9 @@ class ScriptEngine {
                 low: this.low,
                 close: this.close,
                 vol: this.vol,
-                ohlcv: this.data.chart.data
+                ohlcv: this.data.chart.data,
+                t: () => this.t,
+                iter: () => this.iter,
             })
         }
         var t1 = Utils.now()
@@ -54,7 +56,6 @@ class ScriptEngine {
         this.low = []
         this.close = []
         this.vol = []
-
         this.iter = 0
         this.t = 0
         this.skip = false // skip the step
@@ -91,12 +92,12 @@ class ScriptEngine {
         } catch(e) {
             console.log(e)
         }
-
         // DEBUG
+        //console.log(this.env.tss)
         if (script.src.conf.renderer) {
-            this.dc.set(`Squeeze Momentum Indicator [LazyBear].type`, script.src.conf.renderer)
+            this.dc.set(`Skrrr Exec.type`, script.src.conf.renderer)
         }
-        this.dc.set(`Squeeze Momentum Indicator [LazyBear].data`, this.env.data)
+        this.dc.set(`Skrrr Exec.data`, this.env.data)
 
     }
 

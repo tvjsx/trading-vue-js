@@ -16,23 +16,24 @@ export default class ScriptStd {
 
     // Generate the next timeseries id
     _tsid(prev, next) {
+        // TODO: prev presence check
         return `${prev}<-${next}`
     }
 
     // Wait for a value !== undefined
     nw(x) {
-        if (x === undefined || x !== x) {
+        /*if (x == undefined || x !== x) {
             // Skip a dependend indicators + don't
             // add the current value to the final output
             // TODO: only when ts starts?
             se.skip = true
         }
-        return x
+        return x*/
     }
 
     // Skip undefined values
     ns(x) {
-        if (x === undefined || x !== x) {
+        if (x == undefined || x !== x) {
             // Skip a dependend indicators + don't
             // add the current value to the final output
             se.skip = true
@@ -41,14 +42,50 @@ export default class ScriptStd {
     }
 
     nz(x, v) {
-        if (x === undefined || x !== x) {
+        if (x == undefined || x !== x) {
             return v || 0
         }
         return x
     }
 
     na(x) {
-        return x === undefined || x !== x
+        return x == undefined || x !== x
+    }
+
+    // Math operators on t-series and numbers
+    add(x, y, _id) {
+        // __id__ means this is a time-series
+        let id = this._tsid(_id, `add`)
+        let x0 = this.na(x) ? NaN : (x.__id__ ? x[0] : x)
+        let y0 = this.na(y) ? NaN : (y.__id__ ? y[0] : y)
+        return this.ts(x0 + y0, id)
+    }
+
+    sub(x, y, _id) {
+        let id = this._tsid(_id, `sub`)
+        let x0 = this.na(x) ? NaN : (x.__id__ ? x[0] : x)
+        let y0 = this.na(y)? NaN : (y.__id__ ? y[0] : y)
+        return this.ts(x0 - y0, id)
+    }
+
+    mult(x, y, _id) {
+        let id = this._tsid(_id, `mult`)
+        let x0 = this.na(x) ? NaN : (x.__id__ ? x[0] : x)
+        let y0 = this.na(y)? NaN : (y.__id__ ? y[0] : y)
+        return this.ts(x0 * y0, id)
+    }
+
+    div(x, y, _id) {
+        let id = this._tsid(_id, `div`)
+        let x0 = this.na(x) ? NaN : (x.__id__ ? x[0] : x)
+        let y0 = this.na(y)? NaN : (y.__id__ ? y[0] : y)
+        return this.ts(x0 / y0, id)
+    }
+
+    neg(x, _id) {
+        let id = this._tsid(_id, `neg`)
+        let x0 = this.na(x) ? NaN : (x.__id__ ? x[0] : x)
+        return this.ts(-x0, id)
     }
 
     // Creates a new time-series & records each x.
@@ -258,7 +295,33 @@ export default class ScriptStd {
     }
 
     dmi(len, smooth, _id) {
-        // TODO: this
+        let id = this._tsid(_id, `dmi(${len},${smooth})`)
+        let high = this.env.shared.high
+        let low = this.env.shared.low
+        let up = this.change(high, 1, id+'1')[0]
+        let down = this.neg(this.change(low, 1, id+'2'), id)[0]
+
+        let plusDM = this.ts(100 * (
+            this.na(up) ? NaN :
+            (up > down && up > 0 ? up : 0)), id+'3'
+        )
+        let minusDM = this.ts(100 * (
+            this.na(down) ? NaN :
+            (down > up && down > 0 ? down : 0)), id+'4'
+        )
+
+        let trur = this.rma(this.tr(), len, id+'5')
+        let plus = this.div(
+            this.rma(plusDM, len, id+'6'), trur, id+'8')
+        let minus = this.div(
+            this.rma(minusDM, len, id+'7'), trur, id+'9')
+        let sum = this.add(plus, minus, id+'10')[0]
+        let adx = this.rma(
+            this.ts(100 * Math.abs(plus[0] - minus[0]) /
+            (sum === 0 ? 1 : sum), id+'11'),
+            smooth, id+'12'
+        )
+        return [adx, plus, minus]
     }
 
     // Tuple version, faster
@@ -269,7 +332,7 @@ export default class ScriptStd {
     ema(src, len, _id) {
         let id = this._tsid(_id, `ema(${len})`)
         let a = 2 / (len + 1)
-        let ema = this.ts(id, 0)
+        let ema = this.ts(0, id)
         ema[0] = this.na(ema[1]) ?
             this.sma(src, len, id)[0] :
             a * src[0] + (1 - a) * this.nz(ema[1])
@@ -317,8 +380,23 @@ export default class ScriptStd {
         return cond ? x : z
     }
 
-    kc(src, len, mult, use_tr = true) {
-        // TODO: this
+    kc(src, len, mult, use_tr = true, _id) {
+
+        let id = this._tsid(_id, `kc(${len},${mult},${use_tr})`)
+        let high = this.env.shared.high
+        let low = this.env.shared.low
+        let basis = this.ema(src, len, id+'1')
+
+        let range = use_tr ?
+            this.tr(false, id+'2') :
+            this.ts(high[0] - low[0], id+'3')
+        let ema = this.ema(range, len, id+'4')
+
+        return [
+            basis,
+            this.ts(basis[0] + ema[0] * mult, id+'5'),
+            this.ts(basis[0] - ema[0] * mult, id+'6')
+        ]
     }
 
     kcw(src, len, mult, use_tr = true) {
@@ -496,8 +574,11 @@ export default class ScriptStd {
         return this.ts(Math.sqrt(sqd / len), id)
     }
 
-    stoch(src, high, low, len) {
-        // TODO: this
+    stoch(src, high, low, len, _id) {
+        let id = this._tsid(_id, `sum(${len})`)
+        let x = 100 * (src[0] - this.lowest(low, len)[0])
+        let y = this.highest(high, len)[0] - this.lowest(low, len)[0]
+        return this.ts(x / y, id)
     }
 
     sum(src, len, _id) {
@@ -511,6 +592,7 @@ export default class ScriptStd {
 
     supertrend(factor, atrlen) {
         // TODO: this
+        throw 'Not implemented: supertrend()'
     }
 
     swma(src, _id) {
@@ -524,7 +606,7 @@ export default class ScriptStd {
         return Math.tan(x)
     }
 
-    time() {
+    time(res, sesh) {
         // TODO: this
     }
 
@@ -553,8 +635,15 @@ export default class ScriptStd {
 
     }
 
-    tsi() {
-        // TODO: this
+    tsi(src, short, long, _id) {
+        let id = this._tsid(_id, `tsi(${short},${long})`)
+        let m = this.change(src, 1, id+'0')
+        let m_abs = this.ts(Math.abs(m[0]), id+'1')
+        let tsi = (
+            this.ema(this.ema(m, long, id+'1'), short, id+'2')[0] /
+            this.ema(this.ema(m_abs, long, id+'3'), short, id+'4')[0]
+        )
+        return this.ts(tsi, id)
     }
 
     valuewhen() {
@@ -569,8 +658,14 @@ export default class ScriptStd {
         // TODO: this
     }
 
-    vwma(src, len) {
-        // TODO: this
+    vwma(src, len, _id) {
+        let id = this._tsid(_id, `vwma(${len})`)
+        let vol = this.env.shared.vol
+        let sxv = this.ts(src[0] * vol[0], id+'1')
+        let res =
+            this.sma(sxv, len, id+'2')[0] /
+            this.sma(vol, len, id+'3')[0]
+        return this.ts(res, id+'4')
     }
 
     weekofyear() {
@@ -589,8 +684,18 @@ export default class ScriptStd {
         return this.ts(sum / norm, id)
     }
 
-    wpr(len) {
-        // TODO: this
+    wpr(len, _id) {
+        let id = this._tsid(_id, `wpr(${len})`)
+
+        let high = this.env.shared.high
+        let low = this.env.shared.low
+        let close = this.env.shared.close
+
+        let hh = this.highest(high, len, id)
+        let ll = this.lowest(low, len, id)
+
+        let res = (hh[0] - close[0]) / (hh[0] - ll[0])
+        return this.ts(-res * 100 , id)
     }
 
     year(time) {
