@@ -38,18 +38,14 @@ function GridMaker(id, params, master_grid = null) {
 
         } else {
             // Offchart indicator range
-            const dim = sub[0] ? sub[0].length : 0
-            let arr = []
-            // TODO: rewrite, as it slow as hell
-            for (var i = 1; i < dim; i++) {
-                arr.push(...sub.map(x => x[i])
-                    .filter(x => typeof x !== 'string' &&
-                    // Fix NaNs & undefined
-                    x != null && x === x))
+            hi = -Infinity, lo = Infinity
+            for (var i = 0; i < sub.length; i++) {
+                for (var j = 1; j < sub[i].length; j++) {
+                    let v = sub[i][j]
+                    if (v > hi) hi = v
+                    if (v < lo) lo = v
+                }
             }
-            hi = Math.max(...arr)
-            lo = Math.min(...arr)
-
             if (y_range_fn) { [hi, lo] = y_range_fn(hi, lo) }
         }
 

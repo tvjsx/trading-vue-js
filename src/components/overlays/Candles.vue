@@ -48,6 +48,7 @@ export default {
 
         // When added as offchart overlay
         y_range() {
+            console.log('here')
             return [
                 Math.max(...this.$props.sub.map(x => x[2])),
                 Math.min(...this.$props.sub.map(x => x[3]))
