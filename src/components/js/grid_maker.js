@@ -40,10 +40,12 @@ function GridMaker(id, params, master_grid = null) {
             // Offchart indicator range
             const dim = sub[0] ? sub[0].length : 0
             let arr = []
+            // TODO: rewrite, as it slow as hell
             for (var i = 1; i < dim; i++) {
                 arr.push(...sub.map(x => x[i])
-                    .filter(x => typeof x === 'number' &&
-                    x === x)) // Fix NaNs & undefineds
+                    .filter(x => typeof x !== 'string' &&
+                    // Fix NaNs & undefined
+                    x != null && x === x))
             }
             hi = Math.max(...arr)
             lo = Math.min(...arr)
