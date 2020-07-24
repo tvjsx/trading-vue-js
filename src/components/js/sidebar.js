@@ -210,7 +210,8 @@ export default class Sidebar {
     // Not the best place to calculate y-range but
     // this is the simplest solution I found up to
     // date
-    calc_range() {
+    calc_range(diff1 = 1, diff2 = 1) {
+
         let z = this.zoom / this.drug.z
         let zk = (1 / z - 1) / 2
 
@@ -218,8 +219,8 @@ export default class Sidebar {
         let delta = range[0] - range[1]
 
         if (!this.layout.grid.logScale) {
-            range[0] = range[0] + delta * zk
-            range[1] = range[1] - delta * zk
+            range[0] = range[0] + delta * zk * diff1
+            range[1] = range[1] - delta * zk * diff2
         } else {
 
             let px_mid = this.layout.height / 2
@@ -236,6 +237,45 @@ export default class Sidebar {
         }
 
         return range
+    }
+
+    rezoom_range(delta, diff1, diff2) {
+
+        if (!this.$p.y_transform || this.$p.y_transform.auto) return
+
+        this.zoom = 1.0
+        // TODO: further work (improve scaling ratio)
+        if (delta < 0) delta /= 3.75  // Btw, idk why 3.75, but it works
+        delta *= 0.25 
+        this.y_range = [
+            this.layout.$_hi,
+            this.layout.$_lo
+        ]
+        this.drug = {
+            y: 0,
+            z: this.zoom,
+            mid: math.log_mid(this.y_range, this.layout.height),
+            A: this.layout.A,
+            B: this.layout.B
+        }
+        this.zoom = this.calc_zoom({
+            center: {
+                y: delta * this.layout.height
+            }
+        })
+
+        this.comp.$emit('sidebar-transform', {
+            grid_id: this.id,
+            zoom: this.zoom,
+            auto: false,
+            range: this.calc_range(diff1, diff2),
+            drugging: true
+        })
+        this.drug = null
+        this.comp.$emit('sidebar-transform', {
+            grid_id: this.id,
+            drugging: false
+        })
     }
 
     mousemove() { }
