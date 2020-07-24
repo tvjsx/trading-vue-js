@@ -32,26 +32,27 @@ const TIMESCALES = [
 const $SCALES = [0.05, 0.1, 0.2, 0.25, 0.5, 0.8, 1, 2, 5]
 
 const ChartConfig = {
-    SBMIN: 60,      // Minimal sidebar px
-    TOOLBAR: 57,    // Toolbar width px
-    TB_ICON: 25,    // Toolbar icon size px
-    TB_ITEM_M: 6,   // Toolbar item margin px
-    TB_ICON_BRI: 1, // Toolbar icon brightness
-    TB_BORDER: 1,   // Toolbar border px
+    SBMIN: 60,       // Minimal sidebar px
+    TOOLBAR: 57,     // Toolbar width px
+    TB_ICON: 25,     // Toolbar icon size px
+    TB_ITEM_M: 6,    // Toolbar item margin px
+    TB_ICON_BRI: 1,  // Toolbar icon brightness
+    TB_BORDER: 1,    // Toolbar border px
     TB_B_STYLE: 'dotted', // Toolbar border style
-    TOOL_COLL: 7,   // Tool collision threshold
-    EXPAND: 0.15,   // %/100 of range
-    CANDLEW: 0.6,   // %/100 of step
-    GRIDX: 100,     // px
-    GRIDY: 47,      // px
-    BOTBAR: 28,     // px
-    PANHEIGHT: 22,  // px
-    DEFAULT_LEN: 50,// candles
-    MINIMUM_LEN: 5, // candles,
-    MIN_ZOOM: 25,   // candles
-    MAX_ZOOM: 1000, // candles,
-    VOLSCALE: 0.15, // %/100 of height
-    UX_OPACITY: 0.9 // Ux background opacity
+    TOOL_COLL: 7,    // Tool collision threshold
+    EXPAND: 0.15,    // %/100 of range
+    CANDLEW: 0.6,    // %/100 of step
+    GRIDX: 100,      // px
+    GRIDY: 47,       // px
+    BOTBAR: 28,      // px
+    PANHEIGHT: 22,   // px
+    DEFAULT_LEN: 50, // candles
+    MINIMUM_LEN: 5,  // candles,
+    MIN_ZOOM: 25,    // candles
+    MAX_ZOOM: 1000,  // candles,
+    VOLSCALE: 0.15,  // %/100 of height
+    UX_OPACITY: 0.9, // Ux background opacity
+    ZOOM_MODE: 'tv', // 'tv' or 'tl' 
 }
 
 ChartConfig.FONT =

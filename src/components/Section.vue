@@ -16,9 +16,11 @@
              v-on:cursor-locked="cursor_locked"
              v-on:layer-meta-props="emit_meta_props"
              v-on:custom-event="emit_custom_event"
-             v-on:sidebar-transform="sidebar_transform">
+             v-on:sidebar-transform="sidebar_transform"
+             v-on:rezoom-range="rezoom_range">
         </grid>
         <sidebar
+            :ref="'grid-' + grid_id"
             v-bind="sidebar_props"
             v-bind:grid_id="grid_id"
             v-bind:rerender="rerender"
@@ -74,6 +76,14 @@ export default {
         },
         remove_kb(event) {
             this.$emit('remove-kb-listener', event)
+        },
+        rezoom_range(event) {
+            let id = 'grid-' + event.grid_id
+            if (this.$refs[id]) {
+                this.$refs[id].renderer.rezoom_range(
+                    event.z, event.diff1, event.diff2
+                )
+            }
         }
     },
     computed: {
