@@ -432,8 +432,14 @@ export default class ScriptStd {
         // TODO: this
     }
 
-    macd(source, fastlen, slowlen, siglen) {
-        // TODO: this
+    macd(src, fast, slow, sig, _id) {
+        let id = this._tsid(_id, `macd(${fast}${slow}${sig})`)
+        let fast_ma = this.ema(src, fast, id+'1')
+        let slow_ma = this.ema(src, slow, id+'2')
+        let macd = this.sub(fast_ma, slow_ma, id+'3')
+        let signal = this.ema(macd, sig, id+'4')
+        let hist = this.sub(macd, signal, id+'5')
+        return [macd, signal, hist]
     }
 
     max(...args) {

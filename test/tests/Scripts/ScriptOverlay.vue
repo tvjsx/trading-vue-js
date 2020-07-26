@@ -39,7 +39,7 @@ export default {
                     console.log('init script')
                 `,
                 update: `
-                    let [a,b,c] = dmi(14, 14)
+                    let [a,b,c] = macd(close, 12, 26, 9)
                     return [a[0], b[0], c[0]]
                 `
             }
