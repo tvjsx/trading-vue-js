@@ -523,8 +523,17 @@ export default class ScriptStd {
         return Math.round(x)
     }
 
-    rsi(src, len) {
-        // TODO: this
+    rsi(src, len, _id) {
+        let id = this._tsid(_id, `rsi(${len})`)
+        let ch = this.change(src, 1, _id)[0]
+        let pc = this.ts(Math.max(ch, 0), id+'1')
+        let nc = this.ts(-Math.min(ch, 0), id+'2')
+        let up = this.rma(pc, len, id+'3')[0]
+        let down = this.rma(nc, len, id+'4')[0]
+        let rsi = down === 0 ? 100 : (
+            up === 0 ? 0 : (100 - (100 / (1 + up / down)))
+        )
+        return this.ts(rsi, id+'5')
     }
 
     sar(start, inc, max) {
