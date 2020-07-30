@@ -368,8 +368,16 @@ export default class ScriptStd {
         // TODO: this
     }
 
-    hma(src, len) {
-        // TODO: this
+    hma(src, len, _id) {
+        let id = this._tsid(_id, `hma(${len})`)
+        let len2 = Math.floor(len/2)
+        let len3 = Math.round(Math.sqrt(len))
+
+        let a = this.mult(this.wma(src, len2, id+'1'), 2, id)
+        let b = this.wma(src, len, id+'2')
+        let delt = this.sub(a, b)
+
+        return this.wma(delt, len3, id+'3')
     }
 
     hour(time) {

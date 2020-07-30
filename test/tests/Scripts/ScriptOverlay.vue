@@ -39,7 +39,7 @@ export default {
                     console.log('init script')
                 `,
                 update: `
-                    return rsi(close, 14)[0]
+                    return hma(close, 10)[0]
                 `
             }
         }
