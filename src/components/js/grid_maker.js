@@ -33,8 +33,12 @@ function GridMaker(id, params, master_grid = null) {
     function calc_$range() {
         if (!master_grid) {
             // $ candlestick range
-            var hi = Math.max(...sub.map(x => x[2]))
-            var lo = Math.min(...sub.map(x => x[3]))
+            if (y_range_fn) {
+                var [hi, lo] = y_range_fn(hi, lo)
+            } else {
+                hi = Math.max(...sub.map(x => x[2]))
+                lo = Math.min(...sub.map(x => x[3]))
+            }
 
         } else {
             // Offchart indicator range

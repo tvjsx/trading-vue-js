@@ -40,7 +40,7 @@ export default class Grid {
         hamster.wheel((event, delta) => this.mousezoom(-delta * 50, event))
 
         var mc = new Hammer.Manager(this.canvas)
-        mc.add(new Hammer.Pan())
+        mc.add(new Hammer.Pan({ threshold: 0}))
         mc.add(new Hammer.Tap())
         mc.add(new Hammer.Pinch())
         mc.get('pinch').set({ enable: true })
@@ -278,17 +278,28 @@ export default class Grid {
         // if speed is low, scroll shoud be slower
         if (delta < 0 && this.data.length <= this.MIN_ZOOM) return
         if (delta > 0 && this.data.length > this.MAX_ZOOM) return
-
         let k = this.interval / 1000
         let diff = delta * k * this.data.length
-        if (event.originalEvent.ctrlKey) {
+        let tl = this.comp.config.ZOOM_MODE === 'tl'
+        if (event.originalEvent.ctrlKey || tl) {
             let offset = event.originalEvent.offsetX
-            let diff_x = offset / (this.canvas.width-1) * diff
-            let diff_y = diff - diff_x
-            this.range[0] -= diff_x
-            this.range[1] += diff_y
+            let diff1 = offset / (this.canvas.width-1) * diff
+            let diff2 = diff - diff1
+            this.range[0] -= diff1
+            this.range[1] += diff2
         } else {
             this.range[0] -= diff
+        }
+
+        if (tl) {
+            let offset = event.originalEvent.offsetY
+            let diff1 = offset / (this.canvas.height-1) * 2
+            let diff2 = 2 - diff1
+            let z = diff / (this.range[1] - this.range[0])
+            //rezoom_range(z, diff_x, diff_y)
+            this.comp.$emit('rezoom-range', {
+                grid_id: this.id, z, diff1, diff2
+            })
         }
 
         this.change_range()
