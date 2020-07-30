@@ -5,7 +5,8 @@
         :toolbar="true"
         :color-back="colors.colorBack"
         :color-grid="colors.colorGrid"
-        :color-text="colors.colorText">
+        :color-text="colors.colorText"
+        :overlays="overlays">
 </trading-vue>
 </template>
 
@@ -13,11 +14,14 @@
 import TradingVue from '../../src/TradingVue.vue'
 import Data from '../data/data_renko.json'
 import DataCube from '../../src/helpers/datacube.js'
+import Illuminati from './shared/illuminati.js'
+import Eye from './shared/Eye.vue'
 
 export default {
     name: 'Renko',
     description: 'Just Renko, what did you expect?',
     props: ['night'],
+    mixins: [Illuminati],
     components: {
         TradingVue
     },
@@ -49,7 +53,8 @@ export default {
         return {
             chart: new DataCube(Data),
             width: window.innerWidth,
-            height: window.innerHeight
+            height: window.innerHeight,
+            overlays: [Eye]
         }
     }
 }
