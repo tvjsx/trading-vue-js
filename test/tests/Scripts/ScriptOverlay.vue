@@ -39,7 +39,9 @@ export default {
                     console.log('init script')
                 `,
                 update: `
-                    return hma(close, 10)[0]
+                    let [a, b, c] = dmi(14, 14)
+                    return [a[0], b[0], c[0]]
+                    //return sma(close, 100)[0]
                 `
             }
         }
