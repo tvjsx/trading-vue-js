@@ -4,8 +4,9 @@
 
 import ScriptEnv from './script_env.js'
 import Utils from '../stuff/utils.js'
+import TS from './script_ts.js'
 
-const DEF_LIMIT = 200
+const DEF_LIMIT = 5
 
 class ScriptEngine {
     constructor() {}
@@ -51,11 +52,11 @@ class ScriptEngine {
 
     init_state() {
         // Inverted arrays
-        this.open = []
-        this.high = []
-        this.low = []
-        this.close = []
-        this.vol = []
+        this.open = TS('open', [])
+        this.high = TS('high', [])
+        this.low = TS('low', [])
+        this.close = TS('close', [])
+        this.vol = TS('vol', [])
         this.iter = 0
         this.t = 0
         this.skip = false // skip the step
@@ -73,20 +74,17 @@ class ScriptEngine {
     run(script) {
         try {
 
-            this.env.output.init()
+            this.env.init()
+
             let ohlcv = this.data.chart.data
             for (var i = this.start(ohlcv); i < ohlcv.length; i++) {
                 this.iter = i
                 this.t = ohlcv[i][0]
                 this.step(ohlcv[i])
-                let v = this.env.output.update()
 
-                if (this.skip) {
-                    this.skip = false
-                    continue
-                }
+                this.env.step()
 
-                this.copy(v)
+
                 this.limit()
             }
         } catch(e) {
@@ -107,34 +105,15 @@ class ScriptEngine {
         this.low.unshift(data[3])
         this.close.unshift(data[4])
         this.vol.unshift(data[5])
-        this.env.output.unshift(undefined)
-
-        // Update all temp symbols
-        for (var id in this.env.tss) {
-            this.env.tss[id].unshift(undefined)
-        }
     }
 
-    // Copy the recent value to the direct buff
-    copy(v) {
-        if (v !== undefined) this.env.output[0] = v
-        let val = this.env.output[0]
-        if (val == null || !val.length) {
-            // Number / object
-            this.env.data.push([this.t, val])
-        } else {
-            // Array
-            this.env.data.push([this.t, ...val])
-        }
-    }
 
     limit() {
-        this.open.length = DEF_LIMIT
-        this.high.length = DEF_LIMIT
-        this.low.length = DEF_LIMIT
-        this.close.length = DEF_LIMIT
-        this.vol.length = DEF_LIMIT
-        this.env.output.length = DEF_LIMIT
+        this.open.length = this.open.__len__ || DEF_LIMIT
+        this.high.length = this.high.__len__ || DEF_LIMIT
+        this.low.length = this.low.__len__ || DEF_LIMIT
+        this.close.length = this.close.__len__ || DEF_LIMIT
+        this.vol.length = this.vol.__len__ || DEF_LIMIT
     }
 
     start(ohlcv) {

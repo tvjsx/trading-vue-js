@@ -3,6 +3,9 @@
 
 import se from './script_engine.js'
 import linreg from '../stuff/linreg.js'
+import * as u from './script_utils.js'
+
+const BUF_INC = 5
 
 export default class ScriptStd {
 
@@ -12,12 +15,87 @@ export default class ScriptStd {
         this.SWMA = [1/6, 2/6, 2/6, 1/6]
         this.STDEV_EPS = 1e-10
         this.STDEV_Z = 1e-4
+
+        this._index_tracking()
+
+    }
+
+    // Wrap every index with index-tracking function
+    // That way we will know exact index ranges
+    _index_tracking() {
+        let proto = Object.getPrototypeOf(this)
+        let std = ``
+        for (var k of Object.getOwnPropertyNames(proto)) {
+            switch(k) {
+                case 'constructor':
+                case 'ts':
+                case '_index_tracking':
+                case '_tsid':
+                case '_i':
+                case '_v':
+                case '_add_i':
+                    continue
+
+            }
+            this[k] = this._add_i(k, this[k].toString())
+            //console.log(this[k].toString())
+        }
+
+    }
+
+    // Add index tracking to the function
+    _add_i(name, src) {
+        let args = u.f_args(src)
+        src = u.f_body(src)
+        src = u.wrap_idxs(src, 'this.')
+        let f = new Function (...args, src)
+        return f
     }
 
     // Generate the next timeseries id
     _tsid(prev, next) {
         // TODO: prev presence check
         return `${prev}<-${next}`
+    }
+
+    // Index-tracker
+    _i(i, x) {
+        // If an object is actually a timeseries
+        if (x != undefined && x === x && x.__id__) {
+            // Increase TS buff length
+            if (!x.__len__ || i >= x.__len__) {
+                x.__len__ = i + BUF_INC
+            }
+        }
+        return i
+    }
+
+    // Index-tracker (object-based)
+    _v(x, i) {
+         //console.log('!!!!', x.__id__)
+
+        // If an object is actually a timeseries
+        if (x != undefined && x === x && x.__id__) {
+            // Increase TS buff length
+            if (!x.__len__ || i >= x.__len__) {
+                x.__len__ = i + BUF_INC
+                //console.log(x.__id__, x.__len__)
+            }
+        }
+        return x
+    }
+
+    // Creates a new time-series & records each x.
+    // Return the an array. Id is auto-genrated
+    ts(x, _id) {
+        let ts = this.env.tss[_id]
+        if (!ts) {
+            ts = this.env.tss[_id] = [x]
+            ts.__id__ = _id
+        } else {
+            ts[0] = x
+        }
+        return ts
     }
 
     // Wait for a value !== undefined
@@ -86,19 +164,6 @@ export default class ScriptStd {
         let id = this._tsid(_id, `neg`)
         let x0 = this.na(x) ? NaN : (x.__id__ ? x[0] : x)
         return this.ts(-x0, id)
-    }
-
-    // Creates a new time-series & records each x.
-    // Return the an array. Id is auto-genrated
-    ts(x, _id) {
-        let ts = this.env.tss[_id]
-        if (!ts) {
-            ts = this.env.tss[_id] = [x]
-            ts.__id__ = _id
-        } else {
-            ts[0] = x
-        }
-        return ts
     }
 
     abs(x) {
@@ -310,7 +375,7 @@ export default class ScriptStd {
             (down > up && down > 0 ? down : 0)), id+'4'
         )
 
-        let trur = this.rma(this.tr(), len, id+'5')
+        let trur = this.rma(this.tr(false, id), len, id+'5')
         let plus = this.div(
             this.rma(plusDM, len, id+'6'), trur, id+'8')
         let minus = this.div(
@@ -375,9 +440,9 @@ export default class ScriptStd {
 
         let a = this.mult(this.wma(src, len2, id+'1'), 2, id)
         let b = this.wma(src, len, id+'2')
-        let delt = this.sub(a, b)
+        let delt = this.sub(a, b, id+'3')
 
-        return this.wma(delt, len3, id+'3')
+        return this.wma(delt, len3, id+'4')
     }
 
     hour(time) {

@@ -7,7 +7,8 @@
 import ScriptStd from './script_std.js'
 import se from './script_engine.js'
 
-const FDEFS = /(function |)([$A-Z_][0-9A-Z_$\.]*)[\s]*?\((.*?)\)/gmi
+const FDEFS = /(function |)([$A-Z_][0-9A-Z_$\.]*)[\s]*?\((.*?\s*)\)/gmi
+const DEF_LIMIT = 5
 
 export default class ScriptEnv {
 
@@ -23,6 +24,54 @@ export default class ScriptEnv {
         this.output.box_maker(this, data)
         delete this.output.box_maker
 
+    }
+
+    init() {
+        this.output.init()
+    }
+
+    step() {
+        this.unshift()
+        let v = this.output.update()
+
+        if (this.skip) {
+            this.skip = false
+            return
+        }
+
+        this.copy(v)
+        this.limit()
+    }
+
+    unshift() {
+        this.output.unshift(undefined)
+        // Update all temp symbols
+        for (var id in this.tss) {
+            this.tss[id].unshift(undefined)
+        }
+    }
+
+    // Limit env.output length
+    limit() {
+        this.output.length = 200 // DEF_LIMIT
+        for (var id in this.tss) {
+            let ts = this.tss[id]
+            //console.log(ts.__id__, ts.__len__)
+            ts.length = ts.__len__ || DEF_LIMIT
+        }
+    }
+
+    // Copy the recent value to the direct buff
+    copy(v) {
+        if (v !== undefined) this.output[0] = v
+        let val = this.output[0]
+        if (val == null || !val.length) {
+            // Number / object
+            this.data.push([se.t, val])
+        } else {
+            // Array
+            this.data.push([se.t, ...val])
+        }
     }
 
     // A small sandbox for a particular script
@@ -105,7 +154,7 @@ export default class ScriptEnv {
             }
         } while (m)
 
-         //console.log('After ----->\n', src)
+        // console.log('After ----->\n', src)
 
         return src
     }
