@@ -6,6 +6,7 @@
 
 import ScriptStd from './script_std.js'
 import se from './script_engine.js'
+import * as u from './script_utils.js'
 
 const FDEFS = /(function |)([$A-Z_][0-9A-Z_$\.]*)[\s]*?\((.*?\s*)\)/gmi
 const DEF_LIMIT = 5
@@ -154,9 +155,9 @@ export default class ScriptEnv {
             }
         } while (m)
 
-        // console.log('After ----->\n', src)
+        // console.log('After ----->\n', u.wrap_idxs(src))
 
-        return src
+        return u.wrap_idxs(src)
     }
 
     // Postfix function calls with ts _ids

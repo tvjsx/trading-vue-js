@@ -1,5 +1,6 @@
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const WWPlugin = require('./ww_plugin.js')
 
 module.exports = {
     entry: './test/index.js',
@@ -21,13 +22,18 @@ module.exports = {
                     'css-loader'
                 ]
             },
+            {
+                test: /script_ww\.js$/,
+                loader: 'worker-loader'
+            }
         ]
     },
     plugins: [
         new VueLoaderPlugin(),
         new HtmlWebpackPlugin({
             template: './test/index.html'
-        })
+        }),
+        new WWPlugin()
     ],
     devServer: {
         proxy: {

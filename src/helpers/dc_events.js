@@ -4,16 +4,34 @@
 import Utils from '../stuff/utils.js'
 import Icons from '../stuff/icons.json'
 
-import se from './script_engine.js'
+import ww from './script_ww_api.js'
+import {} from './script_ww.js' // For webworker-loader to find the ww
 
 export default class DCEvents {
+
+    constructor() {
+        // Listen to the webworker events
+        ww.onevent = e => {
+            switch(e.data.type) {
+                case 'request-data':
+                    let main = this.data.chart.data
+                    ww.just('upload-data', { ohlcv: main })
+                    break
+                case 'overlay-data':
+                    this.on_overlay_data(e.data.data)
+                    break
+            }
+        }
+    }
 
     // Called when overalay/tv emits 'custom-event'
     on_custom_event(event, args) {
         switch(event) {
             case 'register-tools': this.register_tools(args)
                 break
-            case 'register-scripts': this.register_scripts(args)
+            case 'exec-script': this.exec_script(args)
+                break
+            case 'data-len-changed': this.data_changed(args)
                 break
             case 'tool-selected':
                 if (!args[0]) break // TODO: Quick fix, investigate
@@ -84,8 +102,13 @@ export default class DCEvents {
         this.tv.$set(this.data, 'tool', 'Cursor')
     }
 
-    register_scripts(scripts) {
-        if (scripts.length) se.register(scripts)
+    exec_script(args) {
+        if (args.length) ww.just('exec-script', args[0])
+    }
+
+    data_changed(args) {
+        let main = this.data.chart.data
+        ww.just('upload-data', { ohlcv: main })
     }
 
     merge_presets(proto, preset) {
@@ -202,6 +225,18 @@ export default class DCEvents {
         Utils.overwrite(this.data.tools,
             this.data.tools.filter(x => x.type !== type)
         )
+    }
+
+    // Push overlay updates from the web-worker
+    on_overlay_data(data) {
+        console.log(data)
+        for (var ov of data) {
+            let dcid = this.gldc[ov.id]
+            let obj = this.get_one(`${dcid}`)
+            if (obj) {
+                obj.data = ov.data
+            }
+        }
     }
 
     // Clean-up unfinished business (tools)

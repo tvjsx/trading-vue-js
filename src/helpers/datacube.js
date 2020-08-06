@@ -4,6 +4,7 @@
 
 import Utils from '../stuff/utils.js'
 import DCCore from './dc_core.js'
+import SettProxy from './sett_proxy.js'
 
 // Interface methods. Private methods in dc_core.js
 export default class DataCube extends DCCore {
@@ -12,7 +13,8 @@ export default class DataCube extends DCCore {
 
         super()
         this.data = data
-        this.sett = sett
+        this.sett = SettProxy(sett)
+        
     }
 
     // Add new overlay

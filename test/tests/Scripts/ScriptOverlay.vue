@@ -39,9 +39,17 @@ export default {
                     console.log('init script')
                 `,
                 update: `
-                    let [a, b, c] = dmi(14, 14)
-                    return [a[0], b[0], c[0]]
+                    //let [a, b, c] = dmi(14, 14)
+                    //return [a[0], b[0], c[0]]
                     //return sma(close, 100)[0]
+
+                    let sum = 0
+                    for (var i = 0; i < 20; i++) {
+                        sum += close[i]
+                    }
+                    return sum / 20
+
+
                 `
             }
         }

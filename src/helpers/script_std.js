@@ -37,8 +37,8 @@ export default class ScriptStd {
                     continue
 
             }
-            this[k] = this._add_i(k, this[k].toString())
-            //console.log(this[k].toString())
+            let f = this._add_i(k, this[k].toString())
+            if (f) this[k] = f
         }
 
     }
@@ -47,9 +47,11 @@ export default class ScriptStd {
     _add_i(name, src) {
         let args = u.f_args(src)
         src = u.f_body(src)
-        src = u.wrap_idxs(src, 'this.')
-        let f = new Function (...args, src)
-        return f
+        let src2 = u.wrap_idxs(src, 'this.')
+        if (src2 !== src) {
+            return new Function (...args, src2)
+        }
+        return null
     }
 
     // Generate the next timeseries id
