@@ -11,7 +11,8 @@ class CursorUpdater {
     }
 
     sync(e) {
-
+        // TODO: values not displaying if a custom grid id is set:
+        // grid: { id: N }
         this.cursor.grid_id = e.grid_id
         let once = true
         for (var grid of this.grids) {

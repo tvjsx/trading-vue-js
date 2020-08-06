@@ -10,6 +10,7 @@ export default {
             if (this._data_n0 !== n[0] && this._data_len !== n.length) {
                 changed = true
             }
+            this.check_all_data(changed)
             if (this.ti_map.ib) {
                 this.reindex_delta(n[0], this._data_n0)
             }
@@ -17,6 +18,20 @@ export default {
             this._data_len = n.length
             this.save_data_t()
             return changed
+        },
+        check_all_data(changed) {
+            // If length of data in the Structure changed by > 1 point
+            // emit a special event for DC to recalc the scripts
+            // TODO: check overlays data too
+            let len = this._data_len || 0
+            if (Math.abs(this.ohlcv.length - len) > 1 ||
+                this._data_n0 !== this.ohlcv[0]) {
+                this.$emit('custom-event', {
+                    event: 'data-len-changed',
+                    args: []
+                })
+            }
+
         },
         reindex_delta(n, p) {
             n = n || [[0]]

@@ -7813,11 +7813,34 @@
         "settings": {},
         "grid": {}
     },
+    "onchart": [
+        {
+            "type": "ScriptOverlay",
+            "name": "Skrrr Exec 1",
+            "data": []
+        },
+        {
+            "type": "ScriptOverlay",
+            "name": "Skrrr Exec 2",
+            "data": []
+        }
+    ],
     "offchart": [
         {
             "type": "ScriptOverlay",
-            "name": "Skrrr Exec",
+            "name": "Skrrr Exec 3",
             "data": []
+        },
+        {
+            "type": "ScriptOverlay",
+            "name": "Skrrr Exec 4",
+            "data": []
+        },
+        {
+            "type": "ScriptOverlay",
+            "name": "Skrrr Exec 5",
+            "data": [],
+            "grid": { "id": 1 }
         }
     ]
 }

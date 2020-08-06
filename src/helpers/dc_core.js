@@ -4,8 +4,6 @@
 import Utils from '../stuff/utils.js'
 import DCEvents from './dc_events.js'
 
-import se from './script_engine.js'
-
 export default class DCCore extends DCEvents {
 
     // Set TV instance (once). Called by TradingVue itself
@@ -41,7 +39,6 @@ export default class DCCore extends DCEvents {
 
         // Remove ohlcv cuz we have Data v1.1^
         delete this.data.ohlcv
-        se.init_data(this)
 
     }
 
@@ -97,6 +94,8 @@ export default class DCCore extends DCEvents {
     update_ids() {
         this.data.chart.id = `chart.${this.data.chart.type}`
         var count = {}
+        // grid_id,layer_id => DC id mapping
+        this.gldc = {}
         for (var ov of this.data.onchart) {
             if (count[ov.type] === undefined) {
                 count[ov.type] = 0
@@ -106,8 +105,12 @@ export default class DCCore extends DCEvents {
             if (!ov.name) ov.name = ov.type + ` ${i}`
             if (!ov.settings) ov.settings = {}
 
+            // grid_id,layer_id => DC id mapping
+            this.gldc[`g0_${ov.type}_${i}`] = ov.id
         }
         count = {}
+        let grids = [{}]
+        let gid = 0
         for (var ov of this.data.offchart) {
             if (count[ov.type] === undefined) {
                 count[ov.type] = 0
@@ -116,6 +119,16 @@ export default class DCCore extends DCEvents {
             ov.id = `offchart.${ov.type}${i}`
             if (!ov.name) ov.name = ov.type + ` ${i}`
             if (!ov.settings) ov.settings = {}
+
+            // grid_id,layer_id => DC id mapping
+            gid++
+            let rgid = (ov.grid || {}).id || gid // real grid_id
+            if (!grids[rgid]) grids[rgid] = {}
+            if (grids[rgid][ov.type] === undefined) {
+                grids[rgid][ov.type] = 0
+            }
+            let ri = grids[rgid][ov.type]++
+            this.gldc[`g${rgid}_${ov.type}_${ri}`] = ov.id
         }
     }
 

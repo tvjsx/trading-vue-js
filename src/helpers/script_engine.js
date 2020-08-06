@@ -6,48 +6,70 @@ import ScriptEnv from './script_env.js'
 import Utils from '../stuff/utils.js'
 import TS from './script_ts.js'
 
-const DEF_LIMIT = 5
+const DEF_LIMIT = 5  // default buff length
+const WAIT_EXEC = 10 // ms
 
 class ScriptEngine {
-    constructor() {}
-
-    init_data(dc) {
-        this.dc = dc
-        this.data = dc.data
+    constructor() {
+        this.map = {}
+        this.data = {}
+        this.exec_id = null
+        this.queue = []
+        this.sett = {}
     }
 
-    register(scripts) {
+    exec_all() {
 
-        // DEBUG
-        if (Utils.now() - this.__t < 1000) return
-        this.__t = Utils.now()
+        clearTimeout(this.exec_id)
 
-        this.init_state()
-        for (var s of scripts) {
+        // Wait for the data
+        if (!this.data.ohlcv) return
 
-            if (!s.conf) s.conf = {}
+        // Execute queue after all scripts & data are loaded
+        this.exec_id = setTimeout(() => {
 
-            if (s.src.init) {
-                s.src.init_src = this.get_raw_src(s.src.init)
+            this.init_state()
+            this.map = {}
+
+            // No scripts
+            if (!this.queue.length) return
+
+            while (this.queue.length) {
+                this.exec(this.queue.pop())
             }
-            if (s.src.update) {
-                s.src.upd_src = this.get_raw_src(s.src.update)
-            }
 
-            this.env = new ScriptEnv(s, {
-                open: this.open,
-                high: this.high,
-                low: this.low,
-                close: this.close,
-                vol: this.vol,
-                ohlcv: this.data.chart.data,
-                t: () => this.t,
-                iter: () => this.iter,
-            })
+            this.run()
+
+        }, WAIT_EXEC)
+    }
+
+    exec(s) {
+
+        let id = `g${s.grid_id}_${s.layer_id}`
+
+        if (!s.src.conf) s.src.conf = {}
+
+        if (s.src.init) {
+            s.src.init_src = this.get_raw_src(s.src.init)
         }
-        var t1 = Utils.now()
-        this.run(s)
-        console.log('Perf', Utils.now() - t1)
+        if (s.src.update) {
+            s.src.upd_src = this.get_raw_src(s.src.update)
+        }
+
+        s.env = new ScriptEnv(s, {
+            open: this.open,
+            high: this.high,
+            low: this.low,
+            close: this.close,
+            vol: this.vol,
+            ohlcv: this.data.ohlcv,
+            t: () => this.t,
+            iter: () => this.iter,
+        })
+
+        this.map[id] = s
+        this.map[id]._new = true
+
     }
 
     init_state() {
@@ -71,31 +93,42 @@ class ScriptEngine {
         )
     }
 
-    run(script) {
+    run() {
+
+        console.log('Run Scripts')
+
+        var t1 = Utils.now()
+
         try {
 
-            this.env.init()
+            for (var id in this.map) this.map[id].env.init()
 
-            let ohlcv = this.data.chart.data
+            let ohlcv = this.data.ohlcv
             for (var i = this.start(ohlcv); i < ohlcv.length; i++) {
                 this.iter = i
                 this.t = ohlcv[i][0]
                 this.step(ohlcv[i])
 
-                this.env.step()
-
+                for (var id in this.map) this.map[id].env.step()
 
                 this.limit()
             }
         } catch(e) {
             console.log(e)
         }
+
+        console.log('Perf',  Utils.now() - t1)
+
+        this.onmessage('overlay-data', this.format_map())
+
         // DEBUG
         //console.log(this.env.tss)
-        if (script.src.conf.renderer) {
+        /*if (script.src.conf.renderer) {
             this.dc.set(`Skrrr Exec.type`, script.src.conf.renderer)
         }
-        this.dc.set(`Skrrr Exec.data`, this.env.data)
+        this.dc.set(`Skrrr Exec.data`, this.env.data)*/
+
+
 
     }
 
@@ -117,9 +150,18 @@ class ScriptEngine {
     }
 
     start(ohlcv) {
-        let depth = this.dc.sett.scriptDepth
+        let depth = this.sett.scriptDepth
         return depth ?
             Math.max(ohlcv.length - depth, 0) : 0
+    }
+
+    format_map() {
+        let res = []
+        for (var id in this.map) {
+            let x = this.map[id]
+            res.push({ id: id, data: x.env.data })
+        }
+        return res
     }
 }
 

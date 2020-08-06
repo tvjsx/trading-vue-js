@@ -34,6 +34,12 @@ export default {
             data_colors: this.data_colors,
             y_range: this.y_range
         })
+        if (this.calc) this.$emit('exec-script', {
+            grid_id: this.$props.grid_id,
+            layer_id: this.$props.id,
+            src: this.calc(),
+            use_for: this.use_for()
+        })
         this.mouse = new Mouse(this)
         if (this.init_tool) this.init_tool()
         if (this.init) this.init()
