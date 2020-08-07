@@ -34,19 +34,24 @@
         <span v-if="ind.unk" class="t-vue-unknown">
             (Unknown type)
         </span>
+        <transition name="tvjs-appear">
+            <spinner :colors="common.colors" v-if="ind.loading">
+            </spinner>
+        </transition>
     </div>
 </div>
 </template>
 <script>
 
 import ButtonGroup from './ButtonGroup.vue'
+import Spinner from './Spinner.vue'
 
 export default {
     name: 'ChartLegend',
     props: [
         'common', 'values', 'grid_id', 'meta_props'
     ],
-    components: { ButtonGroup },
+    components: { ButtonGroup, Spinner },
     computed: {
         ohlcv() {
             if (!this.$props.values || !this.$props.values.ohlcv) {
@@ -79,7 +84,8 @@ export default {
                     index: this.json_data.indexOf(x),
                     id: id,
                     values: values ? f(id, values) : this.n_a(1),
-                    unk: !(id in (this.$props.meta_props || {}))
+                    unk: !(id in (this.$props.meta_props || {})),
+                    loading: x.loading
                 }
             })
         },
@@ -158,11 +164,23 @@ export default {
     margin-bottom: 0.5em;
     font-weight: 200;
     font-size: 1.0em;
+    margin-top: 0.3em;
 }
 .t-vue-ivalue {
     margin-left: 0.5em;
 }
 .t-vue-unknown {
     color: #999999; /* TODO: move => params */
+}
+
+.tvjs-appear-enter-active,
+.tvjs-appear-leave-active
+{
+    transition: all .3s ease;
+}
+
+.tvjs-appear-enter, .tvjs-appear-leave-to
+{
+    opacity: 0;
 }
 </style>
