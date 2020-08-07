@@ -176,7 +176,8 @@ export default {
                 )[0] || [], d.indexSrc || 'map'),
                 settings: d.settings || this.settings_ov,
                 grid: d.grid || {},
-                tf: Utils.parse_tf(d.tf)
+                tf: Utils.parse_tf(d.tf),
+                loading: d.loading
             }))
         },
         section_props(i) {
