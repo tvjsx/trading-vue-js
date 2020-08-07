@@ -5,21 +5,23 @@
 import worker from './tmp/ww$$$.json'
 import Utils from '../stuff/utils.js'
 
+import {} from './script_ww.js' // For webworker-loader to find the ww
+
 class WebWork {
 
     constructor() {
-        this.start_ww(worker)
         this.tasks = {}
         this.onevent = () => {}
+        this.start()
     }
 
-    start_ww(data) {
-
+    start() {
+        if (this.worker) this.worker.terminate()
         // URL.createObjectURL
         window.URL = window.URL || window.webkitURL
         var blob
         try {
-            blob = new Blob(data, {type: 'application/javascript'})
+            blob = new Blob(worker, {type: 'application/javascript'})
         } catch (e) {
             // Backwards-compatibility
             window.BlobBuilder = window.BlobBuilder ||
@@ -77,7 +79,10 @@ class WebWork {
             }
         })
     }
+
+    destroy() {
+        if (this.worker) this.worker.terminate()
+    }
 }
 
-
-export default new WebWork()
+export default WebWork

@@ -49,7 +49,7 @@ export default {
     },
     data() {
         return {
-            chart: new DataCube(Data, {
+            chart: new DataCube(JSON.parse(JSON.stringify(Data)), {
                 scripts: true,
                 //scriptDepth: 1000
             }),

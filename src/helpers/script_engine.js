@@ -16,6 +16,7 @@ class ScriptEngine {
         this.exec_id = null
         this.queue = []
         this.sett = {}
+        this.state = {}
     }
 
     exec_all() {
@@ -29,16 +30,19 @@ class ScriptEngine {
         this.exec_id = setTimeout(() => {
 
             this.init_state()
-            this.map = {}
+            this.re_init_map()
 
-            // No scripts
-            if (!this.queue.length) return
+            // TODO: remove script event
 
             while (this.queue.length) {
                 this.exec(this.queue.pop())
             }
 
-            this.run()
+            if (Object.keys(this.map).length) {
+                this.run()
+            }
+
+            this.send_state()
 
         }, WAIT_EXEC)
     }
@@ -68,7 +72,6 @@ class ScriptEngine {
         })
 
         this.map[id] = s
-        this.map[id]._new = true
 
     }
 
@@ -82,6 +85,19 @@ class ScriptEngine {
         this.iter = 0
         this.t = 0
         this.skip = false // skip the step
+    }
+
+    send_state() {
+        this.onmessage('engine-state', {
+            scripts: Object.keys(this.map).length,
+            last_perf: this.perf
+        })
+    }
+
+    re_init_map() {
+        for (var id in this.map) {
+            this.exec(this.map[id])
+        }
     }
 
     get_raw_src(f) {
@@ -101,7 +117,10 @@ class ScriptEngine {
 
         try {
 
-            for (var id in this.map) this.map[id].env.init()
+            for (var id in this.map) {
+                this.onmessage('exec-started', id)
+                this.map[id].env.init()
+            }
 
             let ohlcv = this.data.ohlcv
             for (var i = this.start(ohlcv); i < ohlcv.length; i++) {
@@ -117,7 +136,8 @@ class ScriptEngine {
             console.log(e)
         }
 
-        console.log('Perf',  Utils.now() - t1)
+        this.perf = Utils.now() - t1
+        console.log('Perf',  this.perf)
 
         this.onmessage('overlay-data', this.format_map())
 

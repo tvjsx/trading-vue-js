@@ -1,9 +1,7 @@
 
 // Sends all dc.sett changes to the web-worker
 
-import ww from './script_ww_api.js'
-
-export default function(sett) {
+export default function(sett, ww) {
 
     const h = {
         get: function(sett, k) {

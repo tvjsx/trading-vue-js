@@ -114,7 +114,7 @@ body {
     Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,
     Fira Sans,Droid Sans,Helvetica Neue,
     sans-serif;
-    background: #12192c;
+    background: #121826;
     border-bottom: 1px solid #8080804f;
     z-index: 1000;
 }
