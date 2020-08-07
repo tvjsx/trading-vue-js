@@ -3,22 +3,37 @@
 
 import Utils from '../stuff/utils.js'
 import Icons from '../stuff/icons.json'
-
-import ww from './script_ww_api.js'
-import {} from './script_ww.js' // For webworker-loader to find the ww
+import WebWork from './script_ww_api.js'
 
 export default class DCEvents {
 
     constructor() {
-        // Listen to the webworker events
-        ww.onevent = e => {
+
+        this.ww = new WebWork()
+
+        // Listen to the web-worker events
+        this.ww.onevent = e => {
             switch(e.data.type) {
                 case 'request-data':
                     let main = this.data.chart.data
-                    ww.just('upload-data', { ohlcv: main })
+                    // TODO: DataTunnel class for smarter data transfer
+                    if (this.ww._data_uploading) break
+                    this.ww.just('upload-data', { ohlcv: main })
+                    this.ww._data_uploading = true
                     break
                 case 'overlay-data':
                     this.on_overlay_data(e.data.data)
+                    break
+                case 'exec-started':
+                    let dcid = this.gldc[e.data.data]
+                    let obj = this.get_one(`${dcid}`)
+                    if (obj) this.tv.$set(obj, 'loading', true)
+                    break
+                case 'data-uploaded':
+                    this.ww._data_uploading = false
+                    break
+                case 'engine-state':
+                    this.se_state = e.data.data
                     break
             }
         }
@@ -103,12 +118,16 @@ export default class DCEvents {
     }
 
     exec_script(args) {
-        if (args.length) ww.just('exec-script', args[0])
+        if (args.length) this.ww.just('exec-script', args[0])
     }
 
     data_changed(args) {
         let main = this.data.chart.data
-        ww.just('upload-data', { ohlcv: main })
+        console.log('Data Changed', main.length)
+        if (this.ww._data_uploading) return
+        if (!this.se_state.scripts) return
+        this.ww.just('upload-data', { ohlcv: main })
+        this.ww._data_uploading = true
     }
 
     merge_presets(proto, preset) {
@@ -229,12 +248,12 @@ export default class DCEvents {
 
     // Push overlay updates from the web-worker
     on_overlay_data(data) {
-        console.log(data)
         for (var ov of data) {
             let dcid = this.gldc[ov.id]
             let obj = this.get_one(`${dcid}`)
             if (obj) {
                 obj.data = ov.data
+                this.tv.$set(obj, 'loading', false)
             }
         }
     }
@@ -250,6 +269,7 @@ export default class DCEvents {
         this.drawing_mode_off()
         this.on_scroll_lock(false)
         this.object_selected([])
+        this.ww.destroy()
     }
 
 }

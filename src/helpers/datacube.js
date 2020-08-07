@@ -13,8 +13,8 @@ export default class DataCube extends DCCore {
 
         super()
         this.data = data
-        this.sett = SettProxy(sett)
-        
+        this.sett = SettProxy(sett, this.ww)
+        this.se_state = {}
     }
 
     // Add new overlay

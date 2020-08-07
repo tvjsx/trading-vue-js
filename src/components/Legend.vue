@@ -176,7 +176,7 @@ export default {
 .tvjs-appear-enter-active,
 .tvjs-appear-leave-active
 {
-    transition: all .3s ease;
+    transition: all .25s ease;
 }
 
 .tvjs-appear-enter, .tvjs-appear-leave-to
