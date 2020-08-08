@@ -69,6 +69,7 @@ export default {
                     'n/a'
             ]
         },
+        // TODO: add support for { grid: { id : N }}
         indicators() {
             const values = this.$props.values
             const f = this.format

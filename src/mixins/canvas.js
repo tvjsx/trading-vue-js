@@ -16,7 +16,12 @@ export default {
                 var rect = canvas.getBoundingClientRect()
                 canvas.width = rect.width * dpr
                 canvas.height = rect.height * dpr
-                const ctx = canvas.getContext('2d')
+                const ctx = canvas.getContext('2d', {
+                    // TODO: test the boost:
+                    //alpha: false,
+                    //desynchronized: true,
+                    //preserveDrawingBuffer: false
+                })
                 ctx.scale(dpr, dpr)
                 this.redraw()
                 // Fallback fix for Brave browser

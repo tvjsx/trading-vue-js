@@ -24,16 +24,19 @@ export default class DCEvents {
                 case 'overlay-data':
                     this.on_overlay_data(e.data.data)
                     break
-                case 'exec-started':
+                /*case 'exec-started':
                     let dcid = this.gldc[e.data.data]
                     let obj = this.get_one(`${dcid}`)
                     if (obj) this.tv.$set(obj, 'loading', true)
-                    break
+                    break*/
                 case 'data-uploaded':
                     this.ww._data_uploading = false
                     break
                 case 'engine-state':
                     this.se_state = e.data.data
+                    break
+                case 'change-overlay':
+                    this.change_overlay(e.data.data)
                     break
             }
         }
@@ -85,6 +88,31 @@ export default class DCEvents {
 
     }
 
+    // Triggered when one or multiple settings are changed
+    // We select only the changed ones & re-exec them on the
+    // web worker
+    on_settings(values, prev) {
+
+        let delta = {}
+        let changed = false
+
+        for (var i = 0; i < values.length; i++) {
+            let n = values[i]
+            let arr = prev.filter(x => x.v === n.v)
+            if (!arr.length) {
+                let id = this.dcgl[n.p.id]
+                delta[id] = n.v
+                changed = true
+                this.tv.$set(n.p, 'loading', true)
+            }
+        }
+
+        if (changed) {
+            this.ww.just('update-ov-settings', delta)
+        }
+
+    }
+
     // Combine all tools and their mods
     register_tools(tools) {
         let preset = {}
@@ -118,7 +146,38 @@ export default class DCEvents {
     }
 
     exec_script(args) {
-        if (args.length) this.ww.just('exec-script', args[0])
+        if (args.length) {
+            let obj = this.get_overlay(args[0])
+            if (!obj) return
+            // Parse script props & get the values from the ov
+            let s = obj.settings
+            for (var k in args[0].src.props || {}) {
+                let proto = args[0].src.props[k]
+                if (s[k] !== undefined) {
+                    proto.val = s[k] // use the existing val
+                    continue
+                }
+                if (proto.def === undefined) {
+                    // TODO: add support of info / errors to the legend
+                    console.error(
+                        `Overlay ${obj.id}: script prop '${k}' ` +
+                        `doesn't have a default value`)
+                    return
+                }
+                s[k] = proto.val = proto.def // set the default
+            }
+            this.tv.$set(obj, 'loading', true)
+            this.ww.just('exec-script', args[0])
+        }
+    }
+
+    change_overlay(upd) {
+        let obj = this.get_overlay(upd)
+        if (obj) {
+            for (var k in upd.fileds || {}) {
+                this.tv.$set(obj, k, upd.fileds[k])
+            }
+        }
     }
 
     data_changed(args) {
@@ -270,6 +329,13 @@ export default class DCEvents {
         this.on_scroll_lock(false)
         this.object_selected([])
         this.ww.destroy()
+    }
+
+    // Get overlay by grid-layer id
+    get_overlay(obj) {
+        let id = obj.id || `g${obj.grid_id}_${obj.layer_id}`
+        let dcid = this.gldc[id]
+        return this.get_one(`${dcid}`)
     }
 
 }

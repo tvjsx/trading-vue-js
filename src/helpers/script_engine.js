@@ -47,6 +47,35 @@ class ScriptEngine {
         }, WAIT_EXEC)
     }
 
+    // Exec selected
+    exec_sel(delta) {
+
+        // Wait for the data
+        if (!this.data.ohlcv) return
+
+        this.init_state()
+
+        for (var id in delta) {
+            if (!this.map[id]) continue
+
+            let props = this.map[id].src.props
+            for (var k in props) {
+                if (k in delta[id]) {
+                    props[k].val = delta[id][k]
+                }
+            }
+
+            this.exec(this.map[id])
+
+        }
+
+        this.run(Object.keys(delta)
+            .filter(x => x in this.map))
+
+        this.send_state()
+
+    }
+
     exec(s) {
 
         let id = `g${s.grid_id}_${s.layer_id}`
@@ -109,17 +138,19 @@ class ScriptEngine {
         )
     }
 
-    run() {
+    run(sel) {
 
         console.log('Run Scripts')
 
         var t1 = Utils.now()
+        sel = sel || Object.keys(this.map)
 
         try {
 
-            for (var id in this.map) {
+            for (var id of sel) {
                 this.onmessage('exec-started', id)
                 this.map[id].env.init()
+                this.init_conf(id)
             }
 
             let ohlcv = this.data.ohlcv
@@ -127,8 +158,8 @@ class ScriptEngine {
                 this.iter = i
                 this.t = ohlcv[i][0]
                 this.step(ohlcv[i])
-
-                for (var id in this.map) this.map[id].env.step()
+                // TEST: for (var k = 1; k < 10000000; k++) {}
+                for (var id of sel) this.map[id].env.step()
 
                 this.limit()
             }
@@ -182,6 +213,17 @@ class ScriptEngine {
             res.push({ id: id, data: x.env.data })
         }
         return res
+    }
+
+    init_conf(id) {
+        /*if (this.map[id].src.conf.renderer) {
+            this.onmessage('change-overlay', {
+                id: id,
+                fileds: {
+                    type: this.map[id].src.conf.renderer
+                }
+            })
+        }*/
     }
 }
 

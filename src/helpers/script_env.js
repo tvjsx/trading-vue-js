@@ -88,7 +88,7 @@ export default class ScriptEnv {
         let props = ``
 
         for (var k in src.props) {
-            props += `var ${k} = ${src.props[k].def}\n`
+            props += `var ${k} = ${src.props[k].val}\n`
         }
         // TODO: add argument values to _id
         // TODO: prefix all function by ns, e.g std_nz()

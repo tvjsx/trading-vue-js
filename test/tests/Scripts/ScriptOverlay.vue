@@ -30,6 +30,7 @@ export default {
         calc() {
             return {
                 props: {
+                    length: { def: 20, range: [10,200, 5] }
                 },
                 conf: {
                     'renderer': 'Splines',
@@ -39,15 +40,13 @@ export default {
                     console.log('init script')
                 `,
                 update: `
-                    //let [a, b, c] = dmi(14, 14)
-                    //return [a[0], b[0], c[0]]
-                    //return sma(close, 100)[0]
 
-                    let sum = 0
-                    for (var i = 0; i < 20; i++) {
-                        sum += close[i]
+
+                    this[0] = []
+
+                    for (var l = length; l <= length + 50; l += 10) {
+                        this[0].push(ema(close, l)[0])
                     }
-                    return sum / 20
 
 
                 `
