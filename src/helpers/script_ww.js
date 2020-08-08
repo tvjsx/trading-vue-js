@@ -12,7 +12,7 @@ self.onmessage = async e => {
     console.log('Worker got:', e.data.type)
     switch(e.data.type) {
 
-        case 'update-settings':
+        case 'update-dc-settings':
 
             se.sett = e.data.data
 
@@ -44,6 +44,11 @@ self.onmessage = async e => {
 
             break
 
+        case 'update-ov-settings':
+
+            se.exec_sel(e.data.data)
+
+            break
     }
 
 }
@@ -57,6 +62,7 @@ se.onmessage = (type, data) => {
         case 'overlay-data':
         case 'exec-started':
         case 'engine-state':
+        case 'change-overlay':
 
             self.postMessage({type, data})
 

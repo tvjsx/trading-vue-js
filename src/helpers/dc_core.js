@@ -12,6 +12,10 @@ export default class DCCore extends DCEvents {
             this.tv = $root
             this.init_data()
             this.update_ids()
+
+            // Listen to all setting changes
+            this.tv.$watch(() => this.get_by_query('.settings'),
+                (n, p) => this.on_settings(n, p))
         }
     }
 
@@ -95,7 +99,7 @@ export default class DCCore extends DCEvents {
         this.data.chart.id = `chart.${this.data.chart.type}`
         var count = {}
         // grid_id,layer_id => DC id mapping
-        this.gldc = {}
+        this.gldc = {}, this.dcgl = {}
         for (var ov of this.data.onchart) {
             if (count[ov.type] === undefined) {
                 count[ov.type] = 0
@@ -107,6 +111,7 @@ export default class DCCore extends DCEvents {
 
             // grid_id,layer_id => DC id mapping
             this.gldc[`g0_${ov.type}_${i}`] = ov.id
+            this.dcgl[ov.id] = `g0_${ov.type}_${i}`
         }
         count = {}
         let grids = [{}]
@@ -123,12 +128,15 @@ export default class DCCore extends DCEvents {
             // grid_id,layer_id => DC id mapping
             gid++
             let rgid = (ov.grid || {}).id || gid // real grid_id
+            // When we merge grid, skip ++
+            if ((ov.grid || {}).id) gid--
             if (!grids[rgid]) grids[rgid] = {}
             if (grids[rgid][ov.type] === undefined) {
                 grids[rgid][ov.type] = 0
             }
             let ri = grids[rgid][ov.type]++
             this.gldc[`g${rgid}_${ov.type}_${ri}`] = ov.id
+            this.dcgl[ov.id] = `g${rgid}_${ov.type}_${ri}`
         }
     }
 

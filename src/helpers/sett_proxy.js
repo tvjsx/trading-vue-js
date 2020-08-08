@@ -9,12 +9,12 @@ export default function(sett, ww) {
         },
         set: function(sett, k, v) {
             sett[k] = v
-            ww.just('update-settings', sett)
+            ww.just('update-dc-settings', sett)
             return true
         }
     }
 
-    ww.just('update-settings', sett)
+    ww.just('update-dc-settings', sett)
 
     return new Proxy(sett, h)
 }
