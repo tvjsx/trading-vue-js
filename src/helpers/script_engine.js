@@ -6,15 +6,17 @@ import ScriptEnv from './script_env.js'
 import Utils from '../stuff/utils.js'
 import TS from './script_ts.js'
 
-const DEF_LIMIT = 5  // default buff length
-const WAIT_EXEC = 10 // ms
+const DEF_LIMIT = 5   // default buff length
+const WAIT_EXEC = 10  // ms
 
 class ScriptEngine {
+
     constructor() {
         this.map = {}
         this.data = {}
         this.exec_id = null
         this.queue = []
+        this.delta_queue = []
         this.sett = {}
         this.state = {}
     }
@@ -27,19 +29,22 @@ class ScriptEngine {
         if (!this.data.ohlcv) return
 
         // Execute queue after all scripts & data are loaded
-        this.exec_id = setTimeout(() => {
+        this.exec_id = setTimeout(async () => {
 
-            this.init_state()
+            if (!this.init_state(Object.keys(this.map))) {
+                return
+            }
             this.re_init_map()
 
-            // TODO: remove script event
+            // TODO: 'remove-script' event
 
             while (this.queue.length) {
-                this.exec(this.queue.pop())
+                this.exec(this.queue.shift())
             }
 
             if (Object.keys(this.map).length) {
-                this.run()
+                await this.run()
+                this.check_queues()
             }
 
             this.send_state()
@@ -48,12 +53,17 @@ class ScriptEngine {
     }
 
     // Exec selected
-    exec_sel(delta) {
+    async exec_sel(delta) {
 
         // Wait for the data
         if (!this.data.ohlcv) return
 
-        this.init_state()
+        let sel = Object.keys(delta).filter(x => x in this.map)
+
+        if (!this.init_state(sel)) {
+            this.delta_queue.push(delta)
+            return
+        }
 
         for (var id in delta) {
             if (!this.map[id]) continue
@@ -69,16 +79,15 @@ class ScriptEngine {
 
         }
 
-        this.run(Object.keys(delta)
-            .filter(x => x in this.map))
-
+        await this.run(sel)
+        this.check_queues()
         this.send_state()
 
     }
 
     exec(s) {
 
-        let id = `g${s.grid_id}_${s.layer_id}`
+        let id = s.id || `g${s.grid_id}_${s.layer_id}`
 
         if (!s.src.conf) s.src.conf = {}
 
@@ -104,7 +113,16 @@ class ScriptEngine {
 
     }
 
-    init_state() {
+    init_state(sel) {
+
+        let task = sel.join(',')
+
+        // Stop previous run only if the task is the same
+        if (this.running) {
+            this._restart = (task === this.task)
+            return false
+        }
+
         // Inverted arrays
         this.open = TS('open', [])
         this.high = TS('high', [])
@@ -114,6 +132,10 @@ class ScriptEngine {
         this.iter = 0
         this.t = 0
         this.skip = false // skip the step
+        this.running = true
+        this.task = task
+
+        return true
     }
 
     send_state() {
@@ -138,7 +160,7 @@ class ScriptEngine {
         )
     }
 
-    run(sel) {
+    async run(sel) {
 
         console.log('Run Scripts')
 
@@ -148,17 +170,24 @@ class ScriptEngine {
         try {
 
             for (var id of sel) {
-                this.onmessage('exec-started', id)
                 this.map[id].env.init()
                 this.init_conf(id)
             }
 
             let ohlcv = this.data.ohlcv
             for (var i = this.start(ohlcv); i < ohlcv.length; i++) {
+
+                // Make a pause to read new WW msg
+                if (i % 100 === 0) await Utils.pause(0)
+                if (this.restarted()) return
+//console.log(i)
                 this.iter = i
                 this.t = ohlcv[i][0]
                 this.step(ohlcv[i])
-                // TEST: for (var k = 1; k < 10000000; k++) {}
+
+                // TEST:
+                for (var k = 1; k < 1000000; k++) {}
+
                 for (var id of sel) this.map[id].env.step()
 
                 this.limit()
@@ -170,17 +199,9 @@ class ScriptEngine {
         this.perf = Utils.now() - t1
         console.log('Perf',  this.perf)
 
-        this.onmessage('overlay-data', this.format_map())
+        this.running = false
 
-        // DEBUG
-        //console.log(this.env.tss)
-        /*if (script.src.conf.renderer) {
-            this.dc.set(`Skrrr Exec.type`, script.src.conf.renderer)
-        }
-        this.dc.set(`Skrrr Exec.data`, this.env.data)*/
-
-
-
+        this.onmessage('overlay-data', this.format_map(sel))
     }
 
     step(data) {
@@ -206,9 +227,27 @@ class ScriptEngine {
             Math.max(ohlcv.length - depth, 0) : 0
     }
 
-    format_map() {
+    check_queues() {
+
+        console.log('Queue=', this.queue.length)
+        console.log('Delata queue=', this.delta_queue.length)
+
+        // Check if there are any new scripts (recieved during
+        // the current run)
+        if (this.queue.length) {
+            this.exec_all()
+        }
+        // Check if there are any new settings deltas (...)
+        else if (this.delta_queue.length) {
+            this.exec_sel(this.delta_queue.pop())
+            this.delta_queue = []
+        }
+    }
+
+    format_map(sel) {
+        sel = sel || Object.keys(this.map)
         let res = []
-        for (var id in this.map) {
+        for (var id of sel) {
             let x = this.map[id]
             res.push({ id: id, data: x.env.data })
         }
@@ -224,6 +263,17 @@ class ScriptEngine {
                 }
             })
         }*/
+    }
+
+    restarted() {
+        if (this._restart) {
+            this._restart = false
+            this.running = false
+            this.perf = 0
+            console.log('Restarted')
+            return true
+        }
+        return false
     }
 }
 
