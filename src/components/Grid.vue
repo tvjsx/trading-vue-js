@@ -129,6 +129,9 @@ export default {
             for (var d of this.$props.data) {
                 let comp = this._list[this._registry[d.type]]
                 if (comp) {
+                    if(comp.methods.calc) {
+                        comp = this.inject_renderer(comp)
+                    }
                     comp_list.push({
                         cls: comp,
                         type: d.type,
@@ -168,6 +171,33 @@ export default {
         emit_ux_event(e) {
             let e_pass = this.on_ux_event(e, 'grid')
             if (e_pass) this.$emit('custom-event', e)
+        },
+        // Replace current copm with renderer
+        inject_renderer(comp) {
+            let src = comp.methods.calc()
+            if (!src.conf || !src.conf.renderer || comp.__renderer__) {
+                return comp
+            }
+
+            // Search for an overlay with the target 'name'
+            let f = this._list.find(x => x.name === src.conf.renderer)
+            if (!f) return comp
+
+            for (var k in f.methods) {
+                if (comp.methods[k]) continue
+                comp.methods[k] = f.methods[k]
+            }
+
+            if (!comp.computed) comp.computed = {}
+            for (var k in f.computed) {
+                if (comp.computed[k]) continue
+                comp.computed[k] = f.computed[k]
+            }
+
+            comp.data = f.data
+            comp.__renderer__ = src.conf.renderer
+
+            return comp
         }
     },
     computed: {

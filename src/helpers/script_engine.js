@@ -180,13 +180,13 @@ class ScriptEngine {
                 // Make a pause to read new WW msg
                 if (i % 100 === 0) await Utils.pause(0)
                 if (this.restarted()) return
-//console.log(i)
+
                 this.iter = i
                 this.t = ohlcv[i][0]
                 this.step(ohlcv[i])
 
                 // TEST:
-                for (var k = 1; k < 1000000; k++) {}
+                //for (var k = 1; k < 1000000; k++) {}
 
                 for (var id of sel) this.map[id].env.step()
 
