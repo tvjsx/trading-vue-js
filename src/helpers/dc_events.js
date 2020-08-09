@@ -24,11 +24,6 @@ export default class DCEvents {
                 case 'overlay-data':
                     this.on_overlay_data(e.data.data)
                     break
-                /*case 'exec-started':
-                    let dcid = this.gldc[e.data.data]
-                    let obj = this.get_one(`${dcid}`)
-                    if (obj) this.tv.$set(obj, 'loading', true)
-                    break*/
                 case 'data-uploaded':
                     this.ww._data_uploading = false
                     break
@@ -311,7 +306,7 @@ export default class DCEvents {
             let dcid = this.gldc[ov.id]
             let obj = this.get_one(`${dcid}`)
             if (obj) {
-                obj.data = ov.data
+                 obj.data = ov.data
                 this.tv.$set(obj, 'loading', false)
             }
         }

@@ -60,7 +60,6 @@ se.onmessage = (type, data) => {
     switch(type) {
 
         case 'overlay-data':
-        case 'exec-started':
         case 'engine-state':
         case 'change-overlay':
 
