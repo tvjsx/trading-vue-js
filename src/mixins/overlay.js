@@ -16,6 +16,7 @@ export default {
         this.meta_info()
         this._$emit = this.$emit
         this.$emit = this.custom_event
+        console.log('new-grid-layer', this)
         this._$emit('new-grid-layer', {
             name: this.$options.name,
             id: this.$props.id,

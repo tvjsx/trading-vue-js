@@ -6,7 +6,7 @@ import Utils from '../stuff/utils.js'
 
 var data_requested = false
 
-// Forward
+// DC => WW
 
 self.onmessage = async e => {
     console.log('Worker got:', e.data.type)
@@ -49,11 +49,17 @@ self.onmessage = async e => {
             se.exec_sel(e.data.data)
 
             break
+
+        case 'remove-scripts':
+
+            se.remove_scripts(e.data.data)
+
+            break
     }
 
 }
 
-// Backward
+// WW => DC
 
 se.onmessage = (type, data) => {
 

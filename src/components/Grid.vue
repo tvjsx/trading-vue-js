@@ -172,7 +172,7 @@ export default {
             let e_pass = this.on_ux_event(e, 'grid')
             if (e_pass) this.$emit('custom-event', e)
         },
-        // Replace current copm with renderer
+        // Replace the current comp with 'renderer'
         inject_renderer(comp) {
             let src = comp.methods.calc()
             if (!src.conf || !src.conf.renderer || comp.__renderer__) {

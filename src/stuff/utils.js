@@ -245,8 +245,8 @@ export default {
         }
     },
 
-    uuid() {
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
+    uuid(temp = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx') {
+        return temp
             .replace(/[xy]/g, c => {
             var r = Math.random() * 16 | 0, v = c == 'x' ?
                 r :
@@ -254,5 +254,9 @@ export default {
             return v.toString(16)
         })
     },
+
+    uuid2() {
+        return this.uuid('xxxxxxxxxxxx')
+    }
 
 }
