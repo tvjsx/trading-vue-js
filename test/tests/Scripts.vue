@@ -35,6 +35,7 @@ export default {
         window.dc = this.chart
         window.tv = this.$refs.tv
         window.ov = this.ov[0]
+        window.test = this
     },
     computed: {
         colors() {

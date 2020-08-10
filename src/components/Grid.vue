@@ -183,7 +183,8 @@ export default {
             let f = this._list.find(x => x.name === src.conf.renderer)
             if (!f) return comp
 
-            for (var k in f.methods) {
+            comp.mixins.push(f)
+            /*for (var k in f.methods) {
                 if (comp.methods[k]) continue
                 comp.methods[k] = f.methods[k]
             }
@@ -194,7 +195,7 @@ export default {
                 comp.computed[k] = f.computed[k]
             }
 
-            comp.data = f.data
+            comp.data = f.data*/
             comp.__renderer__ = src.conf.renderer
 
             return comp
@@ -221,6 +222,20 @@ export default {
         cursor: {
             handler: function() {
                 if (!this.$props.cursor.locked) this.redraw()
+            },
+            deep: true
+        },
+        overlays: {
+            // Track changes in calc() functions
+            handler: function(ovs) {
+                for (var ov of ovs) {
+                    for (var comp of this.$children) {
+                        if (comp._name === `<${ov.name}>`) {
+                            comp.calc = ov.methods.calc
+                            comp.exec_script()
+                        }
+                    }
+                }
             },
             deep: true
         }

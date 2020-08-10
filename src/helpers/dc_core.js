@@ -14,6 +14,7 @@ export default class DCCore extends DCEvents {
             this.update_ids()
 
             // Listen to all setting changes
+            // TODO: works only with merge()
             this.tv.$watch(() => this.get_by_query('.settings'),
                 (n, p) => this.on_settings(n, p))
 

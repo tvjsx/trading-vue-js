@@ -156,11 +156,13 @@ export default class DCEvents {
             let obj = this.get_overlay(args[0])
             if (!obj) return
             // Parse script props & get the values from the ov
+            // TODO: remove unnecessary script initializations
             let s = obj.settings
+            let props = args[0].src.props
             if (!s.$uuid) s.$uuid = `${obj.type}-${Utils.uuid2()}`
             args[0].uuid = s.$uuid
-            for (var k in args[0].src.props || {}) {
-                let proto = args[0].src.props[k]
+            for (var k in props || {}) {
+                let proto = props[k]
                 if (s[k] !== undefined) {
                     proto.val = s[k] // use the existing val
                     continue
@@ -174,6 +176,15 @@ export default class DCEvents {
                 }
                 s[k] = proto.val = proto.def // set the default
             }
+            // Remove old props (dropped by the current exec)
+            if (s._props) {
+                for (var k in s) {
+                    if (s._props.includes(k) && !(k in props)) {
+                        delete s[k]
+                    }
+                }
+            }
+            s._props = Object.keys(args[0].src.props)
             this.tv.$set(obj, 'loading', true)
             this.ww.just('exec-script', args[0])
         }
