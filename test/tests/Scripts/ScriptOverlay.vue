@@ -23,7 +23,7 @@ export default {
                     console.log('init script')
                 `,
                 update: `
-                    let a = 14
+                    let a = 34
                     this[0] = []
                     for (var l = length; l <= length + 50; l += 10) {
                         this[0].push(ema(close, l)[0])
