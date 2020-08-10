@@ -36,8 +36,6 @@ class ScriptEngine {
             }
             this.re_init_map()
 
-            // TODO: 'remove-script' event
-
             while (this.queue.length) {
                 this.exec(this.queue.shift())
             }
@@ -87,8 +85,6 @@ class ScriptEngine {
 
     exec(s) {
 
-        let id = s.id || `g${s.grid_id}_${s.layer_id}`
-
         if (!s.src.conf) s.src.conf = {}
 
         if (s.src.init) {
@@ -109,7 +105,7 @@ class ScriptEngine {
             iter: () => this.iter,
         })
 
-        this.map[id] = s
+        this.map[s.uuid] = s
 
     }
 
@@ -178,7 +174,8 @@ class ScriptEngine {
             for (var i = this.start(ohlcv); i < ohlcv.length; i++) {
 
                 // Make a pause to read new WW msg
-                if (i % 100 === 0) await Utils.pause(0)
+                // TODO: speedup pause()
+                if (i % 1000 === 0) await Utils.pause(0)
                 if (this.restarted()) return
 
                 this.iter = i
@@ -229,9 +226,6 @@ class ScriptEngine {
 
     check_queues() {
 
-        console.log('Queue=', this.queue.length)
-        console.log('Delata queue=', this.delta_queue.length)
-
         // Check if there are any new scripts (recieved during
         // the current run)
         if (this.queue.length) {
@@ -274,6 +268,11 @@ class ScriptEngine {
             return true
         }
         return false
+    }
+
+    remove_scripts(ids) {
+        for (var id of ids) delete this.map[id]
+        this.send_state()
     }
 }
 

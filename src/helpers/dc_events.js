@@ -95,7 +95,7 @@ export default class DCEvents {
             let n = values[i]
             let arr = prev.filter(x => x.v === n.v)
             if (!arr.length) {
-                let id = this.dcgl[n.p.id]
+                let id = n.p.settings.$uuid
                 delta[id] = n.v
                 changed = true
                 this.tv.$set(n.p, 'loading', true)
@@ -106,6 +106,17 @@ export default class DCEvents {
             this.ww.just('update-ov-settings', delta)
         }
 
+    }
+
+    // When the set of $uuids is changed
+    on_ids_changed(values, prev) {
+
+        let rem = prev.filter(
+            x => x !== undefined && !values.includes(x))
+
+        if (rem.length) {
+            this.ww.just('remove-scripts', rem)
+        }
     }
 
     // Combine all tools and their mods
@@ -146,6 +157,8 @@ export default class DCEvents {
             if (!obj) return
             // Parse script props & get the values from the ov
             let s = obj.settings
+            if (!s.$uuid) s.$uuid = `${obj.type}-${Utils.uuid2()}`
+            args[0].uuid = s.$uuid
             for (var k in args[0].src.props || {}) {
                 let proto = args[0].src.props[k]
                 if (s[k] !== undefined) {
@@ -303,10 +316,9 @@ export default class DCEvents {
     // Push overlay updates from the web-worker
     on_overlay_data(data) {
         for (var ov of data) {
-            let dcid = this.gldc[ov.id]
-            let obj = this.get_one(`${dcid}`)
+            let obj = this.get_one(`${ov.id}`)
             if (obj) {
-                 obj.data = ov.data
+                obj.data = ov.data
                 this.tv.$set(obj, 'loading', false)
             }
         }

@@ -16,6 +16,11 @@ export default class DCCore extends DCEvents {
             // Listen to all setting changes
             this.tv.$watch(() => this.get_by_query('.settings'),
                 (n, p) => this.on_settings(n, p))
+
+            // Listen to all indices changes
+            this.tv.$watch(() => this.get('.')
+                .map(x => x.settings.$uuid),
+                (n, p) => this.on_ids_changed(n, p))
         }
     }
 

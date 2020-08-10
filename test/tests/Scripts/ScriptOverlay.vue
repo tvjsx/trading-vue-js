@@ -9,7 +9,7 @@ export default {
         meta_info() {
             return { author: 'C451', version: '1.0.0' }
         },
-        use_for() { return ['ScriptOverlay', 'EMA', 'SMA'] },
+        use_for() { return ['ScriptOverlay'] },
         calc() {
             return {
                 props: {
@@ -23,9 +23,8 @@ export default {
                     console.log('init script')
                 `,
                 update: `
-
+                    let a = 14
                     this[0] = []
-
                     for (var l = length; l <= length + 50; l += 10) {
                         this[0].push(ema(close, l)[0])
                     }
