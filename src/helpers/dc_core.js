@@ -146,8 +146,59 @@ export default class DCCore extends DCEvents {
         }
     }
 
+    update_candle(data) {
+        let ohlcv = this.data.chart.data
+        let last = ohlcv[ohlcv.length - 1]
+        let candle = data['candle']
+        let tf = this.tv.$refs.chart.interval_ms
+        let t_next = last[0] + tf
+        let now = Utils.now()
+        let t = now >= t_next ? (now - now % tf) : last[0]
+
+        // Update the entire candle
+        if (candle.length >= 6) {
+            t = candle[0]
+        } else {
+            candle = [t, ...candle]
+        }
+
+        this.agg.push('ohlcv', candle)
+        this.update_overlays(data, t, tf)
+        return t >= t_next
+
+    }
+
+    update_tick(data) {
+        let ohlcv = this.data.chart.data
+        let last = ohlcv[ohlcv.length - 1]
+        let tick = data['price']
+        let volume = data['volume'] || 0
+        let tf = this.tv.$refs.chart.interval_ms
+        let t_next = last[0] + tf
+        let now = Utils.now()
+        let t = now >= t_next ? (now - now % tf) : last[0]
+
+        if (t >= t_next && tick !== undefined) {
+            // And new zero-height candle
+            this.agg.push('ohlcv', [
+                t, tick, tick, tick, tick, volume
+            ], tf)
+
+        } else if (tick !== undefined) {
+            // Update an existing one
+            // TODO: make a separate class Sampler
+            last[2] = Math.max(tick, last[2])
+            last[3] = Math.min(tick, last[3])
+            last[4] = tick
+            last[5] += volume
+            this.agg.push('ohlcv', last, tf)
+        }
+        this.update_overlays(data, t, tf)
+        return t >= t_next
+    }
+
     // Updates all overlays with given values.
-    update_overlays(data, t) {
+    update_overlays(data, t, tf) {
         for (var k in data) {
             if (k === 'price' || k === 'volume' ||
                 k === 'candle') {
@@ -159,7 +210,7 @@ export default class DCCore extends DCEvents {
                 val = data[k]
             }
             if (!k.includes('.data')) k += '.data'
-            this.merge(k, [[t, ...val]])
+            this.agg.push(k, [t, ...val], tf)
         }
     }
 
@@ -377,6 +428,33 @@ export default class DCCore extends DCEvents {
 
         } else {  return []  }
 
+    }
+
+    // Simple data-point merge (faster)
+    fast_merge(data, point, main = true) {
+
+        if (!data) return
+
+        let last_t = (data[data.length - 1] || [])[0]
+        let upd_t = point[0]
+
+        if (!data.length || upd_t > last_t) {
+            data.push(point)
+            if (main && this.sett.auto_scroll) {
+                this.scroll_to(upd_t)
+            }
+        } else if (upd_t === last_t) {
+            if (main) {
+                this.tv.$set(data, data.length - 1, point)
+            } else {
+                data[data.length - 1] = point
+            }
+        }
+
+    }
+
+    scroll_to(t) {
+        // TODO: implement
     }
 
 }

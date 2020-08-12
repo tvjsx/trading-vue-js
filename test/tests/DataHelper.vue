@@ -2,6 +2,7 @@
 <span>
     <trading-vue :data="chart" :width="this.width" :height="this.height"
             ref="tvjs"
+            :toolbar="true"
             :index-based="index_based"
             :color-back="colors.colorBack"
             :color-grid="colors.colorGrid"
@@ -40,7 +41,7 @@ export default {
 
         // Load the last data chunk & init DataCube:
         let now = Utils.now()
-        this.load_chunk([now - Const.DAY, now]).then(data => {
+        this.load_chunk([now - Const.HOUR4, now]).then(data => {
             this.chart = new DataCube({
                 ohlcv: data['chart.data'],
                 onchart: [{
@@ -48,13 +49,15 @@ export default {
                     name: 'SMA',
                     data: data['SMA.data']
                 }]
-            })
+            }, { aggregation: 100 })
             // Register onrange callback & And a stream of trades
             this.chart.onrange(this.load_chunk)
+            this.$refs.tvjs.resetChart()
             this.stream = new Stream(WSS)
             this.stream.ontrades = this.on_trades
             window.dc = this.chart // Debug
             window.tv = this.$refs.tvjs // Debug
+
         })
 
     },
@@ -71,7 +74,7 @@ export default {
             return this.tech(
                     this.parse_binance(
                      await fetch(
-                URL + `${x}&interval=15m&startTime=${t1}&endTime=${t2}`
+                URL + `${x}&interval=1m&startTime=${t1}&endTime=${t2}`
             ).then(response => response.json())))
         },
         // Parse a specific exchange format

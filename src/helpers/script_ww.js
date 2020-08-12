@@ -30,6 +30,17 @@ self.onmessage = async e => {
 
             break
 
+        case 'exec-all-scripts':
+
+            if (!se.data.ohlcv && !data_requested) {
+                data_requested = true
+                self.postMessage({ type: 'request-data' })
+            }
+
+            se.exec_all()
+
+            break
+
         case 'upload-data':
 
             if (e.data.data.ohlcv) {
