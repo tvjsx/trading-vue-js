@@ -1,13 +1,12 @@
 
-// Script engine, aka 🌴 Script Engine
-// Fuck yeah
+// Script engine, Fuck yeah
 
 import ScriptEnv from './script_env.js'
 import Utils from '../stuff/utils.js'
 import TS from './script_ts.js'
 
 const DEF_LIMIT = 5   // default buff length
-const WAIT_EXEC = 10  // ms
+const WAIT_EXEC = 10  // merge script execs, ms
 
 class ScriptEngine {
 
@@ -137,7 +136,9 @@ class ScriptEngine {
     send_state() {
         this.onmessage('engine-state', {
             scripts: Object.keys(this.map).length,
-            last_perf: this.perf
+            last_perf: this.perf,
+            iter: this.iter,
+            last_t: this.t
         })
     }
 
@@ -219,7 +220,7 @@ class ScriptEngine {
     }
 
     start(ohlcv) {
-        let depth = this.sett.scriptDepth
+        let depth = this.sett.script_depth
         return depth ?
             Math.max(ohlcv.length - depth, 0) : 0
     }

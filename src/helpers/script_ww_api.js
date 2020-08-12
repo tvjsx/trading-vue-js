@@ -64,18 +64,22 @@ class WebWork {
         })
     }
 
-    // Execute a task, but just do it,
-    // not waiting for the result
+    // Execute a task, but just fucking do it,
+    // do not wait for the result
     just(type, data, tx_keys) {
         let id = Utils.uuid()
         this.send({ type, id, data }, tx_keys)
     }
 
-    async relay(event) {
+    // Relay an event from iframe postMessage
+    // (for the future)
+    async relay(event, just = false) {
         return new Promise((rs, rj) => {
             this.send(event, event.tx_keys)
-            this.tasks[event.id] = res => {
-                rs(res)
+            if (!just) {
+                this.tasks[event.id] = res => {
+                    rs(res)
+                }
             }
         })
     }

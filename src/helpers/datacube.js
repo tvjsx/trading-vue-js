@@ -5,16 +5,25 @@
 import Utils from '../stuff/utils.js'
 import DCCore from './dc_core.js'
 import SettProxy from './sett_proxy.js'
+import AggTool from './agg_tool.js'
+
 
 // Interface methods. Private methods in dc_core.js
 export default class DataCube extends DCCore {
 
-    constructor(data = {}, sett = {}) {
+    constructor(data = {}, sett = {
+        aggregation: 100,       // Update aggregation interval
+        script_depth: 0,        // 0 === Exec on all data
+        auto_scroll: true       // Auto scroll to a new candle
+    }) {
 
         super()
         this.data = data
         this.sett = SettProxy(sett, this.ww)
+        this.agg = new AggTool(sett.aggregation)
         this.se_state = {}
+
+        this.agg.update = this.agg_update.bind(this)
     }
 
     // Add new overlay
@@ -105,43 +114,13 @@ export default class DataCube extends DCCore {
     }
 
     // Update/append data point, depending on timestamp
+    // v2.0 TODO: to web worker
     update(data) {
-
-        let ohlcv = this.data.chart.data
-        let last = ohlcv[ohlcv.length - 1]
-        let tick = data['price']
-        let volume = data['volume'] || 0
-        let candle = data['candle']
-        let tfx = Utils.parse_tf(this.data.chart.tf)
-        let tf = tfx || Utils.detect_interval(ohlcv)
-        let t_next = last[0] + tf
-        let now = Utils.now()
-        let t = now >= t_next ? (now - now % tf) : last[0]
-
-        if (candle) {
-            // Update the entire candle
-            if (candle.length >= 6) {
-                t = candle[0]
-                this.merge('chart.data', [candle])
-            } else {
-                this.merge('chart.data', [[t, ...candle]])
-            }
-        } else if (t >= t_next && tick !== undefined) {
-            // And new zero-height candle
-            this.merge('chart.data', [[
-                t, tick, tick, tick, tick, volume
-            ]])
-        } else if (tick !== undefined) {
-            // Update an existing one
-            last[2] = Math.max(tick, last[2])
-            last[3] = Math.min(tick, last[3])
-            last[4] = tick
-            last[5] += volume
-            this.merge('chart.data', [last])
+        if(data['candle']) {
+            return this.update_candle(data)
+        } else {
+            return this.update_tick(data)
         }
-
-        this.update_overlays(data, t)
-        return t >= t_next
     }
 
     // Lock overlays from being pulled by query_search

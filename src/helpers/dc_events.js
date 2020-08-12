@@ -177,14 +177,14 @@ export default class DCEvents {
                 s[k] = proto.val = proto.def // set the default
             }
             // Remove old props (dropped by the current exec)
-            if (s._props) {
+            if (s.$props) {
                 for (var k in s) {
-                    if (s._props.includes(k) && !(k in props)) {
+                    if (s.$props.includes(k) && !(k in props)) {
                         delete s[k]
                     }
                 }
             }
-            s._props = Object.keys(args[0].src.props)
+            s.$props = Object.keys(args[0].src.props)
             this.tv.$set(obj, 'loading', true)
             this.ww.just('exec-script', args[0])
         }
@@ -201,7 +201,6 @@ export default class DCEvents {
 
     data_changed(args) {
         let main = this.data.chart.data
-        console.log('Data Changed', main.length)
         if (this.ww._data_uploading) return
         if (!this.se_state.scripts) return
         this.ww.just('upload-data', { ohlcv: main })
@@ -335,6 +334,20 @@ export default class DCEvents {
         }
     }
 
+    // Aggregation handler
+    agg_update(sym, upd) {
+        switch (sym) {
+            case 'ohlcv':
+                var data = this.data.chart.data
+                this.fast_merge(data, upd)
+                break
+            default:
+                var data = this.get(`${sym}`)
+                this.fast_merge(data[0], upd, false)
+                break
+        }
+    }
+
     // Clean-up unfinished business (tools)
     before_destroy() {
         let f = x => !x.settings.$state ||
@@ -355,5 +368,6 @@ export default class DCEvents {
         let dcid = this.gldc[id]
         return this.get_one(`${dcid}`)
     }
+
 
 }
