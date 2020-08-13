@@ -98,7 +98,7 @@ export default class DCEvents {
         for (var i = 0; i < values.length; i++) {
             let n = values[i]
             let arr = prev.filter(x => x.v === n.v)
-            if (!arr.length) {
+            if (!arr.length && n.p.settings.$props) {
                 let id = n.p.settings.$uuid
                 delta[id] = n.v
                 changed = true
