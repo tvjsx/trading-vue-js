@@ -22,7 +22,7 @@ import Utils from '../../src/stuff/utils.js'
 import Const from '../../src/stuff/constants.js'
 import DataCube from '../../src/helpers/datacube.js'
 import Stream from './DataHelper/stream.js'
-import ScriptOverlay from './Scripts/ScriptOverlay.vue'
+import ScriptOverlay from './Scripts/EMAx6.vue'
 
 // Gettin' data through webpeck proxy
 const PORT = location.port
@@ -47,7 +47,7 @@ export default {
             this.chart = new DataCube({
                 ohlcv: data['chart.data'],
                 onchart: [{
-                    type: 'ScriptOverlay',
+                    type: 'EMAx6',
                     name: 'Multiple EMA',
                     data: []
                 }]

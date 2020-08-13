@@ -239,7 +239,7 @@ class ScriptEngine {
                 this.step(ohlcv[i])
 
                 // SLOW DOWN TEST:
-                // for (var k = 1; k < 1000000; k++) {}
+                //for (var k = 1; k < 1000000; k++) {}
 
                 for (var id of sel) this.map[id].env.step()
 
