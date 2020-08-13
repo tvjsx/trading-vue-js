@@ -55,6 +55,16 @@ self.onmessage = async e => {
 
             break
 
+        case 'update-data':
+
+            if (e.data.data.ohlcv) {
+
+                se.update(e.data.data.ohlcv)
+
+            }
+
+            break
+
         case 'update-ov-settings':
 
             se.exec_sel(e.data.data)
@@ -77,6 +87,7 @@ se.onmessage = (type, data) => {
     switch(type) {
 
         case 'overlay-data':
+        case 'overlay-update':
         case 'engine-state':
         case 'change-overlay':
 
