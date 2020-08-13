@@ -292,7 +292,7 @@ export default class DCCore extends DCEvents {
 
         return arr.map((x, i) => ({
             p: this.data[side],
-            i: i,
+            i: this.data[side].indexOf(x),
             v: x
         }))
     }
