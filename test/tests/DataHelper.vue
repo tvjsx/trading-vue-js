@@ -4,6 +4,7 @@
             ref="tvjs"
             :toolbar="true"
             :index-based="index_based"
+            :overlays="overlays"
             :color-back="colors.colorBack"
             :color-grid="colors.colorGrid"
             :color-text="colors.colorText">
@@ -21,6 +22,7 @@ import Utils from '../../src/stuff/utils.js'
 import Const from '../../src/stuff/constants.js'
 import DataCube from '../../src/helpers/datacube.js'
 import Stream from './DataHelper/stream.js'
+import ScriptOverlay from './Scripts/ScriptOverlay.vue'
 
 // Gettin' data through webpeck proxy
 const PORT = location.port
@@ -45,9 +47,9 @@ export default {
             this.chart = new DataCube({
                 ohlcv: data['chart.data'],
                 onchart: [{
-                    type: 'Spline',
-                    name: 'SMA',
-                    data: data['SMA.data']
+                    type: 'ScriptOverlay',
+                    name: 'Multiple EMA',
+                    data: []
                 }]
             }, { aggregation: 100 })
             // Register onrange callback & And a stream of trades
@@ -90,8 +92,7 @@ export default {
         tech(data) {
             // Each query sets data to a corresponding overlay
             return {
-                'chart.data': data,
-                'SMA.data': this.sma(data)
+                'chart.data': data
             }
         },
         sma(data) {
@@ -115,8 +116,7 @@ export default {
         on_trades(trade) {
             this.chart.update({
                 price: parseFloat(trade.p),  // Trade price
-                volume: parseFloat(trade.q), // Trade amount
-                'SMA': this.sma().pop()[1]   // Last value of SMA
+                volume: parseFloat(trade.q)  // Trade amount
             })
         }
     },
@@ -138,7 +138,8 @@ export default {
             chart: {},
             width: window.innerWidth,
             height: window.innerHeight,
-            index_based: true
+            index_based: false,
+            overlays: [ScriptOverlay]
         }
     }
 }

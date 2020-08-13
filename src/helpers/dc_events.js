@@ -24,11 +24,15 @@ export default class DCEvents {
                 case 'overlay-data':
                     this.on_overlay_data(e.data.data)
                     break
+                case 'overlay-update':
+                    this.on_overlay_update(e.data.data)
+                    break
                 case 'data-uploaded':
                     this.ww._data_uploading = false
                     break
                 case 'engine-state':
-                    this.se_state = e.data.data
+                    this.se_state = Object.assign(
+                        this.se_state || {}, e.data.data)
                     break
                 case 'change-overlay':
                     this.change_overlay(e.data.data)
@@ -102,6 +106,7 @@ export default class DCEvents {
             }
         }
 
+        // TODO: send settings only if a script prop is changed
         if (changed) {
             this.ww.just('update-ov-settings', delta)
         }
@@ -205,6 +210,7 @@ export default class DCEvents {
         if (!this.se_state.scripts) return
         this.ww.just('upload-data', { ohlcv: main })
         this.ww._data_uploading = true
+        this.merge('.', { loading: true })
     }
 
     merge_presets(proto, preset) {
@@ -323,7 +329,7 @@ export default class DCEvents {
         )
     }
 
-    // Push overlay updates from the web-worker
+    // Set overlay data from the web-worker
     on_overlay_data(data) {
         for (var ov of data) {
             let obj = this.get_one(`${ov.id}`)
@@ -334,12 +340,23 @@ export default class DCEvents {
         }
     }
 
+    // Push overlay updates from the web-worker
+    on_overlay_update(data) {
+        for (var ov of data) {
+            let obj = this.get_one(`${ov.id}`)
+            if (obj) {
+                this.fast_merge(obj.data, ov.data)
+            }
+        }
+    }
+
     // Aggregation handler
     agg_update(sym, upd) {
         switch (sym) {
             case 'ohlcv':
                 var data = this.data.chart.data
                 this.fast_merge(data, upd)
+                this.ww.just('update-data', { ohlcv: upd })
                 break
             default:
                 var data = this.get(`${sym}`)

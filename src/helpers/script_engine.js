@@ -14,8 +14,9 @@ class ScriptEngine {
         this.map = {}
         this.data = {}
         this.exec_id = null
-        this.queue = []
-        this.delta_queue = []
+        this.queue = []         // Script exec queue
+        this.delta_queue = []   // Settings queue
+        this.update_queue = []  // Live update queue
         this.sett = {}
         this.state = {}
     }
@@ -41,7 +42,7 @@ class ScriptEngine {
 
             if (Object.keys(this.map).length) {
                 await this.run()
-                this.check_queues()
+                this.drain_queues()
             }
 
             this.send_state()
@@ -77,11 +78,12 @@ class ScriptEngine {
         }
 
         await this.run(sel)
-        this.check_queues()
+        this.drain_queues()
         this.send_state()
 
     }
 
+    // Exec script (create a new ScriptEnv, add to the map)
     exec(s) {
 
         if (!s.src.conf) s.src.conf = {}
@@ -106,6 +108,51 @@ class ScriptEngine {
 
         this.map[s.uuid] = s
 
+    }
+
+    // Live update
+    update(candle) {
+
+        if (!this.data.ohlcv || !this.data.ohlcv.length) {
+            return
+        }
+
+        if (this.running) {
+            this.update_queue.push(candle)
+            return
+        }
+
+        try {
+            let ohlcv = this.data.ohlcv
+            let i = ohlcv.length - 1
+            let last = ohlcv[i]
+            let sel = Object.keys(this.map)
+            let unshift = false
+
+            if (candle[0] > last[0]) {
+                ohlcv.push(candle)
+                unshift = true
+                i++
+            } else if (candle[0] < last[0]) {
+                return
+            } else {
+                ohlcv[i] = candle
+            }
+
+            this.iter = i
+            this.t = ohlcv[i][0]
+            this.step(ohlcv[i], unshift)
+
+            for (var id of sel) {
+                this.map[id].env.step(unshift)
+            }
+            this.limit()
+            this.send_update()
+            this.send_state()
+
+        } catch(e) {
+            console.log(e)
+        }
     }
 
     init_state(sel) {
@@ -138,8 +185,15 @@ class ScriptEngine {
             scripts: Object.keys(this.map).length,
             last_perf: this.perf,
             iter: this.iter,
-            last_t: this.t
+            last_t: this.t,
+            running: false
         })
+    }
+
+    send_update() {
+        this.onmessage(
+            'overlay-update', this.format_update()
+        )
     }
 
     re_init_map() {
@@ -160,6 +214,7 @@ class ScriptEngine {
     async run(sel) {
 
         console.log('Run Scripts')
+        this.onmessage('engine-state', { running: true })
 
         var t1 = Utils.now()
         sel = sel || Object.keys(this.map)
@@ -183,8 +238,8 @@ class ScriptEngine {
                 this.t = ohlcv[i][0]
                 this.step(ohlcv[i])
 
-                // TEST:
-                //for (var k = 1; k < 1000000; k++) {}
+                // SLOW DOWN TEST:
+                // for (var k = 1; k < 1000000; k++) {}
 
                 for (var id of sel) this.map[id].env.step()
 
@@ -202,12 +257,20 @@ class ScriptEngine {
         this.onmessage('overlay-data', this.format_map(sel))
     }
 
-    step(data) {
-        this.open.unshift(data[1])
-        this.high.unshift(data[2])
-        this.low.unshift(data[3])
-        this.close.unshift(data[4])
-        this.vol.unshift(data[5])
+    step(data, unshift = true) {
+        if (unshift) {
+            this.open.unshift(data[1])
+            this.high.unshift(data[2])
+            this.low.unshift(data[3])
+            this.close.unshift(data[4])
+            this.vol.unshift(data[5])
+        } else {
+            this.open[0] = data[1]
+            this.high[0] = data[2]
+            this.low[0] = data[3]
+            this.close[0] = data[4]
+            this.vol[0] = data[5]
+        }
     }
 
 
@@ -225,7 +288,7 @@ class ScriptEngine {
             Math.max(ohlcv.length - depth, 0) : 0
     }
 
-    check_queues() {
+    drain_queues() {
 
         // Check if there are any new scripts (recieved during
         // the current run)
@@ -237,6 +300,12 @@ class ScriptEngine {
             this.exec_sel(this.delta_queue.pop())
             this.delta_queue = []
         }
+        else {
+            while (this.update_queue.length) {
+                let c = this.update_queue.shift()
+                this.update(c)
+            }
+        }
     }
 
     format_map(sel) {
@@ -245,6 +314,18 @@ class ScriptEngine {
         for (var id of sel) {
             let x = this.map[id]
             res.push({ id: id, data: x.env.data })
+        }
+        return res
+    }
+
+    format_update() {
+        let res = []
+        for (var id in this.map) {
+            let x = this.map[id]
+            res.push({
+                id: id,
+                data: x.env.data[x.env.data.length - 1]
+            })
         }
         return res
     }

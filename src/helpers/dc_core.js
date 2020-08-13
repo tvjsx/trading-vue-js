@@ -146,6 +146,7 @@ export default class DCCore extends DCEvents {
         }
     }
 
+    // TODO: chart refine (from the exchange chart)
     update_candle(data) {
         let ohlcv = this.data.chart.data
         let last = ohlcv[ohlcv.length - 1]
@@ -289,9 +290,9 @@ export default class DCCore extends DCEvents {
             }))
         }
 
-        return arr.map(x => ({
+        return arr.map((x, i) => ({
             p: this.data[side],
-            i: undefined,
+            i: i,
             v: x
         }))
     }

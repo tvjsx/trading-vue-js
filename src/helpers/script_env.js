@@ -31,8 +31,8 @@ export default class ScriptEnv {
         this.output.init()
     }
 
-    step() {
-        this.unshift()
+    step(unshift = true) {
+        if (unshift) this.unshift()
         let v = this.output.update()
 
         if (this.skip) {
@@ -40,7 +40,7 @@ export default class ScriptEnv {
             return
         }
 
-        this.copy(v)
+        this.copy(v, unshift)
         this.limit()
     }
 
@@ -63,15 +63,20 @@ export default class ScriptEnv {
     }
 
     // Copy the recent value to the direct buff
-    copy(v) {
+    copy(v, unshift = true) {
         if (v !== undefined) this.output[0] = v
         let val = this.output[0]
         if (val == null || !val.length) {
             // Number / object
-            this.data.push([se.t, val])
+            var point = [se.t, val]
         } else {
             // Array
-            this.data.push([se.t, ...val])
+            point = [se.t, ...val]
+        }
+        if (unshift) {
+            this.data.push(point)
+        } else {
+            this.data[this.data.length - 1] = point
         }
     }
 
