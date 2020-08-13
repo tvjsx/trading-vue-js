@@ -195,6 +195,11 @@ export default class DCEvents {
         }
     }
 
+    exec_all_scripts() {
+        this.merge('.', { loading: true })
+        this.ww.just('exec-all-scripts')
+    }
+
     change_overlay(upd) {
         let obj = this.get_overlay(upd)
         if (obj) {
