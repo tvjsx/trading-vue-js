@@ -25,7 +25,7 @@ export default {
                     console.log('init script')
                 `,
                 update: `
-                    return mfi(close, 14)[0]
+                    return pivothigh(low, 10, 10)[0]
                 `
             }
         }

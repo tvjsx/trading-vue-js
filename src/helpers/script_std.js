@@ -552,8 +552,9 @@ export default class ScriptStd {
         return new Date(time || se.t).getUTCMinutes()
     }
 
-    mom(src, len) {
-        // TODO: this
+    mom(src, len, _id) {
+        let id = this._tsid(_id, `mom(${len})`)
+        return this.ts(src[0] - src[len], id)
     }
 
     month(time) {
@@ -578,12 +579,30 @@ export default class ScriptStd {
         // TODO: this
     }
 
-    pivothigh(src, left, right) {
-        // TODO: this
+    pivothigh(src, left, right, _id) {
+        let id = this._tsid(_id, `pivothigh(${left},${right})`)
+
+        let len = left + right + 1
+        let top = src[right]
+        for (var i = 0; i < len; i++) {
+            if (top <= src[i] && i !== right) {
+                return this.ts(NaN, id)
+            }
+        }
+        return this.ts(top, id)
     }
 
-    pivotlow(src, left, right) {
-        // TODO: this
+    pivotlow(src, left, right, _id) {
+        let id = this._tsid(_id, `pivotlow(${left},${right})`)
+
+        let len = left + right + 1
+        let bot = src[right]
+        for (var i = 0; i < len; i++) {
+            if (bot >= src[i] && i !== right) {
+                return this.ts(NaN, id)
+            }
+        }
+        return this.ts(bot, id)
     }
 
     pow(x) {
@@ -604,8 +623,9 @@ export default class ScriptStd {
         return sum
     }
 
-    roc(src, len) {
-        // TODO: this
+    roc(src, len, _id) {
+        let id = this._tsid(_id, `roc(${len})`)
+        return this.ts(100 * (src[0] - src[len]) / src[len], id)
     }
 
     round(x) {
