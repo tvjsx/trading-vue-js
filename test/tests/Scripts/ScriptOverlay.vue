@@ -25,7 +25,7 @@ export default {
                     console.log('init script')
                 `,
                 update: `
-                    return pivothigh(low, 10, 10)[0]
+                    return supertrend(3, 10)[1][0]
                 `
             }
         }

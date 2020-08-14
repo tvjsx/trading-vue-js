@@ -74,14 +74,11 @@ export default class ScriptStd {
 
     // Index-tracker (object-based)
     _v(x, i) {
-         //console.log('!!!!', x.__id__)
-
         // If an object is actually a timeseries
         if (x != undefined && x === x && x.__id__) {
             // Increase TS buff length
             if (!x.__len__ || i >= x.__len__) {
                 x.__len__ = i + BUF_INC
-                //console.log(x.__id__, x.__len__)
             }
         }
         return x
@@ -251,11 +248,6 @@ export default class ScriptStd {
         ]
     }
 
-    // Tuple version, faster
-    bb2() {
-        // TODO: this
-    }
-
     bbw(src, len, mult, _id) {
         let id = this._tsid(_id, `bbw(${len},${mult})`)
         let basis = this.sma(src, len, id)[0]
@@ -410,8 +402,15 @@ export default class ScriptStd {
         return Math.exp(x)
     }
 
-    falling(src, len) {
-        // TODO: this
+    falling(src, len, _id) {
+        let id = this._tsid(_id, `falling(${len})`)
+        let bot = src[0]
+        for (var i = 1; i < len + 1; i++) {
+            if (bot >= src[i]) {
+                return this.ts(false, id)
+            }
+        }
+        return this.ts(true, id)
     }
 
     fixnan(x) {
@@ -474,8 +473,10 @@ export default class ScriptStd {
         ]
     }
 
-    kcw(src, len, mult, use_tr = true) {
-        // TODO: this
+    kcw(src, len, mult, use_tr = true, _id) {
+        let id = this._tsid(_id, `kcw(${len},${mult},${use_tr})`)
+        let kc = this.kc(src, len, mult, use_tr, `kcw`)
+        return this.ts((kc[1][0] - kc[2][0]) / kc[0][0], id)
     }
 
     linreg(src, len, offset = 0, _id) {
@@ -609,8 +610,15 @@ export default class ScriptStd {
         return Math.pow(x)
     }
 
-    rising(src, len) {
-        // TODO: this
+    rising(src, len, _id) {
+        let id = this._tsid(_id, `rising(${len})`)
+        let top = src[0]
+        for (var i = 1; i < len + 1; i++) {
+            if (top <= src[i]) {
+                return this.ts(false, id)
+            }
+        }
+        return this.ts(true, id)
     }
 
     rma(src, len, _id) {
@@ -795,9 +803,30 @@ export default class ScriptStd {
         return this.ts(sum, id)
     }
 
-    supertrend(factor, atrlen) {
-        // TODO: this
-        throw 'Not implemented: supertrend()'
+    supertrend(factor, atrlen, _id) {
+        let id = this._tsid(_id, `supertrend(${factor},${atrlen})`)
+        let high = this.env.shared.high
+        let low = this.env.shared.low
+        let close = this.env.shared.close
+        let hl2 = (high[0] + low[0]) * 0.5
+
+        let atr = factor * this.atr(atrlen, id+'1')[0]
+
+        let ls = this.ts(hl2 - atr, id+'2')
+        let ls1 = this.nz(ls[1], ls[0])
+        ls[0] = close[1] > ls1 ? Math.max(ls[0], ls1) : ls[0]
+
+        let ss = this.ts(hl2 + atr, id+'3')
+        let ss1 = this.nz(ss[1], ss)
+        ss[0] = close[1] < ss1 ? Math.min(ss[0], ss1) : ss[0]
+
+        let dir = this.ts(1, id+'4')
+        dir[0] = this.nz(dir[1], dir[0])
+        dir[0] = dir[0] === -1 && close[0] > ss1 ? 1 :
+            (dir[0] === 1 && close[0] < ls1 ? -1 : dir[0])
+
+        let plot = this.ts(dir[0] === 1 ? ls[0] : ss[0], id+'5')
+        return [plot, this.neg(dir, id+'6')]
     }
 
     swma(src, _id) {
