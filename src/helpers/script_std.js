@@ -611,8 +611,83 @@ export default class ScriptStd {
         return this.ts(rsi, id+'5')
     }
 
-    sar(start, inc, max) {
-        // TODO: this
+    sar(start, inc, max, _id) {
+        // Source: Parabolic SAR by imuradyan
+        // TODO: simplify the code
+        let id = this._tsid(_id, `sar(${start},${inc},${max})`)
+
+        let high = this.env.shared.high
+        let low = this.env.shared.low
+        let close = this.env.shared.close
+
+        let minTick = 0 //1e-7
+        let n = se.iter
+        let out = this.ts(undefined, id+'1')
+        let pos = this.ts(undefined, id+'2')
+        let maxMin = this.ts(undefined, id+'3')
+        let acc = this.ts(undefined, id+'4')
+        let prev
+        let outSet = false
+
+        if (n >= 1) {
+            prev = out[1]
+            if (n === 1) {
+                if (close[0] > close[1]) {
+                    pos[0] = 1
+                    maxMin[0] = Math.max(high[0], high[1])
+                    prev = Math.min(low[0], low[1])
+                } else {
+                    pos[0] = -1
+                    maxMin[0] = Math.min(low[0], low[1])
+                    prev = Math.max(high[0], high[1])
+                }
+                acc[0] = start
+            } else {
+                pos[0] = pos[1]
+                acc[0] = acc[1]
+                maxMin[0] = maxMin[1]
+            }
+            if (pos[0] === 1) {
+                if (high[0] > maxMin[0]) {
+                    maxMin[0] = high[0]
+                    acc[0] = Math.min(acc[0] + inc, max)
+                }
+                if (low[0] <= prev) {
+                    pos[0] = -1
+                    out[0] = maxMin[0]
+                    maxMin[0] = low[0]
+                    acc[0] = start
+                    outSet = true
+                }
+            } else {
+                if (low[0] < maxMin[0]) {
+                    maxMin[0] = low[0]
+                    acc[0] = Math.min(acc[0] + inc, max)
+                }
+
+                if (high[0] >= prev) {
+                    pos[0] = 1
+                    out[0] = maxMin[0]
+                    maxMin[0] = high[0]
+                    acc[0] = start
+                    outSet = true
+                }
+            }
+
+            if (!outSet) {
+                out[0] = prev + acc[0] * (maxMin[0] - prev)
+
+                if (pos[0] === 1)
+                    if (out[0] >= low[0])
+                        out[0] = low[0] - minTick
+
+
+                if (pos[0] === -1)
+                    if (out[0] <= high[0])
+                        out[0] = high[0] + minTick
+            }
+        }
+        return out
     }
 
     second(time) {

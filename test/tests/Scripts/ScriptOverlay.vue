@@ -19,17 +19,13 @@ export default {
                     }
                 },
                 conf: {
-                    'renderer': 'Splines',
-                    'plugin1.setting1': 1000 // WIP
+                    'renderer': 'Splines'
                 },
                 init: `
                     console.log('init script')
                 `,
                 update: `
-                    this[0] = []
-                    for (var l = length; l <= length + 50; l += 10) {
-                        this[0].push(ema(close, l)[0])
-                    }
+                    return sar(0.02, 0.02, 0.2)[0]
                 `
             }
         }
