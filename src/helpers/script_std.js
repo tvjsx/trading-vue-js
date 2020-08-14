@@ -526,8 +526,22 @@ export default class ScriptStd {
         // TODO: this
     }
 
-    mfi(src, len) {
-        // TODO: this
+    mfi(src, len, _id) {
+        let id = this._tsid(_id, `mfi(${len})`)
+        let vol = this.env.shared.vol
+        let ch = this.change(src, 1, id+'1')[0]
+
+        let ts1 = this.mult(vol, ch <= 0.0 ? 0.0 : src[0], id+'2')
+        let ts2 = this.mult(vol, ch  >= 0.0 ? 0.0 : src[0], id+'3')
+
+        let upper = this.sum(ts1, len, id+'4')
+        let lower = this.sum(ts2, len, id+'5')
+
+        let res = undefined
+        if (!this.na(lower)) {
+            res = this.rsi(upper, lower, id+'6')[0]
+        }
+        return this.ts(res, id)
     }
 
     min(...args) {
@@ -598,16 +612,22 @@ export default class ScriptStd {
         return Math.round(x)
     }
 
-    rsi(src, len, _id) {
-        let id = this._tsid(_id, `rsi(${len})`)
-        let ch = this.change(src, 1, _id)[0]
-        let pc = this.ts(Math.max(ch, 0), id+'1')
-        let nc = this.ts(-Math.min(ch, 0), id+'2')
-        let up = this.rma(pc, len, id+'3')[0]
-        let down = this.rma(nc, len, id+'4')[0]
-        let rsi = down === 0 ? 100 : (
-            up === 0 ? 0 : (100 - (100 / (1 + up / down)))
-        )
+    rsi(x, y, _id) {
+        // Check if y is a timeseries
+        if (!this.na(y) && y.__id__) {
+            var id = this._tsid(_id, `rsi(x,y)`)
+            var rsi = 100 - 100 / (1 + this.div(x, y, id)[0])
+        } else {
+            var id = this._tsid(_id, `rsi(${y})`)
+            let ch = this.change(x, 1, _id)[0]
+            let pc = this.ts(Math.max(ch, 0), id+'1')
+            let nc = this.ts(-Math.min(ch, 0), id+'2')
+            let up = this.rma(pc, y, id+'3')[0]
+            let down = this.rma(nc, y, id+'4')[0]
+            var rsi = down === 0 ? 100 : (
+                up === 0 ? 0 : (100 - (100 / (1 + up / down)))
+            )
+        }
         return this.ts(rsi, id+'5')
     }
 

@@ -25,7 +25,7 @@ export default {
                     console.log('init script')
                 `,
                 update: `
-                    return sar(0.02, 0.02, 0.2)[0]
+                    return mfi(close, 14)[0]
                 `
             }
         }
