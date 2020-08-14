@@ -53,7 +53,7 @@ export default {
         return {
             chart: new DataCube(JSON.parse(JSON.stringify(Data)), {
                 scripts: true,
-                //scriptDepth: 1000
+                //script_depth: 300 // TODO: fix iter 
             }),
             width: window.innerWidth,
             height: window.innerHeight,
