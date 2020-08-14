@@ -227,14 +227,16 @@ class ScriptEngine {
             }
 
             let ohlcv = this.data.ohlcv
-            for (var i = this.start(ohlcv); i < ohlcv.length; i++) {
+            let start = this.start(ohlcv)
+
+            for (var i = start; i < ohlcv.length; i++) {
 
                 // Make a pause to read new WW msg
                 // TODO: speedup pause()
                 if (i % 1000 === 0) await Utils.pause(0)
                 if (this.restarted()) return
 
-                this.iter = i
+                this.iter = i - start
                 this.t = ohlcv[i][0]
                 this.step(ohlcv[i])
 
