@@ -16,8 +16,7 @@ export default {
                     length: {
                         def: 14, range: [10,200, 5],
                         text: 'EMA start length'
-                    },
-                    xxx: { def: ["#35a776", "#64c89d", "#e54150", "#e5717c"]}
+                    }
                 },
                 conf: {
                     'renderer': 'Splines'
@@ -26,7 +25,7 @@ export default {
                     console.log('init script')
                 `,
                 update: `
-                    return mfi(add(add(close, high), low), length)[0]
+                    return mfi(add(add(close, high), low), length)[0]    
                 `
             }
         }

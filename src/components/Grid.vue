@@ -184,18 +184,6 @@ export default {
             if (!f) return comp
 
             comp.mixins.push(f)
-            /*for (var k in f.methods) {
-                if (comp.methods[k]) continue
-                comp.methods[k] = f.methods[k]
-            }
-
-            if (!comp.computed) comp.computed = {}
-            for (var k in f.computed) {
-                if (comp.computed[k]) continue
-                comp.computed[k] = f.computed[k]
-            }
-
-            comp.data = f.data*/
             comp.__renderer__ = src.conf.renderer
 
             return comp

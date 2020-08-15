@@ -10,6 +10,15 @@ export default {
         'font', 'config', 'meta', 'tf'
     ],
     mounted() {
+        // TODO: when hot reloading, dynamicaly changed mixins
+        // dissapear (cuz it's a hack), the only way for now
+        // is to reload the browser
+        if (!this.draw) {
+            this.draw = ctx => {
+                let text = 'EARLY ADOPTER BUG: reload the browser & enjoy'
+                console.warn(text)
+            }
+        }
         // Main chart?
         let main = this.$props.sub === this.$props.data
 
