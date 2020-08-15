@@ -14,9 +14,10 @@ export default {
             return {
                 props: {
                     length: {
-                        def: 20, range: [10,200, 5],
+                        def: 14, range: [10,200, 5],
                         text: 'EMA start length'
-                    }
+                    },
+                    xxx: { def: ["#35a776", "#64c89d", "#e54150", "#e5717c"]}
                 },
                 conf: {
                     'renderer': 'Splines'
@@ -25,8 +26,7 @@ export default {
                     console.log('init script')
                 `,
                 update: `
-                    let [macdLine, signalLine, histLine] = macd(close, 12, 26, 9)
-                    return histLine[0]
+                    return mfi(add(add(close, high), low), length)[0]
                 `
             }
         }

@@ -8,7 +8,7 @@ import ScriptStd from './script_std.js'
 import se from './script_engine.js'
 import * as u from './script_utils.js'
 
-const FDEFS = /(function |)([$A-Z_][0-9A-Z_$\.]*)[\s]*?\((.*?\s*)\)/gmi
+const FDEFS = /(function |)([$A-Z_][0-9A-Z_$\.]*)[\s]*?\((.*\s*)\)/gmi
 const DEF_LIMIT = 5
 
 export default class ScriptEnv {
@@ -81,19 +81,21 @@ export default class ScriptEnv {
     }
 
     // A small sandbox for a particular script
+    // TODO: add support of 'Source' prop type (open, high, hl2 ...)
     make_box(src) {
 
         let proto = Object.getPrototypeOf(this.std)
         let std = ``
         for (var k of Object.getOwnPropertyNames(proto)) {
             if (k === 'constructor') continue
-            std += `const ${k} = self.std.${k}.bind(self.std)\n`
+            std += `const std_${k} = self.std.${k}.bind(self.std)\n`
         }
 
         let props = ``
 
         for (var k in src.props) {
-            props += `var ${k} = ${src.props[k].val}\n`
+            let val = JSON.stringify(src.props[k].val)
+            props += `var ${k} = ${val}\n`
         }
         // TODO: add argument values to _id
         // TODO: prefix all function by ns, e.g std_nz()
@@ -133,6 +135,7 @@ export default class ScriptEnv {
     // Preprocess the update function.
     // Replace functions with the full arguments list +
     // generate & add tsid
+    // TODO: implement recursive prepping (with js syntax parser)
     prep(src) {
 
         //console.log('Before -----> \n', src)
@@ -153,9 +156,13 @@ export default class ScriptEnv {
                 if (fkeyword === 'function') {
                     // TODO: add _ids to inline functions
                 } else {
+                    let off = m.index + m[0].indexOf('(')
                     if (this.std[fname]) {
                         src = this.postfix(src, m, ++call_id)
+                        off+=4 // 'std_'
                     }
+                    // Quick fix
+                    FDEFS.lastIndex = off
                 }
             }
         } while (m)
@@ -169,7 +176,8 @@ export default class ScriptEnv {
     postfix(src, m, call_id) {
 
         let target = this.get_args(this.fdef(m[2])).length
-        let args = this.get_args(m[0])
+        let m0 = this.parentheses(m[0]) // First closed pair
+        let args = this.get_args(m0)
 
         for (var i = args.length; i < target; i++) {
             args.push('void 0')
@@ -178,8 +186,24 @@ export default class ScriptEnv {
         // Add an unique time-series id
         args.push(`_pref+"f${call_id}"`)
 
-        return src.replace(m[0], `${m[2]}(${args.join(', ')})`)
+        return src.replace(m0, `std_${m[2]}(${args.join(', ')})`)
 
+    }
+
+    parentheses(str) {
+        var count = 0, first = false
+        for (var i = 0; i < str.length; i++) {
+            if (str[i] === '(') {
+                count++
+                first = true
+            } else if (str[i] === ')') {
+                count--
+            }
+            if (first && count === 0) {
+                return str.substr(0, i+1)
+            }
+        }
+        return str
     }
 
     // Get the function definition

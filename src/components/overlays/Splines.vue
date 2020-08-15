@@ -7,13 +7,14 @@ export default {
     mixins: [Overlay],
     methods: {
         meta_info() {
-            return { author: 'C451', version: '1.0.0' }
+            return { author: 'C451', version: '1.0.1' }
         },
         draw(ctx) {
             const layout = this.$props.layout
             for (var i = 0; i < this.lines_num; i++) {
 
-                ctx.strokeStyle = this.clrx[i]
+                let _i = i % this.clrx.length
+                ctx.strokeStyle = this.clrx[_i]
                 ctx.lineWidth = this.widths[i] || this.line_width
                 ctx.beginPath()
 

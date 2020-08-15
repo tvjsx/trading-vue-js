@@ -363,9 +363,7 @@ export default class ScriptStd {
         return this.ts(sum / len, id)
     }
 
-    // Positive Directional Movement (+DI),
-    // Negative Directional Movement (-DI),
-    // Average Directional Movement Index (ADX)
+    // Directional Movement Index ADX, +DI, -DI
     dmi(len, smooth, _id) {
         let id = this._tsid(_id, `dmi(${len},${smooth})`)
         let high = this.env.shared.high
