@@ -118,7 +118,7 @@ export default {
                 const cs = meta.data_colors ? meta.data_colors() : []
                 if (typeof x == 'number') {
                     // Show 8 digits for small values
-                    x = x.toFixed(x > 0.001 ? 4 : 8)
+                    x = x.toFixed(Math.abs(x) > 0.001 ? 4 : 8)
                 }
                 return {
                     value: x,
