@@ -122,6 +122,7 @@ body {
 #test-container{
     position: absolute;
     top: 50px;
+    width: 100%;
 }
 #test-title h1 {
     color: #c5c5c5;
