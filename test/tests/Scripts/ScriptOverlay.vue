@@ -13,10 +13,9 @@ export default {
         calc() {
             return {
                 props: {
-                    length: {
-                        def: 14, range: [10,200, 5],
-                        text: 'EMA start length'
-                    }
+                    start: { def: 10, text: 'Start Length' },
+                    number: { def: 5, text: 'Number of Lines' },
+                    step: { def: 10, text: 'Length Step' }
                 },
                 conf: {
                     'renderer': 'Splines'
@@ -25,7 +24,11 @@ export default {
                     console.log('init script')
                 `,
                 update: `
-                    return mfi(add(add(close, high), low), length)[0]    
+                    this[0] = []
+                    for (var i = 0; i < number; i++) {
+                        let l = start + i * step
+                        this[0].push(ema(close, l)[0])
+                    }
                 `
             }
         }

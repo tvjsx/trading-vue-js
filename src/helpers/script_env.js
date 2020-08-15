@@ -100,36 +100,44 @@ export default class ScriptEnv {
         // TODO: add argument values to _id
         // TODO: prefix all function by ns, e.g std_nz()
 
-        return Function('self,shared', `
-            'use strict';
+        try {
+            return Function('self,shared', `
+                'use strict';
 
-            // Built-in functions (aliases)
-            ${std}
+                // Built-in functions (aliases)
+                ${std}
 
-            // Timeseries
-            const open = shared.open
-            const high = shared.high
-            const low = shared.low
-            const close = shared.close
-            const vol = shared.vol
+                // Timeseries
+                const open = shared.open
+                const high = shared.high
+                const low = shared.low
+                const close = shared.close
+                const vol = shared.vol
 
-            // Direct data ts
-            const data = self.data
-            const ohlcv = shared.ohlcv
+                // Direct data ts
+                const data = self.data
+                const ohlcv = shared.ohlcv
 
-            // Script's properties (init)
-            ${props}
+                // Script's properties (init)
+                ${props}
 
-            this.init = () => {
-                ${src.init_src}
-            }
+                this.init = () => {
+                    ${src.init_src}
+                }
 
-            this.update = (_id = 'root') => {
-                const t = shared.t()
-                const iter = shared.iter()
-                ${this.prep(src.upd_src)}
-            }
-        `)
+                this.update = (_id = 'root') => {
+                    const t = shared.t()
+                    const iter = shared.iter()
+                    ${this.prep(src.upd_src)}
+                }
+            `)
+        } catch(e) {
+            return Function('self,shared', `
+                'use strict';
+                this.init = () => {}
+                this.update = () => {}
+            `)
+        }
     }
 
     // Preprocess the update function.
