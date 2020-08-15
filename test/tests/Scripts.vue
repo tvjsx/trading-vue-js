@@ -31,6 +31,7 @@ const DEF_SRC =
 // To change the renderer rewrite:
 // 'tests/Scripts/ScriptOverlay.vue'
 // Std lib is in 'helpers/script_std.js'
+// See examples in 'tvjs-overlays' repo
 // Enjoy the bugs 😎
 return {
     props: {
