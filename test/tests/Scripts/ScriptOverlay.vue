@@ -25,7 +25,8 @@ export default {
                     console.log('init script')
                 `,
                 update: `
-                    return supertrend(3, 10)[1][0]
+                    let [macdLine, signalLine, histLine] = macd(close, 12, 26, 9)
+                    return histLine[0]
                 `
             }
         }

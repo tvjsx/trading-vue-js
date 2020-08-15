@@ -118,6 +118,7 @@ export default class ScriptStd {
         return x
     }
 
+    // Replace if NaN
     nz(x, v) {
         if (x == undefined || x !== x) {
             return v || 0
@@ -125,6 +126,7 @@ export default class ScriptStd {
         return x
     }
 
+    // Is NaN ?
     na(x) {
         return x == undefined || x !== x
     }
@@ -185,6 +187,7 @@ export default class ScriptStd {
         }
     }
 
+    // Arnaud Legoux Moving Average
     alma(src, len, offset, sigma, _id) {
         let id = this._tsid(_id, `alma(${len},${offset},${sigma})`)
         let m = Math.floor(offset * (len - 1))
@@ -207,6 +210,7 @@ export default class ScriptStd {
         return Math.atan(x)
     }
 
+    // Average True Range
     atr(len, _id) {
         let id = this._tsid(_id, `atr(${len})`)
         let high = this.env.shared.high
@@ -237,6 +241,7 @@ export default class ScriptStd {
         // TODO: this
     }
 
+    // Bollinger Bands
     bb(src, len, mult, _id) {
         let id = this._tsid(_id, `bb(${len},${mult})`)
         let basis = this.sma(src, len, id)
@@ -248,6 +253,7 @@ export default class ScriptStd {
         ]
     }
 
+    // Bollinger Bands Width
     bbw(src, len, mult, _id) {
         let id = this._tsid(_id, `bbw(${len},${mult})`)
         let basis = this.sma(src, len, id)[0]
@@ -259,6 +265,7 @@ export default class ScriptStd {
         return !!x
     }
 
+    // Commodity Channel Index
     cci(src, len, _id) {
         // TODO: Not exactly precise, but pretty damn close
         let id = this._tsid(_id, `cci(${len})`)
@@ -278,6 +285,7 @@ export default class ScriptStd {
         return this.ts(src[0] - src[len], id)
     }
 
+    // Chande Momentum Oscillator
     cmo(src, len, _id) {
         let id = this._tsid(_id, `cmo(${len})`)
         let mom = this.change(src, 1, id)
@@ -291,6 +299,7 @@ export default class ScriptStd {
         return this.ts(100 * (sm1 - sm2) / (sm1 + sm2), id)
     }
 
+    // Center of Gravity
     cog(src, len, _id) {
         let id = this._tsid(_id, `cmo(${len})`)
         let sum = this.sum(src, len, id)[0]
@@ -301,7 +310,7 @@ export default class ScriptStd {
         return this.ts(-num / sum, id)
     }
 
-    // correlation
+    // Correlation
     corr() {
         // TODO: this
     }
@@ -343,6 +352,7 @@ export default class ScriptStd {
         return new Date(time || se.t).getUTCDay() + 1
     }
 
+    // Deviation from SMA
     dev(src, len, _id) {
         let id = this._tsid(_id, `dev(${len})`)
         let mean = this.sma(src, len, id)[0]
@@ -353,6 +363,9 @@ export default class ScriptStd {
         return this.ts(sum / len, id)
     }
 
+    // Positive Directional Movement (+DI),
+    // Negative Directional Movement (-DI),
+    // Average Directional Movement Index (ADX)
     dmi(len, smooth, _id) {
         let id = this._tsid(_id, `dmi(${len},${smooth})`)
         let high = this.env.shared.high
@@ -383,11 +396,7 @@ export default class ScriptStd {
         return [adx, plus, minus]
     }
 
-    // Tuple version, faster
-    dmi2(len, smooth, _id) {
-        // TODO: this
-    }
-
+    // Exponential Moving Average with alpha = 2 / (y + 1)
     ema(src, len, _id) {
         let id = this._tsid(_id, `ema(${len})`)
         let a = 2 / (len + 1)
@@ -434,6 +443,7 @@ export default class ScriptStd {
         // TODO: this
     }
 
+    // Hull Moving Average
     hma(src, len, _id) {
         let id = this._tsid(_id, `hma(${len})`)
         let len2 = Math.floor(len/2)
@@ -454,6 +464,7 @@ export default class ScriptStd {
         return cond ? x : z
     }
 
+    // Keltner Channels
     kc(src, len, mult, use_tr = true, _id) {
 
         let id = this._tsid(_id, `kc(${len},${mult},${use_tr})`)
@@ -473,12 +484,14 @@ export default class ScriptStd {
         ]
     }
 
+    // Keltner Channels Width
     kcw(src, len, mult, use_tr = true, _id) {
         let id = this._tsid(_id, `kcw(${len},${mult},${use_tr})`)
         let kc = this.kc(src, len, mult, use_tr, `kcw`)
         return this.ts((kc[1][0] - kc[2][0]) / kc[0][0], id)
     }
 
+    // Linear Regression
     linreg(src, len, offset = 0, _id) {
         let id = this._tsid(_id, `highest(${len})`)
 
@@ -508,6 +521,7 @@ export default class ScriptStd {
         // TODO: this
     }
 
+    // Moving Average Convergence/Divergence
     macd(src, fast, slow, sig, _id) {
         let id = this._tsid(_id, `macd(${fast}${slow}${sig})`)
         let fast_ma = this.ema(src, fast, id+'1')
@@ -527,6 +541,7 @@ export default class ScriptStd {
         // TODO: this
     }
 
+    // Money Flow Index
     mfi(src, len, _id) {
         let id = this._tsid(_id, `mfi(${len})`)
         let vol = this.env.shared.vol
@@ -553,6 +568,7 @@ export default class ScriptStd {
         return new Date(time || se.t).getUTCMinutes()
     }
 
+    // Momentum
     mom(src, len, _id) {
         let id = this._tsid(_id, `mom(${len})`)
         return this.ts(src[0] - src[len], id)
@@ -621,6 +637,8 @@ export default class ScriptStd {
         return this.ts(true, id)
     }
 
+    // Exponentially MA with alpha = 1 / length
+    // Used in RSI
     rma(src, len, _id) {
         let id = this._tsid(_id, `rma(${len})`)
         let a = len
@@ -631,6 +649,7 @@ export default class ScriptStd {
         return sum
     }
 
+    // Rate of Change
     roc(src, len, _id) {
         let id = this._tsid(_id, `roc(${len})`)
         return this.ts(100 * (src[0] - src[len]) / src[len], id)
@@ -640,6 +659,7 @@ export default class ScriptStd {
         return Math.round(x)
     }
 
+    // Relative Strength Index
     rsi(x, y, _id) {
         // Check if y is a timeseries
         if (!this.na(y) && y.__id__) {
@@ -659,6 +679,7 @@ export default class ScriptStd {
         return this.ts(rsi, id+'5')
     }
 
+    // Parabolic SAR
     sar(start, inc, max, _id) {
         // Source: Parabolic SAR by imuradyan
         // TODO: simplify the code
@@ -750,6 +771,7 @@ export default class ScriptStd {
         return Math.sin(x)
     }
 
+    // Simple Moving Average
     sma(src, len, _id) {
         let id = this._tsid(_id, `sma(${len})`)
         let sum = 0
@@ -787,6 +809,7 @@ export default class ScriptStd {
         return this.ts(Math.sqrt(sqd / len), id)
     }
 
+    // Stochastic
     stoch(src, high, low, len, _id) {
         let id = this._tsid(_id, `sum(${len})`)
         let x = 100 * (src[0] - this.lowest(low, len)[0])
@@ -803,6 +826,7 @@ export default class ScriptStd {
         return this.ts(sum, id)
     }
 
+    // Supertrend
     supertrend(factor, atrlen, _id) {
         let id = this._tsid(_id, `supertrend(${factor},${atrlen})`)
         let high = this.env.shared.high
@@ -829,6 +853,7 @@ export default class ScriptStd {
         return [plot, this.neg(dir, id+'6')]
     }
 
+    // Symmetrically Weighted Moving Average
     swma(src, _id) {
         let id = this._tsid(_id, `swma`)
         let sum = src[3] * this.SWMA[0] + src[2] * this.SWMA[1] +
@@ -848,6 +873,7 @@ export default class ScriptStd {
         // TODO: this
     }
 
+    // True Range
     tr(fixnan = false, _id) {
         // TODO: this
         let id = this._tsid(_id, `tr(${fixnan})`)
@@ -869,6 +895,7 @@ export default class ScriptStd {
 
     }
 
+    // True strength index
     tsi(src, short, long, _id) {
         let id = this._tsid(_id, `tsi(${short},${long})`)
         let m = this.change(src, 1, id+'0')
@@ -892,6 +919,7 @@ export default class ScriptStd {
         // TODO: this
     }
 
+    // Volume Weighted Moving Average
     vwma(src, len, _id) {
         let id = this._tsid(_id, `vwma(${len})`)
         let vol = this.env.shared.vol
@@ -918,6 +946,7 @@ export default class ScriptStd {
         return this.ts(sum / norm, id)
     }
 
+    // Williams %R
     wpr(len, _id) {
         let id = this._tsid(_id, `wpr(${len})`)
 
