@@ -4,6 +4,7 @@
 
 const http = require('http')
 const fs = require('fs')
+const { minify } = require("terser")
 
 const PATH = `./src/helpers/tmp/`
 
@@ -11,7 +12,7 @@ module.exports = class WWPlugin {
     apply(compiler) {
         compiler.hooks.afterEmit.tap('AfterEmitPlugin', (compilation) => {
 
-            http.get('http://localhost:8080/main.worker.js', resp => {
+            http.get(`http://localhost:${port}/main.worker.js`, resp => {
                 let data = ''
 
                 resp.on('data', (chunk) => {
@@ -19,6 +20,7 @@ module.exports = class WWPlugin {
                 })
 
                 resp.on('end', () => {
+                    //data = minify(data, { sourceMap: false }).code
                     let json = JSON.stringify([data])
                     try {
                         var prev = fs.readFileSync(PATH + 'ww$$$.json')
