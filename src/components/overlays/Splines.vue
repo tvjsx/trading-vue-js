@@ -20,7 +20,7 @@ export default {
 
                 for (var p of this.$props.data) {
                     let x = layout.t2screen(p[0])
-                    let y = layout.$2screen(p[i+1])
+                    let y = layout.$2screen(p[i+1]) 
                     ctx.lineTo(x, y)
                 }
                 ctx.stroke()
