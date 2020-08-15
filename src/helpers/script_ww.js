@@ -9,7 +9,7 @@ var data_requested = false
 // DC => WW
 
 self.onmessage = async e => {
-    console.log('Worker got:', e.data.type)
+    //console.log('Worker got:', e.data.type)
     switch(e.data.type) {
 
         case 'update-dc-settings':

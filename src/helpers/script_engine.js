@@ -213,7 +213,6 @@ class ScriptEngine {
 
     async run(sel) {
 
-        console.log('Run Scripts')
         this.onmessage('engine-state', { running: true })
 
         var t1 = Utils.now()
@@ -252,7 +251,7 @@ class ScriptEngine {
         }
 
         this.perf = Utils.now() - t1
-        console.log('Perf',  this.perf)
+        //console.log('Perf',  this.perf)
 
         this.running = false
 
@@ -348,7 +347,7 @@ class ScriptEngine {
             this._restart = false
             this.running = false
             this.perf = 0
-            console.log('Restarted')
+            //console.log('Restarted')
             return true
         }
         return false
