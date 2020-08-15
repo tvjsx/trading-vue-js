@@ -2,6 +2,8 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const WWPlugin = require('./ww_plugin.js')
 
+global.port = '8080'
+
 module.exports = {
     entry: './test/index.js',
     module: {
@@ -50,6 +52,10 @@ module.exports = {
                 target: 'https://www.bitmex.com',
                 changeOrigin: true
             },
+        },
+        onListening: function(server) {
+            const port = server.listeningApp.address().port
+            global.port = port
         }
     }
 }
