@@ -122,7 +122,7 @@ export default {
                 }
                 return {
                     value: x,
-                    color: cs ? cs[i] : undefined
+                    color: cs ? cs[i % cs.length] : undefined
                 }
             })
         },

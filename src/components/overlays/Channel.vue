@@ -1,5 +1,7 @@
 <script>
 // Channel renderer. (Keltner, Bollinger)
+// TODO: allow color transparency
+// TODO: improve performance: draw in one solid chunk
 import Overlay from '../../mixins/overlay.js'
 
 export default {
