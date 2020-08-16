@@ -1,6 +1,17 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.6.0] - 2020-8-15
+- Scripts (early state)
+- DC faster update()
+- DC tick aggregation
+- Improved offchart overlayz performance
+- Multiple bug fixes
+- +30 Std overlayz (MACD, DMI, Stoch ...)
+- Overlay loading state (animation)
+- TradingLite-like zoom mode
+- Better IB mode + Illuminati test
+
 ## [0.5.0] - 2020-5-5
 ### Changes
 - Index-based rendering mode (hides weekend gaps + sup Renko)
