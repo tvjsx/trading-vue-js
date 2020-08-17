@@ -18,13 +18,17 @@
 <script>
 import TradingVue from '../../src/TradingVue.vue'
 import Data from '../data/data_earn.json'
+import DataCube from '../../src/helpers/datacube.js'
 import Utils from '../../src/stuff/utils.js'
 import Earnings from './MouseEvents/Earnings.vue'
+import Illuminati from './shared/illuminati.js'
+import Eye from './shared/Eye.vue'
 
 export default {
     name: 'MouseEvents',
     description: 'Should display marker hints (click earnings icon)',
     props: ['night'],
+    mixins: [Illuminati],
     components: {
         TradingVue
     },
@@ -38,6 +42,7 @@ export default {
         window.addEventListener('resize', this.onResize)
         this.onResize()
         window.tv = this.$refs.tvjs
+        window.dc = this.chart
     },
     computed: {
         colors() {
@@ -53,10 +58,10 @@ export default {
     },
     data() {
         return {
-            chart: Data,
+            chart: new DataCube(Data),
             width: window.innerWidth,
             height: window.innerHeight,
-            overlays: [Earnings],
+            overlays: [Earnings, Eye],
             index_based: true
         };
     }
