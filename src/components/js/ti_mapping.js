@@ -118,7 +118,7 @@ export default class TI {
             }
             // Race of data points & sub points (ohlcv)
             // (like turn based increments)
-            while (t > tk && k < this.sub.length - 2) {
+            while (k+1 < this.sub.length - 1 && t > this.sub[k+1][0]) {
                 k++
                 tk = this.sub[k][0]
             }
@@ -196,9 +196,12 @@ export default class TI {
         }
 
         try {
+            // Linear Interpolation
             let i = Utils.fast_nearest(this.sub, t)
-            let tk = this.sub[i[1]][0]
-            return this.ss + i[1] - (tk - t) / this.tf
+            let tk = this.sub[i[0]][0]
+            let tk2 = this.sub[i[1]][0]
+            let k = (t - tk) / (tk2 - tk)
+            return this.ss + i[0] + k * (i[1] - i[0])
         } catch(e) { }
 
         return undefined

@@ -5,7 +5,7 @@ export default {
         window.illuminati = this.illuminati
     },
     methods: {
-        illuminati() {
+        illuminati(auto = true, sound = true) {
             let data = dc.data.chart.data
 
             let t0 = data[0][0] - 3600000 * 10
@@ -18,35 +18,53 @@ export default {
 
             let ov = dc.get_one('Illuminati')
             if (!ov) {
+                var obj = [t0, y0]
                 dc.add('onchart', {
                     name: 'Illuminaty Test',
                     type: 'Illuminati',
-                    data: [[t0, y0]]
+                    data: [obj]
                 })
                 ov = dc.get_one('Illuminati')
-                var di = 0
-            } else {
-                ov.data.push([t0, y0])
-                var di = ov.data.length - 1
-            }
 
+            } else {
+                var obj = [t0, y0]
+                ov.data.unshift(obj)
+            }
             let t = t0
 
-            setInterval(() => {
-                this.$set(ov.data[di], 0, t)
-                t += tS
-                if (t >= tN || t < t0) tS =- tS
-
-            }, 20)
-
-            var div = document.createElement("div");
-            div.innerHTML = `
-                <iframe width="420" height="345"
-                    src="https://www.youtube.com/embed/GRWbIoIR04c?autoplay=1">
-                </iframe>
-            `
-            div.style="opacity: 0"
-            document.body.appendChild(div)
+            if (auto) {
+                setInterval(() => {
+                    let i = ov.data.indexOf(obj)
+                    this.$set(ov.data[i], 0, t)
+                    t += tS
+                    if (t >= tN || t < t0) tS =- tS
+                }, 20)
+            } else {
+                window.addEventListener("keydown", (event) => {
+                    let key = event.key.toUpperCase()
+                    let i = ov.data.indexOf(obj)
+                    switch (key) {
+                        case 'ARROWLEFT':
+                            t -= tS
+                            this.$set(ov.data[i], 0, t)
+                            break
+                        case 'ARROWRIGHT':
+                            t += tS
+                            this.$set(ov.data[i], 0, t)
+                            break
+                    }
+                }, true)
+            }
+            if (sound) {
+                var div = document.createElement("div");
+                div.innerHTML = `
+                    <iframe width="420" height="345"
+                        src="https://www.youtube.com/embed/GRWbIoIR04c?autoplay=1">
+                    </iframe>
+                `
+                div.style="opacity: 0; display: none"
+                document.body.appendChild(div)
+            }
         }
     }
 }
