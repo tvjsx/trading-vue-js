@@ -12864,7 +12864,7 @@ var ti_mapping_TI = /*#__PURE__*/function () {
         // (like turn based increments)
 
 
-        while (t > tk && k < this.sub.length - 2) {
+        while (k + 1 < this.sub.length - 1 && t > this.sub[k + 1][0]) {
           k++;
           tk = this.sub[k][0];
         }
@@ -12936,9 +12936,14 @@ var ti_mapping_TI = /*#__PURE__*/function () {
       }
 
       try {
+        // Linear Interpolation
         var i = utils.fast_nearest(this.sub, t);
-        var tk = this.sub[i[1]][0];
-        return this.ss + i[1] - (tk - t) / this.tf;
+        var tk = this.sub[i[0]][0];
+        var tk2 = this.sub[i[1]][0];
+
+        var _k = (t - tk) / (tk2 - tk);
+
+        return this.ss + i[0] + _k * (i[1] - i[0]);
       } catch (e) {}
 
       return undefined;
