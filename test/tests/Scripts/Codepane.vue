@@ -32,7 +32,7 @@ export default {
         style() {
             return `
                 .CodeMirror {
-                    height: ${this.$props.height}px !important;
+                    height: ${this.$props.height-50}px !important;
                 }
                 .cm-s-dracula.CodeMirror,
                 .cm-s-dracula

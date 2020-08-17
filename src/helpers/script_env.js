@@ -8,7 +8,8 @@ import ScriptStd from './script_std.js'
 import se from './script_engine.js'
 import * as u from './script_utils.js'
 
-const FDEFS = /(function |)([$A-Z_][0-9A-Z_$\.]*)[\s]*?\((.*\s*)\)/gmi
+const FDEFS1 = /(function |)([$A-Z_][0-9A-Z_$\.]*)[\s]*?\((.*\s*)\)/gmi
+const FDEFS2 = /(function |)([$A-Z_][0-9A-Z_$\.]*)[\s]*?\((.*\s*)\)/gmis
 const DEF_LIMIT = 5
 
 export default class ScriptEnv {
@@ -151,11 +152,11 @@ export default class ScriptEnv {
         let h = this.src.use_for[0] // TODO: add props here
         src = '\t\t  let _pref = `${_id}<-'+h+'<-`\n' + src
 
-        FDEFS.lastIndex = 0
+        FDEFS2.lastIndex = 0
         let call_id = 0 // Function call id (to make each call unique)
 
         do {
-            var m = FDEFS.exec(src)
+            var m = FDEFS2.exec(src)
             if (m) {
                 let fkeyword = m[1].trim()
                 let fname = m[2]
@@ -167,10 +168,11 @@ export default class ScriptEnv {
                     let off = m.index + m[0].indexOf('(')
                     if (this.std[fname]) {
                         src = this.postfix(src, m, ++call_id)
+                        //console.log(src)
                         off+=4 // 'std_'
                     }
                     // Quick fix
-                    FDEFS.lastIndex = off
+                    FDEFS2.lastIndex = off
                 }
             }
         } while (m)
@@ -185,8 +187,7 @@ export default class ScriptEnv {
 
         let target = this.get_args(this.fdef(m[2])).length
         let m0 = this.parentheses(m[0]) // First closed pair
-        let args = this.get_args(m0)
-
+        let args = this.get_args_2(m0)
         for (var i = args.length; i < target; i++) {
             args.push('void 0')
         }
@@ -222,7 +223,7 @@ export default class ScriptEnv {
 
     // Get args in the function's definition
     get_args(src) {
-        let reg = this.regex_clone(FDEFS)
+        let reg = this.regex_clone(FDEFS1)
         reg.lastIndex = 0
 
         let m = reg.exec(src)
@@ -231,6 +232,33 @@ export default class ScriptEnv {
             .map(x => x.trim())
             .filter(x => x !== '_id')
         return arr
+    }
+
+    get_args_2(str) {
+        let parts = []
+        let c = 0
+        let part
+        for (var i = 0; i < str.length; i++) {
+            if (str[i] === '(') {
+                c++
+                if (!part) part = [i+1]
+            }
+            if (str[i] === ')') c--
+            if (str[i] === ',' && c === 1) {
+                if (part) {
+                    part[1] = i
+                    parts.push(part)
+                    part = [i+1]
+                }
+            }
+            if (c === 0 && part) {
+                part[1] = i
+                parts.push(part)
+                part = null
+            }
+        }
+        return parts.map(x => str.slice(...x))
+            .filter(x => /[^\s]+/.exec(x))
     }
 
     regex_clone(rex) {

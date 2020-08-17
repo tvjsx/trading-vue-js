@@ -229,6 +229,7 @@ export default class ScriptStd {
     }
 
     avg(...args) {
+        args.pop() // Remove _id
         let sum = 0
         for (var i = 0; i < args.length; i++) {
             sum += args[i]
@@ -491,8 +492,9 @@ export default class ScriptStd {
 
     // Linear Regression
     linreg(src, len, offset = 0, _id) {
-        let id = this._tsid(_id, `highest(${len})`)
+        let id = this._tsid(_id, `linreg(${len})`)
 
+        src.__len__ = Math.max(src.__len__ || 0, len)
         let lr = linreg(src, len, offset)
 
         return this.ts(lr, id)
