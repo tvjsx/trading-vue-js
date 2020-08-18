@@ -1,6 +1,6 @@
 {
   "name": "trading-vue-js",
-  "version": "0.6.1",
+  "version": "0.6.2-alpha",
   "description": "Hackable charting lib for traders",
   "main": "./dist/trading-vue.js",
   "scripts": {
@@ -69,6 +69,7 @@
     "arrayslicer": "^1.2.3",
     "hammerjs": "^2.0.8",
     "hamsterjs": "^1.1.3",
+    "lz-string": "^1.4.4",
     "moment": "^2.27.0",
     "vue": "^2.6.11"
   }
