@@ -14,7 +14,7 @@ module.exports = [{
     output: {
         filename: '[name].js',
         library: 'TradingVueJs',
-        libraryTarget: 'umd',
+        libraryTarget: 'umd'
     },
     module: {
         rules: [{
@@ -51,7 +51,11 @@ module.exports = [{
                             http://localhost:${port}/trading-vue.js
                         </a>
                     </h1>
-                    <h3>Build hash [hash]</h3>
+                    <h3>Get build hash:
+                    <a href="http://localhost:${port}/status.js">
+                        http://localhost:${port}/status.js
+                    </a>
+                    </h3>
                   </body>
                 </html>
               `
