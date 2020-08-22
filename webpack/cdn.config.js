@@ -43,7 +43,7 @@ module.exports = [{
     plugins: [
         new VueLoaderPlugin(),
         new HtmlWebpackPlugin({
-            templateContent: `
+            templateContent: () => `
                 <html>
                   <body>
                     <h1>Lib CDN:
