@@ -157,9 +157,9 @@ export default class DCEvents {
     }
 
     exec_script(args) {
-        if (args.length) {
+        if (args.length && this.sett.scripts) {
             let obj = this.get_overlay(args[0])
-            if (!obj) return
+            if (!obj || obj.scripts === false) return
             // Parse script props & get the values from the ov
             // TODO: remove unnecessary script initializations
             let s = obj.settings
@@ -196,6 +196,7 @@ export default class DCEvents {
     }
 
     exec_all_scripts() {
+        if (!this.sett.scripts) return
         this.merge('.', { loading: true })
         this.ww.just('exec-all-scripts')
     }
@@ -210,6 +211,7 @@ export default class DCEvents {
     }
 
     data_changed(args) {
+        if (!this.sett.scripts) return
         let main = this.data.chart.data
         if (this.ww._data_uploading) return
         if (!this.se_state.scripts) return
