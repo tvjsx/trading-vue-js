@@ -40,7 +40,13 @@ class CursorUpdater {
         let data = this.comp[s].data
 
         // Split offchart data between offchart grids
-        if (grid.id > 0) data = [data[grid.id - 1]]
+        if (grid.id > 0) {
+            // Sequential grids
+            let d = data.filter(x => x.grid.id === undefined)
+            // grids with custom ids (for merging)
+            let m = data.filter(x => x.grid.id === grid.id)
+            data = [d[grid.id - 1], ...m]
+        }
 
         const t = grid.screen2t(e.x)
         let ids = {}, res = {}
