@@ -74,6 +74,7 @@ export default {
             const values = this.$props.values
             const f = this.format
             var types = {}
+
             return this.json_data.filter(
                 x => x.settings.legend !== false && !x.main
             ).map(x => {
@@ -82,7 +83,7 @@ export default {
                 return {
                     v: 'display' in x.settings ? x.settings.display : true,
                     name: x.name || id,
-                    index: this.json_data.indexOf(x),
+                    index: (this.off_data || this.json_data).indexOf(x),
                     id: id,
                     values: values ? f(id, values) : this.n_a(1),
                     unk: !(id in (this.$props.meta_props || {})),
@@ -92,8 +93,11 @@ export default {
         },
         calc_style() {
             let top = this.layout.height > 150 ? 10 : 5
+            let grids = this.$props.common.layout.grids
+            let w = grids[0] ? grids[0].width : undefined
             return {
                 top: `${this.layout.offset + top}px`,
+                width: `${w-20}px`
             }
         },
         layout() {
@@ -102,7 +106,10 @@ export default {
         },
         json_data() {
             return this.$props.common.data
-        }
+        },
+        off_data() {
+            return this.$props.common.offchart
+        },
     },
     methods: {
         format(id, values) {

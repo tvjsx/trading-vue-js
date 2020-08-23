@@ -128,8 +128,8 @@ export default {
             // Split offchart data between offchart grids
             if (id > 0) {
                 let all = p.data
+                p.offchart = all
                 p.data = [p.data[id - 1]]
-                // TODO: show correct legend values
                 p.data.push(...all.filter(
                     x => x.grid && x.grid.id === id))
             }
