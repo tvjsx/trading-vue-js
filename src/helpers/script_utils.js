@@ -17,7 +17,6 @@ export function f_args(src) {
     }
     return []
 }
-
 export function f_body(src) {
     return src.slice(
         src.indexOf("{") + 1,
@@ -55,4 +54,15 @@ export function wrap_idxs(src, pre = '') {
     } while (m)
 
     return changed ? src : src
+}
+
+// Get all module helper classes
+export function make_module_lib(mod) {
+    let lib = {}
+    for (var k in mod) {
+        if (k === 'main' || k === 'id') continue
+        let a = f_args(mod[k])
+        lib[k] = new Function(a, f_body(mod[k]))
+    }
+    return lib
 }

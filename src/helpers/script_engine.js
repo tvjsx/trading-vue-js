@@ -19,6 +19,7 @@ class ScriptEngine {
         this.update_queue = []  // Live update queue
         this.sett = {}
         this.state = {}
+        this.mods = {}          // Modules (extensions)
     }
 
     exec_all() {
@@ -94,6 +95,9 @@ class ScriptEngine {
         if (s.src.update) {
             s.src.upd_src = this.get_raw_src(s.src.update)
         }
+        if (s.src.post) {
+            s.src.post_src = this.get_raw_src(s.src.post)
+        }
 
         s.env = new ScriptEnv(s, {
             open: this.open,
@@ -108,6 +112,14 @@ class ScriptEngine {
 
         this.map[s.uuid] = s
 
+        for (var id in this.mods) {
+            if (this.mods[id].new_env) {
+                this.mods[id].new_env(s.uuid, s)
+            }
+        }
+
+        // Build te box after mod's interfaces injected
+        s.env.build()
     }
 
     // Live update
@@ -181,7 +193,7 @@ class ScriptEngine {
     }
 
     send_state() {
-        this.onmessage('engine-state', {
+        this.send('engine-state', {
             scripts: Object.keys(this.map).length,
             last_perf: this.perf,
             iter: this.iter,
@@ -191,7 +203,7 @@ class ScriptEngine {
     }
 
     send_update() {
-        this.onmessage(
+        this.send(
             'overlay-update', this.format_update()
         )
     }
@@ -213,10 +225,12 @@ class ScriptEngine {
 
     async run(sel) {
 
-        this.onmessage('engine-state', { running: true })
+        this.send('engine-state', { running: true })
 
         var t1 = Utils.now()
         sel = sel || Object.keys(this.map)
+
+        this.pre_run_mods(sel)
 
         try {
 
@@ -246,16 +260,23 @@ class ScriptEngine {
 
                 this.limit()
             }
+
+            for (var id of sel) {
+                this.map[id].env.output.post()
+            }
+
         } catch(e) {
             console.log(e)
         }
+
+        this.post_run_mods(sel)
 
         this.perf = Utils.now() - t1
         //console.log('Perf',  this.perf)
 
         this.running = false
 
-        this.onmessage('overlay-data', this.format_map(sel))
+        this.send('overlay-data', this.format_map(sel))
     }
 
     step(data, unshift = true) {
@@ -333,7 +354,7 @@ class ScriptEngine {
 
     init_conf(id) {
         /*if (this.map[id].src.conf.renderer) {
-            this.onmessage('change-overlay', {
+            this.send('change-overlay', {
                 id: id,
                 fileds: {
                     type: this.map[id].src.conf.renderer
@@ -356,6 +377,22 @@ class ScriptEngine {
     remove_scripts(ids) {
         for (var id of ids) delete this.map[id]
         this.send_state()
+    }
+
+    pre_run_mods(sel) {
+        for (var id in this.mods) {
+            if (this.mods[id].pre_run) {
+                this.mods[id].pre_run(sel)
+            }
+        }
+    }
+
+    post_run_mods(sel) {
+        for (var id in this.mods) {
+            if (this.mods[id].post_run) {
+                this.mods[id].post_run(sel)
+            }
+        }
     }
 }
 

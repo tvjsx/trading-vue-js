@@ -17,15 +17,19 @@ export default class ScriptEnv {
     constructor(s, data) {
 
         this.std = new ScriptStd(this)
+        this.id = s.uuid
         this.src = s
         this.output = []
         this.data = []
         this.tss = {}
         this.shared = data
         this.output.box_maker = this.make_box(s.src)
-        this.output.box_maker(this, data)
-        delete this.output.box_maker
+        
+    }
 
+    build() {
+        this.output.box_maker(this, this.shared, se)
+        delete this.output.box_maker
     }
 
     init() {
@@ -102,11 +106,14 @@ export default class ScriptEnv {
         // TODO: prefix all function by ns, e.g std_nz()
 
         try {
-            return Function('self,shared', `
+            return Function('self,shared,se', `
                 'use strict';
 
                 // Built-in functions (aliases)
                 ${std}
+
+                // Modules (API / interfaces)
+                ${this.make_modules()}
 
                 // Timeseries
                 const open = shared.open
@@ -131,14 +138,29 @@ export default class ScriptEnv {
                     const iter = shared.iter()
                     ${this.prep(src.upd_src)}
                 }
+
+                this.post = () => {
+                    ${src.post_src}
+                }
             `)
         } catch(e) {
             return Function('self,shared', `
                 'use strict';
                 this.init = () => {}
                 this.update = () => {}
+                this.post = () => {}
             `)
         }
+    }
+
+    // Make definitions for modules
+    make_modules() {
+        let s = ``
+        for (var id in se.mods) {
+            s += `const ${id} = se.mods['${id}'].api[self.id]`
+            s += '\n'
+        }
+        return s
     }
 
     // Preprocess the update function.
