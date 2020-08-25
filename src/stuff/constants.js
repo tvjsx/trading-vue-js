@@ -52,7 +52,7 @@ const ChartConfig = {
     MAX_ZOOM: 1000,  // candles,
     VOLSCALE: 0.15,  // %/100 of height
     UX_OPACITY: 0.9, // Ux background opacity
-    ZOOM_MODE: 'tv', // 'tv' or 'tl' 
+    ZOOM_MODE: 'tv', // 'tv' or 'tl'
 }
 
 ChartConfig.FONT =

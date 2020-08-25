@@ -13,6 +13,9 @@ export default class DCEvents {
 
         // Listen to the web-worker events
         this.ww.onevent = e => {
+            for (var ctrl of this.tv.controllers) {
+                if (ctrl.ww) ctrl.ww(e.data)
+            }
             switch(e.data.type) {
                 case 'request-data':
                     let main = this.data.chart.data
@@ -37,6 +40,9 @@ export default class DCEvents {
                 case 'change-overlay':
                     this.change_overlay(e.data.data)
                     break
+            }
+            for (var ctrl of this.tv.controllers) {
+                if (ctrl.post_ww) ctrl.post_ww(e.data)
             }
         }
     }

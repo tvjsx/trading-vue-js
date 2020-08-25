@@ -1,4 +1,4 @@
-// Extentions control
+// extensions control
 
 export default {
     methods: {
@@ -25,13 +25,12 @@ export default {
             }
             this.controllers = []
 
-            for (var x of this.$props.extentions) {
+            for (var x of this.$props.extensions) {
                 this.controllers.push(new x.Main(
                     this,      // tv inst
                     this.data  // dc
                 ))
             }
-            console.log(this.controllers)
             return this.controllers
         },
         ws() {

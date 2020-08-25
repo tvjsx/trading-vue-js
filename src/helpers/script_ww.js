@@ -3,6 +3,7 @@
 
 import se from './script_engine.js'
 import Utils from '../stuff/utils.js'
+import * as u from './script_utils.js'
 
 var data_requested = false
 
@@ -55,6 +56,22 @@ self.onmessage = async e => {
 
             break
 
+        case 'upload-module':
+
+            let lib = u.make_module_lib(e.data.data)
+            se.mods[e.data.data.id] = new (
+                new Function(
+                    'mod', 'se', 'lib',
+                    u.f_body(e.data.data.main)
+                )
+            )(e.data.data.id, se, lib)
+
+            break
+
+        case 'module-event':
+
+            break
+
         case 'update-data':
 
             if (e.data.data.ohlcv) {
@@ -82,7 +99,7 @@ self.onmessage = async e => {
 
 // WW => DC
 
-se.onmessage = (type, data) => {
+se.send = (type, data) => {
 
     switch(type) {
 
@@ -90,6 +107,7 @@ se.onmessage = (type, data) => {
         case 'overlay-update':
         case 'engine-state':
         case 'change-overlay':
+        case 'module-data':
 
             self.postMessage({type, data})
 
