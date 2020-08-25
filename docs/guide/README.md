@@ -505,7 +505,7 @@ meta_info() {
 use_for() {return ['<YourOverlayId>'] }
 ```
 
-Submit a PR to `https://github.com/tvjsx/tvjs-overlays` 
+Submit a PR to https://github.com/tvjsx/tvjs-overlays
 
 
 *This section will be updated*
