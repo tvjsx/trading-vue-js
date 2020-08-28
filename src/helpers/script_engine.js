@@ -134,6 +134,9 @@ class ScriptEngine {
             return
         }
 
+        let mfs1 = this.make_mods_hooks('pre_step')
+        let mfs2 = this.make_mods_hooks('post_step')
+
         try {
             let ohlcv = this.data.ohlcv
             let i = ohlcv.length - 1
@@ -155,9 +158,18 @@ class ScriptEngine {
             this.t = ohlcv[i][0]
             this.step(ohlcv[i], unshift)
 
+            for (var m = 0; m < mfs1.length; m++) {
+                mfs1[m](sel) // pre_step
+            }
+
             for (var id of sel) {
                 this.map[id].env.step(unshift)
             }
+
+            for (var m = 0; m < mfs2.length; m++) {
+                mfs2[m](sel) // post_step
+            }
+
             this.limit()
             this.send_update()
             this.send_state()
@@ -231,6 +243,8 @@ class ScriptEngine {
         sel = sel || Object.keys(this.map)
 
         this.pre_run_mods(sel)
+        let mfs1 = this.make_mods_hooks('pre_step')
+        let mfs2 = this.make_mods_hooks('post_step')
 
         try {
 
@@ -246,7 +260,7 @@ class ScriptEngine {
 
                 // Make a pause to read new WW msg
                 // TODO: speedup pause()
-                if (i % 1000 === 0) await Utils.pause(0)
+                if (i % 5000 === 0) await Utils.pause(0)
                 if (this.restarted()) return
 
                 this.iter = i - start
@@ -256,8 +270,15 @@ class ScriptEngine {
                 // SLOW DOWN TEST:
                 //for (var k = 1; k < 1000000; k++) {}
 
+                for (var m = 0; m < mfs1.length; m++) {
+                    mfs1[m](sel) // pre_step
+                }
+
                 for (var id of sel) this.map[id].env.step()
 
+                for (var m = 0; m < mfs2.length; m++) {
+                    mfs2[m](sel) // post_step
+                }
                 this.limit()
             }
 
@@ -393,6 +414,17 @@ class ScriptEngine {
                 this.mods[id].post_run(sel)
             }
         }
+    }
+
+    make_mods_hooks(name) {
+        let arr = []
+        for (var id in this.mods) {
+            if (this.mods[id][name]) {
+                arr.push(this.mods[id][name]
+                    .bind(this.mods[id]))
+            }
+        }
+        return arr
     }
 }
 

@@ -168,7 +168,7 @@ export default {
                 this.chart_config.TOOLBAR : 0
             let chart_props = {
                 title_txt: this.$props.titleTxt,
-                overlays: this.$props.overlays,
+                overlays: this.$props.overlays.concat(this.mod_ovs),
                 data: this.decubed,
                 width: this.$props.width - offset,
                 height: this.$props.height,
@@ -210,6 +210,13 @@ export default {
                 return base.data.chart.indexBased
             }
             return false
+        },
+        mod_ovs() {
+            let arr = []
+            for (var x of this.$props.extensions) {
+                arr.push(...x.overlays)
+            }
+            return arr
         }
     },
     data() {

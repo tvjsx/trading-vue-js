@@ -95,6 +95,8 @@ function GridMaker(id, params, master_grid = null) {
         // calculates max and measures the sidebar length
         // from it:
 
+        // TODO: add custom formatter f()
+
         self.prec = calc_precision(sub)
         let subn = sub.filter(x => typeof x[1] === 'number')
         let lens = subn.map(x => x[1].toFixed(self.prec).length)
