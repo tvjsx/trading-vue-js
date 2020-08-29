@@ -24,7 +24,7 @@ export default class ScriptEnv {
         this.tss = {}
         this.shared = data
         this.output.box_maker = this.make_box(s.src)
-        
+
     }
 
     build() {
@@ -53,6 +53,7 @@ export default class ScriptEnv {
         this.output.unshift(undefined)
         // Update all temp symbols
         for (var id in this.tss) {
+            if (this.tss[id].__tf__) continue
             this.tss[id].unshift(undefined)
         }
     }
@@ -105,6 +106,14 @@ export default class ScriptEnv {
         // TODO: add argument values to _id
         // TODO: prefix all function by ns, e.g std_nz()
 
+        let tss = ``
+
+        for (var k in this.shared) {
+            if (this.shared[k].__id__) {
+                tss += `const ${k} = shared.${k}\n`
+            }
+        }
+
         try {
             return Function('self,shared,se', `
                 'use strict';
@@ -116,11 +125,7 @@ export default class ScriptEnv {
                 ${this.make_modules()}
 
                 // Timeseries
-                const open = shared.open
-                const high = shared.high
-                const low = shared.low
-                const close = shared.close
-                const vol = shared.vol
+                ${tss}
 
                 // Direct data ts
                 const data = self.data
@@ -201,7 +206,7 @@ export default class ScriptEnv {
 
         // console.log('After ----->\n', u.wrap_idxs(src))
 
-        return u.wrap_idxs(src)
+        return u.wrap_idxs(src, 'std_')
     }
 
     // Postfix function calls with ts _ids
