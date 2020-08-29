@@ -60,6 +60,7 @@ export default class ScriptEnv {
 
     // Limit env.output length
     limit() {
+        // TODO: output limit calculate
         this.output.length = 200 // DEF_LIMIT
         for (var id in this.tss) {
             let ts = this.tss[id]
