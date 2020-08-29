@@ -4,6 +4,7 @@
 import se from './script_engine.js'
 import linreg from '../stuff/linreg.js'
 import * as u from './script_utils.js'
+import Sampler from './sampler.js'
 
 const BUF_INC = 5
 
@@ -29,6 +30,7 @@ export default class ScriptStd {
             switch(k) {
                 case 'constructor':
                 case 'ts':
+                case 'tstf':
                 case '_index_tracking':
                 case '_tsid':
                 case '_i':
@@ -86,13 +88,30 @@ export default class ScriptStd {
 
     // Creates a new time-series & records each x.
     // Return the an array. Id is auto-genrated
-    ts(x, _id) {
+    ts(x, _id, _tf) {
+        if (_tf) return tstf(x, _tf, _id)
         let ts = this.env.tss[_id]
         if (!ts) {
             ts = this.env.tss[_id] = [x]
             ts.__id__ = _id
         } else {
             ts[0] = x
+        }
+        return ts
+    }
+
+    // Creates a new time-series & records each x.
+    // Uses Sampler to aggregate the values
+    // Return the an array. Id is auto-genrated
+    tstf(x, tf, _id) {
+        let ts = this.env.tss[_id]
+        if (!ts) {
+            ts = this.env.tss[_id] = [x]
+            ts.__id__ = _id
+            ts.__tf__ = u.tf_from_str(tf)
+            ts.__fn__ = Sampler('close').bind(ts)
+        } else {
+            ts.__fn__(x)
         }
         return ts
     }
@@ -501,11 +520,11 @@ export default class ScriptStd {
     }
 
     log(x) {
-        Math.log(x)
+        return Math.log(x)
     }
 
     log10(x) {
-        Math.log10(x)
+        return Math.log10(x)
     }
 
     lowest(src, len, _id) {

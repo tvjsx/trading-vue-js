@@ -1,8 +1,12 @@
 
+import Const from '../stuff/constants.js'
+
 const FDEFS = /(function |)([$A-Z_][0-9A-Z_$\.]*)[\s]*?\((.*?)\)/gmi
 const SBRACKETS = /([$A-Z_][0-9A-Z_$\.]*)[\s]*?\[([^"^\[^\]]+?)\]/gmi
+const TFSTR = /(\d+)(\w*)/gm
 
 const BUF_INC = 5
+var tf_cache = {}
 
 export function f_args(src) {
     FDEFS.lastIndex = 0
@@ -65,4 +69,41 @@ export function make_module_lib(mod) {
         lib[k] = new Function(a, f_body(mod[k]))
     }
     return lib
+}
+
+export function get_raw_src(f) {
+    if (typeof f === 'string') return f
+    let src = f.toString()
+    return src.slice(
+        src.indexOf("{") + 1,
+        src.lastIndexOf("}")
+    )
+}
+
+// Get tf in ms from pairs such (`15`, `m`)
+export function tf_from_pair(num, pf) {
+    var mult = 1
+    switch (pf) {
+        case 's': mult = Const.SECOND; break
+        case 'm': mult = Const.MINUTE; break
+        case 'H': mult = Const.HOUR; break
+        case 'D': mult = Const.DAY; break
+        case 'W': mult = Const.WEEK; break
+        case 'M': mult = Const.MONTH; break
+        case 'Y': mult = Const.YEAR; break
+    }
+    return parseInt(num) * mult
+}
+
+export function tf_from_str(str) {
+
+    if (tf_cache[str]) return tf_cache[str]
+
+    TFSTR.lastIndex = 0
+    let m = TFSTR.exec(str)
+    if (m) {
+        tf_cache[str] = tf_from_pair(m[1], m[2])
+        return tf_cache[str]
+    }
+    return undefined
 }

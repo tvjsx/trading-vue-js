@@ -3,8 +3,12 @@
 
 import ScriptEnv from './script_env.js'
 import Utils from '../stuff/utils.js'
+import * as u from './script_utils.js'
 import TS from './script_ts.js'
+import Sampler from './sampler.js'
 
+const SYMTF = /(open|high|low|close|vol)(\d+)(\w*)/gm
+const SYMSTD = /(?:hl2|hlc3|ohlc4)/gm
 const DEF_LIMIT = 5   // default buff length
 const WAIT_EXEC = 10  // merge script execs, ms
 
@@ -90,16 +94,19 @@ class ScriptEngine {
         if (!s.src.conf) s.src.conf = {}
 
         if (s.src.init) {
-            s.src.init_src = this.get_raw_src(s.src.init)
+            s.src.init_src = u.get_raw_src(s.src.init)
         }
         if (s.src.update) {
-            s.src.upd_src = this.get_raw_src(s.src.update)
+            s.src.upd_src = u.get_raw_src(s.src.update)
         }
         if (s.src.post) {
-            s.src.post_src = this.get_raw_src(s.src.post)
+            s.src.post_src = u.get_raw_src(s.src.post)
         }
 
-        s.env = new ScriptEnv(s, {
+        // Parse non-default symbols
+        this.parse_syms(s)
+
+        s.env = new ScriptEnv(s, Object.assign({
             open: this.open,
             high: this.high,
             low: this.low,
@@ -108,7 +115,7 @@ class ScriptEngine {
             ohlcv: this.data.ohlcv,
             t: () => this.t,
             iter: () => this.iter,
-        })
+        }, this.tss))
 
         this.map[s.uuid] = s
 
@@ -195,6 +202,11 @@ class ScriptEngine {
         this.low = TS('low', [])
         this.close = TS('close', [])
         this.vol = TS('vol', [])
+
+        // Shared TSs
+        this.tss = {}
+
+        // Engine state
         this.iter = 0
         this.t = 0
         this.skip = false // skip the step
@@ -226,15 +238,6 @@ class ScriptEngine {
         }
     }
 
-    get_raw_src(f) {
-        if (typeof f === 'string') return f
-        let src = f.toString()
-        return src.slice(
-            src.indexOf("{") + 1,
-            src.lastIndexOf("}")
-        )
-    }
-
     async run(sel) {
 
         this.send('engine-state', { running: true })
@@ -250,7 +253,6 @@ class ScriptEngine {
 
             for (var id of sel) {
                 this.map[id].env.init()
-                this.init_conf(id)
             }
 
             let ohlcv = this.data.ohlcv
@@ -260,6 +262,7 @@ class ScriptEngine {
 
                 // Make a pause to read new WW msg
                 // TODO: speedup pause()
+                // TODO: emit progress %
                 if (i % 5000 === 0) await Utils.pause(0)
                 if (this.restarted()) return
 
@@ -269,7 +272,6 @@ class ScriptEngine {
 
                 // SLOW DOWN TEST:
                 //for (var k = 1; k < 1000000; k++) {}
-
                 for (var m = 0; m < mfs1.length; m++) {
                     mfs1[m](sel) // pre_step
                 }
@@ -307,12 +309,19 @@ class ScriptEngine {
             this.low.unshift(data[3])
             this.close.unshift(data[4])
             this.vol.unshift(data[5])
+            for (var id in this.tss) {
+                if (this.tss[id].__tf__) this.tss[id].__fn__()
+                else this.tss[id].unshift(this.tss[id].__fn__())
+            }
         } else {
             this.open[0] = data[1]
             this.high[0] = data[2]
             this.low[0] = data[3]
             this.close[0] = data[4]
             this.vol[0] = data[5]
+            for (var id in this.tss) {
+                this.tss[id] = this.tss[id].__fn__()
+            }
         }
     }
 
@@ -373,15 +382,62 @@ class ScriptEngine {
         return res
     }
 
-    init_conf(id) {
-        /*if (this.map[id].src.conf.renderer) {
-            this.send('change-overlay', {
-                id: id,
-                fileds: {
-                    type: this.map[id].src.conf.renderer
+    // Parse non-default symbols, e.g. close1D, hlc3
+    // & inject the corresponding TSs or samplers
+    parse_syms(s) {
+
+        let ss = s.src
+        let all = `${ss.init_src}\n${ss.upd_src}\n${ss.post_src}`
+
+        SYMTF.lastIndex = 0
+        SYMSTD.lastIndex = 0
+
+        do {
+            var m = SYMTF.exec(all)
+            if (m) {
+                if (m[0] in this.tss) continue
+                let ts = this.tss[m[0]] = TS(m[0], [])
+                ts.__tf__ = u.tf_from_pair(m[2], m[3])
+                ts.__fn__ = Sampler(m[1]).bind(ts)
+
+            }
+        } while (m)
+
+        do {
+            var m = SYMSTD.exec(all)
+            if (m) {
+                if (m[0] in this.tss) continue
+                switch(m[0]) {
+                    case 'hl2':
+                        this.tss['hl2'] = TS('hl2', [])
+                        this.tss['hl2'].__fn__ = () => {
+                            return (
+                                this.high[0] +
+                                this.low[0]) * 0.5
+                        }
+                        break
+                    case 'hlc3':
+                        this.tss['hlc3'] = TS('hlc3', [])
+                        this.tss['hlc3'].__fn__ = () => {
+                            return (
+                                this.high[0] +
+                                this.low[0] +
+                                this.close[0]) / 3
+                        }
+                        break
+                    case 'ohlc4':
+                        this.tss['ohlc4'] = TS('ohlc4', [])
+                        this.tss['ohlc4'].__fn__ = () => {
+                            return (
+                                this.open[0] +
+                                this.high[0] +
+                                this.low[0] +
+                                this.close[0]) * 0.25
+                        }
+                        break
                 }
-            })
-        }*/
+            }
+        } while (m)
     }
 
     restarted() {
