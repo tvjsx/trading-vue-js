@@ -4,11 +4,9 @@
 import ScriptEnv from './script_env.js'
 import Utils from '../stuff/utils.js'
 import * as u from './script_utils.js'
+import symstd from './symstd.js'
 import TS from './script_ts.js'
-import Sampler from './sampler.js'
 
-const SYMTF = /(open|high|low|close|vol)(\d+)(\w*)/gm
-const SYMSTD = /(?:hl2|hlc3|ohlc4)/gm
 const DEF_LIMIT = 5   // default buff length
 const WAIT_EXEC = 10  // merge script execs, ms
 
@@ -24,6 +22,7 @@ class ScriptEngine {
         this.sett = {}
         this.state = {}
         this.mods = {}          // Modules (extensions)
+        this.std_plus = {}      // Functions to inject
     }
 
     exec_all() {
@@ -104,7 +103,7 @@ class ScriptEngine {
         }
 
         // Parse non-default symbols
-        this.parse_syms(s)
+        symstd.parse(s)
 
         s.env = new ScriptEnv(s, Object.assign({
             open: this.open,
@@ -205,6 +204,7 @@ class ScriptEngine {
 
         // Shared TSs
         this.tss = {}
+        this.std_plus = {}
 
         // Engine state
         this.iter = 0
@@ -214,6 +214,13 @@ class ScriptEngine {
         this.task = task
 
         return true
+    }
+
+    // Inject/override functions in the std lib object
+    std_inject(std) {
+        let proto = Object.getPrototypeOf(std)
+        Object.assign(proto, this.std_plus)
+        return std
     }
 
     send_state() {
@@ -365,7 +372,12 @@ class ScriptEngine {
         let res = []
         for (var id of sel) {
             let x = this.map[id]
-            res.push({ id: id, data: x.env.data })
+            res.push({
+                id: id, data: x.env.data, new_ovs: {
+                    onchart: x.env.onchart,
+                    offchart: x.env.offchart
+                }
+            })
         }
         return res
     }
@@ -380,64 +392,6 @@ class ScriptEngine {
             })
         }
         return res
-    }
-
-    // Parse non-default symbols, e.g. close1D, hlc3
-    // & inject the corresponding TSs or samplers
-    parse_syms(s) {
-
-        let ss = s.src
-        let all = `${ss.init_src}\n${ss.upd_src}\n${ss.post_src}`
-
-        SYMTF.lastIndex = 0
-        SYMSTD.lastIndex = 0
-
-        do {
-            var m = SYMTF.exec(all)
-            if (m) {
-                if (m[0] in this.tss) continue
-                let ts = this.tss[m[0]] = TS(m[0], [])
-                ts.__tf__ = u.tf_from_pair(m[2], m[3])
-                ts.__fn__ = Sampler(m[1]).bind(ts)
-
-            }
-        } while (m)
-
-        do {
-            var m = SYMSTD.exec(all)
-            if (m) {
-                if (m[0] in this.tss) continue
-                switch(m[0]) {
-                    case 'hl2':
-                        this.tss['hl2'] = TS('hl2', [])
-                        this.tss['hl2'].__fn__ = () => {
-                            return (
-                                this.high[0] +
-                                this.low[0]) * 0.5
-                        }
-                        break
-                    case 'hlc3':
-                        this.tss['hlc3'] = TS('hlc3', [])
-                        this.tss['hlc3'].__fn__ = () => {
-                            return (
-                                this.high[0] +
-                                this.low[0] +
-                                this.close[0]) / 3
-                        }
-                        break
-                    case 'ohlc4':
-                        this.tss['ohlc4'] = TS('ohlc4', [])
-                        this.tss['ohlc4'].__fn__ = () => {
-                            return (
-                                this.open[0] +
-                                this.high[0] +
-                                this.low[0] +
-                                this.close[0]) * 0.25
-                        }
-                        break
-                }
-            }
-        } while (m)
     }
 
     restarted() {

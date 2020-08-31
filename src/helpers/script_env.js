@@ -7,6 +7,7 @@
 import ScriptStd from './script_std.js'
 import se from './script_engine.js'
 import * as u from './script_utils.js'
+import TS from './script_ts.js'
 
 const FDEFS1 = /(function |)([$A-Z_][0-9A-Z_$\.]*)[\s]*?\((.*\s*)\)/gmi
 const FDEFS2 = /(function |)([$A-Z_][0-9A-Z_$\.]*)[\s]*?\((.*\s*)\)/gmis
@@ -16,15 +17,16 @@ export default class ScriptEnv {
 
     constructor(s, data) {
 
-        this.std = new ScriptStd(this)
+        this.std = se.std_inject(new ScriptStd(this))
         this.id = s.uuid
         this.src = s
-        this.output = []
+        this.output = TS('output', [])
         this.data = []
         this.tss = {}
         this.shared = data
         this.output.box_maker = this.make_box(s.src)
-
+        this.onchart = {}
+        this.offchart = {}
     }
 
     build() {
@@ -60,8 +62,8 @@ export default class ScriptEnv {
 
     // Limit env.output length
     limit() {
-        // TODO: output limit calculate
-        this.output.length = 200 // DEF_LIMIT
+        let out = this.output
+        out.length = out.__len__ || DEF_LIMIT
         for (var id in this.tss) {
             let ts = this.tss[id]
             //console.log(ts.__id__, ts.__len__)
@@ -71,7 +73,9 @@ export default class ScriptEnv {
 
     // Copy the recent value to the direct buff
     copy(v, unshift = true) {
-        if (v !== undefined) this.output[0] = v
+        if (v !== undefined) {
+            this.output[0] = v.__id__ ? v[0] : v
+        }
         let val = this.output[0]
         if (val == null || !val.length) {
             // Number / object
@@ -175,7 +179,7 @@ export default class ScriptEnv {
     // TODO: implement recursive prepping (with js syntax parser)
     prep(src) {
 
-        //console.log('Before -----> \n', src)
+        // console.log('Before -----> \n', src)
 
         let h = this.src.use_for[0] // TODO: add props here
         src = '\t\t  let _pref = `${_id}<-'+h+'<-`\n' + src
@@ -258,10 +262,11 @@ export default class ScriptEnv {
         if (!m[3].trim().length) return []
         let arr = m[3].split(',')
             .map(x => x.trim())
-            .filter(x => x !== '_id')
+            .filter(x => x !== '_id' && x !== '_tf')
         return arr
     }
 
+    // TODO: filter commas inside qoutes, square brackets
     get_args_2(str) {
         let parts = []
         let c = 0
