@@ -351,7 +351,7 @@ export default class DCEvents {
                 this.tv.$set(obj, 'loading', false)
             }
             this.get('.').forEach(x => {
-                if (x.settings.$synth) this.del(`${x.id}`) 
+                if (x.settings.$synth) this.del(`${x.id}`)
             })
             for (var id in ov.new_ovs.onchart) {
                 if (!this.get_one(`onchart.${id}`)) {
