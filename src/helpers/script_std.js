@@ -613,6 +613,7 @@ export default class ScriptStd {
             let type = sett.type
             delete sett.type
             sett.$synth = true
+            sett.skipNaN = true
             let post = Array.isArray(x) ? 's': ''
             this.env.onchart[name] = Object.assign({
                 name: name,
@@ -638,6 +639,7 @@ export default class ScriptStd {
             let type = sett.type
             delete sett.type
             sett.$synth = true
+            sett.skipNaN = true
             let post = Array.isArray(x) ? 's': ''
             this.env.offchart[name] = Object.assign({
                 name: name,
