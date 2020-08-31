@@ -36,6 +36,8 @@ export default class ScriptStd {
                 case '_i':
                 case '_v':
                 case '_add_i':
+                case 'onchart':
+                case 'offchart':
                     continue
 
             }
@@ -230,13 +232,13 @@ export default class ScriptStd {
     }
 
     // Average True Range
-    // TODO: tf
-    atr(len, _id) {
+    atr(len, _id, _tf) {
+        let tfs = _tf || ''
         let id = this._tsid(_id, `atr(${len})`)
-        let high = this.env.shared.high
-        let low = this.env.shared.low
-        let close = this.env.shared.close
-        let tr = this.ts(0, id)
+        let high = this.env.shared[`high${tfs}`]
+        let low = this.env.shared[`low${tfs}`]
+        let close = this.env.shared[`close${tfs}`]
+        let tr = this.ts(0, id, _tf)
         tr[0] = this.na(high[1]) ? high[0] - low[0] :
             Math.max(
                 Math.max(
@@ -246,11 +248,6 @@ export default class ScriptStd {
                 Math.abs(low[0] - close[1])
             )
         return this.rma(tr, len, id)
-    }
-
-    atrtf(len, tf, _id) {
-        let id = this._tsid(_id, `atr${tf}(${len})`)
-        return this.atr(len, _if, tf)
     }
 
     avg(...args) {
@@ -390,24 +387,24 @@ export default class ScriptStd {
     }
 
     // Directional Movement Index ADX, +DI, -DI
-    // TODO: tf
-    dmi(len, smooth, _id) {
+    dmi(len, smooth, _id, _tf) {
         let id = this._tsid(_id, `dmi(${len},${smooth})`)
-        let high = this.env.shared.high
-        let low = this.env.shared.low
+        let tfs = _tf || ''
+        let high = this.env.shared[`high${tfs}`]
+        let low = this.env.shared[`low${tfs}`]
         let up = this.change(high, 1, id+'1')[0]
         let down = this.neg(this.change(low, 1, id+'2'), id)[0]
 
         let plusDM = this.ts(100 * (
             this.na(up) ? NaN :
-            (up > down && up > 0 ? up : 0)), id+'3'
+            (up > down && up > 0 ? up : 0)), id+'3', _tf
         )
         let minusDM = this.ts(100 * (
             this.na(down) ? NaN :
-            (down > up && down > 0 ? down : 0)), id+'4'
+            (down > up && down > 0 ? down : 0)), id+'4', _tf
         )
 
-        let trur = this.rma(this.tr(false, id), len, id+'5')
+        let trur = this.rma(this.tr(false, id, _tf), len, id+'5')
         let plus = this.div(
             this.rma(plusDM, len, id+'6'), trur, id+'8')
         let minus = this.div(
@@ -415,7 +412,7 @@ export default class ScriptStd {
         let sum = this.add(plus, minus, id+'10')[0]
         let adx = this.rma(
             this.ts(100 * Math.abs(plus[0] - minus[0]) /
-            (sum === 0 ? 1 : sum), id+'11'),
+            (sum === 0 ? 1 : sum), id+'11', _tf),
             smooth, id+'12'
         )
         return [adx, plus, minus]
@@ -490,15 +487,16 @@ export default class ScriptStd {
     }
 
     // Keltner Channels
-    kc(src, len, mult, use_tr = true, _id) {
+    kc(src, len, mult, use_tr = true, _id, _tf) {
 
         let id = this._tsid(_id, `kc(${len},${mult},${use_tr})`)
-        let high = this.env.shared.high
-        let low = this.env.shared.low
+        let tfs = _tf || ''
+        let high = this.env.shared[`high${tfs}`]
+        let low = this.env.shared[`low${tfs}`]
         let basis = this.ema(src, len, id+'1')
 
         let range = use_tr ?
-            this.tr(false, id+'2') :
+            this.tr(false, id+'2', _tf) :
             this.ts(high[0] - low[0], id+'3', src.__tf__)
         let ema = this.ema(range, len, id+'4')
 
@@ -510,9 +508,9 @@ export default class ScriptStd {
     }
 
     // Keltner Channels Width
-    kcw(src, len, mult, use_tr = true, _id) {
+    kcw(src, len, mult, use_tr = true, _id, _tf) {
         let id = this._tsid(_id, `kcw(${len},${mult},${use_tr})`)
-        let kc = this.kc(src, len, mult, use_tr, `kcw`)
+        let kc = this.kc(src, len, mult, use_tr, `kcw`, _tf)
         return this.ts((kc[1][0] - kc[2][0]) / kc[0][0], id, src.__tf__)
     }
 
@@ -602,6 +600,55 @@ export default class ScriptStd {
 
     month(time) {
         return new Date(time || se.t).getUTCMonth()
+    }
+
+    // Display data point on the main chart
+    onchart(x, name, sett = {}, _id) {
+        name = name || u.get_fn_id('Onchart', _id)
+        if (x && x.__id__) x = x[0]
+        if (Array.isArray(x) && x[0] && x[0].__id__) {
+            x = x.map(x => x[0])
+        }
+        if (!this.env.onchart[name]) {
+            let type = sett.type
+            delete sett.type
+            sett.$synth = true
+            let post = Array.isArray(x) ? 's': ''
+            this.env.onchart[name] = Object.assign({
+                name: name,
+                type: type || 'Spline' + post,
+                data: [],
+                settings: sett
+            }, sett)
+        }
+        let v = Array.isArray(x) ?
+            [se.t, ...x] : [se.t, x]
+        this.env.onchart[name].data.push(v)
+    }
+
+    // Create a new offchart overlay and put
+    // the point there
+    offchart(x, name, sett = {}, _id) {
+        name = name || u.get_fn_id('Offchart', _id)
+        if (x && x.__id__) x = x[0]
+        if (Array.isArray(x) && x[0] && x[0].__id__) {
+            x = x.map(x => x[0])
+        }
+        if (!this.env.offchart[name]) {
+            let type = sett.type
+            delete sett.type
+            sett.$synth = true
+            let post = Array.isArray(x) ? 's': ''
+            this.env.offchart[name] = Object.assign({
+                name: name,
+                type: type || 'Spline' + post,
+                data: [],
+                settings: sett
+            }, sett)
+        }
+        let v = Array.isArray(x) ?
+            [se.t, ...x] : [se.t, x]
+        this.env.offchart[name].data.push(v)
     }
 
     offset() {
@@ -708,22 +755,22 @@ export default class ScriptStd {
     }
 
     // Parabolic SAR
-    // TODO: tf
-    sar(start, inc, max, _id) {
+    sar(start, inc, max, _id, _tf) {
         // Source: Parabolic SAR by imuradyan
         // TODO: simplify the code
+        // TODO: fix the custom TF mode
         let id = this._tsid(_id, `sar(${start},${inc},${max})`)
-
-        let high = this.env.shared.high
-        let low = this.env.shared.low
-        let close = this.env.shared.close
+        let tfs = _tf || ''
+        let high = this.env.shared[`high${tfs}`]
+        let low = this.env.shared[`low${tfs}`]
+        let close = this.env.shared[`close${tfs}`]
 
         let minTick = 0 //1e-7
-        let n = se.iter
-        let out = this.ts(undefined, id+'1')
-        let pos = this.ts(undefined, id+'2')
-        let maxMin = this.ts(undefined, id+'3')
-        let acc = this.ts(undefined, id+'4')
+        let out = this.ts(undefined, id+'1', _tf)
+        let pos = this.ts(undefined, id+'2', _tf)
+        let maxMin = this.ts(undefined, id+'3', _tf)
+        let acc = this.ts(undefined, id+'4', _tf)
+        let n = _tf ? out.__len__ - 1 : se.iter
         let prev
         let outSet = false
 
@@ -856,30 +903,30 @@ export default class ScriptStd {
     }
 
     // Supertrend
-    // TODO: tf
-    supertrend(factor, atrlen, _id) {
+    supertrend(factor, atrlen, _id, _tf) {
         let id = this._tsid(_id, `supertrend(${factor},${atrlen})`)
-        let high = this.env.shared.high
-        let low = this.env.shared.low
-        let close = this.env.shared.close
+        let tfs = _tf || ''
+        let high = this.env.shared[`high${tfs}`]
+        let low = this.env.shared[`low${tfs}`]
+        let close = this.env.shared[`close${tfs}`]
         let hl2 = (high[0] + low[0]) * 0.5
 
-        let atr = factor * this.atr(atrlen, id+'1')[0]
+        let atr = factor * this.atr(atrlen, id+'1', _tf)[0]
 
-        let ls = this.ts(hl2 - atr, id+'2')
+        let ls = this.ts(hl2 - atr, id+'2', _tf)
         let ls1 = this.nz(ls[1], ls[0])
         ls[0] = close[1] > ls1 ? Math.max(ls[0], ls1) : ls[0]
 
-        let ss = this.ts(hl2 + atr, id+'3')
+        let ss = this.ts(hl2 + atr, id+'3', _tf)
         let ss1 = this.nz(ss[1], ss)
         ss[0] = close[1] < ss1 ? Math.min(ss[0], ss1) : ss[0]
 
-        let dir = this.ts(1, id+'4')
+        let dir = this.ts(1, id+'4', _tf)
         dir[0] = this.nz(dir[1], dir[0])
         dir[0] = dir[0] === -1 && close[0] > ss1 ? 1 :
             (dir[0] === 1 && close[0] < ls1 ? -1 : dir[0])
 
-        let plot = this.ts(dir[0] === 1 ? ls[0] : ss[0], id+'5')
+        let plot = this.ts(dir[0] === 1 ? ls[0] : ss[0], id+'5', _tf)
         return [plot, this.neg(dir, id+'6')]
     }
 
@@ -904,13 +951,12 @@ export default class ScriptStd {
     }
 
     // True Range
-    // TODO: tf
-    tr(fixnan = false, _id) {
-        // TODO: this
+    tr(fixnan = false, _id, _tf) {
         let id = this._tsid(_id, `tr(${fixnan})`)
-        let high = this.env.shared.high
-        let low = this.env.shared.low
-        let close = this.env.shared.close
+        let tfs = _tf || ''
+        let high = this.env.shared[`high${tfs}`]
+        let low = this.env.shared[`low${tfs}`]
+        let close = this.env.shared[`close${tfs}`]
         let res = 0
         if (this.na(close[1]) && fixnan) {
             res = high[0] - low[0]
@@ -922,7 +968,7 @@ export default class ScriptStd {
             )
         }
 
-        return this.ts(res, id)
+        return this.ts(res, id, _tf)
 
     }
 
@@ -978,19 +1024,18 @@ export default class ScriptStd {
     }
 
     // Williams %R
-    // TODO: tf
-    wpr(len, _id) {
+    wpr(len, _id, _tf) {
         let id = this._tsid(_id, `wpr(${len})`)
-
-        let high = this.env.shared.high
-        let low = this.env.shared.low
-        let close = this.env.shared.close
+        let tfs = _tf || ''
+        let high = this.env.shared[`high${tfs}`]
+        let low = this.env.shared[`low${tfs}`]
+        let close = this.env.shared[`close${tfs}`]
 
         let hh = this.highest(high, len, id)
         let ll = this.lowest(low, len, id)
 
         let res = (hh[0] - close[0]) / (hh[0] - ll[0])
-        return this.ts(-res * 100 , id)
+        return this.ts(-res * 100 , id, _tf)
     }
 
     year(time) {

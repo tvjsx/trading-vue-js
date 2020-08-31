@@ -97,6 +97,7 @@ export function tf_from_pair(num, pf) {
 
 export function tf_from_str(str) {
 
+    if (typeof str === 'number') return str
     if (tf_cache[str]) return tf_cache[str]
 
     TFSTR.lastIndex = 0
@@ -106,4 +107,8 @@ export function tf_from_str(str) {
         return tf_cache[str]
     }
     return undefined
+}
+
+export function get_fn_id(pre, id) {
+    return pre + '-' + id.split('<-').pop()
 }
