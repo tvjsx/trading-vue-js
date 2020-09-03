@@ -152,6 +152,14 @@ export default class ScriptStd {
         return x == undefined || x !== x
     }
 
+    // Replace with NaN if Infinite
+    nf(x, v) {
+        if (!isFinite(x)) {
+            return v !== undefined ? v : NaN
+        }
+        return x
+    }
+
     // Math operators on t-series and numbers
     add(x, y, _id) {
         // __id__ means this is a time-series
@@ -345,19 +353,19 @@ export default class ScriptStd {
     cross(src1, src2, _id) {
         let id = this._tsid(_id, `cross`)
         let x = (src1[0] > src2[0]) !== (src1[1] > src2[1])
-        return this.ts(x, id, src.__tf__)
+        return this.ts(x, id, src1.__tf__)
     }
 
     crossover(src1, src2, _id) {
         let id = this._tsid(_id, `crossover`)
         let x = (src1[0] > src2[0]) && (src1[1] <= src2[1])
-        return this.ts(x, id, src.__tf__)
+        return this.ts(x, id, src1.__tf__)
     }
 
     crossunder(src1, src2, _id) {
         let id = this._tsid(_id, `crossunder`)
         let x = (src1[0] < src2[0]) && (src1[1] >= src2[1])
-        return this.ts(x, id, src.__tf__)
+        return this.ts(x, id, src1.__tf__)
     }
 
     cum(src, _id) {

@@ -266,10 +266,11 @@ export default class ScriptEnv {
         return arr
     }
 
-    // TODO: filter commas inside qoutes, square brackets
     get_args_2(str) {
         let parts = []
         let c = 0
+        let s = 0
+        var q1 = false, q2 = false, q3 = false
         let part
         for (var i = 0; i < str.length; i++) {
             if (str[i] === '(') {
@@ -277,7 +278,12 @@ export default class ScriptEnv {
                 if (!part) part = [i+1]
             }
             if (str[i] === ')') c--
-            if (str[i] === ',' && c === 1) {
+            if (str[i] === '[') s++
+            if (str[i] === ']') s--
+            if (str[i] === "'") q1 = !q1
+            if (str[i] === '"') q2 = !q2
+            if (str[i] === '`') q3 = !q3
+            if (str[i] === ',' && c === 1 && !s && !q1 && !q2 && !q3) {
                 if (part) {
                     part[1] = i
                     parts.push(part)
