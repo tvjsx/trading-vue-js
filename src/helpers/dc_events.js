@@ -98,6 +98,8 @@ export default class DCEvents {
     // web worker
     on_settings(values, prev) {
 
+        if (!this.sett.scripts) return
+
         let delta = {}
         let changed = false
 
