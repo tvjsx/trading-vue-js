@@ -167,6 +167,7 @@ export default class ScriptEnv {
     make_modules() {
         let s = ``
         for (var id in se.mods) {
+            if (!se.mods[id].api) continue
             s += `const ${id} = se.mods['${id}'].api[self.id]`
             s += '\n'
         }

@@ -565,6 +565,7 @@ export default class ScriptStd {
     }
 
     max(...args) {
+        args.pop() // Remove _id
         return Math.max(...args)
     }
 
@@ -593,6 +594,7 @@ export default class ScriptStd {
     }
 
     min(...args) {
+        args.pop() // Remove _id
         return Math.min(...args)
     }
 

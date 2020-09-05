@@ -105,6 +105,12 @@ class ScriptEngine {
         // Parse non-default symbols
         symstd.parse(s)
 
+        for (var id in this.mods) {
+            if (this.mods[id].pre_env) {
+                this.mods[id].pre_env(s.uuid, s)
+            }
+        }
+
         s.env = new ScriptEnv(s, Object.assign({
             open: this.open,
             high: this.high,
