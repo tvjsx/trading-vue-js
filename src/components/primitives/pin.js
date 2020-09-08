@@ -54,6 +54,7 @@ export default class Pin {
 
     draw_circle(ctx) {
 
+        this.layout = this.comp.layout
         if (this.comp.selected) {
             var r = this.RADIUS, lw = 1.5
         } else {
@@ -93,6 +94,7 @@ export default class Pin {
     update_from(data, emit = false) {
 
         if (!data) return
+        this.layout = this.comp.layout
 
         this.y$ = data[1]
         this.y = this.layout.$2screen(this.y$)
