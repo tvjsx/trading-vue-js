@@ -32,9 +32,8 @@ export default {
     mounted() {
         window.addEventListener('resize', this.onResize)
         this.onResize()
-        window.DataCube = this.chart
+        window.dc = this.chart
         window.tv = this.$refs.tvjs
-        setTimeout(() => this.$set(this, 'chart', new DataCube(Data)), 1000)
     },
     computed: {
         colors() {
@@ -50,7 +49,7 @@ export default {
     },
     data() {
         return {
-            chart: {},
+            chart: new DataCube(Data),
             width: window.innerWidth,
             height: window.innerHeight
         }
