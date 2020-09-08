@@ -75,7 +75,7 @@ export default {
                         }
                         break
                     case 'dmi':
-                        this.deps(['high', 'low'], m[2])
+                        this.deps(['high', 'low', 'close'], m[2])
                         se.std_plus[fn] = function(len, smooth, _id) {
                             return this.dmi(len, smooth, _id, tf)
                         }

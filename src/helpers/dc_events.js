@@ -139,7 +139,7 @@ export default class DCEvents {
              preset[tool.type] = tool
              delete tool.type
         }
-        this.data.tools = []
+        this.tv.$set(this.data, 'tools', [])
         let list = [{
             type: 'Cursor', icon: Icons['cursor.png']
         }]
