@@ -5,6 +5,7 @@
 const http = require('http')
 const fs = require('fs')
 const { minify } = require("terser")
+const lz = require('lz-string')
 
 const PATH = `./src/helpers/tmp/`
 
@@ -20,6 +21,7 @@ module.exports = class WWPlugin {
 
                 resp.on('end', () => {
                     //data = minify(data, { sourceMap: false }).code
+                    data = lz.compressToBase64(data)
                     let json = JSON.stringify([data])
                     try {
                         var prev = fs.readFileSync(PATH + 'ww$$$.json')

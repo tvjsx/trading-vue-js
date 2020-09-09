@@ -8,9 +8,13 @@
             height: this.height+'px'}">
         <toolbar v-if="toolbar"
             v-on:custom-event="custom_event"
-            v-bind="chart_props"
+            v-bind="chart_props" 
             v-bind:config="chart_config">
         </toolbar>
+        <widgets v-if="ctrllist.length" :map="ws"
+            :width="width" :height="height" :tv="this"
+            :dc="data">
+        </widgets>
         <chart :key="reset"
             ref="chart"
             v-bind="chart_props"
@@ -28,12 +32,15 @@
 import Const from './stuff/constants.js'
 import Chart from './components/Chart.vue'
 import Toolbar from './components/Toolbar.vue'
+import Widgets from './components/Widgets.vue'
+import XControl from './mixins/xcontrol.js'
 
 export default {
     name: 'TradingVue',
     components: {
-        Chart, Toolbar
+        Chart, Toolbar, Widgets
     },
+    mixins: [ XControl ],
     props: {
         titleTxt: {
             type: String,
@@ -148,6 +155,10 @@ export default {
         indexBased: {
             type: Boolean,
             default: false
+        },
+        extensions: {
+            type: Array,
+            default: function () { return [] }
         }
     },
     computed: {
@@ -157,7 +168,7 @@ export default {
                 this.chart_config.TOOLBAR : 0
             let chart_props = {
                 title_txt: this.$props.titleTxt,
-                overlays: this.$props.overlays,
+                overlays: this.$props.overlays.concat(this.mod_ovs),
                 data: this.decubed,
                 width: this.$props.width - offset,
                 height: this.$props.height,
@@ -199,6 +210,13 @@ export default {
                 return base.data.chart.indexBased
             }
             return false
+        },
+        mod_ovs() {
+            let arr = []
+            for (var x of this.$props.extensions) {
+                arr.push(...x.overlays)
+            }
+            return arr
         }
     },
     data() {
@@ -253,7 +271,9 @@ export default {
             return cursor
         },
         legend_button(event) {
-            this.$emit('legend-button-click', event)
+            this.custom_event({
+                event: 'legend-button-click', args: [event]
+            })
         },
         custom_event(d) {
             if ('args' in d) {
@@ -262,10 +282,13 @@ export default {
                 this.$emit(d.event)
             }
             let data = this.$props.data
+            let ctrl = this.controllers.length !== 0
+            if (ctrl) this.pre_dc(d)
             if (data.tv) {
                 // If the data object is DataCube
                 data.on_custom_event(d.event, d.args)
             }
+            if (ctrl) this.post_dc(d)
         },
         range_changed(r) {
             if (this.chart_props.ib) {

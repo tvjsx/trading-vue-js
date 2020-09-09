@@ -25,7 +25,6 @@ export default {
     ],
     components: { ToolbarItem },
     mounted() {
-
     },
     methods: {
         selected(tool) {

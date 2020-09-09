@@ -11,11 +11,15 @@ import AggTool from './agg_tool.js'
 // Interface methods. Private methods in dc_core.js
 export default class DataCube extends DCCore {
 
-    constructor(data = {}, sett = {
-        aggregation: 100,       // Update aggregation interval
-        script_depth: 0,        // 0 === Exec on all data
-        auto_scroll: true       // Auto scroll to a new candle
-    }) {
+    constructor(data = {}, sett = {}) {
+
+        let def_sett = {
+            aggregation: 100,       // Update aggregation interval
+            script_depth: 0,        // 0 === Exec on all data
+            auto_scroll: true,      // Auto scroll to a new candle
+            scripts: true           // Enable overlays scripts
+        }
+        sett = Object.assign(def_sett, sett)
 
         super()
         this.data = data
