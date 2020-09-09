@@ -218,7 +218,10 @@ export default {
             handler: function(ovs) {
                 for (var ov of ovs) {
                     for (var comp of this.$children) {
-                        if (comp._name === `<${ov.name}>`) {
+                        if (typeof comp.id !== 'string') continue
+                        let tuple = comp.id.split('_')
+                        tuple.pop()
+                        if (tuple.join('_') === ov.name) {
                             comp.calc = ov.methods.calc
                             comp.exec_script()
                         }

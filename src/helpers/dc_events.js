@@ -13,6 +13,9 @@ export default class DCEvents {
 
         // Listen to the web-worker events
         this.ww.onevent = e => {
+            for (var ctrl of this.tv.controllers) {
+                if (ctrl.ww) ctrl.ww(e.data)
+            }
             switch(e.data.type) {
                 case 'request-data':
                     let main = this.data.chart.data
@@ -37,6 +40,9 @@ export default class DCEvents {
                 case 'change-overlay':
                     this.change_overlay(e.data.data)
                     break
+            }
+            for (var ctrl of this.tv.controllers) {
+                if (ctrl.post_ww) ctrl.post_ww(e.data)
             }
         }
     }
@@ -92,6 +98,8 @@ export default class DCEvents {
     // web worker
     on_settings(values, prev) {
 
+        if (!this.sett.scripts) return
+
         let delta = {}
         let changed = false
 
@@ -131,7 +139,7 @@ export default class DCEvents {
              preset[tool.type] = tool
              delete tool.type
         }
-        this.data.tools = []
+        this.tv.$set(this.data, 'tools', [])
         let list = [{
             type: 'Cursor', icon: Icons['cursor.png']
         }]
@@ -157,9 +165,9 @@ export default class DCEvents {
     }
 
     exec_script(args) {
-        if (args.length) {
+        if (args.length && this.sett.scripts) {
             let obj = this.get_overlay(args[0])
-            if (!obj) return
+            if (!obj || obj.scripts === false) return
             // Parse script props & get the values from the ov
             // TODO: remove unnecessary script initializations
             let s = obj.settings
@@ -196,6 +204,7 @@ export default class DCEvents {
     }
 
     exec_all_scripts() {
+        if (!this.sett.scripts) return
         this.merge('.', { loading: true })
         this.ww.just('exec-all-scripts')
     }
@@ -210,6 +219,7 @@ export default class DCEvents {
     }
 
     data_changed(args) {
+        if (!this.sett.scripts) return
         let main = this.data.chart.data
         if (this.ww._data_uploading) return
         if (!this.se_state.scripts) return
@@ -341,6 +351,19 @@ export default class DCEvents {
             if (obj) {
                 obj.data = ov.data
                 this.tv.$set(obj, 'loading', false)
+            }
+            this.get('.').forEach(x => {
+                if (x.settings.$synth) this.del(`${x.id}`)
+            })
+            for (var id in ov.new_ovs.onchart) {
+                if (!this.get_one(`onchart.${id}`)) {
+                    this.add('onchart', ov.new_ovs.onchart[id])
+                }
+            }
+            for (var id in ov.new_ovs.offchart) {
+                if (!this.get_one(`offchart.${id}`)) {
+                    this.add('offchart', ov.new_ovs.offchart[id])
+                }
             }
         }
     }

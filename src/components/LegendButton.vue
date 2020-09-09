@@ -11,7 +11,6 @@ export default {
     name: 'LegendButton',
     props: ['id', 'tv_id', 'grid_id', 'ov_id', 'index', 'display'],
     mounted() {
-
     },
     computed: {
         base64() {
@@ -35,8 +34,7 @@ export default {
                 "onchart" : "offchart"
         },
         data_index() {
-            return this.$props.grid_id === 0 ?
-                this.$props.index : this.$props.grid_id - 1
+            return this.$props.index 
         }
     },
     methods: {

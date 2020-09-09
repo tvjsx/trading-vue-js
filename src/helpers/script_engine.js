@@ -3,6 +3,8 @@
 
 import ScriptEnv from './script_env.js'
 import Utils from '../stuff/utils.js'
+import * as u from './script_utils.js'
+import symstd from './symstd.js'
 import TS from './script_ts.js'
 
 const DEF_LIMIT = 5   // default buff length
@@ -19,6 +21,8 @@ class ScriptEngine {
         this.update_queue = []  // Live update queue
         this.sett = {}
         this.state = {}
+        this.mods = {}          // Modules (extensions)
+        this.std_plus = {}      // Functions to inject
     }
 
     exec_all() {
@@ -89,13 +93,25 @@ class ScriptEngine {
         if (!s.src.conf) s.src.conf = {}
 
         if (s.src.init) {
-            s.src.init_src = this.get_raw_src(s.src.init)
+            s.src.init_src = u.get_raw_src(s.src.init)
         }
         if (s.src.update) {
-            s.src.upd_src = this.get_raw_src(s.src.update)
+            s.src.upd_src = u.get_raw_src(s.src.update)
+        }
+        if (s.src.post) {
+            s.src.post_src = u.get_raw_src(s.src.post)
         }
 
-        s.env = new ScriptEnv(s, {
+        // Parse non-default symbols
+        symstd.parse(s)
+
+        for (var id in this.mods) {
+            if (this.mods[id].pre_env) {
+                this.mods[id].pre_env(s.uuid, s)
+            }
+        }
+
+        s.env = new ScriptEnv(s, Object.assign({
             open: this.open,
             high: this.high,
             low: this.low,
@@ -104,10 +120,18 @@ class ScriptEngine {
             ohlcv: this.data.ohlcv,
             t: () => this.t,
             iter: () => this.iter,
-        })
+        }, this.tss))
 
         this.map[s.uuid] = s
 
+        for (var id in this.mods) {
+            if (this.mods[id].new_env) {
+                this.mods[id].new_env(s.uuid, s)
+            }
+        }
+
+        // Build te box after mod's interfaces injected
+        s.env.build()
     }
 
     // Live update
@@ -121,6 +145,9 @@ class ScriptEngine {
             this.update_queue.push(candle)
             return
         }
+
+        let mfs1 = this.make_mods_hooks('pre_step')
+        let mfs2 = this.make_mods_hooks('post_step')
 
         try {
             let ohlcv = this.data.ohlcv
@@ -143,9 +170,18 @@ class ScriptEngine {
             this.t = ohlcv[i][0]
             this.step(ohlcv[i], unshift)
 
+            for (var m = 0; m < mfs1.length; m++) {
+                mfs1[m](sel) // pre_step
+            }
+
             for (var id of sel) {
                 this.map[id].env.step(unshift)
             }
+
+            for (var m = 0; m < mfs2.length; m++) {
+                mfs2[m](sel) // post_step
+            }
+
             this.limit()
             this.send_update()
             this.send_state()
@@ -171,6 +207,12 @@ class ScriptEngine {
         this.low = TS('low', [])
         this.close = TS('close', [])
         this.vol = TS('vol', [])
+
+        // Shared TSs
+        this.tss = {}
+        this.std_plus = {}
+
+        // Engine state
         this.iter = 0
         this.t = 0
         this.skip = false // skip the step
@@ -180,8 +222,15 @@ class ScriptEngine {
         return true
     }
 
+    // Inject/override functions in the std lib object
+    std_inject(std) {
+        let proto = Object.getPrototypeOf(std)
+        Object.assign(proto, this.std_plus)
+        return std
+    }
+
     send_state() {
-        this.onmessage('engine-state', {
+        this.send('engine-state', {
             scripts: Object.keys(this.map).length,
             last_perf: this.perf,
             iter: this.iter,
@@ -191,7 +240,7 @@ class ScriptEngine {
     }
 
     send_update() {
-        this.onmessage(
+        this.send(
             'overlay-update', this.format_update()
         )
     }
@@ -202,27 +251,21 @@ class ScriptEngine {
         }
     }
 
-    get_raw_src(f) {
-        if (typeof f === 'string') return f
-        let src = f.toString()
-        return src.slice(
-            src.indexOf("{") + 1,
-            src.lastIndexOf("}")
-        )
-    }
-
     async run(sel) {
 
-        this.onmessage('engine-state', { running: true })
+        this.send('engine-state', { running: true })
 
         var t1 = Utils.now()
         sel = sel || Object.keys(this.map)
+
+        this.pre_run_mods(sel)
+        let mfs1 = this.make_mods_hooks('pre_step')
+        let mfs2 = this.make_mods_hooks('post_step')
 
         try {
 
             for (var id of sel) {
                 this.map[id].env.init()
-                this.init_conf(id)
             }
 
             let ohlcv = this.data.ohlcv
@@ -232,7 +275,8 @@ class ScriptEngine {
 
                 // Make a pause to read new WW msg
                 // TODO: speedup pause()
-                if (i % 1000 === 0) await Utils.pause(0)
+                // TODO: emit progress %
+                if (i % 5000 === 0) await Utils.pause(0)
                 if (this.restarted()) return
 
                 this.iter = i - start
@@ -241,21 +285,34 @@ class ScriptEngine {
 
                 // SLOW DOWN TEST:
                 //for (var k = 1; k < 1000000; k++) {}
+                for (var m = 0; m < mfs1.length; m++) {
+                    mfs1[m](sel) // pre_step
+                }
 
                 for (var id of sel) this.map[id].env.step()
 
+                for (var m = 0; m < mfs2.length; m++) {
+                    mfs2[m](sel) // post_step
+                }
                 this.limit()
             }
+
+            for (var id of sel) {
+                this.map[id].env.output.post()
+            }
+
         } catch(e) {
             console.log(e)
         }
+
+        this.post_run_mods(sel)
 
         this.perf = Utils.now() - t1
         //console.log('Perf',  this.perf)
 
         this.running = false
 
-        this.onmessage('overlay-data', this.format_map(sel))
+        this.send('overlay-data', this.format_map(sel))
     }
 
     step(data, unshift = true) {
@@ -265,12 +322,19 @@ class ScriptEngine {
             this.low.unshift(data[3])
             this.close.unshift(data[4])
             this.vol.unshift(data[5])
+            for (var id in this.tss) {
+                if (this.tss[id].__tf__) this.tss[id].__fn__()
+                else this.tss[id].unshift(this.tss[id].__fn__())
+            }
         } else {
             this.open[0] = data[1]
             this.high[0] = data[2]
             this.low[0] = data[3]
             this.close[0] = data[4]
             this.vol[0] = data[5]
+            for (var id in this.tss) {
+                this.tss[id] = this.tss[id].__fn__()
+            }
         }
     }
 
@@ -314,7 +378,12 @@ class ScriptEngine {
         let res = []
         for (var id of sel) {
             let x = this.map[id]
-            res.push({ id: id, data: x.env.data })
+            res.push({
+                id: id, data: x.env.data, new_ovs: {
+                    onchart: x.env.onchart,
+                    offchart: x.env.offchart
+                }
+            })
         }
         return res
     }
@@ -331,17 +400,6 @@ class ScriptEngine {
         return res
     }
 
-    init_conf(id) {
-        /*if (this.map[id].src.conf.renderer) {
-            this.onmessage('change-overlay', {
-                id: id,
-                fileds: {
-                    type: this.map[id].src.conf.renderer
-                }
-            })
-        }*/
-    }
-
     restarted() {
         if (this._restart) {
             this._restart = false
@@ -356,6 +414,33 @@ class ScriptEngine {
     remove_scripts(ids) {
         for (var id of ids) delete this.map[id]
         this.send_state()
+    }
+
+    pre_run_mods(sel) {
+        for (var id in this.mods) {
+            if (this.mods[id].pre_run) {
+                this.mods[id].pre_run(sel)
+            }
+        }
+    }
+
+    post_run_mods(sel) {
+        for (var id in this.mods) {
+            if (this.mods[id].post_run) {
+                this.mods[id].post_run(sel)
+            }
+        }
+    }
+
+    make_mods_hooks(name) {
+        let arr = []
+        for (var id in this.mods) {
+            if (this.mods[id][name]) {
+                arr.push(this.mods[id][name]
+                    .bind(this.mods[id]))
+            }
+        }
+        return arr
     }
 }
 
