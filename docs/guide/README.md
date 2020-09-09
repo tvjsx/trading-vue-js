@@ -1,7 +1,7 @@
 # Getting Started
 
 ::: warning
-This library is in alpha stage, API may change. This guide's version is **0.5.0**
+This library is in alpha stage, API may change. This guide's version is **0.6.1**
 :::
 
 ![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=Current%20lib%20version)
@@ -418,10 +418,10 @@ To make the overlay more reusable we can define `settings` format and use its pr
 `In data.json:`
 ```json
 "settings" : {
-    "buy-color": "#bfff00",
-    "sell-color": "#ec4662",
-    "marker-size": 5,
-    "show-label": true
+    "buyColor": "#bfff00",
+    "sellColor": "#ec4662",
+    "markerSize": 5,
+    "showLabel": true
 }
 ```
 
@@ -490,8 +490,6 @@ export default {
 
 ## Publishing your overlay
 
-~~If you want to share your work, you can make a PR to https://github.com/C451/trading-vue-js .~~
-
 Make sure your class contains `meta_info()` method at the same level as `use_for()`:
 
 ```js
@@ -499,16 +497,15 @@ meta_info() {
     return {
         author: 'Satoshi Smith',
         version: '1.0.0',
+        desc: /*opt*/ 'Brief description',
         contact: /*opt*/ '<email>',
-        github: /*opt*/ '<GitHub Page>',
+        github: /*opt*/ '<GitHub Page>'
     }
 },
 use_for() {return ['<YourOverlayId>'] }
 ```
 
-~~Submit a PR to `trading-vue-js/src/components/overlays/` as a folder with the following structure:~~
-
-**There will be a separate git repository & npm package for community overlays [WIP].**
+Submit a PR to https://github.com/tvjsx/tvjs-overlays
 
 
 *This section will be updated*
