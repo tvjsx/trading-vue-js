@@ -9,9 +9,11 @@ assignees: ''
 
 ## Description
 
-## Screenshot (if applicable)
+Behaviour / expected behaviour
 
-## Data Sample (if applicable)
+## Screenshot 
+
+## Data Sample 
 
 The data sample must follow the current [data structure](https://github.com/C451/trading-vue-js/tree/master/docs/api#data-structure-new).
 
