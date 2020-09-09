@@ -29,7 +29,7 @@ If you create trading software - this lib is probably for you. If you like to ma
 
 * Scrolling & zooming as we all like
 * Simple API for making new overlays
-* Custom drawing tools 
+* Custom drawing tools
 * Non-time based charts (e.g. Renko)
 * One overlay === one .vue component
 * Fully reactive
@@ -39,7 +39,7 @@ If you create trading software - this lib is probably for you. If you like to ma
 
 ## Demo & Docs
 
-### [Demo](https://tvjsx.github.io/trading-vue-demo/) | [Getting Started](https://github.com/tvjsx/trading-vue-js/tree/master/docs/guide#getting-started) | [API Book](https://github.com/tvjsx/trading-vue-js/tree/master/docs/api#api-book) | [Built-in Overlays](https://github.com/tvjsx/trading-vue-js/tree/master/docs/overlays#built-in-overlays) | [Examples](https://github.com/tvjsx/trading-vue-js/tree/master/test/tests) | [101 Project](https://github.com/tvjsx/trading-vue-101) | [llll Gitter](https://gitter.im/Trading-Vue-js) | [FAQ](https://github.com/tvjsx/trading-vue-js/tree/master/docs/faq) | [FREE Overlay Pack](https://github.com/tvjsx/tvjs-overlays) 
+### [Demo](https://tvjsx.github.io/trading-vue-demo/) | [Getting Started](https://github.com/tvjsx/trading-vue-js/tree/master/docs/guide#getting-started) | [API Book](https://github.com/tvjsx/trading-vue-js/tree/master/docs/api#api-book) | [Built-in Overlays](https://github.com/tvjsx/trading-vue-js/tree/master/docs/overlays#built-in-overlays) | [Examples](https://github.com/tvjsx/trading-vue-js/tree/master/test/tests) | [101 Project](https://github.com/tvjsx/trading-vue-101) | [llll Gitter](https://gitter.im/Trading-Vue-js) | [FAQ](https://github.com/tvjsx/trading-vue-js/tree/master/docs/faq) | [FREE Overlay Pack](https://github.com/tvjsx/tvjs-overlays)
 
 *To run the examples, download the repo & `npm run test`*
 
@@ -243,6 +243,13 @@ npm install
 
 ```
 npm run dev
+```
+*Server is running on http://localhost:8080*
+
+**Run in a CDN-like mode**
+
+```
+npm run cdn
 ```
 *Server is running on http://localhost:8080*
 
