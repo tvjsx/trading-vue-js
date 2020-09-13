@@ -5,7 +5,7 @@
          class="trading-vue-ohlcv"
         :style = "{ 'max-width': common.width + 'px' }">
         <span class="t-vue-title"
-             :style="{ color: common.colors.colorTitle }">
+             :style="{ color: common.colors.title }">
               {{common.title_txt}}
         </span>
         O<span class="t-vue-lspan" >{{ohlcv[0]}}</span>

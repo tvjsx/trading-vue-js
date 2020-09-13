@@ -27,18 +27,18 @@ export default class Botbar {
 
         const sb = this.layout.grids[0].sb
 
-        this.ctx.fillStyle = this.$p.colors.colorBack
+        this.ctx.fillStyle = this.$p.colors.back
         this.ctx.font = this.$p.font
         this.ctx.fillRect(0, 0, width, height)
 
-        this.ctx.strokeStyle = this.$p.colors.colorScale
+        this.ctx.strokeStyle = this.$p.colors.scale
 
         this.ctx.beginPath()
         this.ctx.moveTo(0, 0.5)
         this.ctx.lineTo(Math.floor(width + 1), 0.5)
         this.ctx.stroke()
 
-        this.ctx.fillStyle = this.$p.colors.colorText
+        this.ctx.fillStyle = this.$p.colors.text
         this.ctx.beginPath()
 
         for (var p of this.layout.botbar.xs) {
@@ -77,7 +77,7 @@ export default class Botbar {
     panel() {
 
         let lbl = this.format_cursor_x()
-        this.ctx.fillStyle = this.$p.colors.colorPanel
+        this.ctx.fillStyle = this.$p.colors.panel
 
         let measure = this.ctx.measureText(lbl + '    ')
         let panwidth = Math.floor(measure.width)
@@ -87,7 +87,7 @@ export default class Botbar {
         let panheight = this.comp.config.PANHEIGHT
         this.ctx.fillRect(x, y, panwidth, panheight + 0.5)
 
-        this.ctx.fillStyle = this.$p.colors.colorTextHL
+        this.ctx.fillStyle = this.$p.colors.textHL
         this.ctx.textAlign = 'center'
         this.ctx.fillText(lbl, cursor, y + 16)
 

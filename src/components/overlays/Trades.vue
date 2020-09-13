@@ -57,7 +57,7 @@ export default {
                 },
                 {
                     value: values[2].toFixed(4),
-                    color: this.$props.colors.colorText
+                    color: this.$props.colors.text
                 }
             ].concat(values[3] ? [
                 {

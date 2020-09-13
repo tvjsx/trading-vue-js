@@ -121,7 +121,7 @@ export default {
         },
         color() {
             return this.sett.color ||
-                this.$props.colors.colorCross
+                this.$props.colors.cross
         },
         back_color() {
             return this.sett.backColor || '#9b9ba316'
@@ -131,7 +131,7 @@ export default {
         },
         value_color() {
             return this.sett.valueColor ||
-                this.$props.colors.colorText
+                this.$props.colors.text
         },
         prec() {
             return this.sett.precision || 2

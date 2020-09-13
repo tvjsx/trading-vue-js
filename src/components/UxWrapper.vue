@@ -170,7 +170,7 @@ export default {
             }
             if (this.uxr.win_styling !== false)
                 st = Object.assign(st, {
-                    'border': `1px solid ${this.$props.colors.colorGrid}`,
+                    'border': `1px solid ${this.$props.colors.grid}`,
                     'border-radius': '3px',
                     'background': `${this.background}`,
                 })
@@ -212,7 +212,7 @@ export default {
             return base_index + ux_index
         },
         background() {
-            let c = this.uxr.background || this.$props.colors.colorBack
+            let c = this.uxr.background || this.$props.colors.back
             return Utils.apply_opacity(c,
                 this.uxr.background_opacity ||
                 this.$props.config.UX_OPACITY
@@ -220,7 +220,7 @@ export default {
         },
         inactive_btn_color() {
             return this.uxr.inactive_btn_color ||
-                this.$props.colors.colorGrid
+                this.$props.colors.grid
         },
         wrapper() {
             return {

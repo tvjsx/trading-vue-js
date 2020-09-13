@@ -63,19 +63,19 @@ export default {
         },
         colorVolUp() {
             return this.sett.colorVolUp ||
-            this.$props.colors.colorVolUp
+            this.$props.colors.volUp
         },
         colorVolDw() {
             return this.sett.colorVolDw ||
-            this.$props.colors.colorVolDw
+            this.$props.colors.volDw
         },
         colorVolUpLegend() {
             return this.sett.colorVolUpLegend ||
-            this.$props.colors.colorCandleUp
+            this.$props.colors.candleUp
         },
         colorVolDwLegend() {
             return this.sett.colorVolDwLegend ||
-            this.$props.colors.colorCandleDw
+            this.$props.colors.candleDw
         },
         volscale() {
             return this.sett.volscale ||

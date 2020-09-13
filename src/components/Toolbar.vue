@@ -38,9 +38,9 @@ export default {
             let colors = this.$props.colors
             let b = this.$props.config.TB_BORDER
             let w = this.$props.config.TOOLBAR - b
-            let c = colors.colorGrid
-            let cb = colors.colorTbBack || colors.colorBack
-            let brd = colors.colorTbBorder || colors.colorScale
+            let c = colors.grid
+            let cb = colors.tbBack || colors.back
+            let brd = colors.tbBorder || colors.scale
             let st = this.$props.config.TB_B_STYLE
             return {
                 'width': `${w}px`,

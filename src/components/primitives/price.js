@@ -32,7 +32,7 @@ export default class Price {
                 let y = bar.y - h * 0.5 - 0.5
                 let a = 7
                 ctx.fillRect(x - 0.5, y, w + 1, h)
-                ctx.fillStyle = comp.$props.colors.colorTextHL
+                ctx.fillStyle = comp.$props.colors.textHL
                 ctx.textAlign = 'left'
                 ctx.fillText(lbl, a, y + 15)
 

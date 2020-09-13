@@ -118,27 +118,6 @@ export default class ScriptStd {
         return ts
     }
 
-    // Wait for a value !== undefined
-    nw(x) {
-        /*if (x == undefined || x !== x) {
-            // Skip a dependend indicators + don't
-            // add the current value to the final output
-            // TODO: only when ts starts?
-            se.skip = true
-        }
-        return x*/
-    }
-
-    // Skip undefined values
-    ns(x) {
-        if (x == undefined || x !== x) {
-            // Skip a dependend indicators + don't
-            // add the current value to the final output
-            se.skip = true
-        }
-        return x
-    }
-
     // Replace if NaN
     nz(x, v) {
         if (x == undefined || x !== x) {
@@ -455,6 +434,12 @@ export default class ScriptStd {
     fixnan(x) {
         // TODO: this
     }
+
+    /* TODO: think
+    skipnan(x, _id) {
+        let id = this._tsid(_id, `skipnan()`)
+        return this.ts(true, id, src.__tf__)
+    }*/
 
     floor(x) {
         Math.floor(x)

@@ -221,7 +221,7 @@ export default class Grid {
     // Actually draws the grid (for real)
     grid() {
 
-        this.ctx.strokeStyle = this.$p.colors.colorGrid
+        this.ctx.strokeStyle = this.$p.colors.grid
         this.ctx.beginPath()
 
         const ymax = this.layout.height
@@ -246,7 +246,7 @@ export default class Grid {
     }
 
     upper_border() {
-        this.ctx.strokeStyle = this.$p.colors.colorScale
+        this.ctx.strokeStyle = this.$p.colors.scale
         this.ctx.beginPath()
         this.ctx.moveTo(0, 0.5)
         this.ctx.lineTo(this.layout.width, 0.5)

@@ -32,7 +32,7 @@ export default {
                 height: layout.height,
             },
             style: {
-                backgroundColor: this.$props.colors.colorBack
+                backgroundColor: this.$props.colors.back
             },
         })
     },
