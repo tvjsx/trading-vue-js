@@ -3,12 +3,13 @@
     <!-- Main component  -->
     <div class="trading-vue" v-bind:id="id"
          :style="{
-            color: this.colorText, font: this.font,
+            color: this.chart_props.colors.text,
+            font: this.font,
             width: this.width+'px',
             height: this.height+'px'}">
         <toolbar v-if="toolbar"
             v-on:custom-event="custom_event"
-            v-bind="chart_props" 
+            v-bind="chart_props"
             v-bind:config="chart_config">
         </toolbar>
         <widgets v-if="ctrllist.length" :map="ws"
@@ -125,6 +126,10 @@ export default {
             type: String,
             default: '#8282827d'
         },
+        colors: {
+            type: Object,
+            default: function () { return {} }
+        },
         font: {
             type: String,
             default: Const.ChartConfig.FONT
@@ -176,11 +181,13 @@ export default {
                 buttons: this.$props.legendButtons,
                 toolbar: this.$props.toolbar,
                 ib: this.$props.indexBased || this.index_based || false,
-                colors: {}
+                colors: this.$props.colors 
             }
             for (var k in this.$props) {
                 if (k.indexOf('color') === 0) {
-                    chart_props.colors[k] = this.$props[k]
+                    let k2 = k.replace('color', '')
+                    k2 = k2[0].toLowerCase() + k2.slice(1)
+                    chart_props.colors[k2] = this.$props[k]
                 }
             }
             return chart_props

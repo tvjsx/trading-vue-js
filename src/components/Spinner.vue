@@ -1,6 +1,6 @@
 <template>
 <div class="tvjs-spinner">
-    <div v-for="i in 4" :style="{background: colors.colorText}">
+    <div v-for="i in 4" :style="{background: colors.text}">
     </div>
 </div>
 </div>

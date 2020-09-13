@@ -30,7 +30,7 @@ export default {
                 height: sett.height,
             },
             style: {
-                backgroundColor: this.$props.colors.colorBack
+                backgroundColor: this.$props.colors.back
             },
         })
     },

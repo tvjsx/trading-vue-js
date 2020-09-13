@@ -70,31 +70,31 @@ export default {
         },
         colorCandleUp() {
             return this.sett.colorCandleUp ||
-            this.$props.colors.colorCandleUp
+            this.$props.colors.candleUp
         },
         colorCandleDw() {
             return this.sett.colorCandleDw ||
-            this.$props.colors.colorCandleDw
+            this.$props.colors.candleDw
         },
         colorWickUp() {
             return this.sett.colorWickUp ||
-            this.$props.colors.colorWickUp
+            this.$props.colors.wickUp
         },
         colorWickDw() {
             return this.sett.colorWickDw ||
-            this.$props.colors.colorWickDw
+            this.$props.colors.wickDw
         },
         colorWickSm() {
             return this.sett.colorWickSm ||
-            this.$props.colors.colorWickSm
+            this.$props.colors.wickSm
         },
         colorVolUp() {
             return this.sett.colorVolUp ||
-            this.$props.colors.colorVolUp
+            this.$props.colors.volUp
         },
         colorVolDw() {
             return this.sett.colorVolDw ||
-            this.$props.colors.colorVolDw
+            this.$props.colors.volDw
         }
     },
     data() {

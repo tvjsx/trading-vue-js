@@ -41,12 +41,6 @@ export default class ScriptEnv {
     step(unshift = true) {
         if (unshift) this.unshift()
         let v = this.output.update()
-
-        if (this.skip) {
-            this.skip = false
-            return
-        }
-
         this.copy(v, unshift)
         this.limit()
     }
@@ -109,7 +103,6 @@ export default class ScriptEnv {
             props += `var ${k} = ${val}\n`
         }
         // TODO: add argument values to _id
-        // TODO: prefix all function by ns, e.g std_nz()
 
         let tss = ``
 

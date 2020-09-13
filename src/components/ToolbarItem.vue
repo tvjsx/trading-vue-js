@@ -52,7 +52,7 @@ export default {
         splitter() {
             let conf = this.$props.config
             let colors = this.$props.colors
-            let c = colors.colorGrid
+            let c = colors.grid
             let im = conf.TB_ITEM_M
             let m = (conf.TOOLBAR - conf.TB_ICON) * 0.5 - im
             let s = conf.TB_ICON + im * 2

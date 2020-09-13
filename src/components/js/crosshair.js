@@ -30,7 +30,7 @@ export default class Crosshair {
         this.x = this.$p.cursor.x
 
         ctx.save()
-        ctx.strokeStyle = this.$p.colors.colorCross
+        ctx.strokeStyle = this.$p.colors.cross
         ctx.beginPath()
         ctx.setLineDash([5])
 

@@ -8,8 +8,8 @@ export default class Pin {
 
         this.RADIUS = comp.$props.config.PIN_RADIUS || 5.5
         this.RADIUS_SQ = Math.pow(this.RADIUS + 7, 2)
-        this.COLOR_BACK = comp.$props.colors.colorBack
-        this.COLOR_BR = comp.$props.colors.colorText
+        this.COLOR_BACK = comp.$props.colors.back
+        this.COLOR_BR = comp.$props.colors.text
 
         this.comp = comp
         this.layout = comp.layout
