@@ -1,6 +1,21 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.7.0] - 2020-9-15
+- Extensions (widgets, colorpacks & skins v1)
+- Pins & toolbar bug fixes
+- WebWorker modules (emitted from extension)
+- Std lib injections (though WW modules)
+- Improved fn argument parsing for scripts
+- Splines overlay: skipNaN mode
+- Scripts: multi-tf TA, how cool is that?
+- Scripts: hl2, hlc3, ohlc4 and potentially more in the futr
+- Script: SE hooks for backtester mod (if you like)
+- Hooks on the internal events (no only for Chart.vue)
+- Fixed legend values (when grid.id is custom)
+- DC: some improvements & new settings
+- lz-string compression for the WW code. Supr fast
+
 ## [0.6.0] - 2020-8-15
 - Scripts (early state)
 - DC faster update()
