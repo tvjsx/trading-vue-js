@@ -44,12 +44,13 @@ import IndexBased from './tests/IndexBased.vue'
 import Performance from './tests/Performance.vue'
 import Renko from './tests/Renko.vue'
 import Scripts from './tests/Scripts.vue'
+import Extensions from './tests/Extensions.vue'
 
 const TESTS = {
     Simple, MouseEvents, Timeframes, Multichart,
     LegendButtons, ChartTypes, DataHelper, Toolbar,
     GridSettings, Interfaces, IndexBased, Performance,
-    Renko, Scripts
+    Renko, Scripts, Extensions
 }
 
 export default {

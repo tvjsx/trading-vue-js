@@ -127,8 +127,7 @@ export default {
             default: '#8282827d'
         },
         colors: {
-            type: Object,
-            default: function () { return {} }
+            type: Object
         },
         font: {
             type: String,
@@ -181,15 +180,9 @@ export default {
                 buttons: this.$props.legendButtons,
                 toolbar: this.$props.toolbar,
                 ib: this.$props.indexBased || this.index_based || false,
-                colors: this.$props.colors 
+                colors: Object.assign({}, this.$props.colors)
             }
-            for (var k in this.$props) {
-                if (k.indexOf('color') === 0) {
-                    let k2 = k.replace('color', '')
-                    k2 = k2[0].toLowerCase() + k2.slice(1)
-                    chart_props.colors[k2] = this.$props[k]
-                }
-            }
+            this.parse_colors(chart_props.colors)
             return chart_props
         },
         chart_config() {
@@ -221,7 +214,7 @@ export default {
         mod_ovs() {
             let arr = []
             for (var x of this.$props.extensions) {
-                arr.push(...x.overlays)
+                arr.push(...Object.values(x.overlays))
             }
             return arr
         }
@@ -233,12 +226,16 @@ export default {
         this.custom_event({ event: 'before-destroy' })
     },
     methods: {
+        // TODO: reset extensions
         resetChart(resetRange = true) {
             this.reset++
             let range = this.getRange()
             if (!resetRange && range[0] && range[1]) {
                 this.$nextTick(() => this.setRange(...range))
             }
+            this.$nextTick(() => this.custom_event({
+                event: 'chart-reset', args: []
+            }))
         },
         goto(t) {
             // TODO: limit goto & setRange (out of data error)
@@ -316,6 +313,16 @@ export default {
                 }
                 dc.range_changed(r, tf)
             })
+        },
+        parse_colors(colors) {
+            for (var k in this.$props) {
+                if (k.indexOf('color') === 0 && k !== 'colors') {
+                    let k2 = k.replace('color', '')
+                    k2 = k2[0].toLowerCase() + k2.slice(1)
+                    if (colors[k2]) continue
+                    colors[k2] = this.$props[k]
+                }
+            }
         }
     }
 }
