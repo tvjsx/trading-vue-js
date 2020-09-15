@@ -3,6 +3,19 @@
 
 export default {
     methods: {
+        // Init shaders from extensions
+        init_shaders(skin, prev) {
+            if (skin !== prev) {
+                if (prev) this.shaders = this.shaders.filter(
+                    x => x.owner !== prev.id
+                )
+                for (var Shader of skin.shaders) {
+                    let shader = new Shader()
+                    shader.owner = skin.id
+                    this.shaders.push(shader)
+                }
+            }
+        },
         on_shader_event(d, target) {
             if (d.event === 'new-shader') {
                 if (d.args[0].target === target) {
@@ -16,6 +29,11 @@ export default {
                 this.shaders = this.shaders
                     .filter(x => x.id !== id)
             }
+        }
+    },
+    watch: {
+        skin(n, p) {
+            this.init_shaders(n, p)
         }
     },
     data() { return { shaders: [] } }

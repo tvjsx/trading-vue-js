@@ -41,7 +41,8 @@ export default {
     name: 'Chart',
     props: [
         'title_txt', 'data', 'width', 'height', 'font', 'colors',
-        'overlays', 'tv_id', 'config', 'buttons', 'toolbar', 'ib'
+        'overlays', 'tv_id', 'config', 'buttons', 'toolbar', 'ib',
+        'skin'
     ],
     mixins: [Shaders, DataTrack],
     components: {
@@ -68,6 +69,7 @@ export default {
         if (this.$props.ib && !this.chart.tf) {
             console.warn(Const.IB_TF_WARN)
         }
+        this.init_shaders()
     },
     methods: {
         range_changed(r) {
@@ -162,7 +164,8 @@ export default {
                 tv_id: this.$props.tv_id,
                 config: this.$props.config,
                 buttons: this.$props.buttons,
-                meta: this.meta
+                meta: this.meta,
+                skin: this.$props.skin
             }
         },
         overlay_subset(source) {
@@ -337,7 +340,8 @@ export default {
 
             // Meta data
             last_candle: [],
-            sub_start: undefined,
+            sub_start: undefined
+
         }
     },
     watch: {

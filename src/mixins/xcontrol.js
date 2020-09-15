@@ -44,6 +44,29 @@ export default {
                 }
             }
             return ws
+        },
+        skins() {
+            let sks = {}
+            for (var x of this.$props.extensions) {
+                for (var id in x.skins || {}) {
+                    sks[id] = x.skins[id]
+                }
+            }
+            return sks
+        },
+        skin_proto() {
+            return this.skins[this.$props.skin]
+        },
+        colorpack() {
+            let sel = this.skins[this.$props.skin]
+            return sel ? sel.colors : undefined
+        }
+    },
+    watch: {
+        // TODO: This is fast & dirty fix, need
+        // to fix the actual reactivity problem 
+        skin(n, p) {
+            if (n !== p) this.resetChart()
         }
     },
     data() {

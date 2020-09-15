@@ -34,6 +34,12 @@ export default {
             },
         })
     },
+    computed: {
+        bot_shaders() {
+            return this.$props.shaders
+                .filter(x => x.target === 'botbar')
+        }
+    },
     watch: {
         range: {
             handler: function() { this.redraw() },

@@ -197,6 +197,8 @@ export default class Grid {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
         this.grid()
 
+        if (this.$p.shaders.length) this.apply_shaders()
+
         let overlays = []
         overlays.push(...this.overlays)
 
@@ -215,6 +217,17 @@ export default class Grid {
 
         if (this.crosshair) {
             this.crosshair.renderer.draw(this.ctx)
+        }
+    }
+
+    apply_shaders() {
+        let props = {
+            layout: this.$p.layout.grids[this.id]
+        }
+        for (var s of this.$p.shaders) {
+            this.ctx.save()
+            s.draw(this.ctx, props)
+            this.ctx.restore()
         }
     }
 
