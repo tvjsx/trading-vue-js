@@ -68,7 +68,6 @@ export default {
         if (this.$props.ib && !this.chart.tf) {
             console.warn(Const.IB_TF_WARN)
         }
-
     },
     methods: {
         range_changed(r) {
@@ -91,10 +90,12 @@ export default {
         },
         cursor_changed(e) {
             this.updater.sync(e)
+            if (this._hook_xchanged) this.ce('?x-changed', e)
         },
         cursor_locked(state) {
             if (this.cursor.scroll_lock && state) return
             this.cursor.locked = state
+            if (this._hook_xlocked) this.ce('?x-locked', state)
         },
         calc_interval() {
             if (this.ohlcv.length < 2) return
@@ -215,6 +216,7 @@ export default {
             if (clac_tf) this.calc_interval()
             const lay = new Layout(this)
             Utils.copy_layout(this._layout, lay)
+            if (this._hook_update) this.ce('?chart-update', lay)
         },
         legend_button_click(event) {
             this.$emit('legend-button-click', event)
@@ -231,6 +233,14 @@ export default {
             // TODO: add last values for all overlays
             this.last_candle = this.ohlcv ?
                 this.ohlcv[this.ohlcv.length - 1] : undefined
+        },
+        // Hook events for extentions
+        ce(event, ...args) {
+            this.emit_custom_event({ event, args })
+        },
+        // Set hooks list (called from an extention)
+        hooks(...list) {
+            list.forEach(x => this[`_hook_${x}`] = true)
         }
     },
     computed: {
@@ -327,15 +337,17 @@ export default {
 
             // Meta data
             last_candle: [],
-            sub_start: undefined
+            sub_start: undefined,
         }
     },
     watch: {
         width() {
             this.update_layout()
+            if (this._hook_resize) this.ce('?chart-resize')
         },
         height() {
             this.update_layout()
+            if (this._hook_resize) this.ce('?chart-resize')
         },
         ib(nw) {
             if (!nw) {
@@ -371,7 +383,8 @@ export default {
                 if (n.scrollLock && this.cursor.locked) {
                     this.cursor.locked = false
                 }
-                this.data_changed()
+                let nw = this.data_changed()
+                if (this._hook_data) this.ce('?chart-data', nw)
                 this.update_last_candle()
                 // TODO: update legend values for overalys
                 this.rerender++
