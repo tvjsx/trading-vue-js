@@ -2,13 +2,16 @@
 // Index for the extentention
 
 import Main from './main.js'
-import Button from './Button.vue'
+import DayPack from './DayPack.json'
+import NightPack from './NightPack.json'
+import DaySkin from './DaySkin.js'
+import NightSkin from './NightSkin.js'
 
-const widgets = { Button }
+const widgets = { }
 const components = {  }
 const overlays = {  }
-const colorpacks = {  }
-const skins = {  }
+const colorpacks = { DayPack, NightPack }
+const skins = { DaySkin, NightSkin }
 
 const Pack = {
     widgets,
@@ -16,7 +19,6 @@ const Pack = {
     overlays,
     colorpacks,
     skins,
-    Button,
     Main
 }
 
@@ -28,6 +30,5 @@ export {
     overlays,
     colorpacks,
     skins,
-    Button,
     Main
 }

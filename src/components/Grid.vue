@@ -26,7 +26,7 @@ export default {
     props: [
         'sub', 'layout', 'range', 'interval', 'cursor', 'colors', 'overlays',
         'width', 'height', 'data', 'grid_id', 'y_transform', 'font', 'tv_id',
-        'config', 'meta'
+        'config', 'meta', 'shaders'
     ],
     mixins: [Canvas, UxList],
     components: { Crosshair, KeyboardListener },

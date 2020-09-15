@@ -24,7 +24,6 @@
             v-bind="sidebar_props"
             v-bind:grid_id="grid_id"
             v-bind:rerender="rerender"
-            v-bind:shaders="shaders"
             v-on:sidebar-transform="sidebar_transform">
         </sidebar>
     </div>
@@ -45,6 +44,9 @@ export default {
         Grid,
         Sidebar,
         ChartLegend
+    },
+    mounted() {
+        this.init_shaders(this.$props.common.skin)
     },
     methods: {
         range_changed(r) {
@@ -105,6 +107,7 @@ export default {
             p.width = p.layout.grids[id].width
             p.height = p.layout.grids[id].height
             p.y_transform = p.y_ts[id]
+            p.shaders = this.grid_shaders
             return p
         },
         sidebar_props() {
@@ -113,6 +116,7 @@ export default {
             p.width = p.layout.grids[id].sb
             p.height = p.layout.grids[id].height
             p.y_transform = p.y_ts[id]
+            p.shaders = this.sb_shaders
             return p
         },
         section_values() {
@@ -137,6 +141,12 @@ export default {
         },
         get_meta_props() {
             return this.meta_props
+        },
+        grid_shaders() {
+            return this.shaders.filter(x => x.target === 'grid')
+        },
+        sb_shaders() {
+            return this.shaders.filter(x => x.target === 'sidebar')
         }
     },
     watch: {
@@ -153,7 +163,6 @@ export default {
     data() {
         return {
             meta_props: {},
-            shaders: [],
             rerender: 0
         }
     }

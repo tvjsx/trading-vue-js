@@ -67,7 +67,7 @@ export default class Botbar {
     }
 
     apply_shaders() {
-        for (var s of this.$p.shaders) {
+        for (var s of this.comp.bot_shaders) {
             this.ctx.save()
             s.draw(this.ctx)
             this.ctx.restore()

@@ -1,7 +1,7 @@
 <template>
 <trading-vue :data="chart" :width="this.width" :height="this.height"
         :toolbar="true" ref="tv"
-        :extensions="extensions"
+        :extensions="extensions" :skin="skin"
         :color-back="colors.colorBack"
         :color-grid="colors.colorGrid"
         :color-text="colors.colorText">
@@ -13,9 +13,10 @@ import TradingVue from '../../src/TradingVue.vue'
 import Data from '../data/data_ext.json'
 import DataCube from '../../src/helpers/datacube.js'
 import GotoPresent from './Extensions/GotoPresent/index.js'
+import SkinPack from './Extensions/SkinPack/index.js'
 
 export default {
-    name: 'Extentions',
+    name: 'Extensions',
     description: 'Widgets, Standalone Comps & Skins',
     props: ['night'],
     components: {
@@ -41,6 +42,9 @@ export default {
                 colorText: '#333'
             }
         },
+        skin() {
+            return this.$props.night ? 'NightSkin' : 'DaySkin'
+        }
     },
     beforeDestroy() {
         window.removeEventListener('resize', this.onResize)
@@ -50,7 +54,7 @@ export default {
             chart: new DataCube(Data),
             width: window.innerWidth,
             height: window.innerHeight,
-            extensions: [GotoPresent]
+            extensions: [GotoPresent, SkinPack]
         }
     }
 }

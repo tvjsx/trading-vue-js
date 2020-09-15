@@ -1,3 +1,4 @@
+<!-- Basically, a simple widget example -->
 <template>
     <img class="x-goto-button" :src="icon"
         :style="style"
@@ -23,7 +24,7 @@ export default {
         }
 
         // Update ref to the chart when resetChart is called()
-        // TODO: make this automatic (prob add a 'chart' prop)
+        // TODO: make this automatic (prob add 'chart' prop)
         this.main.bus.onreset = () => {
             this.chart = this.$props.tv.$refs.chart
             this.layout = this.chart._layout.grids[0]
@@ -32,6 +33,7 @@ export default {
     methods: {
         onclick() {
 
+            // Ease it bro
             let ez = x => x<.5 ? 2*x*x : -1+(4-2*x)*x
 
             let tN = this.chart.meta.last[0]
@@ -78,5 +80,4 @@ export default {
 .x-goto-button:hover {
     filter: brightness(1.2);
 }
-
 </style>

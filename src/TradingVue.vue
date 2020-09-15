@@ -163,6 +163,9 @@ export default {
         extensions: {
             type: Array,
             default: function () { return [] }
+        },
+        skin: {
+            type: String // Skin Name
         }
     },
     computed: {
@@ -180,7 +183,9 @@ export default {
                 buttons: this.$props.legendButtons,
                 toolbar: this.$props.toolbar,
                 ib: this.$props.indexBased || this.index_based || false,
-                colors: Object.assign({}, this.$props.colors)
+                colors: Object.assign({}, this.$props.colors ||
+                    this.colorpack),
+                skin: this.skin_proto
             }
             this.parse_colors(chart_props.colors)
             return chart_props
