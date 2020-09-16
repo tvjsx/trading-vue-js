@@ -1,7 +1,7 @@
 # DataCube API
 
 ::: warning
-This library is in alpha stage, API may change. This guide version is **0.5.0**
+This library is in alpha stage, API may change. This guide version is **0.7.0**
 :::
 
 ![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=Current%20lib%20version)
@@ -42,6 +42,26 @@ TVJS automatically detects that you are a smart person who wants to use this lib
 |---|---|---|
 | data | Object | Original chart data. Use it for direct access  |
 | tv | Component | Reference to `trading-vue` component |
+| sett <sup style="color:#14b32a">new</sup> | Object  | DC Settins object |
+| se_state <sup style="color:#14b32a">new</sup> | Object | Script Engine state |
+
+
+## Settings <sup style="color:#14b32a">new</sup>
+
+```js
+new DataCube({
+    // Data
+}, {
+    // Settings
+})
+```
+
+| Sett | Type | Description |
+|---|---|---|
+| aggregation | Number | Update aggregation interval, default = 100  |
+| script_depth | Number | 0 === Exec on all data, default = 0 |
+| auto_scroll | Boolean  | Auto scroll to a new candle, default = true |
+| scripts | Boolean | Enable overlays scripts, default = true |
 
 ## Query system
 

@@ -1,7 +1,7 @@
 # API Book
 
 ::: warning
-This library is in alpha stage, API may change. This guide version is **0.5.2**
+This library is in alpha stage, API may change. This guide version is **0.7.0**
 :::
 
 ![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=Current%20lib%20version)
@@ -33,15 +33,18 @@ This library is in alpha stage, API may change. This guide version is **0.5.2**
 | colorVolUp | String | Green volume color |
 | colorVolDw | String | Red volume color |
 | colorPanel | String | Value bars color |
+| colors  <sup style="color:#14b32a">new</sup>  | Object | All-colors object, has a lower priority |
 | font | String | Full font string, e.g. "11px Arial..." |
 | data | Object | Data object |
 | overlays | Array | List of custom overlay classes |
 | chartConfig | Object | Overwrites chart config values |
 | legendButtons | Array | Array of legend buttons ids |
-| toolbar <sup style="color:#14b32a">new</sup>| Boolean | Show toolbar (works with DataCube) |
-| colorTbBack <sup style="color:#14b32a">new</sup> | String | Toolbar background color |
-| colorTbBorder <sup style="color:#14b32a">new</sup> | String | Toolbar border color |
-| indexBased <sup style="color:#14b32a">new</sup> | Boolean | Index-based rendering mode (global setting) |
+| toolbar | Boolean | Show toolbar (works with DataCube) |
+| colorTbBack  | String | Toolbar background color |
+| colorTbBorder  | String | Toolbar border color |
+| indexBased  | Boolean | Index-based rendering mode (global setting) |
+| extensions <sup style="color:#14b32a">new</sup>  | Array | Array of extensions |
+| skin <sup style="color:#14b32a">new</sup>  | String | Skin ID (should be in the extensions) |
 
 
 ### Legend Button Types
@@ -110,6 +113,19 @@ Goto to a specific timestamp
 
 * **Arguments**: t (Number) Target timestamp
 
+### getCursor()
+
+Gets the cursor [object](https://github.com/tvjsx/trading-vue-js/tree/master/docs/api#cursor-data)
+
+* **Returns**: Object
+
+### $refs.chart.hooks(...args) <sup style="color:#14b32a">new</sup>
+
+Set hooks to the internal events. You'll get events like this `?<hook name>`
+
+* **Arguments**: ...args (Strings) hook names
+
+Currently supports: `xchanged, xlocked, update, resize, data`
 
 ## Events
 
@@ -143,7 +159,7 @@ export default {
 </script>
 ```
 
-### custom-event  <sup style="color:#14b32a">new</sup>
+### custom-event
 
 Can be emitted from overlay or **trading-vue** itself. Propagates all the way up to the root component; must have a unique name. Some names are reserved:
 ```
@@ -168,7 +184,7 @@ Event listener:
 </script>
 ```
 
-## Data structure <sup style="color:#14b32a">new</sup>
+## Data structure
 
 Data structure v1.2.2
 
@@ -293,7 +309,7 @@ Data for building overlays. Defined in `mixins/overlay.js`, accessed through ove
 | data | Array | Current subset of indicator data |
 | settings | Object | Indicator's settings, defined in `data.json` |
 | grid_id | Number | Current grid id |
-| config <sup style="color:#14b32a">new</sup> | Object | Chart config, see 'constants.js' |
+| config  | Object | Chart config, see 'constants.js' |
 
 ### Cursor data*
 
@@ -306,7 +322,7 @@ Data for building overlays. Defined in `mixins/overlay.js`, accessed through ove
 | grid_id | Number | Current grid id |
 | locked | Boolean | *true* during scrolling, *false* otherwise |
 | values | Object | Current indicator values in a specific format |
-| scroll_lock <sup style="color:#14b32a">new</sup> | Boolean | True when scrolling is locked (drawing mode) |
+| scroll_lock  | Boolean | True when scrolling is locked (drawing mode) |
 
 #### Values format
 
@@ -348,7 +364,7 @@ Defined in `layout.js`, accessed through overlay's `this.$props.layout`.
 | $_hi | Number | Upper bound of price-range |
 | $_lo | Number | Lower bound of price-range |
 | $_step | Number | Grid price step |
-| $_mult <sup style="color:#14b32a">new</sup> | Number | Grid price multipler ([log-scale mode](https://github.com/tvjsx/trading-vue-js/blob/master/docs/faq/README.md#log-scale-no)) |
+| $_mult  | Number | Grid price multipler ([log-scale mode](https://github.com/tvjsx/trading-vue-js/blob/master/docs/faq/README.md#log-scale-no)) |
 | t_step | Number | Grid time step  |
 | A | Number | Scale transform coefficient |
 | B | Number | Offset transform coefficient |
@@ -361,7 +377,7 @@ Defined in `layout.js`, accessed through overlay's `this.$props.layout`.
 | sb |  Number | Sidebar width |
 | spacex | Number | Drawing area width (px) |
 | startx | Number | First candle position (px) |
-| ti_map <sup style="color:#14b32a">new</sup> | Object | Time-index mapping for [IB mode](https://github.com/tvjsx/trading-vue-js/blob/master/docs/faq/README.md#what-is-the-index-based-ib-rendering-mode) |
+| ti_map  | Object | Time-index mapping for [IB mode](https://github.com/tvjsx/trading-vue-js/blob/master/docs/faq/README.md#what-is-the-index-based-ib-rendering-mode) |
 | candles | Array | Candles subset |
 | volume | Array | Volume bars positions and sizes |
 | xs | Array | vertical grid lines `[[x, candle], ...]` |
@@ -449,7 +465,7 @@ ctx.stroke()
 
 To change the default behaviour of an overlay, override this methods.
 
-#### init() <sup style="color:#14b32a">new</sup>
+#### init()
 
 Called when overlay is mounted.
 
@@ -480,7 +496,7 @@ draw(ctx) {
 }
 ```
 
-#### pre_draw(ctx), post_draw(ctx) <sup style="color:#14b32a">new</sup>
+#### pre_draw(ctx), post_draw(ctx)
 
 Override if you need them.
 
@@ -547,7 +563,7 @@ legend(values) {
 }
 ```
 
-#### tool() <sup style="color:#14b32a">new</sup>
+#### tool()
 
 * **Returns:** Tool descriptor. See `LineTool.vue`:
 
@@ -603,7 +619,7 @@ tool() {
 *Optional*
 * **Arguments**: event (Object) Native keypress event
 
-### Overlay I/O objects <sup style="color:#14b32a">new</sup>
+### Overlay I/O objects
 
 #### mouse
 
