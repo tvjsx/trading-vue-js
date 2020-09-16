@@ -11,7 +11,7 @@ All notable changes to this project will be documented in this file.
 - Scripts: multi-tf TA, how cool is that?
 - Scripts: hl2, hlc3, ohlc4 and potentially more in the futr
 - Script: SE hooks for backtester mod (if you like)
-- Hooks on the internal events (no only for Chart.vue)
+- Hooks on the internal events (now only for Chart.vue)
 - Fixed legend values (when grid.id is custom)
 - DC: some improvements & new settings
 - lz-string compression for the WW code. Supr fast
