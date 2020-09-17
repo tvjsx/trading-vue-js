@@ -229,7 +229,9 @@ export default {
                 }
             },
             deep: true
-        }
+        },
+        // Redraw on the shader list change
+        shaders(n, p) { this.redraw() }
     },
     data() {
         return {

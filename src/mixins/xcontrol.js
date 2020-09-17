@@ -64,7 +64,7 @@ export default {
     },
     watch: {
         // TODO: This is fast & dirty fix, need
-        // to fix the actual reactivity problem 
+        // to fix the actual reactivity problem
         skin(n, p) {
             if (n !== p) this.resetChart()
         }
