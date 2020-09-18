@@ -249,8 +249,8 @@ export default class DCCore extends DCEvents {
                 result = [/*ch[0],*/ ...on, ...off]
                 break
         }
-
-        return result.filter(x => !x.v.locked || chuck)
+        return result.filter(
+            x => !(x.v || {}).locked || chuck)
     }
 
     chart_as_piv(tuple) {
