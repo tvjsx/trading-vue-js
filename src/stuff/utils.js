@@ -260,7 +260,7 @@ export default {
         return this.uuid('xxxxxxxxxxxx')
     },
 
-    // Delayed warning, f = condition lamda fn
+    // Delayed warning, f = condition lambda fn
     warn(f, text, delay = 0) {
         setTimeout(() => {
             if (f()) console.warn(text)
