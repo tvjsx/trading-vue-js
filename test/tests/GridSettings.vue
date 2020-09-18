@@ -1,5 +1,6 @@
 <template>
 <trading-vue :data="chart" :width="this.width" :height="this.height"
+        ref="tv"
         :color-back="colors.colorBack"
         :color-grid="colors.colorGrid"
         :color-text="colors.colorText">
@@ -27,6 +28,7 @@ export default {
     mounted() {
         window.addEventListener('resize', this.onResize)
         this.onResize()
+        window.tv = this.$refs.tv
     },
     beforeDestroy() {
         window.removeEventListener('resize', this.onResize)

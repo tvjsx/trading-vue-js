@@ -36,10 +36,10 @@ export default class Grid {
 
     listeners() {
 
-        var hamster = Hamster(this.canvas)
-        hamster.wheel((event, delta) => this.mousezoom(-delta * 50, event))
+        this.hm = Hamster(this.canvas)
+        this.hm.wheel((event, delta) => this.mousezoom(-delta * 50, event))
 
-        var mc = new Hammer.Manager(this.canvas)
+        let mc = this.mc = new Hammer.Manager(this.canvas)
         mc.add(new Hammer.Pan({ threshold: 0}))
         mc.add(new Hammer.Tap())
         mc.add(new Hammer.Pinch())
@@ -110,19 +110,16 @@ export default class Grid {
             if (this.pinch) this.pinchzoom(event.scale)
         })
 
-        window.addEventListener("gesturestart", event => {
-            event.preventDefault()
-        })
-
-        window.addEventListener("gesturechange", event => {
-            event.preventDefault()
-        })
-
-        window.addEventListener("gestureend", event => {
-            event.preventDefault()
-        })
+        let add = addEventListener
+        add("gesturestart", this.gesturestart)
+        add("gesturechange", this.gesturechange)
+        add("gestureend", this.gestureend)
 
     }
+
+    gesturestart(event) { event.preventDefault() }
+    gesturechange(event) { event.preventDefault() }
+    gestureend(event) { event.preventDefault() }
 
     mousemove(event) {
 
@@ -434,5 +431,14 @@ export default class Grid {
                 keys.emit(name, event)
             }
         }
+    }
+
+    destroy() {
+        let rm = removeEventListener
+        rm("gesturestart", this.gesturestart)
+        rm("gesturechange", this.gesturechange)
+        rm("gestureend", this.gestureend)
+        if (this.mc) this.mc.destroy()
+        if (this.hm) this.hm.unwheel()
     }
 }

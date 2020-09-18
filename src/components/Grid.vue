@@ -57,6 +57,9 @@ export default {
         this.$on('custom-event', e =>
             this.on_ux_event(e, 'grid'))
     },
+    beforeDestroy () {
+        if (this.renderer) this.renderer.destroy()
+    },
     mounted() {
         const el = this.$refs['canvas']
         this.renderer = new Grid(el, this)
