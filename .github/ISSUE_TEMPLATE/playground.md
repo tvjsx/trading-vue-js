@@ -1,6 +1,6 @@
 ---
 name: PlayGround
-about: Online editor of mini-apps https://tvjs.io/play
+about: Online editor of tvjs-apps https://tvjs.io/play
 title: ''
 labels: ''
 assignees: ''
