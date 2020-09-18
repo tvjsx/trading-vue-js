@@ -65,10 +65,6 @@ export default {
         this.updater = new CursorUpdater(this)
 
         this.update_last_candle()
-
-        if (this.$props.ib && !this.chart.tf) {
-            console.warn(Const.IB_TF_WARN)
-        }
         this.init_shaders()
     },
     methods: {
@@ -101,9 +97,13 @@ export default {
         },
         calc_interval() {
             if (this.ohlcv.length < 2) return
-            let tf = Utils.parse_tf(this.chart.tf)
+            let tf = Utils.parse_tf(this.forced_tf)
             this.interval_ms = tf || Utils.detect_interval(this.ohlcv)
             this.interval = this.$props.ib ? 1 : this.interval_ms
+            Utils.warn(
+                () => this.$props.ib && !this.chart.tf,
+                Const.IB_TF_WARN, Const.SECOND
+            )
         },
         set_ytransform(s) {
             let obj = this.y_transforms[s.grid_id] || {}
@@ -303,6 +303,9 @@ export default {
                 last: this.last_candle,
                 sub_start: this.sub_start
             }
+        },
+        forced_tf() {
+            return this.chart.tf
         }
     },
     data() {
@@ -372,22 +375,25 @@ export default {
         colors() {
             Utils.overwrite(this.range, this.range)
         },
+        forced_tf() {
+            this.update_layout(true)
+        },
         data: {
             handler: function(n, p) {
                 if (!this.sub.length) this.init_range()
                 const sub = this.subset()
-                // Fix Infinite loop warn, when the subset is empty
+                // Fixes Infinite loop warn, when the subset is empty
                 // TODO: Consider removing 'sub' from data entirely
                 if (this.sub.length || sub.length) {
                     Utils.overwrite(this.sub, sub)
                 }
-                this.update_layout()
+                let nw = this.data_changed()
+                this.update_layout(nw)
                 Utils.overwrite(this.range, this.range)
                 this.cursor.scroll_lock = !!n.scrollLock
                 if (n.scrollLock && this.cursor.locked) {
                     this.cursor.locked = false
                 }
-                let nw = this.data_changed()
                 if (this._hook_data) this.ce('?chart-data', nw)
                 this.update_last_candle()
                 // TODO: update legend values for overalys

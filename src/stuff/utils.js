@@ -258,6 +258,13 @@ export default {
 
     uuid2() {
         return this.uuid('xxxxxxxxxxxx')
+    },
+
+    // Delayed warning, f = condition lamda fn
+    warn(f, text, delay = 0) {
+        setTimeout(() => {
+            if (f()) console.warn(text)
+        }, delay)
     }
 
 }
