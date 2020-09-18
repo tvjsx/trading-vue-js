@@ -25,7 +25,7 @@ export default class Sidebar {
     }
 
     listeners() {
-        var mc = new Hammer.Manager(this.canvas)
+        let mc = this.mc = new Hammer.Manager(this.canvas)
         mc.add(new Hammer.Pan({
             direction: Hammer.DIRECTION_VERTICAL,
             threshold: 1
@@ -276,6 +276,10 @@ export default class Sidebar {
             grid_id: this.id,
             drugging: false
         })
+    }
+
+    destroy() {
+        if (this.mc) this.mc.destroy()
     }
 
     mousemove() { }

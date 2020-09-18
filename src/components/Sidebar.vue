@@ -48,6 +48,9 @@ export default {
         rerender() {
             this.$nextTick(() => this.redraw())
         }
+    },
+    beforeDestroy () {
+        if(this.renderer) this.renderer.destroy()
     }
 }
 
