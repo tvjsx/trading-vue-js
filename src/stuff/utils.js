@@ -235,6 +235,7 @@ export default {
                 el = doc.createElement("div")
                 el.id = id
                 el.style.position = 'absolute'
+                el.style.top = '-1000px'
                 base.appendChild(el)
             }
             if(ctx.font) el.style.font = ctx.font
