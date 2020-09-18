@@ -1,6 +1,6 @@
 ---
 name: Question / Feature request
-about: Freestyle issue
+about: Freestyle issue (for bugs/problems use the templates above)
 title: ''
 labels: ''
 assignees: ''

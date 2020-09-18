@@ -1,6 +1,6 @@
 ---
 name: Full Template
-about: Use this as the basis for your issue
+about: Perfect for almost everything.
 title: ''
 labels: ''
 assignees: ''
