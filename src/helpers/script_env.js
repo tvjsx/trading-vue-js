@@ -132,6 +132,9 @@ export default class ScriptEnv {
                 // Script's properties (init)
                 ${props}
 
+                // Globals
+                const tf = shared.tf
+
                 this.init = () => {
                     ${src.init_src}
                 }
