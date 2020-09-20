@@ -597,6 +597,11 @@ export default class ScriptStd {
         return new Date(time || se.t).getUTCMonth()
     }
 
+    // Display data point as the main chart
+    chart() {
+        // TODO: this
+    }
+
     // Display data point on the main chart
     onchart(x, name, sett = {}, _id) {
         name = name || u.get_fn_id('Onchart', _id)

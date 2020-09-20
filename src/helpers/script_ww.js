@@ -25,8 +25,8 @@ self.onmessage = async e => {
                 data_requested = true
                 self.postMessage({ type: 'request-data' })
             }
-
-            se.queue.push(e.data.data)
+            se.tf = e.data.data.tf
+            se.queue.push(e.data.data.s)
             se.exec_all()
 
             break
@@ -37,7 +37,8 @@ self.onmessage = async e => {
                 data_requested = true
                 self.postMessage({ type: 'request-data' })
             }
-
+            
+            se.tf = e.data.data.tf
             se.exec_all()
 
             break

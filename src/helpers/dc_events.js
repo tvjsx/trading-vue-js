@@ -54,6 +54,8 @@ export default class DCEvents {
                 break
             case 'exec-script': this.exec_script(args)
                 break
+            case 'exec-all-scripts': this.exec_all_scripts()
+                break
             case 'data-len-changed': this.data_changed(args)
                 break
             case 'tool-selected':
@@ -200,14 +202,16 @@ export default class DCEvents {
             }
             s.$props = Object.keys(args[0].src.props)
             this.tv.$set(obj, 'loading', true)
-            this.ww.just('exec-script', args[0])
+            let tf = this.tv.$refs.chart.interval_ms
+            this.ww.just('exec-script', {s: args[0], tf})
         }
     }
 
     exec_all_scripts() {
         if (!this.sett.scripts) return
         this.merge('.', { loading: true })
-        this.ww.just('exec-all-scripts')
+        let tf = this.tv.$refs.chart.interval_ms
+        this.ww.just('exec-all-scripts', { tf })
     }
 
     change_overlay(upd) {

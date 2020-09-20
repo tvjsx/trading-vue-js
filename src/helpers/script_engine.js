@@ -23,6 +23,7 @@ class ScriptEngine {
         this.state = {}
         this.mods = {}          // Modules (extensions)
         this.std_plus = {}      // Functions to inject
+        this.tf = undefined     // Main chart TF
     }
 
     exec_all() {
@@ -120,6 +121,7 @@ class ScriptEngine {
             ohlcv: this.data.ohlcv,
             t: () => this.t,
             iter: () => this.iter,
+            tf: this.tf
         }, this.tss))
 
         this.map[s.uuid] = s
