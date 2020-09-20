@@ -13,11 +13,6 @@ export default class Crosshair {
 
     }
 
-    update(x, y) {
-        this.x = this.$p.cursor.x
-        this.y = y
-    }
-
     draw(ctx) {
 
         // Update reference to the grid
@@ -25,9 +20,8 @@ export default class Crosshair {
 
         if (!this.visible) return
 
-        // Adjust x here cuz there is a delay between
-        // update() and draw()
         this.x = this.$p.cursor.x
+        this.y = this.$p.cursor.y
 
         ctx.save()
         ctx.strokeStyle = this.$p.colors.cross

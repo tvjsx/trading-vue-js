@@ -226,6 +226,7 @@ export default {
                         tuple.pop()
                         if (tuple.join('_') === ov.name) {
                             comp.calc = ov.methods.calc
+                            if (!comp.calc) continue
                             let calc = comp.calc.toString()
                             if (calc !== ov.__prevscript__) {
                                 comp.exec_script()
