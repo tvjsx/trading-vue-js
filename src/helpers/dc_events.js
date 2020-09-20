@@ -108,13 +108,14 @@ export default class DCEvents {
             let arr = prev.filter(x => x.v === n.v)
             if (!arr.length && n.p.settings.$props) {
                 let id = n.p.settings.$uuid
-                delta[id] = n.v
-                changed = true
-                this.tv.$set(n.p, 'loading', true)
+                if (Utils.is_scr_props_upd(n, prev)) {
+                    delta[id] = n.v
+                    changed = true
+                    this.tv.$set(n.p, 'loading', true)
+                }
             }
         }
 
-        // TODO: send settings only if a script prop is changed
         if (changed) {
             this.ww.just('update-ov-settings', delta)
         }

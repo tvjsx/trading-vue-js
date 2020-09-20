@@ -104,7 +104,7 @@ export default {
             }),
             width: window.innerWidth,
             height: window.innerHeight,
-            pane: window.innerWidth * 0.35,
+            pane: Math.floor(window.innerWidth * 0.35),
             ov: [ScriptOverlay],
             src: DEF_SRC
         }
