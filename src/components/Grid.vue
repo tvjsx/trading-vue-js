@@ -226,7 +226,11 @@ export default {
                         tuple.pop()
                         if (tuple.join('_') === ov.name) {
                             comp.calc = ov.methods.calc
-                            comp.exec_script()
+                            let calc = comp.calc.toString()
+                            if (calc !== ov.__prevscript__) {
+                                comp.exec_script()
+                            }
+                            ov.__prevscript__ = calc
                         }
                     }
                 }

@@ -265,6 +265,18 @@ export default {
         setTimeout(() => {
             if (f()) console.warn(text)
         }, delay)
+    },
+
+    // Checks if script props updated
+    // (and not style settings or something else)
+    is_scr_props_upd(n, prev) {
+        let p = prev.find(x => x.v.$uuid === n.v.$uuid)
+        if (!p) return false
+
+        let props = n.p.settings.$props
+        if (!props) return false
+
+        return props.some(x => n.v[x] !== p.v[x])
     }
 
 }
