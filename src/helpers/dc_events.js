@@ -82,6 +82,8 @@ export default class DCEvents {
                 break
             case 'change-settings': this.change_settings(args)
                 break
+            case 'range-changed': this.scripts_onrange(...args)
+                break
             case 'scroll-lock': this.on_scroll_lock(args[0])
                 break
             case 'object-selected': this.object_selected(args)
@@ -119,7 +121,11 @@ export default class DCEvents {
         }
 
         if (changed) {
-            this.ww.just('update-ov-settings', delta)
+            let tf = this.tv.$refs.chart.interval_ms
+            let range = this.tv.getRange()
+            this.ww.just('update-ov-settings', {
+                delta, tf, range
+            })
         }
 
     }
@@ -174,7 +180,7 @@ export default class DCEvents {
             // Parse script props & get the values from the ov
             // TODO: remove unnecessary script initializations
             let s = obj.settings
-            let props = args[0].src.props
+            let props = args[0].src.props || {}
             if (!s.$uuid) s.$uuid = `${obj.type}-${Utils.uuid2()}`
             args[0].uuid = s.$uuid
             for (var k in props || {}) {
@@ -200,10 +206,16 @@ export default class DCEvents {
                     }
                 }
             }
-            s.$props = Object.keys(args[0].src.props)
+            s.$props = Object.keys(args[0].src.props || {})
             this.tv.$set(obj, 'loading', true)
             let tf = this.tv.$refs.chart.interval_ms
-            this.ww.just('exec-script', {s: args[0], tf})
+            let range = this.tv.getRange()
+            if (obj.script && obj.script.output === false) {
+                args[0].output = false
+            }
+            this.ww.just('exec-script', {
+                s: args[0], tf, range
+            })
         }
     }
 
@@ -211,7 +223,30 @@ export default class DCEvents {
         if (!this.sett.scripts) return
         this.merge('.', { loading: true })
         let tf = this.tv.$refs.chart.interval_ms
-        this.ww.just('exec-all-scripts', { tf })
+        let range = this.tv.getRange()
+        this.ww.just('exec-all-scripts', { tf, range })
+    }
+
+    scripts_onrange(r) {
+        if (!this.sett.scripts) return
+        let delta = {}
+        let update = false
+
+        this.get('.').forEach(v => {
+            if (v.script && v.script.execOnRange &&
+                v.settings.$uuid) {
+                delta[v.settings.$uuid] = v.settings
+                update = true
+            }
+        })
+
+        if (update) {
+            let tf = this.tv.$refs.chart.interval_ms
+            let range = this.tv.getRange()
+            this.ww.just('update-ov-settings', {
+                delta, tf, range
+            })
+        }
     }
 
     change_overlay(upd) {
@@ -354,8 +389,9 @@ export default class DCEvents {
         for (var ov of data) {
             let obj = this.get_one(`${ov.id}`)
             if (obj) {
-                obj.data = ov.data
                 this.tv.$set(obj, 'loading', false)
+                if (!ov.data) continue
+                obj.data = ov.data
             }
             this.get('.').forEach(x => {
                 if (x.settings.$synth) this.del(`${x.id}`)
@@ -376,6 +412,7 @@ export default class DCEvents {
     // Push overlay updates from the web-worker
     on_overlay_update(data) {
         for (var ov of data) {
+            if (!ov.data) continue
             let obj = this.get_one(`${ov.id}`)
             if (obj) {
                 this.fast_merge(obj.data, ov.data)

@@ -26,6 +26,7 @@ self.onmessage = async e => {
                 self.postMessage({ type: 'request-data' })
             }
             se.tf = e.data.data.tf
+            se.range = e.data.data.range
             se.queue.push(e.data.data.s)
             se.exec_all()
 
@@ -37,8 +38,9 @@ self.onmessage = async e => {
                 data_requested = true
                 self.postMessage({ type: 'request-data' })
             }
-            
+
             se.tf = e.data.data.tf
+            se.range = e.data.data.range
             se.exec_all()
 
             break
@@ -85,7 +87,9 @@ self.onmessage = async e => {
 
         case 'update-ov-settings':
 
-            se.exec_sel(e.data.data)
+            se.tf = e.data.data.tf
+            se.range = e.data.data.range
+            se.exec_sel(e.data.data.delta)
 
             break
 

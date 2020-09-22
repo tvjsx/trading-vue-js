@@ -98,7 +98,7 @@ export default class ScriptEnv {
 
         let props = ``
 
-        for (var k in src.props) {
+        for (var k in src.props || {}) {
             let val = JSON.stringify(src.props[k].val)
             props += `var ${k} = ${val}\n`
         }
