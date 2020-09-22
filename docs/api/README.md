@@ -186,7 +186,7 @@ Event listener:
 
 ## Data structure
 
-Data structure v1.2.2
+Data structure v1.3
 
 IMPORTANT: All data must be sorted by time (in ascending order). The main OHLCV must not contain duplicate timestamps.
 
@@ -214,21 +214,23 @@ IMPORTANT: All data must be sorted by time (in ascending order). The main OHLCV 
                 [timestamp, ... ], // Arbitrary length
                 ...
             ],
-            "settings": { } // Arbitrary settings format
+            "settings": { }, // Arbitrary settings format
+            "grid": { }, // The same as in "chart",
+            "tf": <Number|'1s'...'1Y'>, // Forced timeframe
+            "loading": <true|false>, // Show loading animation
+            "script": { // Script settings
+                "execOnRange": <true|false>
+            }
         },
         ...
     ],
     "offchart": [ // Displayed BELOW the chart
+        // The same as "onchart"
+    ],
+    "datasets": [ // Hidden data (used by scripts)
         {
-            "name": "<Indicator name>",
-            "type": "<e.g. RSI, Stoch>",
-            "data": [
-                [timestamp, ... ], // Arbitrary length
-                ...
-            ],
-            "settings": { } // Arbitrary settings format
-        },
-        ...
+            
+        }
     ],
     /* The Properties below are automatically created by DataCube,
      * but can be defined / changed manually, for example,

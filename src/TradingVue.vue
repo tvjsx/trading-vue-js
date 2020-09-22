@@ -305,6 +305,9 @@ export default {
                 r = r.map(x => ti_map.i2t(x))
             }
             this.$emit('range-changed', r)
+            this.custom_event(
+                {event: 'range-changed', args: [r]}
+            )
         },
         set_loader(dc) {
             const self = this

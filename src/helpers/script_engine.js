@@ -71,7 +71,7 @@ class ScriptEngine {
         for (var id in delta) {
             if (!this.map[id]) continue
 
-            let props = this.map[id].src.props
+            let props = this.map[id].src.props || {}
             for (var k in props) {
                 if (k in delta[id]) {
                     props[k].val = delta[id][k]
@@ -121,7 +121,8 @@ class ScriptEngine {
             ohlcv: this.data.ohlcv,
             t: () => this.t,
             iter: () => this.iter,
-            tf: this.tf
+            tf: this.tf,
+            range: this.range
         }, this.tss))
 
         this.map[s.uuid] = s
@@ -380,12 +381,17 @@ class ScriptEngine {
         let res = []
         for (var id of sel) {
             let x = this.map[id]
+            if (x.output === false) {
+                res.push({id: id, data: null})
+                continue
+            }
             res.push({
                 id: id, data: x.env.data, new_ovs: {
                     onchart: x.env.onchart,
                     offchart: x.env.offchart
                 }
             })
+
         }
         return res
     }
@@ -394,6 +400,11 @@ class ScriptEngine {
         let res = []
         for (var id in this.map) {
             let x = this.map[id]
+            if (x.output === false) {
+                res.push({id: id, data: null})
+                continue
+            }
+            // TODO: onchart/offchart update
             res.push({
                 id: id,
                 data: x.env.data[x.env.data.length - 1]
