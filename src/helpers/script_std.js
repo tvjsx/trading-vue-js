@@ -653,6 +653,12 @@ export default class ScriptStd {
         this.env.offchart[name].data.push(v)
     }
 
+    // Send settings update
+    // (can be called from init(), update() or post())
+    settings(upd) {
+        this.env.send_modify({ settings: upd })
+    }
+
     offset() {
         // TODO: this
     }

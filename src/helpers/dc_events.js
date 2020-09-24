@@ -37,8 +37,8 @@ export default class DCEvents {
                     this.se_state = Object.assign(
                         this.se_state || {}, e.data.data)
                     break
-                case 'change-overlay':
-                    this.change_overlay(e.data.data)
+                case 'modify-overlay':
+                    this.modify_overlay(e.data.data)
                     break
             }
             for (var ctrl of this.tv.controllers) {
@@ -183,6 +183,7 @@ export default class DCEvents {
             let props = args[0].src.props || {}
             if (!s.$uuid) s.$uuid = `${obj.type}-${Utils.uuid2()}`
             args[0].uuid = s.$uuid
+            args[0].sett = s
             for (var k in props || {}) {
                 let proto = props[k]
                 if (s[k] !== undefined) {
@@ -249,11 +250,16 @@ export default class DCEvents {
         }
     }
 
-    change_overlay(upd) {
+    // Overlay modification from WW
+    modify_overlay(upd) {
         let obj = this.get_overlay(upd)
         if (obj) {
-            for (var k in upd.fileds || {}) {
-                this.tv.$set(obj, k, upd.fileds[k])
+            for (var k in upd.fields || {}) {
+                if (typeof obj[k] === 'object') {
+                    this.merge(`${upd.uuid}.${k}`, upd.fields[k])
+                } else {
+                    this.tv.$set(obj, k, upd.fileds[k])
+                }
             }
         }
     }
@@ -452,7 +458,7 @@ export default class DCEvents {
     // Get overlay by grid-layer id
     get_overlay(obj) {
         let id = obj.id || `g${obj.grid_id}_${obj.layer_id}`
-        let dcid = this.gldc[id]
+        let dcid = obj.uuid || this.gldc[id]
         return this.get_one(`${dcid}`)
     }
 
