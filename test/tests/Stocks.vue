@@ -25,7 +25,7 @@ import Illuminati from './shared/illuminati.js'
 import Eye from './shared/Eye.vue'
 
 export default {
-    name: 'MouseEvents',
+    name: 'Stocks',
     description: 'Should display marker hints (click earnings icon)',
     props: ['night'],
     mixins: [Illuminati],

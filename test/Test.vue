@@ -31,7 +31,7 @@
 <script>
 
 import Simple from './tests/Simple.vue'
-import MouseEvents from './tests/MouseEvents.vue'
+import Stocks from './tests/Stocks.vue'
 import Timeframes from './tests/Timeframes.vue'
 import Multichart from './tests/Multichart.vue'
 import LegendButtons from './tests/LegendButtons.vue'
@@ -47,7 +47,7 @@ import Scripts from './tests/Scripts.vue'
 import Extensions from './tests/Extensions.vue'
 
 const TESTS = {
-    Simple, MouseEvents, Timeframes, Multichart,
+    Simple, Stocks, Timeframes, Multichart,
     LegendButtons, ChartTypes, DataHelper, Toolbar,
     GridSettings, Interfaces, IndexBased, Performance,
     Renko, Scripts, Extensions

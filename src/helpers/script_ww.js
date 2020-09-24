@@ -111,7 +111,7 @@ se.send = (type, data) => {
         case 'overlay-data':
         case 'overlay-update':
         case 'engine-state':
-        case 'change-overlay':
+        case 'modify-overlay':
         case 'module-data':
 
             self.postMessage({type, data})

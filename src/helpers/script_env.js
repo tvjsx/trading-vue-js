@@ -133,10 +133,12 @@ export default class ScriptEnv {
                 ${props}
 
                 // Globals
+                const settings = self.src.sett
                 const tf = shared.tf
+                const range = shared.range
 
-                this.init = () => {
-                    ${src.init_src}
+                this.init = (_id = 'root') => {
+                    ${this.prep(src.init_src)}
                 }
 
                 this.update = (_id = 'root') => {
@@ -145,8 +147,8 @@ export default class ScriptEnv {
                     ${this.prep(src.upd_src)}
                 }
 
-                this.post = () => {
-                    ${src.post_src}
+                this.post = (_id = 'root') => {
+                    ${this.prep(src.post_src)}
                 }
             `)
         } catch(e) {
@@ -299,5 +301,12 @@ export default class ScriptEnv {
 
     regex_clone(rex) {
         return new RegExp(rex.source, rex.flags)
+    }
+
+    send_modify(upd) {
+        se.send('modify-overlay', {
+            uuid: this.id,
+            fields: upd
+        })
     }
 }
