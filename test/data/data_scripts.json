@@ -8012,7 +8012,8 @@
             "data": [],
             "settings": {
                 "colors": ["#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4"]
-            }
+            },
+            "script": {}
         }
     ]
 }

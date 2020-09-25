@@ -112,3 +112,14 @@ export function tf_from_str(str) {
 export function get_fn_id(pre, id) {
     return pre + '-' + id.split('<-').pop()
 }
+
+// Apply filter for all new overlays
+export function ovf(obj, f) {
+    var nw = {}
+
+    for (var id in obj) {
+        nw[id] = obj[id]
+        nw[id].data = f(obj[id].data)
+    }
+    return nw
+}

@@ -277,6 +277,20 @@ export default {
         if (!props) return false
 
         return props.some(x => n.v[x] !== p.v[x])
+    },
+
+    // Checks if it's time to make a script update
+    // (based on execInterval in ms)
+    delayed_exec(v) {
+        if (!v.script.execInterval) return true
+        let t = this.now()
+        let dt = v.script.execInterval
+        if (!v.settings.$last_exec ||
+            t > v.settings.$last_exec + dt) {
+            v.settings.$last_exec = t
+            return true
+        }
+        return false
     }
 
 }
