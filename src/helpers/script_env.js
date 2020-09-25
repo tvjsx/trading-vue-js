@@ -105,11 +105,17 @@ export default class ScriptEnv {
         // TODO: add argument values to _id
 
         let tss = ``
-
         for (var k in this.shared) {
             if (this.shared[k].__id__) {
                 tss += `const ${k} = shared.${k}\n`
             }
+        }
+
+        // Datasets
+        let dss = ``
+        for (var k in src.data || {}) {
+            let id = src.data[k].src
+            dss += `const ${k} = shared.dss['${id}']\n`
         }
 
         try {
@@ -127,7 +133,8 @@ export default class ScriptEnv {
 
                 // Direct data ts
                 const data = self.data
-                const ohlcv = shared.ohlcv
+                const ohlcv = shared.dss.ohlcv
+                ${dss}
 
                 // Script's properties (init)
                 ${props}

@@ -21,9 +21,12 @@ self.onmessage = async e => {
 
         case 'exec-script':
 
-            if (!se.data.ohlcv && !data_requested) {
+            var req = se.data_required(e.data.data.s)
+            if (req && !data_requested) {
                 data_requested = true
-                self.postMessage({ type: 'request-data' })
+                self.postMessage({
+                    type: 'request-data', data: req
+                })
             }
             se.tf = e.data.data.tf
             se.range = e.data.data.range
@@ -34,9 +37,12 @@ self.onmessage = async e => {
 
         case 'exec-all-scripts':
 
-            if (!se.data.ohlcv && !data_requested) {
+            var req = se.data_required(e.data.data.s)
+            if (req && !data_requested) {
                 data_requested = true
-                self.postMessage({ type: 'request-data' })
+                self.postMessage({
+                    type: 'request-data', data: req
+                })
             }
 
             se.tf = e.data.data.tf
@@ -47,15 +53,15 @@ self.onmessage = async e => {
 
         case 'upload-data':
 
-            if (e.data.data.ohlcv) {
-                self.postMessage({ type: 'data-uploaded' })
+            self.postMessage({ type: 'data-uploaded' })
 
-                await Utils.pause(1)
+            await Utils.pause(1)
 
-                se.data.ohlcv = e.data.data.ohlcv
-                data_requested = false
-                se.exec_all()
+            for (var id in e.data.data) {
+                se.data[id] = e.data.data[id]
             }
+            data_requested = false
+            se.exec_all()
 
             break
 

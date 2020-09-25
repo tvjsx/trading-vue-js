@@ -229,8 +229,11 @@ IMPORTANT: All data must be sorted by time (in ascending order). The main OHLCV 
     ],
     "datasets": [ // Hidden data (used by scripts)
         {
-            
-        }
+            "name": "<Dataset Name>",
+            "id": "<Dataset Id>",
+            "data": [ ... ] // Initial data
+        },
+        ...
     ],
     /* The Properties below are automatically created by DataCube,
      * but can be defined / changed manually, for example,
@@ -246,52 +249,14 @@ IMPORTANT: All data must be sorted by time (in ascending order). The main OHLCV 
             },
             "icon": "Data Url",
             "data": [ ... ] // Initial data
-        }
+        },
+        ...
     ],
     "tool": "<Tool type, e.g. Cursor>", // Current tool
     "selected": "<Selected object id>",
     "drawingMode": <true|false>
 }
 ```
-
-<details><summary>Data structure v1.0</summary>
-<p>
-
-```js
-{
-    "ohlcv": [   // Mandatory
-        [timestamp, open, high, low, close, volume],
-        ...
-    ],
-    "onchart": [ // Displayed ON the chart
-        {
-            "name": "<Indicator name>",
-            "type": "<e.g. EMA, SMA>",
-            "data": [
-                [timestamp, ... ], // Arbitrary length
-                ...
-            ],
-            "settings": { } // Arbitrary settings format
-        },
-        ...
-    ],
-    "offchart": [ // Displayed BELOW the chart
-        {
-            "name": "<Indicator name>",
-            "type": "<e.g. RSI, Stoch>",
-            "data": [
-                [timestamp, ... ], // Arbitrary length
-                ...
-            ],
-            "settings": { } // Arbitrary settings format
-        },
-        ...
-    ]
-}
-```
-
-</p>
-</details>
 
 ## Overlay api
 
