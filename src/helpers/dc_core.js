@@ -3,6 +3,7 @@
 
 import Utils from '../stuff/utils.js'
 import DCEvents from './dc_events.js'
+import Dataset from './dataset.js'
 
 export default class DCCore extends DCEvents {
 
@@ -22,6 +23,8 @@ export default class DCCore extends DCEvents {
             this.tv.$watch(() => this.get('.')
                 .map(x => x.settings.$uuid),
                 (n, p) => this.on_ids_changed(n, p))
+
+            // TODO: Watch for all 'datasets' changes
         }
     }
 
@@ -49,6 +52,16 @@ export default class DCCore extends DCEvents {
 
         // Remove ohlcv cuz we have Data v1.1^
         delete this.data.ohlcv
+
+        if (!('datasets' in this.data)) {
+            this.tv.$set(this.data, 'datasets', [])
+        }
+
+        // Init dataset proxies
+        for (var ds of this.data.datasets) {
+            if (!this.dss) this.dss = {}
+            this.dss[ds.id] = new Dataset(this, ds)
+        }
 
     }
 
@@ -228,6 +241,7 @@ export default class DCCore extends DCEvents {
                 break
             case 'onchart':
             case 'offchart':
+            case 'datasets':
                 result = this.query_search(query, tuple)
                 break
             default:
@@ -273,14 +287,13 @@ export default class DCCore extends DCEvents {
         let path = tuple[1] || ''
         let field = tuple[2]
 
-        let arr = this.data[side].filter(
-            x => x.id && x.name && x.settings && (
-                 x.id === query ||
-                 x.id.includes(path) ||
-                 x.name === query ||
-                 x.name.includes(path) ||
-                 query.includes(x.settings.$uuid)
-            ))
+        let arr = this.data[side].filter(x => (
+            x.id === query ||
+            (x.id && x.id.includes(path)) ||
+            x.name === query ||
+            (x.name && x.name.includes(path)) ||
+            query.includes((x.settings || {}).$uuid)
+        ))
 
         if (field) {
             return arr.map(x => ({

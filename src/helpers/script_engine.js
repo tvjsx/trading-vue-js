@@ -59,6 +59,7 @@ class ScriptEngine {
     async exec_sel(delta) {
 
         // Wait for the data
+        // TODO: Check data requirements
         if (!this.data.ohlcv) return
 
         let sel = Object.keys(delta).filter(x => x in this.map)
@@ -118,7 +119,7 @@ class ScriptEngine {
             low: this.low,
             close: this.close,
             vol: this.vol,
-            ohlcv: this.data.ohlcv,
+            dss: this.data,
             t: () => this.t,
             iter: () => this.iter,
             tf: this.tf,
@@ -454,6 +455,21 @@ class ScriptEngine {
             }
         }
         return arr
+    }
+
+    data_required(s) {
+        let all = Object.values(this.map)
+        if (s) all.push(s)
+
+        let ids = ['ohlcv']
+        for (var s of all) {
+            if (s.src.data) {
+                let reqs = Object.values(s.src.data)
+                ids.push(...reqs.map(x => x.src))
+            }
+        }
+        let unf = ids.filter(x => !this.data[x])
+        return unf.length ? unf : null
     }
 }
 

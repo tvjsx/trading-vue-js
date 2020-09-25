@@ -118,8 +118,6 @@ export default class DataCube extends DCCore {
     }
 
     // Update/append data point, depending on timestamp
-    // v2.0 TODO: to web worker
-    //
     update(data) {
         if(data['candle']) {
             return this.update_candle(data)

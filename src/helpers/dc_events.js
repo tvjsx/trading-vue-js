@@ -4,6 +4,8 @@
 import Utils from '../stuff/utils.js'
 import Icons from '../stuff/icons.json'
 import WebWork from './script_ww_api.js'
+import Dataset from './dataset.js'
+
 
 export default class DCEvents {
 
@@ -18,10 +20,10 @@ export default class DCEvents {
             }
             switch(e.data.type) {
                 case 'request-data':
-                    let main = this.data.chart.data
                     // TODO: DataTunnel class for smarter data transfer
                     if (this.ww._data_uploading) break
-                    this.ww.just('upload-data', { ohlcv: main })
+                    let data = Dataset.make_tx(this, e.data.data)
+                    this.ww.just('upload-data', data)
                     this.ww._data_uploading = true
                     break
                 case 'overlay-data':
