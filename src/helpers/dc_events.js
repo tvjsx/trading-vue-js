@@ -213,8 +213,8 @@ export default class DCEvents {
             this.tv.$set(obj, 'loading', true)
             let tf = this.tv.$refs.chart.interval_ms
             let range = this.tv.getRange()
-            if (obj.script && obj.script.output === false) {
-                args[0].output = false
+            if (obj.script && obj.script.output != null) {
+                args[0].output = obj.script.output
             }
             this.ww.just('exec-script', {
                 s: args[0], tf, range
@@ -239,7 +239,8 @@ export default class DCEvents {
             if (v.script && v.script.execOnRange &&
                 v.settings.$uuid) {
                 delta[v.settings.$uuid] = v.settings
-                update = true
+                update = Utils.delayed_exec(v)
+                // TODO: execInterrupt flag?
             }
         })
 

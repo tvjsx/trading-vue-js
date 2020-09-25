@@ -382,17 +382,23 @@ class ScriptEngine {
         let res = []
         for (var id of sel) {
             let x = this.map[id]
-            if (x.output === false) {
+            let f = x => x
+            if (x.output === false || x.output === 'none') {
                 res.push({id: id, data: null})
                 continue
             }
+            if (x.output === 'range' && this.range) {
+                var [t1, t2] = this.range
+                f = x => x.filter(
+                    y => y[0] >= t1 && y[0] <= t2
+                )
+            }
             res.push({
-                id: id, data: x.env.data, new_ovs: {
-                    onchart: x.env.onchart,
-                    offchart: x.env.offchart
+                id: id, data: f(x.env.data), new_ovs: {
+                    onchart: u.ovf(x.env.onchart, f),
+                    offchart: u.ovf(x.env.offchart, f)
                 }
             })
-
         }
         return res
     }
