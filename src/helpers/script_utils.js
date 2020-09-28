@@ -116,9 +116,12 @@ export function get_fn_id(pre, id) {
 // Apply filter for all new overlays
 export function ovf(obj, f) {
     var nw = {}
-
     for (var id in obj) {
-        nw[id] = obj[id]
+        nw[id] = {}
+        for (var k in obj[id]) {
+            if (k === 'data') continue
+            nw[id][k] = obj[id][k]
+        }
         nw[id].data = f(obj[id].data)
     }
     return nw

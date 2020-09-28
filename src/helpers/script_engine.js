@@ -377,18 +377,19 @@ class ScriptEngine {
         }
     }
 
-    format_map(sel) {
+    format_map(sel, range, output) {
         sel = sel || Object.keys(this.map)
         let res = []
         for (var id of sel) {
             let x = this.map[id]
             let f = x => x
-            if (x.output === false || x.output === 'none') {
+            if ((x.output === false || x.output === 'none') &&
+                !output) {
                 res.push({id: id, data: null})
                 continue
             }
-            if (x.output === 'range' && this.range) {
-                var [t1, t2] = this.range
+            if (x.output === 'range' || range) {
+                var [t1, t2] = range || this.range
                 f = x => x.filter(
                     y => y[0] >= t1 && y[0] <= t2
                 )
