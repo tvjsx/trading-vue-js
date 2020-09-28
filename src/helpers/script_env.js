@@ -106,7 +106,7 @@ export default class ScriptEnv {
 
         let tss = ``
         for (var k in this.shared) {
-            if (this.shared[k].__id__) {
+            if (this.shared[k] && this.shared[k].__id__) {
                 tss += `const ${k} = shared.${k}\n`
             }
         }

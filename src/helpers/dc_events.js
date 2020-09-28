@@ -269,6 +269,7 @@ export default class DCEvents {
 
     data_changed(args) {
         if (!this.sett.scripts) return
+        if (this.sett.data_change_exec === false) return
         let main = this.data.chart.data
         if (this.ww._data_uploading) return
         if (!this.se_state.scripts) return
