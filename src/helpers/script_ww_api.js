@@ -9,7 +9,8 @@ import {} from './script_ww.js' // For webworker-loader to find the ww
 
 class WebWork {
 
-    constructor() {
+    constructor(dc) {
+        this.dc = dc
         this.tasks = {}
         this.onevent = () => {}
         this.start()
@@ -36,12 +37,39 @@ class WebWork {
         this.worker.onmessage = e => this.onmessage(e)
     }
 
+    start_socket() {
+        if (!this.dc.sett.node_url) return
+        this.socket = new WebSocket(this.dc.sett.node_url)
+        this.socket.addEventListener('message', e => {
+            this.onmessage({data: JSON.parse(e.data)})
+        })
+        this.msg_queue = []
+    }
+
     send(msg, tx_keys) {
+        if (this.dc.sett.node_url) {
+            return this.send_node(msg, tx_keys)
+        }
         if (tx_keys) {
             let tx_objs = tx_keys.map(k => msg.data[k])
             this.worker.postMessage(msg, tx_objs)
         } else {
             this.worker.postMessage(msg)
+        }
+    }
+
+    // Send to node.js via websocket
+    send_node(msg, tx_keys) {
+        if (!this.socket) this.start_socket()
+        if (this.socket && this.socket.readyState) {
+            // Send the old messages first
+            while(this.msg_queue.length) {
+                let m = this.msg_queue.shift()
+                this.socket.send(JSON.stringify(m))
+            }
+            this.socket.send(JSON.stringify(msg))
+        } else {
+            this.msg_queue.push(msg)
         }
     }
 

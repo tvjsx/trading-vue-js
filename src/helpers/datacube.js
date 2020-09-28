@@ -17,11 +17,14 @@ export default class DataCube extends DCCore {
             aggregation: 100,       // Update aggregation interval
             script_depth: 0,        // 0 === Exec on all data
             auto_scroll: true,      // Auto scroll to a new candle
-            scripts: true           // Enable overlays scripts
+            scripts: true,          // Enable overlays scripts,
+            ww_ram_limit: 0,        // TODO: WebWorker RAM limit
+            node_url: null          // Use node.js instead of WW
         }
         sett = Object.assign(def_sett, sett)
 
         super()
+        this.sett = sett
         this.data = data
         this.sett = SettProxy(sett, this.ww)
         this.agg = new AggTool(sett.aggregation)
