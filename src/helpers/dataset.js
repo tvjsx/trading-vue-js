@@ -5,6 +5,9 @@ export default class Dataset {
 
     constructor(dc, desc) {
 
+        // TODO: dataset url arrow fn tells WW
+        // to load the ds directly from web
+
         this.name = desc.name
         this.id = desc.id
         this.dc = dc
@@ -34,7 +37,8 @@ export default class Dataset {
             base = { ohlcv: main }
         }
 
-        // TODO: Send datasets 
+        // TODO: Send datasets
+        // TODO: Data request callback ?
 
         return base
     }

@@ -11,7 +11,7 @@ export default class DCEvents {
 
     constructor() {
 
-        this.ww = new WebWork()
+        this.ww = new WebWork(this)
 
         // Listen to the web-worker events
         this.ww.onevent = e => {

@@ -231,7 +231,7 @@ export default {
         this.custom_event({ event: 'before-destroy' })
     },
     methods: {
-        // TODO: reset extensions
+        // TODO: reset extensions?
         resetChart(resetRange = true) {
             this.reset++
             let range = this.getRange()

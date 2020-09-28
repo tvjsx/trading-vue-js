@@ -1,5 +1,5 @@
 
-// DataCube private methods
+// DataCube "private" methods
 
 import Utils from '../stuff/utils.js'
 import DCEvents from './dc_events.js'
