@@ -67,16 +67,20 @@ export default class ScriptEnv {
 
     // Copy the recent value to the direct buff
     copy(v, unshift = true) {
-        if (v !== undefined) {
+        let off = this.output.__offset__
+        if (v != undefined) {
             this.output[0] = v.__id__ ? v[0] : v
+            off = off || v.__offset__
         }
         let val = this.output[0]
+        let t = se.t
+        if (off) t += off * se.tf
         if (val == null || !val.length) {
             // Number / object
-            var point = [se.t, val]
+            var point = [t, val]
         } else {
             // Array
-            point = [se.t, ...val]
+            point = [t, ...val]
         }
         if (unshift) {
             this.data.push(point)

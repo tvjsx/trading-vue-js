@@ -659,8 +659,15 @@ export default class ScriptStd {
         this.env.send_modify({ settings: upd })
     }
 
-    offset() {
-        // TODO: this
+    offset(src, num, _id) {
+        if (src.__id__) {
+            src.__offset__ = num
+            return src
+        }
+        let id = this._tsid(_id, `offset(${num})`)
+        let out = ts(src, id)
+        out.__offset__ = num
+        return out
     }
 
     // percentile_linear_interpolation

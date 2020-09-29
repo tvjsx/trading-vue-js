@@ -29,6 +29,9 @@ export default {
                         let l = start + i * step
                         this[0].push(ema(close, l)[0])
                     }
+                `,
+                post: `
+                    // After the updates
                 `
             }
         }
