@@ -224,7 +224,10 @@ export default class DCEvents {
 
     exec_all_scripts() {
         if (!this.sett.scripts) return
-        this.merge('.', { loading: true })
+        let skrr = dc.get('.').filter(x => x.settings.$props)
+        for (var s of skrr) {
+            this.merge(`${s.id}`, { loading: true })
+        }
         let tf = this.tv.$refs.chart.interval_ms
         let range = this.tv.getRange()
         this.ww.just('exec-all-scripts', { tf, range })
