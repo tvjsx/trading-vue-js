@@ -10,7 +10,7 @@ export default {
         'font', 'config', 'meta', 'tf'
     ],
     mounted() {
-        // TODO: when hot reloading, dynamicaly changed mixins
+        // TODO(1): when hot reloading, dynamicaly changed mixins
         // dissapear (cuz it's a hack), the only way for now
         // is to reload the browser
         if (!this.draw) {
@@ -93,6 +93,9 @@ export default {
                     `${this.grid_id}-${this.id}-${this.uxs_count++}`
             }
             // TODO: add a namespace to the event name
+            // TODO(2): this prevents call overflow, but
+            // the root of evil is in (1)
+            if (event === 'custom-event') return
             this._$emit('custom-event', {event, args})
         },
         exec_script() {

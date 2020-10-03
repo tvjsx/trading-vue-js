@@ -11,7 +11,7 @@ export default {
     mixins: [Overlay],
     methods: {
         meta_info() {
-            return { author: 'C451', version: '1.1.0' }
+            return { author: 'C451', version: '1.1.1' }
         },
         // Here goes your code. You are provided with:
         // { All stuff is reactive }
@@ -49,7 +49,7 @@ export default {
                 for (var p of this.$props.data) {
                     let x = layout.t2screen(p[0])
                     let y = layout.$2screen(p[i])
-                    if (y == null || y !== y) {
+                    if (p[i] == null || y !== y) {
                         this._skip = true
                     } else {
                         if (this._skip) ctx.moveTo(x, y)
