@@ -141,7 +141,7 @@ class ScriptEngine {
     // Live update
     update(candle) {
 
-        if (!this.data.ohlcv || !this.data.ohlcv.length) {
+        if (!this.data.ohlcv || !this.data.ohlcv.data.length) {
             return
         }
 
@@ -154,7 +154,7 @@ class ScriptEngine {
         let mfs2 = this.make_mods_hooks('post_step')
 
         try {
-            let ohlcv = this.data.ohlcv
+            let ohlcv = this.data.ohlcv.data
             let i = ohlcv.length - 1
             let last = ohlcv[i]
             let sel = Object.keys(this.map)
@@ -272,7 +272,7 @@ class ScriptEngine {
                 this.map[id].env.init()
             }
 
-            let ohlcv = this.data.ohlcv
+            let ohlcv = this.data.ohlcv.data
             let start = this.start(ohlcv)
 
             for (var i = start; i < ohlcv.length; i++) {
@@ -465,18 +465,35 @@ class ScriptEngine {
     }
 
     data_required(s) {
+
         let all = Object.values(this.map)
         if (s) all.push(s)
 
-        let ids = ['ohlcv']
+        let types = [{ type: 'OHLCV' }]
         for (var s of all) {
             if (s.src.data) {
                 let reqs = Object.values(s.src.data)
-                ids.push(...reqs.map(x => x.src))
+                types.push(...reqs.map(x => ({
+                    id: s.uuid,
+                    type: x.type
+                })))
             }
         }
-        let unf = ids.filter(x => !this.data[x])
+        let unf = types.filter(x =>
+            !Object.values(this.data)
+            .find(y => y.type === x.type)
+        )
         return unf.length ? unf : null
+    }
+
+    // Match dataset id using script id & required type
+    match_ds(id, type) {
+        // TODO: develop further
+        for (var id in this.data) {
+            if (this.data[id].type === type) {
+                return id
+            }
+        }
     }
 }
 

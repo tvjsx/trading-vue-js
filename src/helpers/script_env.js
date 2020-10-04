@@ -118,8 +118,13 @@ export default class ScriptEnv {
         // Datasets
         let dss = ``
         for (var k in src.data || {}) {
-            let id = src.data[k].src
-            dss += `const ${k} = shared.dss['${id}']\n`
+            let id = se.match_ds(this.id, src.data[k].type)
+            if (!this.shared.dss[id]) {
+                let T = src.data[k].type
+                console.warn(`Dataset '${T}' is undefined`)
+                continue
+            }
+            dss += `const ${k} = shared.dss['${id}'].data\n`
         }
 
         try {
@@ -137,7 +142,7 @@ export default class ScriptEnv {
 
                 // Direct data ts
                 const data = self.data
-                const ohlcv = shared.dss.ohlcv
+                const ohlcv = shared.dss.ohlcv.data
                 ${dss}
 
                 // Script's properties (init)

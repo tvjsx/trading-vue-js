@@ -4,6 +4,7 @@
 import se from './script_engine.js'
 import Utils from '../stuff/utils.js'
 import * as u from './script_utils.js'
+import { DatasetWW } from './dataset.js'
 
 var data_requested = false
 
@@ -52,14 +53,15 @@ self.onmessage = async e => {
             break
 
         case 'upload-data':
-
             self.postMessage({ type: 'data-uploaded' })
 
             await Utils.pause(1)
 
             for (var id in e.data.data) {
-                se.data[id] = e.data.data[id]
+                let data = e.data.data[id]
+                se.data[id] = new DatasetWW(id, data)
             }
+
             data_requested = false
             se.exec_all()
 
@@ -84,9 +86,19 @@ self.onmessage = async e => {
         case 'update-data':
 
             if (e.data.data.ohlcv) {
-
+                // TODO: for datasets
                 se.update(e.data.data.ohlcv)
 
+            }
+
+            break
+
+        case 'dataset-op':
+
+            await Utils.pause(1)
+
+            if (e.data.data.id in se.data) {
+                se.data[e.data.data.id].op(e.data.data)
             }
 
             break
