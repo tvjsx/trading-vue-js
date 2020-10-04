@@ -9,7 +9,7 @@ export default {
     mixins: [Overlay],
     methods: {
         meta_info() {
-            return { author: 'C451', version: '1.0.0' }
+            return { author: 'C451', version: '1.0.1' }
         },
         draw(ctx) {
             ctx.lineWidth = this.line_width
@@ -23,6 +23,7 @@ export default {
                 let p2 = this.mapp(this.$props.data[i+1])
 
                 if (!p2) continue
+                if (p1.y1 !== p1.y1) continue // Fix NaN
 
                 // Background
                 ctx.beginPath()
