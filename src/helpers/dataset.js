@@ -40,7 +40,7 @@ export default class Dataset {
         // TODO: add more sophisticated search
         // (using 'script.datasets' paramerter)
         for (var req of types) {
-            let ds = Object.values(dc.dss)
+            let ds = Object.values(dc.dss || {})
                 .find(x => x.type === req.type)
             if (ds && ds.data) {
                 base[ds.id] = {

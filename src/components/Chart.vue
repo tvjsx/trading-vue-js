@@ -377,7 +377,7 @@ export default {
         },
         forced_tf(n, p) {
             this.update_layout(true)
-            this.ce('exec-all-scripts') 
+            this.ce('exec-all-scripts')
         },
         data: {
             handler: function(n, p) {

@@ -23,6 +23,7 @@ export default class DCEvents {
                     // TODO: DataTunnel class for smarter data transfer
                     if (this.ww._data_uploading) break
                     let data = Dataset.make_tx(this, e.data.data)
+                    this.send_meta_2_ww()
                     this.ww.just('upload-data', data)
                     this.ww._data_uploading = true
                     break
@@ -276,9 +277,16 @@ export default class DCEvents {
         let main = this.data.chart.data
         if (this.ww._data_uploading) return
         if (!this.se_state.scripts) return
+        this.send_meta_2_ww()
         this.ww.just('upload-data', { ohlcv: main })
         this.ww._data_uploading = true
         this.merge('.', { loading: true })
+    }
+
+    send_meta_2_ww() {
+        let tf = this.tv.$refs.chart.interval_ms
+        let range = this.tv.getRange()
+        this.ww.just('send-meta-info', { tf, range })
     }
 
     merge_presets(proto, preset) {
