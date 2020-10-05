@@ -111,6 +111,13 @@ self.onmessage = async e => {
 
             break
 
+        case 'send-meta-info':
+
+            se.tf = e.data.data.tf
+            se.range = e.data.data.range
+
+            break
+
         case 'remove-scripts':
 
             se.remove_scripts(e.data.data)
