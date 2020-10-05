@@ -9,6 +9,8 @@ assignees: ''
 
 ## (!important) Maybe you would prefer making an interactive demo with https://tvjs.io/play. If so, please select the PlayGround template.
 
+## (!important 2) Consider reading the [FAQ](https://github.com/tvjsx/trading-vue-js/tree/master/docs/faq) first, because it helps to solve 82% of issues. 
+
 ## Description
 
 Behaviour / expected behaviour
