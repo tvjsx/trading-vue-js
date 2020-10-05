@@ -1,8 +1,6 @@
 # API Book
 
-::: warning
-This library is in alpha stage, API may change. This guide version is **0.7.0**
-:::
+This guide version is **0.8.0-alpha**
 
 ![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=Current%20lib%20version)
 
@@ -218,9 +216,7 @@ IMPORTANT: All data must be sorted by time (in ascending order). The main OHLCV 
             "grid": { }, // The same as in "chart",
             "tf": <Number|'1s'...'1Y'>, // Forced timeframe
             "loading": <true|false>, // Show loading animation
-            "script": { // Script settings
-                "execOnRange": <true|false>
-            }
+            "script": { } // See 'script settings'
         },
         ...
     ],
@@ -229,7 +225,7 @@ IMPORTANT: All data must be sorted by time (in ascending order). The main OHLCV 
     ],
     "datasets": [ // Hidden data (used by scripts)
         {
-            "name": "<Dataset Name>",
+            "type": "<Dataset Type>",
             "id": "<Dataset Id>",
             "data": [ ... ] // Initial data
         },
@@ -257,6 +253,15 @@ IMPORTANT: All data must be sorted by time (in ascending order). The main OHLCV 
     "drawingMode": <true|false>
 }
 ```
+
+### Script Settings <sup style="color:#14b32a">new</sup>
+
+| Prop | Type | Description |
+|---|---|---|
+| execOnRange | Boolean | Exec script on 'range-changed', default=false  |
+| execInterval | Number | Exec-on-range interval, default=0 (immediatly) |
+| output | Boolean/String | Timeseries output: `true, false, 'range'`, default=true |
+
 
 ## Overlay api
 
