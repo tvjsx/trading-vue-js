@@ -9,6 +9,7 @@
 <script>
 import TradingVue from './TradingVue.vue'
 import Data from '../data/data.json'
+import DataCube from '../src/helpers/datacube.js'
 
 export default {
     name: 'app',
@@ -23,17 +24,14 @@ export default {
     },
     mounted() {
         window.addEventListener('resize', this.onResize)
-        setTimeout(() => {
-            // Async data setup
-            this.$set(this, 'chart', Data)
-        }, 0)
+        window.dc = this.chart
     },
     beforeDestroy() {
         window.removeEventListener('resize', this.onResize)
     },
     data() {
         return {
-            chart: {}, // Data will be here,
+            chart: new DataCube(Data),
             width: window.innerWidth,
             height: window.innerHeight,
             colors: {

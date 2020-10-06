@@ -237,11 +237,11 @@ export default {
             this.last_candle = this.ohlcv ?
                 this.ohlcv[this.ohlcv.length - 1] : undefined
         },
-        // Hook events for extentions
+        // Hook events for extensions
         ce(event, ...args) {
             this.emit_custom_event({ event, args })
         },
-        // Set hooks list (called from an extention)
+        // Set hooks list (called from an extension)
         hooks(...list) {
             list.forEach(x => this[`_hook_${x}`] = true)
         }
