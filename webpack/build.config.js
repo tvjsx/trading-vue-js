@@ -3,6 +3,7 @@ const TerserPlugin = require('terser-webpack-plugin')
 
 const webpack = require('webpack')
 const path = require('path')
+const fs = require('fs')
 
 const VERS = require('../package.json').version
 const DATE = new Date().toDateString()
@@ -12,6 +13,11 @@ const BANNER =
 `    https://github.com/tvjsx/trading-vue-js\n` +
 `    Copyright (c) 2019 C451 Code's All Right;\n` +
 `    Licensed under the MIT license`
+
+if (!fs.existsSync('./src/helpers/tmp/ww$$$.json')) {
+    console.log('Web-worker is not compiled. Run `npm run dev`\n')
+    process.exit()
+}
 
 let common = {
     entry: {
