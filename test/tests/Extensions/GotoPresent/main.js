@@ -1,5 +1,5 @@
 
-// Controller for the extention. Setups all things,
+// Controller for the extension. Setups all things,
 // handles events, serves as a hub between different
 // widgets/components
 
