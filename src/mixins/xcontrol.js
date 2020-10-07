@@ -19,6 +19,8 @@ export default {
         }
     },
     computed: {
+        // TODO: Should the extensions be reset on a new DC?
+        // Idk, but that's what happens now
         ctrllist() {
             for (var ctrl of this.controllers) {
                 if (ctrl.destroy) ctrl.destroy()

@@ -47,6 +47,7 @@ export default {
     },
     mounted() {
         this.init_shaders(this.$props.common.skin)
+        //this.last_ghash = this.ghash(this.$props.common)
     },
     methods: {
         range_changed(r) {
@@ -86,6 +87,11 @@ export default {
                     event.z, event.diff1, event.diff2
                 )
             }
+        },
+        ghash(val) {
+            // Measures grid heights configuration
+            let hs = val.layout.grids.map(x => x.height)
+            return hs.reduce((a, b) => a + b, '')
         }
     },
     computed: {
@@ -152,10 +158,16 @@ export default {
     watch: {
         common: {
             handler: function (val, old_val) {
+                let newhash = this.ghash(val)
+                if (newhash !== this.last_ghash) {
+                    this.rerender++
+                }
+
                 if(val.data.length !== old_val.data.length) {
                     // Look at this nasty trick!
                     this.rerender++
                 }
+                 this.last_ghash = newhash
             },
             deep: true
         }
@@ -163,7 +175,8 @@ export default {
     data() {
         return {
             meta_props: {},
-            rerender: 0
+            rerender: 0,
+            last_ghash: ''
         }
     }
 }
