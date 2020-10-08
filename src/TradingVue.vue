@@ -8,13 +8,15 @@
             width: this.width+'px',
             height: this.height+'px'}">
         <toolbar v-if="toolbar"
+            ref="toolbar"
             v-on:custom-event="custom_event"
             v-bind="chart_props"
             v-bind:config="chart_config">
         </toolbar>
-        <widgets v-if="ctrllist.length" :map="ws"
-            :width="width" :height="height" :tv="this"
-            :dc="data">
+        <widgets v-if="ctrllist.length"
+            ref="widgets"
+            :map="ws" :width="width" :height="height"
+            :tv="this" :dc="data">
         </widgets>
         <chart :key="reset"
             ref="chart"
@@ -164,6 +166,10 @@ export default {
             type: Array,
             default: function () { return [] }
         },
+        xSettings: {
+            type: Object,
+            default: function () { return {} }
+        },
         skin: {
             type: String // Skin Name
         }
@@ -229,6 +235,7 @@ export default {
     },
     beforeDestroy() {
         this.custom_event({ event: 'before-destroy' })
+        this.ctrl_destroy()
     },
     methods: {
         // TODO: reset extensions?
