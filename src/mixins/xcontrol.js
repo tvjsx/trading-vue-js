@@ -16,22 +16,32 @@ export default {
                     ctrl.post_update(e)
                 }
             }
+        },
+        ctrl_destroy() {
+            for (var ctrl of this.controllers) {
+                if (ctrl.destroy) ctrl.destroy()
+            }
         }
     },
     computed: {
         // TODO: Should the extensions be reset on a new DC?
         // Idk, but that's what happens now
         ctrllist() {
-            for (var ctrl of this.controllers) {
-                if (ctrl.destroy) ctrl.destroy()
-            }
+            this.ctrl_destroy()
             this.controllers = []
 
             for (var x of this.$props.extensions) {
-                this.controllers.push(new x.Main(
+                let name = x.Main.__name__
+                if (!this.xSettings[name]) {
+                    this.$set(this.xSettings, name, {})
+                }
+                let nc = new x.Main(
                     this,      // tv inst
-                    this.data  // dc
-                ))
+                    this.data, // dc
+                    this.xSettings[name] // settings
+                )
+                nc.name = name
+                this.controllers.push(nc)
             }
             return this.controllers
         },
@@ -69,6 +79,16 @@ export default {
         // to fix the actual reactivity problem
         skin(n, p) {
             if (n !== p) this.resetChart()
+        },
+        xSettings: {
+            handler(n, p) {
+                for (var ctrl of this.controllers) {
+                    if (ctrl.onsettings) {
+                        ctrl.onsettings(n, p)
+                    }
+                }
+            },
+            deep: true
         }
     },
     data() {
