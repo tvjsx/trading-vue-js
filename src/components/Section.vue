@@ -47,7 +47,6 @@ export default {
     },
     mounted() {
         this.init_shaders(this.$props.common.skin)
-        //this.last_ghash = this.ghash(this.$props.common)
     },
     methods: {
         range_changed(r) {

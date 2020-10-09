@@ -67,9 +67,14 @@ export default class Botbar {
     }
 
     apply_shaders() {
+        let layout = this.layout.grids[0]
+        let props = {
+            layout: layout,
+            cursor: this.$p.cursor
+        }
         for (var s of this.comp.bot_shaders) {
             this.ctx.save()
-            s.draw(this.ctx)
+            s.draw(this.ctx, props)
             this.ctx.restore()
         }
     }

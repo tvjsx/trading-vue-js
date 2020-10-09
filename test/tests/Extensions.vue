@@ -1,6 +1,7 @@
 <template>
 <trading-vue :data="chart" :width="this.width" :height="this.height"
         :toolbar="true" ref="tv"
+        :indexBased="false"
         :extensions="extensions" :skin="skin"
         :color-back="colors.colorBack"
         :color-grid="colors.colorGrid"

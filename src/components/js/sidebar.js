@@ -163,9 +163,14 @@ export default class Sidebar {
     }
 
     apply_shaders() {
+        let layout = this.$p.layout.grids[this.id]
+        let props = {
+            layout: layout,
+            cursor: this.$p.cursor
+        }
         for (var s of this.$p.shaders) {
             this.ctx.save()
-            s.draw(this.ctx)
+            s.draw(this.ctx, props)
             this.ctx.restore()
         }
     }

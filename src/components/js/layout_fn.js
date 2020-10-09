@@ -23,6 +23,7 @@ export default function(self, range) {
         },
         // Time-axis nearest step
         t_magnet: t => {
+            if (ib) t = self.ti_map.smth2i(t)
             const cn = self.candles || self.master_grid.candles
             const arr = cn.map(x => x.raw[0])
             const i = Utils.nearest_a(t, arr)[0]
