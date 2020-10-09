@@ -8,6 +8,7 @@
     "auto-test": "ava",
     "eslint": "./node_modules/.bin/eslint --ext .js,.vue src",
     "dev": "webpack-dev-server --config webpack/dev.config.js --mode development --progress --hot",
+    "ww": "webpack-dev-server --config webpack/dev.config.js --mode production --progress --hot",
     "build": "webpack  --config webpack/build.config.js --mode production --progress",
     "cdn": "webpack-dev-server --config webpack/cdn.config.js --mode development --progress --hot"
   },

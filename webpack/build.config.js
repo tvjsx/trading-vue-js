@@ -15,7 +15,7 @@ const BANNER =
 `    Licensed under the MIT license`
 
 if (!fs.existsSync('./src/helpers/tmp/ww$$$.json')) {
-    console.log('Web-worker is not compiled. Run `npm run dev`\n')
+    console.log('Web-worker is not compiled. Run `npm run ww`\n')
     process.exit()
 }
 
