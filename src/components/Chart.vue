@@ -65,7 +65,7 @@ export default {
         this.updater = new CursorUpdater(this)
 
         this.update_last_candle()
-        this.init_shaders()
+        this.init_shaders(this.skin)
     },
     methods: {
         range_changed(r) {

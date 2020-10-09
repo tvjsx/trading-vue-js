@@ -218,8 +218,18 @@ export default class Grid {
     }
 
     apply_shaders() {
+        let layout = this.$p.layout.grids[this.id]
         let props = {
-            layout: this.$p.layout.grids[this.id]
+            layout: layout,
+            range: this.range,
+            interval: this.interval,
+            tf: layout.ti_map.tf,
+            cursor: this.cursor,
+            colors: this.$p.colors,
+            sub: this.data,
+            font: this.$p.font,
+            config: this.$p.config,
+            meta: this.$p.meta
         }
         for (var s of this.$p.shaders) {
             this.ctx.save()
