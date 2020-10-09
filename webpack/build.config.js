@@ -36,7 +36,12 @@ let common = {
         maxAssetSize: 1024000
     },
     module: {
-        rules: [{
+        rules: [
+            {
+                test: /script_ww.js/,
+                use: 'null-loader'
+            },
+            {
                 test: /\.vue$/,
                 exclude: /node_modules/,
                 loader: 'vue-loader'
