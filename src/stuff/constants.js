@@ -33,6 +33,7 @@ const $SCALES = [0.05, 0.1, 0.2, 0.25, 0.5, 0.8, 1, 2, 5]
 
 const ChartConfig = {
     SBMIN: 60,       // Minimal sidebar px
+    SBMAX: Infinity, // Max sidebar, px
     TOOLBAR: 57,     // Toolbar width px
     TB_ICON: 25,     // Toolbar icon size px
     TB_ITEM_M: 6,    // Toolbar item margin px

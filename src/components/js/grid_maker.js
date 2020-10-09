@@ -105,6 +105,7 @@ function GridMaker(id, params, master_grid = null) {
         let str = '0'.repeat(Math.max(...lens)) + '    '
         self.sb = ctx.measureText(str).width
         self.sb = Math.max(Math.floor(self.sb), $p.config.SBMIN)
+        self.sb = Math.min(self.sb, $p.config.SBMAX)
 
     }
 
