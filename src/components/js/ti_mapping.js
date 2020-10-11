@@ -217,4 +217,12 @@ export default class TI {
         }
     }
 
+    smth2t(smth) {
+        if (smth < MAX_ARR) {
+            return this.i2t(smth) // it was an index
+        } else {
+            return smth // it was time
+        }
+    }
+
 }

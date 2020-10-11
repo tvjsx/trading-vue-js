@@ -3,7 +3,7 @@
     <div class="trading-vue-toolbar" :style="styles"
         :key="tool_count">
         <toolbar-item v-for="(tool, i) in data.tools"
-            v-if="tool.icon"
+            v-if="tool.icon && !tool.hidden"
             @item-selected="selected"
             :key="i"
             :data="tool"
