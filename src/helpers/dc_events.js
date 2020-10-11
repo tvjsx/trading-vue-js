@@ -72,14 +72,7 @@ export default class DCEvents {
                     this.drawing_mode_off()
                 }
                 break
-            case 'grid-mousedown':
-                // TODO: tool state finished?
-                this.object_selected([])
-                if (this.data.tool && this.data.tool !== 'Cursor' &&
-                   !this.data.drawingMode) {
-                    this.tv.$set(this.data, 'drawingMode', true)
-                    this.build_tool(args[0])
-                }
+            case 'grid-mousedown': this.grid_mousedown(args)
                 break
             case 'drawing-mode-off': this.drawing_mode_off()
                 break
@@ -300,19 +293,38 @@ export default class DCEvents {
         }
     }
 
+    grid_mousedown(args) {
+        // TODO: tool state finished?
+        this.object_selected([])
+        // Remove the previous RangeTool
+        let rem = () => this.get('RangeTool')
+            .filter(x => x.settings.shiftMode)
+            .forEach(x => this.del(x.id))
+        if (this.data.tool && this.data.tool !== 'Cursor' &&
+           !this.data.drawingMode) {
+            this.tv.$set(this.data, 'drawingMode', true)
+            this.build_tool(args[0])
+        } else if (this.sett.shift_measure && args[1].shiftKey) {
+            rem()
+            this.tv.$nextTick(() =>
+                this.build_tool(args[0], 'RangeTool:ShiftMode'))
+        } else {
+            rem()
+        }
+    }
+
     drawing_mode_off() {
         this.tv.$set(this.data, 'drawingMode', false)
         this.tv.$set(this.data, 'tool', 'Cursor')
     }
 
     // Place a new tool
-    build_tool(grid_id) {
+    build_tool(grid_id, type) {
 
         let list = this.data.tools
-        let type = this.data.tool
+        type = type || this.data.tool
         let proto = list.find(x => x.type === type)
         if (!proto) return
-
         let sett = Object.assign({}, proto.settings || {})
         let data = (proto.data || []).slice()
 

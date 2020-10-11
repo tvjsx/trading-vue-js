@@ -156,7 +156,7 @@ export default class Grid {
         this.comp.$emit('cursor-locked', true)
         if (event.defaultPrevented) return
         this.comp.$emit('custom-event', {
-            event: 'grid-mousedown', args: [this.id]
+            event: 'grid-mousedown', args: [this.id, event]
         })
     }
 

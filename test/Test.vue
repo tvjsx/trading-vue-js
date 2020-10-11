@@ -69,7 +69,7 @@ export default {
             len: Object.values(TESTS).length,
             test_index: 0,
             current_test: '',
-            night: true
+            night: localStorage.getItem('tvjstest:nm') === 'true'
         }
     },
     methods: {
@@ -93,6 +93,9 @@ export default {
     watch: {
         test_index(v) {
             setTimeout(() => location.hash = `${v+1}`)
+        },
+        night(v) {
+            localStorage.setItem('tvjstest:nm', v)
         }
     }
 };

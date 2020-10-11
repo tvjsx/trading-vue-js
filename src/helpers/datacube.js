@@ -19,7 +19,8 @@ export default class DataCube extends DCCore {
             auto_scroll: true,      // Auto scroll to a new candle
             scripts: true,          // Enable overlays scripts,
             ww_ram_limit: 0,        // TODO: WebWorker RAM limit
-            node_url: null          // Use node.js instead of WW
+            node_url: null,         // Use node.js instead of WW
+            shift_measure: true     // Draw measurment shift+click
         }
         sett = Object.assign(def_sett, sett)
 

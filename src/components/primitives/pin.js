@@ -16,6 +16,7 @@ export default class Pin {
         this.mouse = comp.mouse
         this.name = name
         this.state = params.state || 'settled'
+        this.hidden = params.hidden || false
 
         this.mouse.on('mousemove', e => this.mousemove(e))
         this.mouse.on('mousedown', e => this.mousedown(e))
@@ -40,6 +41,7 @@ export default class Pin {
     }
 
     draw(ctx) {
+        if (this.hidden) return
         switch (this.state) {
             case 'tracking':
                 break
@@ -139,6 +141,7 @@ export default class Pin {
                 this.comp.$emit('scroll-lock', false)
                 break
             case 'settled':
+                if (this.hidden) return
                 if (this.hover()) {
                     this.state = 'dragging'
                     this.moved = false
