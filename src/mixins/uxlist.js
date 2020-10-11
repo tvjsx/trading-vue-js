@@ -53,8 +53,10 @@ export default {
                 }
             }
         },
-        remove_all_ux() {
-            this.uxs = []
+        // Remove all UXs for a given overlay id
+        remove_all_ux(id) {
+            this.uxs = this.uxs.filter(
+                x => x.overlay.id !== id)
         }
     },
     data() { return { uxs: [] } }

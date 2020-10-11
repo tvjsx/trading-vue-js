@@ -85,21 +85,7 @@ export default {
             })*/
 
         },
-        draw(ctx) {
-            ctx.lineWidth = this.line_width
-            ctx.strokeStyle = this.color
-            ctx.beginPath()
-
-            const layout = this.$props.layout
-            const i = this.data_index
-
-            for (var p of this.$props.data) {
-                let x = layout.t2screen(p[0])
-                let y = layout.$2screen(p[i])
-                ctx.lineTo(x, y)
-            }
-            ctx.stroke()
-        },
+        draw(ctx) {},
 
         use_for() { return ['SplineUx'] },
 
