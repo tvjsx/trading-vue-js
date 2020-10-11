@@ -122,7 +122,7 @@ export default {
                 event: 'remove-layer-meta',
                 args: [grid_id, layer]
             })
-            this.remove_all_ux()
+            this.remove_all_ux(layer)
         },
         get_overlays(h) {
             // Distributes overlay data & settings according
