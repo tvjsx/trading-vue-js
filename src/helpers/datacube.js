@@ -109,7 +109,7 @@ export default class DataCube extends DCCore {
         for (var obj of objects) {
 
             // Find current index of the field (if not defined)
-            let i = obj.i !== undefined ?
+            let i = typeof obj.i !== 'number' ?
                 obj.i : obj.p.indexOf(obj.v)
 
             if (i !== -1) {
