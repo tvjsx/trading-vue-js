@@ -1,7 +1,30 @@
 // extensions control
 
 export default {
+    mounted() {
+        this.ctrllist()
+    },
     methods: {
+        // Build / rebuild component list 
+        ctrllist() {
+            this.ctrl_destroy()
+            this.controllers = []
+
+            for (var x of this.$props.extensions) {
+                let name = x.Main.__name__
+                if (!this.xSettings[name]) {
+                    this.$set(this.xSettings, name, {})
+                }
+                let nc = new x.Main(
+                    this,      // tv inst
+                    this.data, // dc
+                    this.xSettings[name] // settings
+                )
+                nc.name = name
+                this.controllers.push(nc)
+            }
+            return this.controllers
+        },
         // TODO: preventDefault
         pre_dc(e) {
             for (var ctrl of this.controllers) {
@@ -24,27 +47,6 @@ export default {
         }
     },
     computed: {
-        // TODO: Should the extensions be reset on a new DC?
-        // Idk, but that's what happens now
-        ctrllist() {
-            this.ctrl_destroy()
-            this.controllers = []
-
-            for (var x of this.$props.extensions) {
-                let name = x.Main.__name__
-                if (!this.xSettings[name]) {
-                    this.$set(this.xSettings, name, {})
-                }
-                let nc = new x.Main(
-                    this,      // tv inst
-                    this.data, // dc
-                    this.xSettings[name] // settings
-                )
-                nc.name = name
-                this.controllers.push(nc)
-            }
-            return this.controllers
-        },
         ws() {
             let ws = {}
             for (var ctrl of this.controllers) {
@@ -79,6 +81,9 @@ export default {
         // to fix the actual reactivity problem
         skin(n, p) {
             if (n !== p) this.resetChart()
+        },
+        extensions() {
+            this.ctrllist()
         },
         xSettings: {
             handler(n, p) {

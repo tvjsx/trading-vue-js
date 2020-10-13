@@ -13,7 +13,7 @@
             v-bind="chart_props"
             v-bind:config="chart_config">
         </toolbar>
-        <widgets v-if="ctrllist.length"
+        <widgets v-if="controllers.length"
             ref="widgets"
             :map="ws" :width="width" :height="height"
             :tv="this" :dc="data">
