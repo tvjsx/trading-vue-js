@@ -218,9 +218,9 @@ That's why the title doesn't lie: you can draw ANYTHING.
 * ~~Tests~~
 * Solve known issues (marked as 'TODO: IMPORTANT')
 * Performance improvements
-* Data-manipulation helpers
-* Add more built-in overlays
-* Add toolbar (drawing tools)
+* ~~Data-manipulation helpers~~
+* ~~Add more built-in overlays~~
+* ~~Add toolbar (drawing tools)~~
 * Custom loayout / layout persistence
 * Fix and improve mobile version
 * **Version 1.0.0 here**
