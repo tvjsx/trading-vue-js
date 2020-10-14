@@ -206,7 +206,7 @@ That's why the title doesn't lie: you can draw ANYTHING.
 ## Grin
 
 <div align="center">
-  <img src="https://github.com/tvjsx/trading-vue-js/blob/master/assets/README-0027a833.png?raw=true" alt="trading-vue logo">
+  <img src="https://github.com/tvjsx/trading-vue-js/blob/master/assets/GRIN.gif?raw=true" alt="trading-vue logo">
 </div>
 
 #### [ Code | click your 🐁 ](https://gist.github.com/C451/6d8ea8d603e3faadd801b4b3f2e7a57d)
