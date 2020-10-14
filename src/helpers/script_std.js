@@ -604,9 +604,14 @@ export default class ScriptStd {
 
     // Display data point on the main chart
     onchart(x, name, sett = {}, _id) {
+        let off = 0
         name = name || u.get_fn_id('Onchart', _id)
-        if (x && x.__id__) x = x[0]
+        if (x && x.__id__) {
+            off = x.__offset__ || 0
+            x = x[0]
+        }
         if (Array.isArray(x) && x[0] && x[0].__id__) {
+            off = x[0].__offset__ || 0
             x = x.map(x => x[0])
         }
         if (!this.env.onchart[name]) {
@@ -622,8 +627,9 @@ export default class ScriptStd {
                 settings: sett
             }, sett)
         }
+        off *= se.tf
         let v = Array.isArray(x) ?
-            [se.t, ...x] : [se.t, x]
+            [se.t + off, ...x] : [se.t + off, x]
         this.env.onchart[name].data.push(v)
     }
 
@@ -631,8 +637,13 @@ export default class ScriptStd {
     // the point there
     offchart(x, name, sett = {}, _id) {
         name = name || u.get_fn_id('Offchart', _id)
-        if (x && x.__id__) x = x[0]
+        let off = 0
+        if (x && x.__id__) {
+            off = x.__offset__ || 0
+            x = x[0]
+        }
         if (Array.isArray(x) && x[0] && x[0].__id__) {
+            off = x[0].__offset__ || 0
             x = x.map(x => x[0])
         }
         if (!this.env.offchart[name]) {
@@ -648,8 +659,9 @@ export default class ScriptStd {
                 settings: sett
             }, sett)
         }
+        off *= se.tf
         let v = Array.isArray(x) ?
-            [se.t, ...x] : [se.t, x]
+            [se.t + off, ...x] : [se.t + off, x]
         this.env.offchart[name].data.push(v)
     }
 
