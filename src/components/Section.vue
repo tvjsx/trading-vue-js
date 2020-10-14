@@ -1,14 +1,15 @@
 <template>
     <!-- Horizontal section: (grid + sidebar) -->
     <div class="trading-vue-section">
-        <chart-legend
+        <chart-legend ref="legend"
             v-bind:values="section_values"
             v-bind:grid_id="grid_id"
             v-bind:common="legend_props"
             v-bind:meta_props="get_meta_props"
             v-on:legend-button-click="button_click">
         </chart-legend>
-        <grid v-bind="grid_props" v-bind:grid_id="grid_id"
+        <grid v-bind="grid_props" ref="grid"
+            v-bind:grid_id="grid_id"
              v-on:register-kb-listener="register_kb"
              v-on:remove-kb-listener="remove_kb"
              v-on:range-changed="range_changed"
@@ -20,7 +21,7 @@
              v-on:rezoom-range="rezoom_range">
         </grid>
         <sidebar
-            :ref="'grid-' + grid_id"
+            :ref="'sb-' + grid_id"
             v-bind="sidebar_props"
             v-bind:grid_id="grid_id"
             v-bind:rerender="rerender"
@@ -80,7 +81,7 @@ export default {
             this.$emit('remove-kb-listener', event)
         },
         rezoom_range(event) {
-            let id = 'grid-' + event.grid_id
+            let id = 'sb-' + event.grid_id
             if (this.$refs[id]) {
                 this.$refs[id].renderer.rezoom_range(
                     event.z, event.diff1, event.diff2

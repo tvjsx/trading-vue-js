@@ -3,7 +3,7 @@
     <div class="trading-vue-chart" :style="styles">
         <keyboard ref="keyboard"></keyboard>
         <grid-section v-for="(grid, i) in this._layout.grids"
-            :key="grid.id"
+            :key="grid.id" ref="sec"
             v-bind:common="section_props(i)"
             v-bind:grid_id="i"
             v-on:register-kb-listener="register_kb"
