@@ -179,7 +179,9 @@ export default {
             // Bars count (through the candle index)
             let f2 = t => {
                 let c = this.layout.c_magnet(t)
-                return this.layout.candles.indexOf(c)
+                let cn = this.layout.candles ||
+                    this.layout.master_grid.candles
+                return cn.indexOf(c)
             }
             // Bars count (and handling the negative values)
             let b = f2(this.p2[0]) - f2(this.p1[0])
