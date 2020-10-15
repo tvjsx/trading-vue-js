@@ -17,7 +17,8 @@
             v-on:legend-button-click="legend_button_click"
             >
         </grid-section>
-        <botbar v-bind="botbar_props" :shaders="shaders">
+        <botbar v-bind="botbar_props"
+            :shaders="shaders" :timezone="timezone">
         </botbar>
     </div>
 </template>
@@ -42,7 +43,7 @@ export default {
     props: [
         'title_txt', 'data', 'width', 'height', 'font', 'colors',
         'overlays', 'tv_id', 'config', 'buttons', 'toolbar', 'ib',
-        'skin'
+        'skin', 'timezone'
     ],
     mixins: [Shaders, DataTrack],
     components: {
@@ -370,6 +371,9 @@ export default {
             }
             let sub = this.subset()
             Utils.overwrite(this.sub, sub)
+            this.update_layout()
+        },
+        timezone() {
             this.update_layout()
         },
         colors() {

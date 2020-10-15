@@ -172,6 +172,10 @@ export default {
         },
         skin: {
             type: String // Skin Name
+        },
+        timezone: {
+            type: Number,
+            default: 0
         }
     },
     computed: {
@@ -191,7 +195,8 @@ export default {
                 ib: this.$props.indexBased || this.index_based || false,
                 colors: Object.assign({}, this.$props.colors ||
                     this.colorpack),
-                skin: this.skin_proto
+                skin: this.skin_proto,
+                timezone: this.$props.timezone
             }
             this.parse_colors(chart_props.colors)
             return chart_props

@@ -106,7 +106,7 @@ function Layout(params) {
     let specs = {
         sub, interval, range, ctx, $p, layers_meta,
         ti_map, height: hs[0], y_t: y_ts[0],
-        grid: mgrid
+        grid: mgrid, timezone: $p.timezone
     }
     let gms = [new GridMaker(0, specs)]
 
