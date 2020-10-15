@@ -126,7 +126,7 @@ export default class DCCore extends DCEvents {
             let i = count[ov.type]++
             ov.id = `onchart.${ov.type}${i}`
             if (!ov.name) ov.name = ov.type + ` ${i}`
-            if (!ov.settings) ov.settings = {}
+            if (!ov.settings) this.tv.$set(ov, 'settings', {})
 
             // grid_id,layer_id => DC id mapping
             this.gldc[`g0_${ov.type}_${i}`] = ov.id
@@ -142,7 +142,7 @@ export default class DCCore extends DCEvents {
             let i = count[ov.type]++
             ov.id = `offchart.${ov.type}${i}`
             if (!ov.name) ov.name = ov.type + ` ${i}`
-            if (!ov.settings) ov.settings = {}
+            if (!ov.settings) this.tv.$set(ov, 'settings', {})
 
             // grid_id,layer_id => DC id mapping
             gid++
