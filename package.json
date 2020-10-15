@@ -1,6 +1,6 @@
 {
   "name": "trading-vue-js",
-  "version": "0.8.0-alpha",
+  "version": "0.8.0",
   "description": "Hackable charting lib for traders",
   "main": "./dist/trading-vue.js",
   "scripts": {
