@@ -98,13 +98,16 @@ export default class Botbar {
 
     }
 
-    // TODO: implement time zones
     format_date(p) {
         let t = p[1][0]
         t = this.grid_0.ti_map.i2t(t)
+        let ti = this.$p.layout.grids[0].ti_map.tf
+        // Enagle timezones only for tf < 1D
+        let k = ti < DAY ? 1 : 0
+        let tZ = t + k * this.$p.timezone * HOUR
 
         //t += new Date(t).getTimezoneOffset() * MINUTE
-        let d = new Date(t)
+        let d = new Date(tZ)
 
         if (p[2] === YEAR || Utils.year_start(t) === t) {
             return d.getUTCFullYear()
@@ -112,7 +115,8 @@ export default class Botbar {
         if (p[2] === MONTH || Utils.month_start(t) === t) {
             return MONTHMAP[d.getUTCMonth()]
         }
-        if (Utils.day_start(t) === t) return d.getDate()
+        // TODO(*) see grid_maker.js
+        if (Utils.day_start(tZ) === tZ) return d.getUTCDate()
 
         let h = Utils.add_zero(d.getUTCHours())
         let m = Utils.add_zero(d.getUTCMinutes())
@@ -124,9 +128,13 @@ export default class Botbar {
 
         let t = this.$p.cursor.t
         t = this.grid_0.ti_map.i2t(t)
-        let ti = this.$p.interval
+        //let ti = this.$p.interval
+        let ti = this.$p.layout.grids[0].ti_map.tf
+        // Enagle timezones only for tf < 1D
+        let k = ti < DAY ? 1 : 0
+
         //t += new Date(t).getTimezoneOffset() * MINUTE
-        let d = new Date(t)
+        let d = new Date(t + k * this.$p.timezone * HOUR)
 
         if (ti === YEAR) {
             return d.getUTCFullYear()

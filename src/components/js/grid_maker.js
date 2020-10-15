@@ -5,7 +5,7 @@ import math from '../../stuff/math.js'
 import layout_fn from './layout_fn.js'
 import log_scale from './log_scale.js'
 
-const { TIMESCALES, $SCALES, WEEK, MONTH, YEAR } = Const
+const { TIMESCALES, $SCALES, WEEK, MONTH, YEAR, HOUR, DAY } = Const
 const MAX_INT = Number.MAX_SAFE_INTEGER
 
 
@@ -15,7 +15,7 @@ function GridMaker(id, params, master_grid = null) {
 
     let {
         sub, interval, range, ctx, $p, layers_meta, height, y_t, ti_map,
-        grid
+        grid, timezone
     } = params
 
     var self = { ti_map }
@@ -306,6 +306,12 @@ function GridMaker(id, params, master_grid = null) {
         let prev_t = ti_map.ib ? ti_map.i2t(prev[0]) : prev[0]
         let p_t = ti_map.ib ? ti_map.i2t(p[0]) : p[0]
 
+        if (ti_map.tf < DAY) {
+            prev_t += timezone * HOUR
+            p_t += timezone * HOUR
+        }
+        let d = timezone * HOUR
+
         // TODO: take this block =========> (see below)
         if ((prev[0] || interval === YEAR) &&
             Utils.get_year(p_t) !== Utils.get_year(prev_t)) {
@@ -314,6 +320,11 @@ function GridMaker(id, params, master_grid = null) {
         else if (prev[0] &&
             Utils.get_month(p_t) !== Utils.get_month(prev_t)) {
             self.xs.push([x, p, MONTH])
+        }
+        // TODO: should be added if this day !== prev day
+        // And the same for 'botbar.js', TODO(*) 
+        else if (Utils.day_start(p_t) === p_t) {
+            self.xs.push([x, p, DAY])
         }
         else if (p[0] % self.t_step === 0) {
             self.xs.push([x, p, interval])
