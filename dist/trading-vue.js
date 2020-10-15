@@ -1,5 +1,5 @@
 /*!
- * TradingVue.JS - v0.8.0-alpha - Thu Oct 15 2020
+ * TradingVue.JS - v0.8.0 - Thu Oct 15 2020
  *     https://github.com/tvjsx/trading-vue-js
  *     Copyright (c) 2019 C451 Code's All Right;
  *     Licensed under the MIT license
@@ -11479,7 +11479,8 @@ LineTool_component.options.__file = "src/components/overlays/LineTool.vue"
       var f2 = function f2(t) {
         var c = _this2.layout.c_magnet(t);
 
-        return _this2.layout.candles.indexOf(c);
+        var cn = _this2.layout.candles || _this2.layout.master_grid.candles;
+        return cn.indexOf(c);
       }; // Bars count (and handling the negative values)
 
 
@@ -16668,7 +16669,7 @@ var dc_core_DCCore = /*#__PURE__*/function (_DCEvents) {
           var i = count[ov.type]++;
           ov.id = "onchart.".concat(ov.type).concat(i);
           if (!ov.name) ov.name = ov.type + " ".concat(i);
-          if (!ov.settings) ov.settings = {}; // grid_id,layer_id => DC id mapping
+          if (!ov.settings) this.tv.$set(ov, 'settings', {}); // grid_id,layer_id => DC id mapping
 
           this.gldc["g0_".concat(ov.type, "_").concat(i)] = ov.id;
           this.dcgl[ov.id] = "g0_".concat(ov.type, "_").concat(i);
@@ -16698,7 +16699,7 @@ var dc_core_DCCore = /*#__PURE__*/function (_DCEvents) {
 
           ov.id = "offchart.".concat(ov.type).concat(_i);
           if (!ov.name) ov.name = ov.type + " ".concat(_i);
-          if (!ov.settings) ov.settings = {}; // grid_id,layer_id => DC id mapping
+          if (!ov.settings) this.tv.$set(ov, 'settings', {}); // grid_id,layer_id => DC id mapping
 
           gid++;
           var rgid = (ov.grid || {}).id || gid; // real grid_id
