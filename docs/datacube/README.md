@@ -1,6 +1,6 @@
 # DataCube API
 
-This guide version is **0.7.0**
+This guide version is **0.8.0**
 
 ![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=Current%20lib%20version)
 
@@ -40,11 +40,12 @@ TVJS automatically detects that you are a smart person who wants to use this lib
 |---|---|---|
 | data | Object | Original chart data. Use it for direct access  |
 | tv | Component | Reference to `trading-vue` component |
-| sett <sup style="color:#14b32a">new</sup> | Object  | DC Settins object |
-| se_state <sup style="color:#14b32a">new</sup> | Object | Script Engine state |
+| sett  | Object  | DC Settins object |
+| se_state | Object | Script Engine state |
+| ww  | Object  |  Web-worker interface |
 
 
-## Settings <sup style="color:#14b32a">new</sup>
+## Settings
 
 ```js
 new DataCube({
@@ -60,6 +61,9 @@ new DataCube({
 | script_depth | Number | 0 === Exec on all data, default = 0 |
 | auto_scroll | Boolean  | Auto scroll to a new candle, default = true |
 | scripts | Boolean | Enable overlays scripts, default = true |
+| node_url <sup style="color:#14b32a">new</sup> | String | Use node.js instead of WW |
+| shift_measure <sup style="color:#14b32a">new</sup>  | String  | Shift+click measurment, default = true |
+
 
 ## Query system
 

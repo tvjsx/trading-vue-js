@@ -63,3 +63,28 @@ time() {
 ```
 
 Both `sidebar` and `botbar` shaders updated and removed automatically by the lib.
+
+## Background Shaders
+
+Very similar to the inline type, but use `props` as a data source.
+
+```js
+export default class BackShader {
+
+    constructor() {
+        this.target = 'grid' // Where to apply ('sidebar|botbar|grid')
+        this.name = 'BackShader'
+        this.id = 'BackShader'
+        this.zIndex = -1 // Order
+        this.owner = null // Skin / extension (set automatically)
+    }
+
+    draw(ctx, props) {
+        // props contains (for main grid):
+        // { layout, range, interval tf, cursor,
+        // colors, sub, font, config, meta }
+        // (for sidebar & botbar):
+        // { layout, cursor }
+    }
+}
+```

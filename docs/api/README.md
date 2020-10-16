@@ -1,6 +1,6 @@
 # API Book
 
-This guide version is **0.8.0-alpha**
+This guide version is **0.8.0**
 
 ![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=Current%20lib%20version)
 
@@ -31,7 +31,7 @@ This guide version is **0.8.0-alpha**
 | colorVolUp | String | Green volume color |
 | colorVolDw | String | Red volume color |
 | colorPanel | String | Value bars color |
-| colors  <sup style="color:#14b32a">new</sup>  | Object | All-colors object, has a lower priority |
+| colors  | Object | All-colors object, has a lower priority |
 | font | String | Full font string, e.g. "11px Arial..." |
 | data | Object | Data object |
 | overlays | Array | List of custom overlay classes |
@@ -41,8 +41,9 @@ This guide version is **0.8.0-alpha**
 | colorTbBack  | String | Toolbar background color |
 | colorTbBorder  | String | Toolbar border color |
 | indexBased  | Boolean | Index-based rendering mode (global setting) |
-| extensions <sup style="color:#14b32a">new</sup>  | Array | Array of extensions |
-| skin <sup style="color:#14b32a">new</sup>  | String | Skin ID (should be in the extensions) |
+| extensions   | Array | Array of extensions |
+| skin   | String | Skin ID (should be in the extensions) |
+| timezone  <sup style="color:#14b32a">new</sup> | Number | Shift from UTC, hours |
 
 
 ### Legend Button Types
@@ -117,7 +118,7 @@ Gets the cursor [object](https://github.com/tvjsx/trading-vue-js/tree/master/doc
 
 * **Returns**: Object
 
-### $refs.chart.hooks(...args) <sup style="color:#14b32a">new</sup>
+### $refs.chart.hooks(...args)
 
 Set hooks to the internal events. You'll get events like this `?<hook name>`
 
@@ -254,7 +255,7 @@ IMPORTANT: All data must be sorted by time (in ascending order). The main OHLCV 
 }
 ```
 
-### Script Settings <sup style="color:#14b32a">new</sup>
+### Script Settings
 
 | Prop | Type | Description |
 |---|---|---|
