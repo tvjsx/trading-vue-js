@@ -12,7 +12,7 @@ export default {
     mixins: [Overlay, Tool],
     methods: {
         meta_info() {
-            return { author: 'C451', version: '2.0.0' }
+            return { author: 'C451', version: '2.0.1' }
         },
         tool() {
             return {
@@ -132,7 +132,10 @@ export default {
 
             const layout = this.$props.layout
             const xdir = Math.sign(this.p2[0] - this.p1[0])
-            const ym = layout.$2screen((this.p1[1] + this.p2[1]) * 0.5)
+            const ym = (
+                layout.$2screen(this.p1[1]) +
+                layout.$2screen(this.p2[1])
+            ) / 2
 
             ctx.beginPath()
 
@@ -157,13 +160,10 @@ export default {
             // Horizontal Line
             ctx.beginPath()
             ctx.setLineDash([5, 5])
-            new Seg(this, ctx).draw(
-                [this.p1[0], (this.p1[1] + this.p2[1]) * 0.5],
-                [this.p2[0], (this.p1[1] + this.p2[1]) * 0.5]
-            )
+            ctx.moveTo(x1, ym)
+            ctx.lineTo(x2, ym)
             ctx.stroke()
             ctx.setLineDash([])
-
 
         },
         // WTF? I know dude, a lot of shitty code here
