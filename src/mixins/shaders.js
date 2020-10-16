@@ -14,6 +14,7 @@ export default {
                     shader.owner = skin.id
                     this.shaders.push(shader)
                 }
+                // TODO: Sort by zIndex
             }
         },
         on_shader_event(d, target) {

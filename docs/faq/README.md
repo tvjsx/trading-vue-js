@@ -99,6 +99,6 @@ Did you give each instance a unique id?
 
 Do you use `translate3d`? Currenty the lib doesn't support it.
 
-## How to use real-time data?
+## How to use real-time data? Lazy data loading? 
 
 See https://github.com/tvjsx/trading-vue-js/blob/master/test/tests/DataHelper.vue

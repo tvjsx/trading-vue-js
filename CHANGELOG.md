@@ -1,6 +1,21 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.8.0] - 2020-10-15
+
+- Timezones (initial support)
+- Extended shader props
+- Show/hide scalebars (via chart-config sizes)
+- Chart section resizing [Ext]
+- Linked charts [Ext]
+- Shift + drag => Measure
+- Various bug kills and memory leak demolitions
+- Scripts: onrange exec, node.js SE exec (opt)
+- Scripts: added support of 'tf', 'range'
+- Updated RangeTool
+- Datasets, very first try
+- 30% build size decrease
+
 ## [0.7.0] - 2020-9-15
 - Extensions (widgets, colorpacks & skins v1)
 - Pins & toolbar bug fixes
