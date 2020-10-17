@@ -476,7 +476,7 @@ export default class ScriptStd {
     }
 
     iff(cond, x, y) {
-        return cond ? x : z
+        return cond ? x : y
     }
 
     // Keltner Channels
@@ -663,6 +663,11 @@ export default class ScriptStd {
         let v = Array.isArray(x) ?
             [se.t + off, ...x] : [se.t + off, x]
         this.env.offchart[name].data.push(v)
+    }
+
+    // Returns true when the candle(<tf>) is being closed
+    onclose(tf) {
+        return (se.t + se.tf) % u.tf_from_str(tf) === 0
     }
 
     // Send settings update
