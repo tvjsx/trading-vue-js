@@ -468,7 +468,10 @@ export default class DCCore extends DCEvents {
     }
 
     scroll_to(t) {
-        // TODO: implement
+        if (tv.$refs.chart.cursor.locked) return
+        let tl = tv.$refs.chart.last_candle[0]
+        let d = this.tv.getRange()[1] - tl
+        if (d > 0) this.tv.goto(t + d)
     }
 
 }
