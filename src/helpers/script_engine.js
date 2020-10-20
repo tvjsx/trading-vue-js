@@ -412,11 +412,19 @@ class ScriptEngine {
                 res.push({id: id, data: null})
                 continue
             }
-            // TODO: onchart/offchart update
             res.push({
                 id: id,
                 data: x.env.data[x.env.data.length - 1]
             })
+            for (var side of ['onchart', 'offchart']) {
+                for (var id in x.env[side]) {
+                    let y = x.env[side][id]
+                    res.push({
+                        id: `${side}.${id}`,
+                        data: y.data[y.data.length - 1]
+                    })
+                }
+            }
         }
         return res
     }
