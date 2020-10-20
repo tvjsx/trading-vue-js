@@ -30,6 +30,9 @@ export default {
                     for (var l = length; l <= length + 50; l += 10) {
                         this[0].push(ema(close, l)[0])
                     }
+                    //let [mid, hi, lo] = bb(close, 20, 2)
+                    //onchart([hi, mid, lo], 'BB', {type:'BB'})
+                    offchart(rsi(close, 14), 'RSI, 14', {type:'RSI'})
                 `
             }
         }
