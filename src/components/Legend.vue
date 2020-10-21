@@ -59,6 +59,11 @@ export default {
             }
             const prec = this.layout.prec
 
+            let meta = this.$props.meta_props['Candles_0'] || {}
+            if (meta.legend) {
+                return meta.legend().map(x => x.value)
+            }
+
             return [
                 this.$props.values.ohlcv[1].toFixed(prec),
                 this.$props.values.ohlcv[2].toFixed(prec),
