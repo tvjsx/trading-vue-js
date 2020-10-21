@@ -59,9 +59,11 @@ export default {
             }
             const prec = this.layout.prec
 
-            let meta = this.$props.meta_props['Candles_0'] || {}
+            // TODO: main the main legend more customizable
+            let id = this.main_type + '_0'
+            let meta = this.$props.meta_props[id] || {}
             if (meta.legend) {
-                return meta.legend().map(x => x.value)
+                return (meta.legend() || []).map(x => x.value)
             }
 
             return [
@@ -115,6 +117,10 @@ export default {
         off_data() {
             return this.$props.common.offchart
         },
+        main_type() {
+            let f = this.common.data.find(x => x.main)
+            return f ? f.type : undefined
+        }
     },
     methods: {
         format(id, values) {
