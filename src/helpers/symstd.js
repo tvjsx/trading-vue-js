@@ -29,7 +29,6 @@ export default {
                 let ts = se.tss[m[0]] = TS(m[0], [])
                 ts.__tf__ = u.tf_from_pair(m[2], m[3])
                 ts.__fn__ = Sampler(m[1]).bind(ts)
-
             }
         } while (m)
 

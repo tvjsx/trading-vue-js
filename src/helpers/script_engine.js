@@ -286,6 +286,7 @@ class ScriptEngine {
                 this.iter = i - start
                 this.t = ohlcv[i][0]
                 this.step(ohlcv[i])
+                if (this.custom_main) this.make_ohlcv()
 
                 // SLOW DOWN TEST:
                 //for (var k = 1; k < 1000000; k++) {}
@@ -401,6 +402,12 @@ class ScriptEngine {
                 }
             })
         }
+        if (this.custom_main) {
+            res.push({
+                id: 'chart',
+                data: this.data.ohlcv.data
+            })
+        }
         return res
     }
 
@@ -501,6 +508,23 @@ class ScriptEngine {
             if (this.data[id].type === type) {
                 return id
             }
+        }
+    }
+
+    // Make a ohlcv data point if there is a symbol
+    // with { main: true } props (overwrites ohlcv).
+    make_ohlcv() {
+        let sym = this.custom_main
+        let tNext = this.t + this.tf
+        if (sym.update(null, tNext)) {
+            this.data.ohlcv.data.push([
+                tNext,
+                sym.open[0],
+                sym.high[0],
+                sym.low[0],
+                sym.close[0],
+                sym.vol[0]
+            ])
         }
     }
 }

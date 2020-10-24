@@ -117,7 +117,8 @@ export default class DCEvents {
         }
 
         if (changed) {
-            let tf = this.tv.$refs.chart.interval_ms
+            let tf = this.tv.$refs.chart.interval_ms ||
+                     this.data.chart.tf
             let range = this.tv.getRange()
             this.ww.just('update-ov-settings', {
                 delta, tf, range
@@ -205,7 +206,8 @@ export default class DCEvents {
             }
             s.$props = Object.keys(args[0].src.props || {})
             this.tv.$set(obj, 'loading', true)
-            let tf = this.tv.$refs.chart.interval_ms
+            let tf = this.tv.$refs.chart.interval_ms ||
+                     this.data.chart.tf
             let range = this.tv.getRange()
             if (obj.script && obj.script.output != null) {
                 args[0].output = obj.script.output
@@ -222,7 +224,8 @@ export default class DCEvents {
         for (var s of skrr) {
             this.merge(`${s.id}`, { loading: true })
         }
-        let tf = this.tv.$refs.chart.interval_ms
+        let tf = this.tv.$refs.chart.interval_ms ||
+                 this.data.chart.tf
         let range = this.tv.getRange()
         this.ww.just('exec-all-scripts', { tf, range })
     }
@@ -242,7 +245,8 @@ export default class DCEvents {
         })
 
         if (update) {
-            let tf = this.tv.$refs.chart.interval_ms
+            let tf = this.tv.$refs.chart.interval_ms ||
+                     this.data.chart.tf
             let range = this.tv.getRange()
             this.ww.just('update-ov-settings', {
                 delta, tf, range
@@ -277,7 +281,8 @@ export default class DCEvents {
     }
 
     send_meta_2_ww() {
-        let tf = this.tv.$refs.chart.interval_ms
+        let tf = this.tv.$refs.chart.interval_ms ||
+                 this.data.chart.tf
         let range = this.tv.getRange()
         this.ww.just('send-meta-info', { tf, range })
     }
@@ -429,6 +434,7 @@ export default class DCEvents {
             this.get('.').forEach(x => {
                 if (x.settings.$synth) this.del(`${x.id}`)
             })
+            if (!ov.new_ovs) continue
             for (var id in ov.new_ovs.onchart) {
                 if (!this.get_one(`onchart.${id}`)) {
                     this.add('onchart', ov.new_ovs.onchart[id])

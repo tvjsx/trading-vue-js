@@ -23,6 +23,7 @@ export default class ScriptEnv {
         this.output = TS('output', [])
         this.data = []
         this.tss = {}
+        this.syms = {}
         this.shared = data
         this.output.box_maker = this.make_box(s.src)
         this.onchart = {}
