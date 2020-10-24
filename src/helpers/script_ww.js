@@ -29,7 +29,7 @@ self.onmessage = async e => {
                     type: 'request-data', data: req
                 })
             }
-            se.tf = e.data.data.tf
+            se.tf = u.tf_from_str(e.data.data.tf)
             se.range = e.data.data.range
             se.queue.push(e.data.data.s)
             se.exec_all()
@@ -46,7 +46,7 @@ self.onmessage = async e => {
                 })
             }
 
-            se.tf = e.data.data.tf
+            se.tf = u.tf_from_str(e.data.data.tf)
             se.range = e.data.data.range
             se.exec_all()
 
@@ -105,7 +105,7 @@ self.onmessage = async e => {
 
         case 'update-ov-settings':
 
-            se.tf = e.data.data.tf
+            se.tf = u.tf_from_str(e.data.data.tf)
             se.range = e.data.data.range
             se.exec_sel(e.data.data.delta)
 
@@ -113,7 +113,7 @@ self.onmessage = async e => {
 
         case 'send-meta-info':
 
-            se.tf = e.data.data.tf
+            se.tf = u.tf_from_str(e.data.data.tf)
             se.range = e.data.data.range
 
             break

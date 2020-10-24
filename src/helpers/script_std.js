@@ -5,6 +5,7 @@ import se from './script_engine.js'
 import linreg from '../stuff/linreg.js'
 import * as u from './script_utils.js'
 import Sampler from './sampler.js'
+import { Sym, ARR, TSS, NUM } from './symbol.js'
 
 const BUF_INC = 5
 
@@ -36,8 +37,10 @@ export default class ScriptStd {
                 case '_i':
                 case '_v':
                 case '_add_i':
+                case 'chart':
                 case 'onchart':
                 case 'offchart':
+                case 'sym':
                     continue
 
             }
@@ -472,7 +475,7 @@ export default class ScriptStd {
     }
 
     hour(time) {
-        return new Date(time || t).getUTCHours()
+        return new Date(time || se.t).getUTCHours()
     }
 
     iff(cond, x, y) {
@@ -552,6 +555,11 @@ export default class ScriptStd {
     max(...args) {
         args.pop() // Remove _id
         return Math.max(...args)
+    }
+
+    // Send update to some overlay / main chart
+    modify(id, fields) {
+        se.send('modify-overlay', { uuid:id, fields })
     }
 
     // max_bars_back
@@ -968,6 +976,51 @@ export default class ScriptStd {
         let sum = src[3] * this.SWMA[0] + src[2] * this.SWMA[1] +
                   src[1] * this.SWMA[2] + src[0] * this.SWMA[3]
         return this.ts(sum, id, src.__tf__)
+    }
+
+    // Creates a new Symbol. Argument variations:
+    // <data>(Array), [<params>(Object)]
+    // <ts>(TS), [<params>(Object)]
+    // <point>(Number), [<params>(Object)]
+    // <tf>(String) 1m, 5m, 1H, etc. (uses main OHLCV)
+    // Params object: {
+    //  id: <String>,
+    //  tf: <String|Number>,
+    //  aggtype: <String> (TODO: Type of aggregation)
+    //  format: <String> (Data format, e.g. "time:price:vol")
+    //  window: <String|Number> (Aggregation window)
+    //  main <true|false> (Use as the main chart)
+    // }
+    sym(x, y = {}, _id) {
+        let id = y.id || this._tsid(_id, `sym`)
+        if (this.env.syms[id]) {
+            this.env.syms[id].update(x)
+            return this.env.syms[id]
+        }
+
+        switch(typeof x) {
+            case 'object':
+                var sym = new Sym(x, y)
+                this.env.syms[id] = sym
+                if (x.__id__) {
+                    sym.data_type = TSS
+                } else {
+                    sym.data_type = ARR
+                }
+
+                break
+            case 'number':
+                sym = new Sym(null, y)
+                sym.data_type = NUM
+                break
+            case 'string':
+                y.tf = x
+                sym = new Sym(se.data.ohlcv, y)
+                sym.data_type = ARR
+                break
+        }
+
+        this.env.syms[id] = sym
     }
 
     tan(x) {

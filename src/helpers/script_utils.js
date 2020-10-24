@@ -126,3 +126,27 @@ export function ovf(obj, f) {
     }
     return nw
 }
+
+// Return index of the next element in
+// dataset (since t). Impl: simple binary search
+// TODO: optimize (remember the penultimate
+// iteration and start from there)
+export function nextt(data, t, ti = 0) {
+
+    let i0 = 0
+    let iN = data.length - 1
+
+    while (i0 <= iN) {
+        var mid = Math.floor((i0 + iN) / 2)
+        if (data[mid][ti] === t) {
+            return mid
+        } else if (data[mid][ti] < t) {
+            i0 = mid + 1
+        } else {
+            iN = mid - 1
+        }
+    }
+
+    return t < data[mid][ti] ? mid : mid + 1
+
+}
