@@ -16,14 +16,16 @@ export default {
         draw() {}, // No rendering
         calc() {
             return {
-                props: {},
+                props: {
+                    k: { def: 10, text: 'Sampling window X TF' }
+                },
                 data: {
                     trades: { type: 'Trades' },
                     src1m: { type: 'Data1m' }
                 },
                 init: `
                     console.log('init script')
-                    sym(src1m, { main:true, window: tf })
+                    sym(src1m, { main:true, window: tf * k })
                     console.log(src1m)
                 `,
                 update: `
