@@ -17,24 +17,28 @@ export default class Sym {
         this.id = params.id
         this.tf = u.tf_from_str(params.tf)
         this.format = params.format
-        this.aggtype = params.aggtype
+        this.aggtype = params.aggtype || 'ohlcv'
         this.window = params.window
+        this.fillgaps = params.fillgaps
         this.data = data
         this.data_type = ARR
         this.main = !!params.main
+        this.idx = this.data_idx()
+
+        this.tf = this.tf || se.tf
+        if (this.main) this.tf = se.tf
 
         for (var id of ['open', 'high', 'low', 'close', 'vol']) {
             this[id] = TS(`${this.id}_${id}`, [])
             this[id].__fn__ = Sampler(id).bind(this[id])
-            this[id].__tf__ = this.tf || se.tf
-            if (this.main) this[id].__tf__ = se.tf
+            this[id].__tf__ = this.tf
         }
 
         if (this.main) {
-            if (!se.tf) throw 'Main tf should be defined'
+            if (!this.tf) throw 'Main tf should be defined'
             se.custom_main = this
             let t0 = this.data[0][0]
-            se.t = t0 - t0 % se.tf
+            se.t = t0 - t0 % this.tf
             this.update(null, se.t)
 
             // First candle should be formed before any updates()
@@ -56,21 +60,32 @@ export default class Sym {
         // current or the next (if we are sampling
         // the main chart)
         t = t || se.t
+        let idx = this.idx
         switch (this.data_type) {
             case ARR:
-                let t0 = this.window ? t - this.window + se.tf : t
+                let t0 = this.window ? t - this.window + this.tf : t
                 let i0 = u.nextt(this.data, t0)
                 if (i0 >= this.data.length) return false
-                let t1 = t + se.tf
-                for(var i = i0; i < this.data.length - 1; i++) {
-                    if (this.data[i + 1][0] >= t1) break
-                    let price = this.data[i + 1][1] // TODO: calc index
-                    let vol = this.data[i + 1][2]
-                    this.open.__fn__(price, t)
-                    this.high.__fn__(price, t)
-                    this.low.__fn__(price, t)
-                    this.close.__fn__(price, t)
-                    this.vol.__fn__(vol, t)
+                let t1 = t + this.tf
+                let noevent = true
+                for(var i = i0; i < this.data.length; i++) {
+                    let dp = this.data[i]
+                    if (dp[idx.time] >= t1) break
+                    this.open.__fn__(dp[idx.open], t)
+                    this.high.__fn__(dp[idx.high], t)
+                    this.low.__fn__(dp[idx.low], t)
+                    this.close.__fn__(dp[idx.close], t)
+                    this.vol.__fn__(dp[idx.vol], t)
+                    noevent = false
+                }
+                if (noevent) {
+                    if (this.fillgaps === false && !this.main) return false
+                    let last = this.close[0]
+                    this.open.__fn__(last, t)
+                    this.high.__fn__(last, t)
+                    this.low.__fn__(last, t)
+                    this.close.__fn__(last, t)
+                    this.vol.__fn__(0, t)
                 }
                 break
             case TSS:
@@ -81,6 +96,32 @@ export default class Sym {
                 break
         }
         return true
+    }
+
+    // Calculates data indices from the format
+    data_idx() {
+        let idx = {}
+        switch(this.aggtype) {
+            case 'ohlcv':
+                // Trying to detect the format from the
+                // first data point
+                if (!this.format) {
+                    let x0 = this.data[0]
+                    if (!x0 || x0.length === 6) {
+                        this.format = 'time:open:high:low:close:vol'
+                    }
+                    else if (x0.length === 3) {
+                        this.format = 'time:open,high,low,close:vol'
+                    }
+                }
+                this.format.split(':').forEach((x, i) => {
+                    if (!x.length) return
+                    let list = x.split(',')
+                    list.forEach(y => idx[y] = i)
+                })
+                break
+        }
+        return idx
     }
 }
 
