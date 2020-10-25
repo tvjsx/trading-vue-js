@@ -611,6 +611,7 @@ export default class ScriptStd {
     }
 
     // Display data point on the main chart
+    // TODO: optionally enable scripts for $synth ovs
     onchart(x, name, sett = {}, _id) {
         let off = 0
         name = name || u.get_fn_id('Onchart', _id)
@@ -632,7 +633,8 @@ export default class ScriptStd {
                 name: name,
                 type: type || 'Spline' + post,
                 data: [],
-                settings: sett
+                settings: sett,
+                scripts: false
             }, sett)
         }
         off *= se.tf
@@ -664,7 +666,8 @@ export default class ScriptStd {
                 name: name,
                 type: type || 'Spline' + post,
                 data: [],
-                settings: sett
+                settings: sett,
+                scripts: false
             }, sett)
         }
         off *= se.tf
@@ -905,14 +908,16 @@ export default class ScriptStd {
 
         let sumf = (x, y) => {
             let res = x + y
-            if (Math.abs(res) <= this.STDEV_EPS) {
+            return res
+            // TODO: something wrong with this checks
+            /*if (Math.abs(res) <= this.STDEV_EPS) {
                 return 0
             }
             else if (Math.abs(res) > this.STDEV_Z) {
                 return res
             } else {
                 return 15 // wtf?
-            }
+            }*/
         }
 
         let id = this._tsid(_id, `stdev(${len})`)

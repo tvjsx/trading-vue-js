@@ -1,7 +1,8 @@
 <template>
 <trading-vue :data="chart" :width="this.width" :height="this.height"
-        ref="tv"
+        ref="tv" skin="Alps"
         :toolbar="true" :overlays="overlays"
+        :extensions="extensions"
         :color-back="colors.colorBack"
         :color-grid="colors.colorGrid"
         :color-text="colors.colorText">
@@ -11,9 +12,10 @@
 <script>
 import TradingVue from '../../src/TradingVue.vue'
 import Data from '../data/data_skybtc_trades.json'
+import Data2 from '../data/data_btc_1m.json'
 import DataCube from '../../src/helpers/datacube.js'
 import DatasetCalc from './Scripts/DatasetCalc.vue'
-
+import Alps from './Extensions/Alps/index.js'
 export default {
     name: 'Datasets',
     description: 'Dataset testing app. Checks uploading, ops, updates',
@@ -62,13 +64,18 @@ export default {
                     type: 'Trades',
                     id: 'skybtc-trades',
                     data: Data
+                }, {
+                    type: 'Data1m',
+                    id: 'btc-1m',
+                    data: Data2.ohlcv
                 }]
                 // Prevent from executing scripts
                 // on the main data change
             }, { data_change_exec: false }),
             width: window.innerWidth,
             height: window.innerHeight,
-            overlays: [DatasetCalc]
+            overlays: [DatasetCalc],
+            extensions: [Alps]
         }
     }
 }

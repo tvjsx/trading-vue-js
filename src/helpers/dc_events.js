@@ -424,6 +424,9 @@ export default class DCEvents {
 
     // Set overlay data from the web-worker
     on_overlay_data(data) {
+        this.get('.').forEach(x => {
+            if (x.settings.$synth) this.del(`${x.id}`)
+        })
         for (var ov of data) {
             let obj = this.get_one(`${ov.id}`)
             if (obj) {
@@ -431,9 +434,6 @@ export default class DCEvents {
                 if (!ov.data) continue
                 obj.data = ov.data
             }
-            this.get('.').forEach(x => {
-                if (x.settings.$synth) this.del(`${x.id}`)
-            })
             if (!ov.new_ovs) continue
             for (var id in ov.new_ovs.onchart) {
                 if (!this.get_one(`onchart.${id}`)) {
@@ -442,6 +442,7 @@ export default class DCEvents {
             }
             for (var id in ov.new_ovs.offchart) {
                 if (!this.get_one(`offchart.${id}`)) {
+                    console.log('offchart', ov.new_ovs.offchart[id])
                     this.add('offchart', ov.new_ovs.offchart[id])
                 }
             }

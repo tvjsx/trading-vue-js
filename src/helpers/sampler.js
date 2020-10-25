@@ -17,7 +17,7 @@ export default function(T) {
         let val = x !== undefined ? x : se[T][0]
         if (!this.__t0__ || t >= this.__t0__ + tf) {
 
-            this.unshift(val)
+            this.unshift(Ti !== 3 ? val : 0)
             this.__t0__ = t - t % tf
             // TODO: new candle signal
         }
