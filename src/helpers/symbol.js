@@ -63,12 +63,15 @@ export default class Sym {
         let idx = this.idx
         switch (this.data_type) {
             case ARR:
+                if (t > this.data[this.data.length-1][0]) return false
                 let t0 = this.window ? t - this.window + this.tf : t
                 let i0 = u.nextt(this.data, t0)
                 if (i0 >= this.data.length) return false
                 let t1 = t + this.tf
                 let noevent = true
+
                 for(var i = i0; i < this.data.length; i++) {
+                    noevent = false
                     let dp = this.data[i]
                     if (dp[idx.time] >= t1) break
                     this.open.__fn__(dp[idx.open], t)
@@ -76,7 +79,6 @@ export default class Sym {
                     this.low.__fn__(dp[idx.low], t)
                     this.close.__fn__(dp[idx.close], t)
                     this.vol.__fn__(dp[idx.vol], t)
-                    noevent = false
                 }
                 if (noevent) {
                     if (this.fillgaps === false && !this.main) return false

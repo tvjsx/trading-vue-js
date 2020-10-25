@@ -109,16 +109,16 @@ body {
     margin: 0;
     padding: 0;
     overflow: hidden;
+    font-family: -apple-system,BlinkMacSystemFont,
+    Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,
+    Fira Sans,Droid Sans,Helvetica Neue,
+    sans-serif;
 }
 #test-title{
     position: absolute;
     height: 50px;
     color: #ddd;
     width: 100%;
-    font-family: -apple-system,BlinkMacSystemFont,
-    Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,
-    Fira Sans,Droid Sans,Helvetica Neue,
-    sans-serif;
     background: #121826;
     border-bottom: 1px solid #8080804f;
     z-index: 1000;
