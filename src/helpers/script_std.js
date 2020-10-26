@@ -634,7 +634,8 @@ export default class ScriptStd {
                 type: type || 'Spline' + post,
                 data: [],
                 settings: sett,
-                scripts: false
+                scripts: false,
+                grid: sett.grid || {}
             }, sett)
         }
         off *= se.tf
@@ -667,7 +668,8 @@ export default class ScriptStd {
                 type: type || 'Spline' + post,
                 data: [],
                 settings: sett,
-                scripts: false
+                scripts: false,
+                grid: sett.grid || {}
             }, sett)
         }
         off *= se.tf
@@ -998,6 +1000,7 @@ export default class ScriptStd {
     // }
     sym(x, y = {}, _id) {
         let id = y.id || this._tsid(_id, `sym`)
+        y.id = id
         if (this.env.syms[id]) {
             this.env.syms[id].update(x)
             return this.env.syms[id]
@@ -1020,12 +1023,13 @@ export default class ScriptStd {
                 break
             case 'string':
                 y.tf = x
-                sym = new Sym(se.data.ohlcv, y)
+                sym = new Sym(se.data.ohlcv.data, y)
                 sym.data_type = ARR
                 break
         }
 
         this.env.syms[id] = sym
+        return sym
     }
 
     tan(x) {

@@ -442,7 +442,6 @@ export default class DCEvents {
             }
             for (var id in ov.new_ovs.offchart) {
                 if (!this.get_one(`offchart.${id}`)) {
-                    console.log('offchart', ov.new_ovs.offchart[id])
                     this.add('offchart', ov.new_ovs.offchart[id])
                 }
             }

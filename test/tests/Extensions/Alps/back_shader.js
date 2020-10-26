@@ -19,8 +19,8 @@ export default class BackShader {
     draw(ctx, props) {
         //if (props.layout.id !== 0) return
         let dpr = window.devicePixelRatio || 1
-        ctx.globalAlpha = 0.5
-        if (props.layout.id !== 0) ctx.globalAlpha = 0.1
+        ctx.globalAlpha = 0.55
+        if (props.layout.id !== 0) ctx.globalAlpha = 0.35
         let cw = ctx.canvas.width / dpr
         let ch = ctx.canvas.height / dpr
         let x = props.layout.width * 0.5

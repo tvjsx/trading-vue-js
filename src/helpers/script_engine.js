@@ -286,7 +286,6 @@ class ScriptEngine {
                 this.iter = i - start
                 this.t = ohlcv[i][0]
                 this.step(ohlcv[i])
-                if (this.custom_main) this.make_ohlcv()
 
                 // SLOW DOWN TEST:
                 //for (var k = 1; k < 1000000; k++) {}
@@ -299,6 +298,8 @@ class ScriptEngine {
                 for (var m = 0; m < mfs2.length; m++) {
                     mfs2[m](sel) // post_step
                 }
+
+                if (this.custom_main) this.make_ohlcv()
                 this.limit()
             }
 
