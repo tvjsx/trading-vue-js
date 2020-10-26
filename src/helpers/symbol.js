@@ -65,11 +65,15 @@ export default class Sym {
             case ARR:
                 if (t > this.data[this.data.length-1][0]) return false
                 let t0 = this.window ? t - this.window + this.tf : t
+                let dt = t0 % this.tf
+                t0 -= dt
                 let i0 = u.nextt(this.data, t0)
                 if (i0 >= this.data.length) return false
-                let t1 = t + this.tf
+                let t1 = t + se.tf
+                // Flush volume before the next window,
+                // but not before a new candle
+                if (t < this.vol.__t0__ + this.tf) this.vol[0] = 0
                 let noevent = true
-
                 for(var i = i0; i < this.data.length; i++) {
                     noevent = false
                     let dp = this.data[i]

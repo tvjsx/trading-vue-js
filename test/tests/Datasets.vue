@@ -4,6 +4,7 @@
             ref="tv" skin="Alps"
             :toolbar="true" :overlays="overlays"
             :extensions="extensions"
+            @data-len-changed="on_data"
             :color-back="colors.colorBack"
             :color-grid="colors.colorGrid"
             :color-text="colors.colorText">
@@ -15,6 +16,16 @@
     </div>
     <tf-selector :charts="tfs" v-on:selected="on_selected">
     </tf-selector>
+    <div class="datasets">
+        <div class="dataset" v-for="ds of dss"
+            @click="ondsclick(ds)"
+            :style="{
+                background: `url(${icon})`,
+                backgroundSize: 'cover'
+            }">
+            {{ds}}
+        </div>
+    </div>
 </div>
 </template>
 
@@ -26,6 +37,8 @@ import Data2 from '../data/data_btc_1m.json'
 import DataCube from '../../src/helpers/datacube.js'
 import DatasetCalc from './Scripts/DatasetCalc.vue'
 import Alps from './Extensions/Alps/index.js'
+import Icon from './Datasets/ds.json'
+
 export default {
     name: 'Datasets',
     description: 'Dataset testing app. Checks uploading, ops, updates',
@@ -43,6 +56,13 @@ export default {
         },
         on_selected(tf) {
             this.chart.set('chart.tf', tf.name)
+        },
+        ondsclick(ds) {
+            this.chart.merge('Calculations.settings', { ds })
+        },
+        on_data(data) {
+            let tL = this.chart.get_one('chart.data').slice(-1)[0][0]
+            this.$refs.tv.goto(tL + this.$refs.tv.$refs.chart.interval)
         }
     },
     mounted() {
@@ -94,7 +114,9 @@ export default {
             overlays: [DatasetCalc],
             extensions: [Alps],
             wk: 1,
-            tfs: {'5m': {}, '15m': {}, '1H': {}}
+            tfs: {'5m': {}, '15m': {}, '1H': {}},
+            dss: ['1m', 'hf'],
+            icon: Icon
         }
     }
 }
@@ -128,5 +150,26 @@ export default {
     padding: 5px 10px;
     right: 300px;
     top: 12px;
+    border-radius: 30px;
+}
+.datasets {
+    position: absolute;
+    width: 100px;
+    top: 12px;
+    right: 400px;
+    display: flex;
+    grid-column-gap: 10px;
+    grid-template-columns: 1fr;
+}
+.dataset {
+    font-size: 0.75em;
+    width: 23px;
+    height: 25px;
+    color: #fff;
+    line-height: 5.5em;
+    text-align: center;
+    user-select: none;
+    cursor: pointer;
+    text-shadow: 1px 1px 2px black;
 }
 </style>
