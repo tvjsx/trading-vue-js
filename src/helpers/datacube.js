@@ -5,7 +5,7 @@
 import Utils from '../stuff/utils.js'
 import DCCore from './dc_core.js'
 import SettProxy from './sett_proxy.js'
-import AggTool from './agg_tool.js'
+import AggTool from './agg_tool_2.js'
 
 
 // Interface methods. Private methods in dc_core.js
@@ -28,10 +28,10 @@ export default class DataCube extends DCCore {
         this.sett = sett
         this.data = data
         this.sett = SettProxy(sett, this.ww)
-        this.agg = new AggTool(sett.aggregation)
+        this.agg = new AggTool(this, sett.aggregation)
         this.se_state = {}
 
-        this.agg.update = this.agg_update.bind(this)
+        //this.agg.update = this.agg_update.bind(this)
     }
 
     // Add new overlay
