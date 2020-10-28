@@ -591,7 +591,7 @@ export default class ScriptStd {
         return Math.min(...args)
     }
 
-    minute() {
+    minute(time) {
         return new Date(time || se.t).getUTCMinutes()
     }
 
