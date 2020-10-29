@@ -13,6 +13,7 @@ export default class ScriptStd {
 
     constructor(env) {
         this.env = env
+        this.se = se
 
         this.SWMA = [1/6, 2/6, 2/6, 1/6]
         this.STDEV_EPS = 1e-10

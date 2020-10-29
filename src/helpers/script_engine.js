@@ -139,14 +139,14 @@ class ScriptEngine {
     }
 
     // Live update
-    update(candle) {
+    update(candles) {
 
         if (!this.data.ohlcv || !this.data.ohlcv.data.length) {
             return
         }
 
         if (this.running) {
-            this.update_queue.push(candle)
+            this.update_queue.push(candles)
             return
         }
 
@@ -160,14 +160,16 @@ class ScriptEngine {
             let sel = Object.keys(this.map)
             let unshift = false
 
-            if (candle[0] > last[0]) {
-                ohlcv.push(candle)
-                unshift = true
-                i++
-            } else if (candle[0] < last[0]) {
-                return
-            } else {
-                ohlcv[i] = candle
+            for (var candle of candles) {
+                if (candle[0] > last[0]) {
+                    ohlcv.push(candle)
+                    unshift = true
+                    i++
+                } else if (candle[0] < last[0]) {
+                    continue
+                } else {
+                    ohlcv[i] = candle
+                }
             }
 
             this.iter = i

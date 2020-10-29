@@ -4,50 +4,94 @@ import Utils from '../stuff/utils.js'
 
 export default class AggTool {
 
-    constructor(int = 100) {
+    constructor(dc, int = 100) {
 
         this.symbols = {}
         this.int = int // Itarval in ms
-        this.update = () => {}
+        this.dc = dc
+        this.st_id = null
 
     }
 
     push(sym, upd, tf) {
 
+        // Start auto updates
+        if (!this.st_id) {
+            this.st_id = setTimeout(() => this.update())
+        }
+
         tf = parseInt(tf)
         let old = this.symbols[sym]
         let t = Utils.now()
+        let isds = sym.includes('datasets.')
 
         if (!old) {
 
-            this.symbols[sym] = { upd, t }
-            this.update(sym, upd)
+            this.symbols[sym] = { upd, t, data: [] }
 
+        } else if (upd[0] >= old.upd[0] + tf && !isds) {
 
-        } else if (upd[0] >= old.upd[0] + tf) {
+            // Refine the previous data point
+            this.refine(sym, old.upd.slice())
 
-            // Refine the previous
-            let refine = old.upd.slice()
-            refine[0] = old.upd[0]
-            this.update(sym, refine)
+            this.symbols[sym] = { upd, t, data: [] }
 
-            this.symbols[sym] = { upd, t }
-
-            // Update with the new
-            this.update(sym, upd)
+        } else {
 
             // Tick updates the current
-        } else {
             this.symbols[sym].upd = upd
-            let _t = this.symbols[sym].t
-
-            if (t - _t > this.int) {
-                this.update(sym, upd)
-                this.symbols[sym].t = t
-            }
+            this.symbols[sym].t = t
 
         }
 
+        if (isds) {
+            this.symbols[sym].data.push(upd)
+        }
+
+    }
+
+    update() {
+        let out = {}
+        for (var sym in this.symbols) {
+            let upd = this.symbols[sym].upd
+            switch (sym) {
+                case 'ohlcv':
+                    var data = this.dc.data.chart.data
+                    this.dc.fast_merge(data, upd)
+                    out.ohlcv = data.slice(-2)
+                    break
+                default:
+                    if (sym.includes('datasets.')) {
+                        this.update_ds(sym, out)
+                        continue
+                    }
+                    var data = this.dc.get_one(`${sym}`)
+                    if (!data) continue
+                    this.dc.fast_merge(data, upd, false)
+                    break
+            }
+        }
+        this.dc.ww.just('update-data', out)
+        setTimeout(() => this.update(), this.int)
+    }
+
+    refine(sym, upd) {
+        if (sym === 'ohlcv') {
+            var data = this.dc.data.chart.data
+            this.dc.fast_merge(data, upd)
+        } else {
+            var data = this.dc.get_one(`${sym}`)
+            if (!data) return
+            this.dc.fast_merge(data, upd, false)
+        }
+    }
+
+    update_ds(sym, out) {
+        let data = this.symbols[sym].data
+        if (data.length) {
+            out[sym] = data
+            this.symbols[sym].data = []
+        }
     }
 
     clear() {

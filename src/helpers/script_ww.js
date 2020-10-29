@@ -86,7 +86,8 @@ self.onmessage = async e => {
         case 'update-data':
 
             if (e.data.data.ohlcv) {
-                // TODO: for datasets
+
+                DatasetWW.update_all(se, e.data.data)
                 se.update(e.data.data.ohlcv)
 
             }

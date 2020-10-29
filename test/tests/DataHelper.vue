@@ -1,6 +1,7 @@
 <template>
 <span>
     <trading-vue :data="chart" :width="this.width" :height="this.height"
+            :chart-config="{MIN_ZOOM:1}"
             ref="tvjs"
             :toolbar="true"
             :index-based="index_based"
@@ -49,6 +50,11 @@ export default {
                 onchart: [{
                     type: 'EMAx6',
                     name: 'Multiple EMA',
+                    data: []
+                }],
+                datasets: [{
+                    type: 'Trades',
+                    id: 'binance-btcusdt',
                     data: []
                 }]
             }, { aggregation: 100 })
@@ -115,8 +121,14 @@ export default {
         },
         on_trades(trade) {
             this.chart.update({
-                price: parseFloat(trade.p),  // Trade price
-                volume: parseFloat(trade.q)  // Trade amount
+                t: trade.T,     // Exchange time (optional)
+                price: parseFloat(trade.p),   // Trade price
+                volume: parseFloat(trade.q),  // Trade amount
+                'datasets.binance-btcusdt': [ // Update dataset
+                    trade.T,
+                    parseFloat(trade.p),
+                    parseFloat(trade.q)
+                ]
             })
         }
     },

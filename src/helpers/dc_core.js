@@ -166,7 +166,7 @@ export default class DCCore extends DCEvents {
         let candle = data['candle']
         let tf = this.tv.$refs.chart.interval_ms
         let t_next = last[0] + tf
-        let now = Utils.now()
+        let now = data.t || Utils.now()
         let t = now >= t_next ? (now - now % tf) : last[0]
 
         // Update the entire candle
@@ -189,14 +189,15 @@ export default class DCCore extends DCEvents {
         let volume = data['volume'] || 0
         let tf = this.tv.$refs.chart.interval_ms
         let t_next = last[0] + tf
-        let now = Utils.now()
+        let now = data.t || Utils.now()
+
         let t = now >= t_next ? (now - now % tf) : last[0]
 
         if (t >= t_next && tick !== undefined) {
             // And new zero-height candle
-            this.agg.push('ohlcv', [
-                t, tick, tick, tick, tick, volume
-            ], tf)
+            let nc = [t, tick, tick, tick, tick, volume]
+            this.agg.push('ohlcv', nc, tf)
+            ohlcv.push(nc)
 
         } else if (tick !== undefined) {
             // Update an existing one
@@ -215,7 +216,11 @@ export default class DCCore extends DCEvents {
     update_overlays(data, t, tf) {
         for (var k in data) {
             if (k === 'price' || k === 'volume' ||
-                k === 'candle') {
+                k === 'candle' || k === 't') {
+                continue
+            }
+            if (k.includes('datasets.')) {
+                this.agg.push(k, data[k], tf)
                 continue
             }
             if (!Array.isArray(data[k])) {
