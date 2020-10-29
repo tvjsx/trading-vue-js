@@ -459,21 +459,6 @@ export default class DCEvents {
         }
     }
 
-    // Aggregation handler
-    agg_update(sym, upd) {
-        switch (sym) {
-            case 'ohlcv':
-                var data = this.data.chart.data
-                this.fast_merge(data, upd)
-                this.ww.just('update-data', { ohlcv: upd })
-                break
-            default:
-                var data = this.get(`${sym}`)
-                this.fast_merge(data[0], upd, false)
-                break
-        }
-    }
-
     // Clean-up unfinished business (tools)
     before_destroy() {
         let f = x => !x.settings.$state ||

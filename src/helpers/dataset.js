@@ -84,6 +84,7 @@ export default class Dataset {
 // Dataset reciever (created on WW)
 
 export class DatasetWW {
+
     constructor(id, data) {
         this.id = id
         if (Array.isArray(data)) {
@@ -94,6 +95,25 @@ export class DatasetWW {
             // Dataset descriptor
             this.data = data.data
             this.type = data.type
+        }
+    }
+
+    // Update from 'update-data' event
+    // TODO: ds size limit (in MB / data points)
+    static update_all(se, data) {
+        for (var k in data) {
+            if (k === 'ohlcv') continue
+            let id = k.split('.')[1]
+            if (!se.data[id]) continue
+            let arr = se.data[id].data
+            let iN = arr.length - 1
+            let last = arr[iN]
+
+            for (var dp of data[k]) {
+                if (!last || dp[0] > last[0]) {
+                    arr.push(dp)
+                }
+            }
         }
     }
 

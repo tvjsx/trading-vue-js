@@ -5,7 +5,7 @@
 import Utils from '../stuff/utils.js'
 import DCCore from './dc_core.js'
 import SettProxy from './sett_proxy.js'
-import AggTool from './agg_tool_2.js'
+import AggTool from './agg_tool.js'
 
 
 // Interface methods. Private methods in dc_core.js
