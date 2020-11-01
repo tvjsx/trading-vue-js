@@ -9,7 +9,7 @@ export default {
     mixins: [Overlay],
     methods: {
         meta_info() {
-            return { author: 'C451', version: '1.0.0' }
+            return { author: 'C451', version: '1.0.1' }
         },
         draw(ctx) {
             let layout = this.$props.layout
@@ -40,7 +40,7 @@ export default {
 
             y = Math.floor(y)
 
-            ctx.fillStyle = p[3] || this.label_color
+            ctx.fillStyle = p[3] || this.flag_color
 
             ctx.beginPath()
             ctx.moveTo(x, y)
@@ -51,7 +51,7 @@ export default {
             ctx.closePath()
             ctx.fill()
 
-            ctx.fillStyle = '#fff'
+            ctx.fillStyle = this.label_color
             ctx.textAlign = side < 0 ? 'right' : 'left'
             ctx.fillText(p[1], x + 15 * side, y + 4)
         },
@@ -67,8 +67,11 @@ export default {
             return this.sett.font ||
             '12px ' + this.$props.font.split('px').pop()
         },
+        flag_color() {
+            return this.sett.flagColor || '#4285f4'
+        },
         label_color() {
-            return this.sett.labelColor || '#4285f4'
+            return this.sett.labelColor || '#fff'
         },
         line_color() {
             return this.sett.lineColor || '#4285f4'

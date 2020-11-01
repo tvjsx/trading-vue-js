@@ -1,0 +1,11 @@
+{
+    "name": "settings-win",
+    "author": "StdSquad",
+    "version": "1.0.0",
+    "components": [],
+    "widgets": ["SettingsWin.vue"],
+    "overlays": [],
+    "skins": [],
+    "colorpacks": [],
+    "deps": {}
+}

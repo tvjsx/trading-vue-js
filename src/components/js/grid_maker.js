@@ -50,7 +50,7 @@ function GridMaker(id, params, master_grid = null) {
                     if (v < lo) lo = v
                 }
             }
-            if (y_range_fn) { [hi, lo] = y_range_fn(hi, lo) }
+            if (y_range_fn) { var [hi, lo, exp] = y_range_fn(hi, lo) }
         }
 
         // Fixed y-range in non-auto mode
@@ -59,8 +59,9 @@ function GridMaker(id, params, master_grid = null) {
             self.$_lo = y_t.range[1]
         } else {
             if (!ls) {
-                self.$_hi = hi + (hi - lo) * $p.config.EXPAND
-                self.$_lo = lo - (hi - lo) * $p.config.EXPAND
+                exp = exp === false ? 0 : 1
+                self.$_hi = hi + (hi - lo) * $p.config.EXPAND * exp
+                self.$_lo = lo - (hi - lo) * $p.config.EXPAND * exp
             } else {
                 self.$_hi = hi
                 self.$_lo = lo
@@ -322,7 +323,7 @@ function GridMaker(id, params, master_grid = null) {
             self.xs.push([x, p, MONTH])
         }
         // TODO: should be added if this day !== prev day
-        // And the same for 'botbar.js', TODO(*) 
+        // And the same for 'botbar.js', TODO(*)
         else if (Utils.day_start(p_t) === p_t) {
             self.xs.push([x, p, DAY])
         }
