@@ -28,10 +28,18 @@ export default class Sym {
         this.tf = this.tf || se.tf
         if (this.main) this.tf = se.tf
 
-        for (var id of ['open', 'high', 'low', 'close', 'vol']) {
-            this[id] = TS(`${this.id}_${id}`, [])
-            this[id].__fn__ = Sampler(id).bind(this[id])
-            this[id].__tf__ = this.tf
+        if (this.aggtype === 'ohlcv') {
+            for (var id of ['open', 'high', 'low', 'close', 'vol']) {
+                this[id] = TS(`${this.id}_${id}`, [])
+                this[id].__fn__ = Sampler(id).bind(this[id])
+                this[id].__tf__ = this.tf
+            }
+        }
+
+        if (typeof this.aggtype === 'function') {
+            this.close = TS(`${this.id}_close`, [])
+            this.close.__fn__ = this.aggtype
+            this.close.__tf__ = this.tf
         }
 
         if (this.main) {
@@ -56,6 +64,14 @@ export default class Sym {
     }
 
     update(x, t) {
+        if(this.aggtype === 'ohlcv') {
+            return this.update_ohlcv(x, t)
+        } else if (typeof this.aggtype === 'function') {
+            return this.update_custom(x, t)
+        }
+    }
+
+    update_ohlcv(x, t) {
         // Timestamp of the target candle, can be
         // current or the next (if we are sampling
         // the main chart)
@@ -95,10 +111,54 @@ export default class Sym {
                 }
                 break
             case TSS:
-
+                // TODO: this
                 break
             case NUM:
+                // TODO: this
+                break
+        }
+        return true
+    }
 
+    update_custom(x, t) {
+        t = t || se.t
+        let idx = this.idx
+        switch (this.data_type) {
+            case ARR:
+                if (!this.data.length) return false
+                if (t > this.data[this.data.length-1][0]) return false
+                let t0 = this.window ? t - this.window + this.tf : t
+                let dt = t0 % this.tf
+                t0 -= dt
+                let i0 = u.nextt(this.data, t0)
+                if (i0 >= this.data.length) return false
+                let t1 = t + se.tf
+
+                let sub = []
+                for(var i = i0; i < this.data.length; i++) {
+                    let dp = this.data[i]
+                    if (dp[idx.time] >= t1) break
+                    sub.push(dp)
+                }
+
+                if (sub.length || this.fillgaps === false) {
+                    var val = this.close.__fn__(sub)
+                } else if (this.fillgaps !== false) {
+                    val = this.close[0]
+                }
+                let ts0 = this.close.__t0__
+                if (!ts0 || t >= ts0 + this.tf) {
+                    this.close.unshift(val)
+                    this.close.__t0__ = t - t % this.tf
+                } else {
+                    this.close[0] = val
+                }
+                break
+            case TSS:
+                // TODO: this
+                break
+            case NUM:
+                // TODO: this
                 break
         }
         return true
@@ -120,13 +180,16 @@ export default class Sym {
                         this.format = 'time:open,high,low,close:vol'
                     }
                 }
-                this.format.split(':').forEach((x, i) => {
-                    if (!x.length) return
-                    let list = x.split(',')
-                    list.forEach(y => idx[y] = i)
-                })
+                break
+            default:
+                this.format = 'time:close'
                 break
         }
+        this.format.split(':').forEach((x, i) => {
+            if (!x.length) return
+            let list = x.split(',')
+            list.forEach(y => idx[y] = i)
+        })
         return idx
     }
 }

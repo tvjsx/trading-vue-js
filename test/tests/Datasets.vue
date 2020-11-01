@@ -58,11 +58,14 @@ export default {
             this.chart.set('chart.tf', tf.name)
         },
         ondsclick(ds) {
+            this.dschanged = true
             this.chart.merge('Calculations.settings', { ds })
         },
         on_data(data) {
+            if (!this.dschanged) return
             let tL = this.chart.get_one('chart.data').slice(-1)[0][0]
             this.$refs.tv.goto(tL + this.$refs.tv.$refs.chart.interval)
+            this.dschanged = false
         }
     },
     mounted() {

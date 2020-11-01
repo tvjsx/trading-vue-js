@@ -24,6 +24,7 @@ import Const from '../../src/stuff/constants.js'
 import DataCube from '../../src/helpers/datacube.js'
 import Stream from './DataHelper/stream.js'
 import ScriptOverlay from './Scripts/EMAx6.vue'
+import BSB from './Scripts/BuySellBalance.vue'
 
 // Gettin' data through webpeck proxy
 const PORT = location.port
@@ -51,6 +52,12 @@ export default {
                     type: 'EMAx6',
                     name: 'Multiple EMA',
                     data: []
+                }],
+                offchart: [{
+                    type: 'BuySellBalance',
+                    name: 'Buy/Sell Balance',
+                    data: [],
+                    settings: {}
                 }],
                 datasets: [{
                     type: 'Trades',
@@ -126,8 +133,9 @@ export default {
                 volume: parseFloat(trade.q),  // Trade amount
                 'datasets.binance-btcusdt': [ // Update dataset
                     trade.T,
-                    parseFloat(trade.p),
-                    parseFloat(trade.q)
+                    trade.m ? 0 : 1,          // Sell or Buy
+                    parseFloat(trade.q),
+                    parseFloat(trade.p)
                 ]
             })
         }
@@ -151,7 +159,7 @@ export default {
             width: window.innerWidth,
             height: window.innerHeight,
             index_based: false,
-            overlays: [ScriptOverlay]
+            overlays: [ScriptOverlay, BSB]
         }
     }
 }
