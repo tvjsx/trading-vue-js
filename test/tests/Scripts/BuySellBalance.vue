@@ -16,14 +16,15 @@ export default {
                 if (typeof this.data[i0][1] === 'number') break
             }
             if (!this.data[i0]) return
-            // Sells
             const layout = this.$props.layout
             let x0 = layout.t2screen(this.data[i0][0])
             let xN = layout.t2screen(this.data[this.data.length-1][0])
             let top = layout.$2screen(1)
             let mid = layout.$2screen(0.5)
             let bot = layout.$2screen(0)
-            ctx.beginPath()
+
+            // Sells
+            /*ctx.beginPath()
             var grd = ctx.createLinearGradient(0, 0, 0, layout.height)
             grd.addColorStop(0, "#ed2f7822")
             grd.addColorStop(0.5, "#ed2f7800")
@@ -36,7 +37,7 @@ export default {
                 ctx.lineTo(x, y)
             }
             ctx.lineTo(xN, top)
-            ctx.fill()
+            ctx.fill()*/
 
             // Buys
             ctx.beginPath()
@@ -56,7 +57,7 @@ export default {
 
             // Middle line
             ctx.beginPath()
-            ctx.lineWidth = 2
+            ctx.lineWidth = 1.5
             ctx.strokeStyle = '#2579f7'
             for (var i = i0; i < this.data.length; i++) {
                 let p = this.data[i]

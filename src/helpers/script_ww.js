@@ -85,12 +85,20 @@ self.onmessage = async e => {
 
         case 'update-data':
 
+            DatasetWW.update_all(se, e.data.data)
+
             if (e.data.data.ohlcv) {
-
-                DatasetWW.update_all(se, e.data.data)
                 se.update(e.data.data.ohlcv)
-
             }
+
+            break
+
+        case 'get-dataset':
+
+            self.postMessage({
+                id: e.data.id,
+                data: se.data[e.data.data]
+            })
 
             break
 
@@ -99,8 +107,10 @@ self.onmessage = async e => {
             await Utils.pause(1)
 
             if (e.data.data.id in se.data) {
-                se.data[e.data.data.id].op(e.data.data)
+                se.data[e.data.data.id].op(se, e.data.data)
             }
+
+            if (e.data.data.exec) se.exec_all()
 
             break
 

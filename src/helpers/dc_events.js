@@ -454,7 +454,7 @@ export default class DCEvents {
             if (!ov.data) continue
             let obj = this.get_one(`${ov.id}`)
             if (obj) {
-                this.fast_merge(obj.data, ov.data)
+                this.fast_merge(obj.data, ov.data, false)
             }
         }
     }
