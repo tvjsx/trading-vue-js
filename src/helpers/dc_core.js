@@ -24,7 +24,9 @@ export default class DCCore extends DCEvents {
                 .map(x => x.settings.$uuid),
                 (n, p) => this.on_ids_changed(n, p))
 
-            // TODO: Watch for all 'datasets' changes
+            // Watch for all 'datasets' changes
+            this.tv.$watch(() => this.get('datasets'),
+                Dataset.watcher.bind(this))
         }
     }
 
@@ -198,6 +200,7 @@ export default class DCCore extends DCEvents {
             let nc = [t, tick, tick, tick, tick, volume]
             this.agg.push('ohlcv', nc, tf)
             ohlcv.push(nc)
+            this.scroll_to(t)
 
         } else if (tick !== undefined) {
             // Update an existing one
@@ -246,8 +249,15 @@ export default class DCCore extends DCEvents {
                 break
             case 'onchart':
             case 'offchart':
+                result = this.query_search(query, tuple)
+                break
             case 'datasets':
                 result = this.query_search(query, tuple)
+                for (var r of result) {
+                    if (r.i === 'data') {
+                        r.v = this.dss[r.p.id].data()
+                    }
+                }
                 break
             default:
                 /* Should get('.') return also the chart? */

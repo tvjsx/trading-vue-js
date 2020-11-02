@@ -37,7 +37,8 @@ export default class DataCube extends DCCore {
     // Add new overlay
     add(side, overlay) {
 
-        if (side !== 'onchart' && side !== 'offchart') {
+        if (side !== 'onchart' && side !== 'offchart' &&
+            side !== 'datasets') {
             return
         }
 
