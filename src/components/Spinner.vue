@@ -3,7 +3,6 @@
     <div v-for="i in 4" :style="{background: colors.text}">
     </div>
 </div>
-</div>
 </template>
 <script>
 export default {

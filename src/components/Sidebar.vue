@@ -49,7 +49,7 @@ export default {
             this.$nextTick(() => this.redraw())
         }
     },
-    beforeDestroy () {
+    beforeUnmount () {
         if(this.renderer) this.renderer.destroy()
     }
 }

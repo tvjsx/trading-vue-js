@@ -1,9 +1,9 @@
 <template>
-<trading-vue :data="chart" :width="this.width" :height="this.height"
+    <trading-vue :data="chart" :width="this.width" :height="this.height"
         :color-back="colors.colorBack"
         :color-grid="colors.colorGrid"
         :color-text="colors.colorText">
-</trading-vue>
+    </trading-vue>
 </template>
 
 <script>
@@ -26,12 +26,12 @@ export default {
         window.addEventListener('resize', this.onResize)
         window.dc = this.chart
     },
-    beforeDestroy() {
+    beforeUnmount() {
         window.removeEventListener('resize', this.onResize)
     },
     data() {
         return {
-            chart: new DataCube(Data),
+            chart: {}, //new DataCube(Data),
             width: window.innerWidth,
             height: window.innerHeight,
             colors: {

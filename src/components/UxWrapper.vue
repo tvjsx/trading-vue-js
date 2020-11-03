@@ -50,7 +50,7 @@ export default {
         this.mouse.on('mousemove', this.mousemove)
         this.mouse.on('mouseout', this.mouseout)
     },
-    beforeDestroy() {
+    beforeUnmount() {
         this.mouse.off('mousemove', this.mousemove)
         this.mouse.off('mouseout', this.mouseout)
     },

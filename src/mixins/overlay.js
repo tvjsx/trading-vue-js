@@ -49,7 +49,7 @@ export default {
         if (this.init_tool) this.init_tool()
         if (this.init) this.init()
     },
-    beforeDestroy() {
+    beforeUnmount() {
         if (this.destroy) this.destroy()
         this._$emit('delete-grid-layer', this.$props.id)
     },

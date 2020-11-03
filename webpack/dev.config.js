@@ -1,4 +1,4 @@
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const VueLoader = require('vue-loader')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const WWPlugin = require('./ww_plugin.js')
 
@@ -31,7 +31,7 @@ module.exports = {
         ]
     },
     plugins: [
-        new VueLoaderPlugin(),
+        new VueLoader.VueLoaderPlugin(),
         new HtmlWebpackPlugin({
             template: './src/index.html'
         }),

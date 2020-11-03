@@ -26,7 +26,7 @@ export default {
     },
     mounted() {
     },
-    beforeDestroy () {
+    beforeUnmount () {
     },
     methods: {
         on_custom_event(event) {

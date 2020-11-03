@@ -57,7 +57,7 @@ export default {
         this.$on('custom-event', e =>
             this.on_ux_event(e, 'grid'))
     },
-    beforeDestroy () {
+    beforeUnmount () {
         if (this.renderer) this.renderer.destroy()
     },
     mounted() {

@@ -4,9 +4,11 @@
 
 <script>
 
+import { h } from 'vue'
+
 export default {
     name: 'KeyboardListener',
-    render(h) { return h() },
+    render() { return h() },
     created: function () {
         this.$emit('register-kb-listener', {
             id: this._uid,
@@ -15,7 +17,7 @@ export default {
             keypress: this.keypress
         })
     },
-    beforeDestroy: function () {
+    beforeUnmount: function () {
         this.$emit('remove-kb-listener', {
             id: this._uid
         })

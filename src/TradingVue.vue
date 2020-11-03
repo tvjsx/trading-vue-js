@@ -238,7 +238,7 @@ export default {
     data() {
         return { reset: 0 }
     },
-    beforeDestroy() {
+    beforeUnmount() {
         this.custom_event({ event: 'before-destroy' })
         this.ctrl_destroy()
     },
