@@ -15853,31 +15853,19 @@ var dataset_Dataset = /*#__PURE__*/function () {
       } // TODO: add more sophisticated search
       // (using 'script.datasets' paramerter)
 
-
-      var _iterator3 = dataset_createForOfIteratorHelper(types),
-          _step3;
-
-      try {
-        for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
-          var req = _step3.value;
-          var ds = Object.values(dc.dss || {}).find(function (x) {
-            return x.type === req.type;
-          });
-
+      /*for (var req of types) {
+          let ds = Object.values(dc.dss || {})
+              .find(x => x.type === req.type)
           if (ds && ds.data) {
-            base[ds.id] = {
-              id: ds.id,
-              type: ds.type,
-              data: ds.data
-            };
+              base[ds.id] = {
+                  id: ds.id,
+                  type: ds.type,
+                  data: ds.data
+              }
           }
-        } // TODO: Data request callback ?
+      }*/
+      // TODO: Data request callback ?
 
-      } catch (err) {
-        _iterator3.e(err);
-      } finally {
-        _iterator3.f();
-      }
 
       return base;
     }
@@ -15956,21 +15944,21 @@ var dataset_DatasetWW = /*#__PURE__*/function () {
         var iN = arr.length - 1;
         var last = arr[iN];
 
-        var _iterator4 = dataset_createForOfIteratorHelper(data[k]),
-            _step4;
+        var _iterator3 = dataset_createForOfIteratorHelper(data[k]),
+            _step3;
 
         try {
-          for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
-            var dp = _step4.value;
+          for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+            var dp = _step3.value;
 
             if (!last || dp[0] > last[0]) {
               arr.push(dp);
             }
           }
         } catch (err) {
-          _iterator4.e(err);
+          _iterator3.e(err);
         } finally {
-          _iterator4.f();
+          _iterator3.f();
         }
       }
     }
