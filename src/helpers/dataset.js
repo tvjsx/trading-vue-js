@@ -59,7 +59,7 @@ export default class Dataset {
 
         // TODO: add more sophisticated search
         // (using 'script.datasets' paramerter)
-        for (var req of types) {
+        /*for (var req of types) {
             let ds = Object.values(dc.dss || {})
                 .find(x => x.type === req.type)
             if (ds && ds.data) {
@@ -69,7 +69,7 @@ export default class Dataset {
                     data: ds.data
                 }
             }
-        }
+        }*/
         // TODO: Data request callback ?
 
         return base
