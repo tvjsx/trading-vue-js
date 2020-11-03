@@ -1,4 +1,6 @@
 
+# *VUE 3 JOURNEY JUST STARTED*
+
 <div align="center">
   <img width="318" heigth="256" src="https://raw.githubusercontent.com/tvjsx/trading-vue-js/master/assets/README-c8a97eb7.png?raw=true" alt="trading-vue logo">
 </div>
