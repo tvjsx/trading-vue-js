@@ -160,6 +160,7 @@ export default {
     font-size: 1.25em;
     margin-left: 10px;
     pointer-events: none;
+    text-align: left;
 }
 .trading-vue-ohlcv {
     pointer-events: none;

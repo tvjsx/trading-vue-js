@@ -34,7 +34,7 @@ export default {
                 "onchart" : "offchart"
         },
         data_index() {
-            return this.$props.index 
+            return this.$props.index
         }
     },
     methods: {
@@ -56,6 +56,7 @@ export default {
     width: 21px;
     height: 21px;
     margin-bottom: -6px;
+    margin-top: -6px;
     pointer-events: all;
     cursor: pointer;
 }

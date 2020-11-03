@@ -347,3 +347,12 @@ export default {
     }
 }
 </script>
+<style>
+/* Anit-boostrap tactix */
+.trading-vue *, ::after, ::before {
+    box-sizing: content-box;
+}
+.trading-vue img {
+    vertical-align: initial;
+}
+</style>
