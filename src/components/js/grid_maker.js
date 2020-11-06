@@ -26,7 +26,8 @@ function GridMaker(id, params, master_grid = null) {
     if (lm && Object.keys(lm).length) {
         // Gets last y_range fn()
         let yrs = Object.values(lm).filter(x => x.y_range)
-        if (yrs.length) y_range_fn = yrs[yrs.length - 1].y_range
+        // The first y_range() determines the range 
+        if (yrs.length) y_range_fn = yrs[0].y_range
     }
 
     // Calc vertical ($/₿) range
