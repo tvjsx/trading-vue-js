@@ -1,5 +1,5 @@
 /*!
- * TradingVue.JS - v0.9.0-alpha - Tue Nov 03 2020
+ * TradingVue.JS - v0.9.0-alpha - Fri Nov 06 2020
  *     https://github.com/tvjsx/trading-vue-js
  *     Copyright (c) 2019 C451 Code's All Right;
  *     Licensed under the MIT license
@@ -6693,7 +6693,7 @@ function GridMaker(id, params, master_grid) {
     var yrs = Object.values(lm).filter(function (x) {
       return x.y_range;
     });
-    if (yrs.length) y_range_fn = yrs[yrs.length - 1].y_range;
+    if (yrs.length) y_range_fn = yrs[0].y_range;
   } // Calc vertical ($/₿) range
 
 
@@ -9132,9 +9132,15 @@ var mouse_Mouse = /*#__PURE__*/function () {
 
 
     var main = this.$props.sub === this.$props.data;
-    this.meta_info();
-    this._$emit = this.$emit;
-    this.$emit = this.custom_event;
+    this.meta_info(); // TODO(1): quick fix for vue2, in vue3 we use 3rd party emit
+
+    try {
+      new Function('return ' + this.$emit)();
+      this._$emit = this.$emit;
+      this.$emit = this.custom_event;
+    } catch (e) {
+      return;
+    }
 
     this._$emit('new-grid-layer', {
       name: this.$options.name,
