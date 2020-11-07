@@ -9,7 +9,7 @@ import se from './script_engine.js'
 import * as u from './script_utils.js'
 import TS from './script_ts.js'
 
-const FDEFS1 = /(function |)([$A-Z_][0-9A-Z_$\.]*)[\s]*?\((.*\s*)\)/gmi
+const FDEFS1 = /(function |)([$A-Z_][0-9A-Z_$\.]*)[\s]*?\((.*?\s*)\)/mi
 const FDEFS2 = /(function |)([$A-Z_][0-9A-Z_$\.]*)[\s]*?\((.*\s*)\)/gmis
 const DEF_LIMIT = 5
 
