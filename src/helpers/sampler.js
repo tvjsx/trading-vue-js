@@ -15,6 +15,8 @@ export default function(T) {
         let id = this.__id__
         t = t || se.t
         let val = x !== undefined ? x : se[T][0]
+        // TODO: closing at a specific time
+        // (timezone, end of the month...)
         if (!this.__t0__ || t >= this.__t0__ + tf) {
 
             this.unshift(Ti !== 3 ? val : 0)
