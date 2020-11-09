@@ -65,7 +65,7 @@ calc() {
 `update()` is executed at each step. Should return a new data point (or set `this[0]`). Imagine that output of the function is pushed to your overlay's `data` array.
 `post()` is called after all updates.
 
-If `renderer` is specified, the lib will use another overlay for rendering the script (it should be added to the `overlays` prop ofc).
+If `renderer` is specified, the lib will use another overlay for rendering the script (it should be added to the `overlays` prop of course).
 
 If you need to create a persistent variable, just make a new property in `this`:
 
@@ -114,11 +114,11 @@ ts1[[i][0] + arr[n]]
 
 ## How to make your own indicators
 
-A good way to start is to take one of your best PINE scripts and try to convert it to TVJS scritps. If you don't know PINE and how it works, it's highly recommended to go through some of the tutorials on the internet.
+A good way to start is to take one of your best PINE scripts and try to convert it to TVJS scripts. If you don't know PINE and how it works, it's highly recommended to go through some of the tutorials on the internet.
 
-From a multiyear experience of the project's creator, the reverse timeseries method used in both engine is THE BEST way to construct TA studies. It's expressive, compact and thanks to the modern javascript implementations is much faster than Python.
+From a multiyear experience of the project's creator, the reverse time-series method used in both engine is THE BEST way to construct TA studies. It's expressive, compact and thanks to the modern javascript implementations is much faster than Python.
 
-With this script engine it's possible to run almost any math on finance data and obviously data-mine it to the oblivion (bad practics tho).
+With this script engine it's possible to run almost any math on finance data and obviously data-mine it to the oblivion (bad practice tho).
 
 Some function are named differently than in PINE:
 
@@ -131,9 +131,9 @@ And there are some brand new:
 
 ```js
 nf(x, v) // Replaces value with NaN or v if x is Infinite
-ts(x) // Create new Timeseries & update with value x
-tstf(x, tf) // Create ne TS with the timeframe
-sub(x, y) // Substract Number/TS
+ts(x) // Create new Time-series & update with value x
+tstf(x, tf) // Create new TS with the timeframe
+sub(x, y) // Subtract Number/TS
 mult(x, y) // Multiply Number/TS
 div(x, y) // Divide Number/TS
 neg(x) // Negative Number/TS
@@ -147,7 +147,7 @@ sym(x, y) // Creates a new symbol, see Samplers & Symbols
 
 ## Meta constants
 
-Some useful info is avalible through the following constants:
+Some useful info is available through the following constants:
 
 ```js
 t // current timestamp
@@ -202,7 +202,7 @@ ema(ts1, 200) // 200 days EMA
 
 ## Samplers & Symbols
 
-A simple OHLCV sampler is created every time you use a TS or function with a custom timeframe. For eaxmple:
+A simple OHLCV sampler is created every time you use a TS or function with a custom timeframe. For example:
 
 ```js
 close12H // Creates one 'close' sampler
@@ -210,7 +210,7 @@ atr12H(14) // Creates 3 samplers: 'high, low, close'
 tstf(high, '12H') // Creates one 'high' sampler
 ```
 
-If you print any of these timeseries with `console.log()`, you'll find an additional `__fn__()` property. It's called each step.
+If you print any of these time-series with `console.log()`, you'll find an additional `__fn__()` property. It's called each step.
 The task of the std sampler is simple: aggregate data points and close the current chunk (candle) when it is time to do so.
 
 So far so good. But what if you have some alternative sparse data? For example, you want to incorporate Open Interest or market trades into your study:
