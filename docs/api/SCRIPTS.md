@@ -116,7 +116,7 @@ ts1[[i][0] + arr[n]]
 
 A good way to start is to take one of your best PINE scripts and try to convert it to TVJS scripts. If you don't know PINE and how it works, it's highly recommended to go through some of the tutorials on the internet.
 
-From a multiyear experience of the project's creator, the reverse time-series method used in both engine is THE BEST way to construct TA studies. It's expressive, compact and thanks to the modern javascript implementations is much faster than Python.
+From a multiyear experience of the project's creator, the reverse time-series method used in both engine is THE BEST way to construct TA studies. It's expressive, compact and thanks to the modern javascript, its implementation is much faster than similar ones written in Python.
 
 With this script engine it's possible to run almost any math on finance data and obviously data-mine it to the oblivion (bad practice tho).
 
