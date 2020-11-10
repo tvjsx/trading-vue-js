@@ -1,10 +1,11 @@
 const VueLoader = require('vue-loader')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const WWPlugin = require('./ww_plugin.js')
+const TerserPlugin = require('terser-webpack-plugin')
 
 global.port = '8080'
 
-module.exports = {
+module.exports = (env, options) => ({
     entry: './src/main.js',
     module: {
         rules: [{
@@ -42,5 +43,17 @@ module.exports = {
             const port = server.listeningApp.address().port
             global.port = port
         }
+    },
+    optimization: {
+        minimize: options.mode === 'production',
+        minimizer: [
+            new TerserPlugin({
+                terserOptions: {
+                    mangle: {
+                        reserved: ['_id', '_tf'] // for scripts std
+                    }
+                }
+            })
+        ]
     }
-}
+})

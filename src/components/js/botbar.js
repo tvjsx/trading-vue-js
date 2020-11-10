@@ -102,7 +102,7 @@ export default class Botbar {
         let t = p[1][0]
         t = this.grid_0.ti_map.i2t(t)
         let ti = this.$p.layout.grids[0].ti_map.tf
-        // Enagle timezones only for tf < 1D
+        // Enable timezones only for tf < 1D
         let k = ti < DAY ? 1 : 0
         let tZ = t + k * this.$p.timezone * HOUR
 
@@ -130,7 +130,7 @@ export default class Botbar {
         t = this.grid_0.ti_map.i2t(t)
         //let ti = this.$p.interval
         let ti = this.$p.layout.grids[0].ti_map.tf
-        // Enagle timezones only for tf < 1D
+        // Enable timezones only for tf < 1D
         let k = ti < DAY ? 1 : 0
 
         //t += new Date(t).getTimezoneOffset() * MINUTE

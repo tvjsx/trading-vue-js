@@ -23,8 +23,15 @@ export default {
         let main = this.$props.sub === this.$props.data
 
         this.meta_info()
-        this._$emit = this.$emit
-        this.$emit = this.custom_event
+
+        // TODO(1): quick fix for vue2, in vue3 we use 3rd party emit
+        try {
+            new Function('return ' + this.$emit)()
+            this._$emit = this.$emit
+            this.$emit = this.custom_event
+        } catch(e) {
+            return
+        }
 
         this._$emit('new-grid-layer', {
             name: this.$options.name,
