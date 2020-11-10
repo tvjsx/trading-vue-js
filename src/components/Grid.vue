@@ -20,6 +20,7 @@ import Splitters from "./overlays/Splitters.vue"
 import LineTool from "./overlays/LineTool.vue"
 import RangeTool from "./overlays/RangeTool.vue"
 
+import { h } from 'vue'
 
 export default {
     name: 'Grid',
@@ -54,8 +55,8 @@ export default {
         this.$emit('custom-event', {
             event: 'register-tools', args: tools
         })
-        this.$on('custom-event', e =>
-            this.on_ux_event(e, 'grid'))
+        //this.$on('custom-event', e =>
+        //    this.on_ux_event(e, 'grid'))
     },
     beforeUnmount () {
         if (this.renderer) this.renderer.destroy()
@@ -67,7 +68,7 @@ export default {
         this.$nextTick(() => this.redraw())
 
     },
-    render(h) {
+    render() {
         const id = this.$props.grid_id
         const layout = this.$props.layout.grids[id]
         return this.create_canvas(h, `grid-${id}`, {

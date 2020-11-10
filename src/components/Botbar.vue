@@ -4,6 +4,8 @@
 import Botbar from './js/botbar.js'
 import Canvas from '../mixins/canvas.js'
 
+import { h } from 'vue'
+
 export default {
     name: 'Botbar',
     props: [
@@ -18,7 +20,7 @@ export default {
         this.setup()
         this.redraw()
     },
-    render(h) {
+    render() {
         const sett = this.$props.layout.botbar
         return this.create_canvas(h, 'botbar', {
             position: {
