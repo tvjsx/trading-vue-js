@@ -259,7 +259,7 @@ datasets: [{
 }]
 ```
 
-After all is set, `symbol` and `symbol2` will contain 5 samples: `open`, `high`, `low`, `close` and `vol`. The provided dataset by default should follow one of the two following formats (for 'ohlcv' aggregation):
+After all is set, `symbol` and `symbol2` will contain 5 samplers: `open`, `high`, `low`, `close` and `vol`. The provided dataset by default should follow one of the two following formats (for 'ohlcv' aggregation):
 
 ```js
 [time, open, high, low, close, vol]
