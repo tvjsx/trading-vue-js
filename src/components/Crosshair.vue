@@ -1,7 +1,6 @@
 <script>
 
 import Crosshair from './js/crosshair.js'
-import { h } from 'vue'
 
 export default {
     name: 'Crosshair',
@@ -38,6 +37,6 @@ export default {
             deep: true
         }
     },
-    render() { return h() }
+    render() { return [] }
 }
 </script>

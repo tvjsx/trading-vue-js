@@ -44,19 +44,15 @@ export default {
                     position: 'absolute',
                 }
             }, [
-                h('canvas', {
-                    on: {
-                        mousemove: e => this.renderer.mousemove(e),
-                        mouseout: e => this.renderer.mouseout(e),
-                        mouseup: e => this.renderer.mouseup(e),
-                        mousedown: e => this.renderer.mousedown(e)
-                    },
-                    attrs: Object.assign({
-                        id: `${this.$props.tv_id}-${id}-canvas`
-                    }, props.attrs),
+                h('canvas', Object.assign({
+                    id: `${this.$props.tv_id}-${id}-canvas`,
+                    onmousemove: e => this.renderer.mousemove(e),
+                    onmouseout: e => this.renderer.mouseout(e),
+                    onmouseup: e => this.renderer.mouseup(e),
+                    onmousedown: e => this.renderer.mousedown(e),
                     ref: 'canvas',
                     style: props.style,
-                })
+                }, props.attrs))
             ].concat(props.hs || []))
         },
         redraw() {
