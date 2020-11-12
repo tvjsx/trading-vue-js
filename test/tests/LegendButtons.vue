@@ -12,6 +12,8 @@
 import TradingVue from '../../src/TradingVue.vue'
 import Data from '../data/data_buttons.json'
 import Utils from '../../src/stuff/utils.js'
+import CodeIcon from './LegendButtons/code3.json'
+
 
 export default {
     name: 'LegendButtons',
@@ -64,7 +66,11 @@ export default {
             width: window.innerWidth,
             height: window.innerHeight,
             buttons: [
-                'display', 'settings', 'remove'
+                'display', 'settings', 'remove',
+                {
+                    name: 'code',
+                    icon: CodeIcon
+                }
             ]
         }
     }

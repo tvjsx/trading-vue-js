@@ -2,12 +2,14 @@
 <span class="t-vue-lbtn-grp">
     <legend-button
         v-for="(b, i) in buttons" :key="i"
-        :id="b"
+        :id="b.name || b"
         :tv_id="tv_id"
         :ov_id="ov_id"
         :grid_id="grid_id"
         :index="index"
         :display="display"
+        :icon="b.icon"
+        :config="config"
         v-on:legend-button-click="button_click"
     >
     </legend-button>
@@ -21,7 +23,7 @@ export default {
     name: 'ButtonGroup',
     props: [
         'buttons', 'tv_id', 'ov_id', 'grid_id', 'index',
-        'display'
+        'display', 'config'
     ],
     components: {
         LegendButton
