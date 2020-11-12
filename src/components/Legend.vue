@@ -18,6 +18,7 @@
         <span class="t-vue-iname">{{ind.name}}</span>
         <button-group
             v-bind:buttons="common.buttons"
+            v-bind:config="common.config"
             v-bind:ov_id="ind.id"
             v-bind:grid_id="grid_id"
             v-bind:index="ind.index"
