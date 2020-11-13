@@ -320,19 +320,14 @@ export default {
             this.custom_event(
                 {event: 'range-changed', args: [r]}
             )
+            if (this.onrange) this.onrange(r)
         },
         set_loader(dc) {
-            const self = this
-            this.$refs.chart.$off('range-changed')
-            if (dc) this.$refs.chart.$on('range-changed', r => {
-                let tf = this.$refs.chart.interval
-                if (self.chart_props.ib) {
-                    const ti_map = this.$refs.chart.ti_map
-                    r = r.map(x => ti_map.i2t(x))
-                    tf = this.$refs.chart.interval_ms
-                }
+            this.onrange = r => {
+                let pf = this.chart_props.ib ? '_ms' : ''
+                let tf = this.$refs.chart['interval' + pf]
                 dc.range_changed(r, tf)
-            })
+            }
         },
         parse_colors(colors) {
             for (var k in this.$props) {
