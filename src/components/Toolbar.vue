@@ -2,14 +2,16 @@
 <template>
     <div class="trading-vue-toolbar" :style="styles"
         :key="tool_count">
-        <toolbar-item v-for="(tool, i) in data.tools"
+        <toolbar-item v-for="(tool, i) in groups"
             v-if="tool.icon && !tool.hidden"
             @item-selected="selected"
             :key="i"
             :data="tool"
+            :subs="sub_map"
+            :dc="data"
             :config="config"
             :colors="colors"
-            :selected="tool.type === data.tool">
+            :selected="is_selected(tool)">
         </toolbar-item>
     </div>
 </template>
@@ -31,6 +33,17 @@ export default {
             this.$emit('custom-event', {
                 event:'tool-selected', args: [tool.type]
             })
+            if (tool.group) {
+                // TODO: emit the sub map to DC (save)
+                this.sub_map[tool.group] = tool.type
+            }
+        },
+        is_selected(tool) {
+            if (tool.group) {
+                return !!tool.items.find(
+                    x => x.type === this.data.tool)
+            }
+            return tool.type === this.data.tool
         }
     },
     computed: {
@@ -48,6 +61,26 @@ export default {
                 'background-color': cb,
                 'border-right': `${b}px ${st} ${brd}`
             }
+        },
+        groups() {
+            let arr = []
+            for (var tool of this.data.tools || []) {
+                if (!tool.group) {
+                    arr.push(tool)
+                    continue
+                }
+                let g = arr.find(x => x.group === tool.group)
+                if (!g) {
+                    arr.push({
+                        group: tool.group,
+                        icon: tool.icon,
+                        items: [tool]
+                    })
+                } else {
+                    g.items.push(tool)
+                }
+            }
+            return arr
         }
     },
     watch: {
@@ -62,7 +95,7 @@ export default {
             deep: true
         }
     },
-    data() { return { tool_count: 0 } }
+    data() { return { tool_count: 0, sub_map: {} } }
 }
 
 </script>
@@ -71,7 +104,7 @@ export default {
 .trading-vue-toolbar {
     position: absolute;
     border-right: 1px solid black;
-    z-index: 100;
+    z-index: 101;
     padding-top: 3px;
 }
 </style>

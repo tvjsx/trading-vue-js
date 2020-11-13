@@ -55,7 +55,7 @@ const ChartConfig = {
     UX_OPACITY: 0.9, // Ux background opacity
     ZOOM_MODE: 'tv', // 'tv' or 'tl'
     L_BTN_SIZE: 21,  // Legend Button size, px
-    L_BTN_MARGIN: '-6px 0 -6px 0' // css margin 
+    L_BTN_MARGIN: '-6px 0 -6px 0' // css margin
 }
 
 ChartConfig.FONT =
