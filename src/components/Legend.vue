@@ -162,6 +162,7 @@ export default {
     margin-left: 10px;
     pointer-events: none;
     text-align: left;
+    user-select: none;
 }
 .trading-vue-ohlcv {
     pointer-events: none;

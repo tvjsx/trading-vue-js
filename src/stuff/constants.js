@@ -38,6 +38,7 @@ const ChartConfig = {
     TB_ICON: 25,     // Toolbar icon size px
     TB_ITEM_M: 6,    // Toolbar item margin px
     TB_ICON_BRI: 1,  // Toolbar icon brightness
+    TB_ICON_HOLD: 420, // ms, wait to expand
     TB_BORDER: 1,    // Toolbar border px
     TB_B_STYLE: 'dotted', // Toolbar border style
     TOOL_COLL: 7,    // Tool collision threshold

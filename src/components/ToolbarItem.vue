@@ -2,6 +2,7 @@
 <template>
     <div :class="['trading-vue-tbitem', selected ? 'selected-item' : '']"
         @click="emit_selected"
+        @mousedown="mousedown"
         :style="item_style">
         <div class="trading-vue-tbicon tvjs-pixelated"
             :style="icon_style">
@@ -9,9 +10,9 @@
         <div class="trading-vue-tbitem-exp" v-if="data.group"
             :style="exp_style"
             @click="exp_click"
-            @mousedown="mousedown"
-            @mouseover="mouseover"
-            @mouseleave="mouseleave">
+            @mousedown="expmousedown"
+            @mouseover="expmouseover"
+            @mouseleave="expmouseleave">
             ᐳ
         </div>
         <item-list :config="config" :items="data.items"
@@ -24,6 +25,7 @@
 <script>
 
 import ItemList from './ItemList.vue'
+import Utils from '../stuff/utils.js'
 
 export default {
     name: 'ToolbarItem',
@@ -39,16 +41,25 @@ export default {
         }
     },
     methods: {
-        mouseover() {
+        mousedown(e) {
+            this.click_start = Utils.now()
+            this.click_id = setTimeout(() => {
+                this.show_exp_list = true
+            }, this.config.TB_ICON_HOLD)
+        },
+        expmouseover() {
             this.exp_hover = true
         },
-        mouseleave() {
+        expmouseleave() {
             this.exp_hover = false
         },
-        mousedown(e) {
+        expmousedown(e) {
             if (this.show_exp_list) e.stopPropagation()
         },
         emit_selected() {
+            if (Utils.now() - this.click_start >
+                this.config.TB_ICON_HOLD) return
+            clearTimeout(this.click_id)
             if (!this.data.group) {
                 this.$emit('item-selected', this.data)
             } else {
