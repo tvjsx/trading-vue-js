@@ -18,7 +18,7 @@ export default class DataCube extends DCCore {
             script_depth: 0,        // 0 === Exec on all data
             auto_scroll: true,      // Auto scroll to a new candle
             scripts: true,          // Enable overlays scripts,
-            ww_ram_limit: 0,        // TODO: WebWorker RAM limit
+            ww_ram_limit: 0,        // WebWorker RAM limit (MB)
             node_url: null,         // Use node.js instead of WW
             shift_measure: true     // Draw measurment shift+click
         }
