@@ -28,6 +28,7 @@ export default class Grid {
         this.offset_x = 0
         this.offset_y = 0
         this.deltas = 0 // Wheel delta events
+        this.wmode = this.$p.config.SCROLL_WHEEL
 
         this.listeners()
         this.overlays = []
@@ -275,8 +276,13 @@ export default class Grid {
 
     mousezoom(delta, event) {
 
-        event.originalEvent.preventDefault()
-        event.preventDefault()
+        if (this.wmode !== 'pass') {
+            if (this.wmode === 'click' && !this.$p.meta.activated) {
+                return
+            }
+            event.originalEvent.preventDefault()
+            event.preventDefault()
+        }
 
         event.deltaX = event.deltaX || Utils.get_deltaX(event)
         event.deltaY = event.deltaY || Utils.get_deltaY(event)

@@ -302,7 +302,8 @@ export default {
         meta() {
             return {
                 last: this.last_candle,
-                sub_start: this.sub_start
+                sub_start: this.sub_start,
+                activated: this.activated
             }
         },
         forced_tf() {
@@ -344,7 +345,8 @@ export default {
 
             // Meta data
             last_candle: [],
-            sub_start: undefined
+            sub_start: undefined,
+            activated: false
 
         }
     },
