@@ -72,6 +72,7 @@ export default {
         item_click(e, item) {
             e.cancelBubble = true
             this.$emit('item-selected', item)
+            this.$emit('close-list')
         },
         onmousedown() {
             this.$emit('close-list')
