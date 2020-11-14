@@ -2,6 +2,7 @@
 <template>
     <!-- Main component  -->
     <div class="trading-vue" v-bind:id="id"
+        @mousedown="mousedown" @mouseleave="mouseleave"
          :style="{
             color: this.chart_props.colors.text,
             font: this.font,
@@ -338,6 +339,12 @@ export default {
                     colors[k2] = this.$props[k]
                 }
             }
+        },
+        mousedown() {
+            this.$refs.chart.activated = true
+        },
+        mouseleave() {
+            this.$refs.chart.activated = false
         }
     }
 }
