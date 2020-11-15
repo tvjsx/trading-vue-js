@@ -145,6 +145,30 @@ settings(upd) // Modify this overlays's settings with upd
 sym(x, y) // Creates a new symbol, see Samplers & Symbols
 ```
 
+<details><summary>Example</summary>
+<p>
+<i>Only update() function is shown here</i><br>
+<i>Examples can be tested with test#14 (`npm run test`) </i>
+
+```js
+
+// (high + low) / 2
+let middle = div(add(high, low), 2)
+
+// Make a new onchart overlay &
+// push middle[0]
+onchart(middle)
+
+// Create a new TS with the random noise
+let rnd = ts(Math.random())
+// Display it as offchart overlay
+// with name 'RND' & custom settings
+offchart(rnd, 'RND', {color:'red'})
+
+```
+</p>
+</details>
+
 ## Meta constants
 
 Some useful info is available through the following constants:
@@ -161,6 +185,26 @@ ohlcv // Main OHLCV data (direct order)
 self // Script Env object
 shared // Shared data b/w all scripts
 ```
+
+<details><summary>Example</summary>
+<p>
+<i>Only update() function is shown here</i><br>
+<i>Examples can be tested with test#14 (`npm run test`) </i>
+
+```js
+
+// Display the current iteration
+offchart(iter)
+
+// Calculate the middle of the time range
+// (calculated only once, see Script execution modes
+// to make a real-time version)
+let m = (range[0] + range[1]) / 2
+offchart(t > m && t <= m + tf ? 1 : 0)
+
+```
+</p>
+</details>
 
 ## TF symbols
 
@@ -199,6 +243,22 @@ The other functions can detect the timeframe from one of their parameters:
 let ts1 = tstf(close, '1D')
 ema(ts1, 200) // 200 days EMA
 ```
+
+<details><summary>Example</summary>
+<p>
+<i>Only update() function is shown here</i><br>
+<i>Examples can be tested with test#14 (`npm run test`) </i>
+
+```js
+
+// Daily Bollinger Bands on a intraday chart
+let [m, h, l] = bb(close1D, 20, 1)
+onchart([h[1], m[1], l[1]], 'BB', {type: 'Channel'})
+
+```
+</p>
+</details>
+
 
 ## Samplers & Symbols
 
@@ -303,6 +363,50 @@ Every time `update()` is called your aggregation function gets all data data poi
 
 
 ## Script execution modes
+
+Scripts can be executed differently: https://github.com/tvjsx/trading-vue-js/tree/master/docs/api#script-settings
+
+Let's improve the example in **Meta constants**:
+
+```js
+
+init: `
+    // Modify overlay object: here we set
+    // the 'script' field, to enable the 'execOnRange' mode
+    modify(self.id, {
+        script: {
+            execOnRange: true
+        }
+    })
+`,
+update: `
+    // Calculate the middle of the time range
+    // Now it's REexecuted every time user
+    // changes the chart view range
+    let m = (range[0] + range[1]) / 2
+    offchart(t > m && t <= m + tf ? 1 : 0)
+`
+
+```
+
+If you don't need the time-series output (and will use only `settings({...})`) you can disable it with `output: false`. Also if you need to send back to the chart only the visible subset, set it to `range`:
+
+```js
+
+init: `
+    // Modify overlay object
+    // (can also be changed outside scripts with DC)
+    modify(self.id, {
+        script: {
+            output: 'range'
+        }
+    })
+`,
+update: `
+    return rsi(close, 14)
+`
+
+```
 
 ## Offchart & onchart
 
