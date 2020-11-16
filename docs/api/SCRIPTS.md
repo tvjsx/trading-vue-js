@@ -1,4 +1,4 @@
-
+Sometimes
 # Scripts: Brief Intro
 
 ## What
@@ -392,7 +392,7 @@ update: `
 If you don't need the time-series output (and will use only `settings({...})`) you can disable it with `output: false`. Also if you need to send back to the chart only the visible subset, set it to `range`:
 
 ```js
-
+// Examples can be tested with test#14 (`npm run test`)
 init: `
     // Modify overlay object
     // (can also be changed outside scripts with DC)
@@ -409,6 +409,64 @@ update: `
 ```
 
 ## Offchart & onchart
+
+As shown in the previous examples, in addition to the main script output (with `return` or `this[0]`) you can generate new overlays:
+
+```js
+onchart(<data>, <name>, <settings>)
+ooffchart(<data>, <name>, <settings>)
+```
+
+The `<name>` parameter should be unique, it also serves as an overlay id.
+
+You can specify overlay `type` and the `grid` object defining the corresponding fields in `settings`:
+
+```js
+offchart([1,2], 'Lines', {
+    type: 'Splines', // Custom renderer
+    grid: { id: 1 }  // Places it on the grid#1
+})
+```
+
+The `<data>` parameter can be `Number`, `TS`, `Array(Number)`, `Array(TS)`. When the type is Array the function produces tuples and pushes them as data points.
+
+```js
+[1605550000000, 1, 2],
+[1605560000000, 1, 2],
+[1605570000000, 1, 2],
+...
+```
+
+## settings() & modify()
+
+Sometimes you don't need to produce a time-series output with your script. For example, you want to calculate an average candle-size over the entire OHLCV dataset. Then you need to push the result back to the chart instance. Use `settings()` for overwriting only the overlay's settings object or `modify()` for overwriting any field (including `data`).
+
+```js
+
+init: `
+    // Using the direct data array
+    let sum = 0
+    for (var i = 0; i < ohlcv.length; i++) {
+        let high = ohlcv[i][2]
+        let low = ohlcv[i][3]
+        sum += 100 * (high - low) / high
+    }
+    // Check the 'avg' field in the overlay
+    settings({
+        avg: sum / ohlcv.length
+    })
+`
+```
+
+```js
+init: `
+    // Copy the whole OHLCV dataset to the overlay
+    modify(self.id, {
+		data: ohlcv,
+		script: { output: false }
+	})
+`
+```
 
 ## Script Engine Modules
 
