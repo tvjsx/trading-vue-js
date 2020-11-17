@@ -1,4 +1,3 @@
-environmentSometimes
 # Scripts: Brief Intro
 
 ## What
@@ -482,7 +481,7 @@ this.dc.ww.just('upload-module', {
 })
 ```
 
-All the dependencies and the main module class should be packaged as stringified functions, because you can not send regular js function to web worker or even an SE deployed on server-side. Here is an example of a very simple SE-module:
+All the dependencies and the main module class should be packaged as stringified functions, because you can not send regular js function to web worker or an SE deployed on server-side. Here is an example of a very simple SE-module:
 
 ```js
 // --------- X Controller ----------- //
@@ -563,7 +562,7 @@ export default function(mod, se, lib) {
             }
         }
 
-        // Here we are sending data batk to the Controller
+        // Here we are sending data back to the Controller
         se.send('module-data', {
             mod: mod, // Module id
             type: 'serious-data',
@@ -574,7 +573,7 @@ export default function(mod, se, lib) {
 }
 
 // ------------ Lib1.js ------------- //
-// First dependency, contains the woofs count
+// First dependency, contains the woof & bark counts
 
 export default function(id, se, env, lib) {
 
@@ -630,7 +629,7 @@ if (crossover(rsi, ts(70))[0]) {
 
 ### Std-lib injections
 
-In addition to the full modules there is a way to inject simple functions into the std lib. The controller in this case looks very similar, the main module can define new functions insde the `pre_run` call:
+In addition to the full modules there is a way to inject simple functions into the std lib. The controller in this case looks very similar, the main module can define new functions inside the `pre_run` call:
 
 ```js
 this.pre_env = function(id, s) {
