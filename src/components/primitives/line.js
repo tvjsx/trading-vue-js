@@ -37,8 +37,10 @@ export default class Line {
 
         this.ctx.moveTo(x2, y2)
         this.ctx.lineTo(x2 + dx, y2 + dy)
-        this.ctx.moveTo(x1, y1)
-        this.ctx.lineTo(x1 - dx, y1 - dy)
+        if (!this.ray) {
+            this.ctx.moveTo(x1, y1)
+            this.ctx.lineTo(x1 - dx, y1 - dy)
+        }
 
         this.comp.collisions.push(
             this.make([x1, y1], [x2, y2])
@@ -47,8 +49,11 @@ export default class Line {
 
     // Collision function. x, y - mouse coord.
     make(p1, p2) {
+        let f = this.ray ?
+            Math2.point2ray.bind(Math2) :
+            Math2.point2line.bind(Math2)
         return (x, y) => {
-            return Math2.point2line(
+            return f(
                 [x, y], p1, p2
             ) < this.T
         }
