@@ -1,4 +1,4 @@
-Sometimes
+environmentSometimes
 # Scripts: Brief Intro
 
 ## What
@@ -462,12 +462,203 @@ init: `
 init: `
     // Copy the whole OHLCV dataset to the overlay
     modify(self.id, {
-		data: ohlcv,
-		script: { output: false }
-	})
+        data: ohlcv,
+        script: { output: false }
+    })
 `
 ```
 
 ## Script Engine Modules
 
+The Script Engine can be extended with SE-modules. A module should be sent to the web-worker by an extension (see Extensions Guide):
+
+```js
+// Emits the module to the Web Worker
+this.dc.ww.just('upload-module', {
+    id: 'superdog',
+    main: Mod.toString(),  // Mod = main module class (defined as a function)
+    Lib1: Lib1.toString(), // The dependencies should be included
+    Lib2: Lib2.toString()  // as stringified functions
+})
+```
+
+All the dependencies and the main module class should be packaged as stringified functions, because you can not send regular js function to web worker or even an SE deployed on server-side. Here is an example of a very simple SE-module:
+
+```js
+// --------- X Controller ----------- //
+export default class Main {
+
+    constructor(tv, dc) {
+        this.tv = tv
+        this.dc = dc
+        this.dc.ww.just('upload-module', {
+            id: 'superdog',
+            main: Mod.toString(),  // Mod = main module class (defined as a function)
+            Lib1: Lib1.toString(), // The dependencies should be included
+            Lib2: Lib2.toString()  // as stringified functions
+        })
+    }
+
+    // Listening to the module events
+    ww(e) {
+        if (e.type !== 'module-data') return
+        if (e.data.mod === 'superdog') {
+            switch (e.data.type) {
+                case 'serious-data':
+                    console.log(e.data.data)
+                    break
+            }
+        }
+    }
+}
+
+// ---------- Main Mod.js ----------- //
+// mod => module id (in our case 'superdog')
+// se => reference to the Script Engine
+// lib => all the dependencies defined above
+export default function(mod, se, lib) {
+
+    // The map contains all instances of some class
+    // for different scripts. (Note: there can be
+    // multiple scripts running in parallel)
+    this.map = {}
+
+    // All instances of your module's API. Similar
+    // to the map but contains an objects with functions
+    this.api = {}
+
+    // SE-HOOK: when a new script environment is created
+    // id => script id (that's what called $uuid if you
+    // check your data structure)
+    // s => script instance (contains env & settings)
+    this.new_env = function(id, s) {
+
+        // Here we init our first dependency, later
+        // we can reference it in API functions
+        this.map[id] = new lib.Lib1(id, se, s.env, lib)
+
+        // This what scripts see. Should be called as:
+        // superdog.woof(), superdog.bark()
+        this.api[id] = {
+            woof() {
+                this.map[id].woof()
+            },
+            bark() {
+                this.map[id].bark()
+            }
+        }
+
+    }
+
+    // SE-HOOK: when the run is finished
+    // sel => all script IDs participated in the run
+    this.post_run = function(sel) {
+
+        let reports = {}
+        for (var i = 0; i < sel.length; i++) {
+            let id = sel[i]
+            reports[id] = {
+                woofs: this.map[id].woof_count,
+                barks: this.map[id].bark_count,
+            }
+        }
+
+        // Here we are sending data batk to the Controller
+        se.send('module-data', {
+            mod: mod, // Module id
+            type: 'serious-data',
+            data: reports
+        })
+
+    }
+}
+
+// ------------ Lib1.js ------------- //
+// First dependency, contains the woofs count
+
+export default function(id, se, env, lib) {
+
+    const Lib2 = new lib.Lib2()
+
+    this.woof_count = 0
+    this.bark_count = 0
+
+    this.woof = function() {
+        this.woof_count++
+    }
+
+    this.bark = function() {
+        this.bark_count = Lib2.inc(this.bark_count)
+    }
+}
+
+// ------------ Lib2.js ------------- //
+// Second dependency, can increment numbers,
+// called from Lib1
+
+export default function(id, se, env, lib) {
+    this.inc = function(a) {
+        return a + 1
+    }
+}
+
+```
+
+Now when this extension is uploaded to the SE, you can try to make some sense of it:
+
+```js
+// See the console for the results
+let rsi = rsi(close, 14)
+if (crossunder(rsi, ts(30))[0]) {
+    superdog.woof()
+}
+if (crossover(rsi, ts(70))[0]) {
+    superdog.bark()
+}
+```
+
+### Script Engine Hooks
+
+| Hook | Arguments | Description |
+|---|---|---|
+| pre_env | script_id, script | Before a script environment is created |
+| new_env | script_id, script | A new script environment was created |
+| pre_run | script_ids | Before the engine run |
+| post_run | script_ids | After the engine run |
+| pre_step | script_ids |  Before each script step (but after the engine step) |
+| post_step | script_ids  | After each script step |
+
+### Std-lib injections
+
+In addition to the full modules there is a way to inject simple functions into the std lib. The controller in this case looks very similar, the main module can define new functions insde the `pre_run` call:
+
+```js
+this.pre_env = function(id, s) {
+    // src => input time-series
+    // len => first parameter (length)
+    // _id => generated id, should be underscored
+    // _tf => optional timeframe, should be underscored
+    se.std_plus['sma2'] = function(src, len, _id, _tf) {
+
+        // Creates a recursive uuid for this calculation
+        // branch (_id is generated by the parent call)
+        let id = this._tsid(_id, `sma2(${len})`)
+        let sum = 0
+        for (var i = 0; i < len; i++) {
+            sum = sum + src[i]
+        }
+        // Return a new TS with a tf, defined by src
+        return this.ts(sum / len, id, src.__tf__)
+    }
+}
+```
+
+As in the previous case now you can call `sma2` from any script, executed on this engine instance:
+
+```js
+onchart(sma2(high, 42), 'High', {color: 'green'})
+```
+
 ## Backtesting
+
+Basically, using the SE hooks & std-injections you can make a backtesting engine of any level of complexity or even connect an existing backtester (if you are running SE in nodejs environment). There is a plan to make a simple backtester module in 2021.
