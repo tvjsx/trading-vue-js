@@ -3,6 +3,7 @@
 
 import Main from './main.js'
 import Button from './Button.vue'
+Main.__name__ = 'goto-present'
 
 const widgets = { Button }
 const components = {  }

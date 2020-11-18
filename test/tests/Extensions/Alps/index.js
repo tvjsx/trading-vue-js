@@ -4,6 +4,7 @@
 import Main from './main.js'
 import AlpsPack from './AlpsPack.json'
 import Alps from './AlpsSkin.js'
+Main.__name__ = 'alps'
 
 const widgets = { }
 const components = {  }
