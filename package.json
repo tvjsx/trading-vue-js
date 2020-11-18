@@ -37,7 +37,8 @@
     "visualization",
     "reactive",
     "algo-trading",
-    "finviz"
+    "finviz",
+    "trading-systems"
   ],
   "homepage": "https://github.com/C451/trading-vue-js#readme",
   "repository": "github:C451/trading-vue-js",
