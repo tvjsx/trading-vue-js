@@ -1,5 +1,9 @@
 # Scripts: Brief Intro
 
+This guide's version is **0.9.0**
+
+![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=Current%20lib%20version)
+
 ## What
 
 TVJS Scripts is a time-series engine, similar to the tradingview's PINE script. Syntax is based on javascript, in the future it will be possible to make custom code constructions with regular expressions (extend the language).
