@@ -7,7 +7,7 @@ This guide's version is **0.9.0**
 
 ## Why & How
 
-To keep the core library size relatively small, it was decided to introduce a simple (but not as of today) way to extend the functionality. The main project consists of the two major parts: **TradingVue** component (renderer) and **DataCube** (data helper). An extension can manipulate the behaviour of both of them. The internal functions of `TradingVue` can be accessed through `tv` and `tv.$refs.chart`, the inner-works of `DC` is available through the `dc` reference & its events can be caught with `pre_dc` and `post_dc` functions.
+To keep the core library size relatively small, it was decided to introduce a simple (not yet) way to extend the functionality. The main project consists of the two major parts: **TradingVue** component (renderer) and **DataCube** (data helper). An extension can manipulate the behaviour of both of them. The internal functions of `TradingVue` can be accessed through `tv` and `tv.$refs.chart`, the inner-works of `DataCube` is available through the `dc` reference & its events can be caught with `pre_dc` and `post_dc` functions.
 
 ## X Structure
 
@@ -19,7 +19,7 @@ Every extension can contain the following parts:
 * Skins
 * Colorpacks
 
-If you check the repo with standard pack https://github.com/tvjsx/tvjs-xp you'll find that each extension contains `x.json` file with this structure. For example, https://github.com/tvjsx/tvjs-xp/blob/main/src/extensions/settings-win/x.json includes only one widget
+If you check the repo with the standard pack https://github.com/tvjsx/tvjs-xp you'll find that each extension contains `x.json` file with this structure. For example, https://github.com/tvjsx/tvjs-xp/blob/main/src/extensions/settings-win/x.json includes only one widget
 
 ```json
 {
@@ -116,7 +116,7 @@ destroy() {
 }
 ```
 
-To communicate between widgets/components and the controller you can add a simple event bus class:
+To communicate between widgets/components and the controller you can use a simple event bus class:
 
 ```js
 
@@ -178,7 +178,7 @@ this.tv.$set(this.widgets, id, {
 
 ```
 
-Removing the widget can be done in a similar way:
+Removing a widget can be done in a similar way:
 
 ```js
 
