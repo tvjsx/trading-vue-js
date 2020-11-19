@@ -221,12 +221,94 @@ Oh and you can also connect them to the main controller via `EventBus`. Sounds l
 
 ## Skins
 
-Here is the best part. Tiered of back & white backgrounds and boring "eye-friendly" color themes? Now it's time to go full rampage.
+Here is the best part. Tiered of back & white backgrounds and boring "eye-friendly" color themes? Now it is time to go full rampage!
 
+<br>
+<div align="center">
+  <img width="640" heigth="384" src="assets/SuperDog.gif" alt="trading-vue logo">
+</div>
+<br>
 
+A skin defined by a simple object:
+
+```js
+export default {
+    id: 'SuperDogSkin',      // Skin id
+    colors: DogPack,         // Color Pack
+    shaders: [BackShader],   // Background Shaders
+    font: '20px Kingthings', // Font
+    styles: Styles           // Global css stylesheet
+}
+```
+
+BackShader is similar to the [InlineShader](https://github.com/tvjsx/trading-vue-js/blob/master/docs/api/SHADERS.md) and allows you to cover the areas of Grid, Sidebar or Botbar with a custom graphics. The props provided by the library contain all necessary information to make an interactive visualisations.
+
+Examples of back shaders can be found [here](https://github.com/tvjsx/trading-vue-js/blob/master/test/tests/Extensions/Alps/back_shader.js) and [here](https://github.com/tvjsx/trading-vue-js/blob/master/test/tests/Extensions/SkinPack/back_shader.js).
 
 ## Color Packs
 
+Colorpack is a json object with all colors to be replaced. The names come from the main component's props, without `color` prefix:
+
+```json
+{
+    "candleDw": "#23a776",
+    "candleUp": "#23a776",
+    "cross": "#23a776",
+    "grid": "#23a77622",
+    "panel": "#23a77655",
+    "scale": "#23a77655",
+    "tbBorder": "#23a77655",
+    "text": "#23a776",
+    "textHL": "#23a776",
+    "title": "#23a776",
+    "volDw": "#23a776",
+    "volUp": "#23a776",
+    "wickDw": "#23a776",
+    "wickSm": "#23a776",
+    "wickUp": "#23a776"
+}
+```
+
 ## X Settings
 
+To provide a settings object (shown in #Controller) use `x-settings` prop:
+
+```html
+<trading-vue :x-settings="xsett"/>
+<script>
+export default {
+    data() {
+        return {
+            xsett: {
+                'extension-id-1': { /* ... */ },
+                'extension-id-2': { /* ... */ }
+            }
+        }
+    }
+}
+</script>
+```
+
 ## Chart-event hooks
+
+If you need to set up hooks to the internal events, use `$refs.chart.hooks(...args)`, where `args` is an array of hook names. Currently supported hooks: `xchanged, xlocked, update, resize, data`.
+
+After the call you'll be getting events like this `?<hook name>`:
+
+```js
+// Extension's controller
+
+export default class Main {
+
+    // ...
+
+    // Listens to all tvjs events (& dc events)
+    update(e) {
+        switch(e.event) {
+            case '?x-changed': break
+            // ...
+        }
+    }
+
+}
+```
