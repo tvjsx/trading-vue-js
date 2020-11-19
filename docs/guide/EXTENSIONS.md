@@ -221,7 +221,7 @@ Oh and you can also connect them to the main controller via `EventBus`. Sounds l
 
 ## Skins
 
-Here is the best part. Tiered of back & white backgrounds and boring "eye-friendly" color themes? Now it is time to go full rampage!
+Here is the best part. Tiered of black & white backgrounds and boring "eye-friendly" color themes? Now it is time to go full rampage!
 
 <br>
 <div align="center">
