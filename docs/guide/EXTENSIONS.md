@@ -35,7 +35,7 @@ If you check the repo with the standard pack https://github.com/tvjsx/tvjs-xp yo
 }
 ```
 
-This repo uses a special building process, so it transforms `x.json` into the corresponding `index.js` files (e.g. https://github.com/tvjsx/tvjs-xp/blob/main/build/settings-win/settings-win.js). You can start developing extension by cloning this repo & following the build-in process. To make a development index and building the library you'll need 2 commands:
+This repo uses a special building process, so it transforms `x.json` into the corresponding `index.js` files (e.g. https://github.com/tvjsx/tvjs-xp/blob/main/build/settings-win/settings-win.js). You can start developing extension by cloning this repo & following the built-in process. To make a development index and building the library you'll need 2 commands:
 
 ```bash
 npm run compile
@@ -192,9 +192,36 @@ remove_widget(id) {
 
 ## Components
 
-## Overlay
+This category should be selected when you need to make a stand-alone vue component that interact with the main chart. A good example is a buy/sell panel which can add orders to the chart.
+
+If your component is named `BuySellPanel`, it can be imported directly from the index:
+
+```js
+import { BuySellPanel } form 'my-extension'
+```
+
+Or if you are building it with the TVJS-XP repo:
+
+```js
+import XP from 'xp'
+const BuySellPanel = XP['my-extension'].BuySellPanel
+
+Vue.use(BuySellPanel)
+```
+
+## Overlays
+
+Overlays are automatically added to the main chart collection. That's it.
+
+<details><summary>Spolier</summary>
+<p>
+Oh and you can also connect them to the main controller via `EventBus`. Sounds like a lot of new possibilities, huh?
+</p>
+</details>
 
 ## Skins
+
+Here is the best part. Tiered of back & white backgrounds and boring "eye-friendly" color themes? Now it is time to rampage.
 
 ## Color Packs
 
