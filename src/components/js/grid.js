@@ -193,9 +193,9 @@ export default class Grid {
         if (!this.layout) return
 
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
-        this.grid()
-
         if (this.$p.shaders.length) this.apply_shaders()
+
+        this.grid()
 
         let overlays = []
         overlays.push(...this.overlays)
