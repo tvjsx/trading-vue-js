@@ -210,7 +210,8 @@ IMPORTANT: All data must be sorted by time (in ascending order). The main OHLCV 
         "tf": <Number|'1s'...'1Y'>, // Forced timeframe
         "grid": { // Grid settings (optional)
             "logScale": <true|false>,
-            "height": <Number> // Grid height (weight)
+            "height": <Number>, // Grid height (weight)
+            "id": // New grid id (merge w/another, offchart only)
         }
         "settings": { } // Settings (depending on "type")
     },
@@ -226,7 +227,8 @@ IMPORTANT: All data must be sorted by time (in ascending order). The main OHLCV 
             "grid": { }, // The same as in "chart",
             "tf": <Number|'1s'...'1Y'>, // Forced timeframe
             "loading": <true|false>, // Show loading animation
-            "script": { } // See 'script settings'
+            "script": { } // See 'script settings',
+            "scripts": <true|false> // Enable/disable scripts
         },
         ...
     ],
