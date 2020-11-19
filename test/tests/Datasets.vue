@@ -1,7 +1,7 @@
 <template>
 <div>
     <trading-vue :data="chart" :width="this.width" :height="this.height"
-            ref="tv" skin="Alps"
+            ref="tv" skin="Alps" 
             :toolbar="true" :overlays="overlays"
             :extensions="extensions"
             @data-len-changed="on_data"
