@@ -473,7 +473,7 @@ init: `
 
 ## Script Engine Modules
 
-The Script Engine can be extended with SE-modules. A module should be sent to the web-worker by an extension (see Extensions Guide):
+The Script Engine can be extended with SE-modules. A module should be sent to the web-worker by an extension (see [Extensions Guide](https://github.com/tvjsx/trading-vue-js/blob/master/docs/guide/EXTENSIONS.md)):
 
 ```js
 // Emits the module to the Web Worker
