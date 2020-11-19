@@ -5,7 +5,7 @@
         @mousedown="mousedown" @mouseleave="mouseleave"
          :style="{
             color: this.chart_props.colors.text,
-            font: this.font,
+            font: this.font_comp,
             width: this.width+'px',
             height: this.height+'px'}">
         <toolbar v-if="toolbar"
@@ -190,7 +190,7 @@ export default {
                 data: this.decubed,
                 width: this.$props.width - offset,
                 height: this.$props.height,
-                font: this.$props.font,
+                font: this.font_comp,
                 buttons: this.$props.legendButtons,
                 toolbar: this.$props.toolbar,
                 ib: this.$props.indexBased || this.index_based || false,
@@ -199,6 +199,7 @@ export default {
                 skin: this.skin_proto,
                 timezone: this.$props.timezone
             }
+
             this.parse_colors(chart_props.colors)
             return chart_props
         },
@@ -234,6 +235,10 @@ export default {
                 arr.push(...Object.values(x.overlays))
             }
             return arr
+        },
+        font_comp() {
+            return this.skin_proto && this.skin_proto.font ?
+                this.skin_proto.font : this.font
         }
     },
     data() {
