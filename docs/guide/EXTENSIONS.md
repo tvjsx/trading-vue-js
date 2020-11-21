@@ -221,7 +221,7 @@ Oh and you can also connect them to the main controller via `EventBus`. Sounds l
 
 ## Skins
 
-Here is the best part. Tiered of black & white backgrounds and boring "eye-friendly" color themes? Now it is time to go full rampage!
+Here is the best part. Tired of black & white backgrounds and boring "eye-friendly" color themes? Now it is time to go full rampage!
 
 <br>
 <div align="center">
@@ -229,7 +229,7 @@ Here is the best part. Tiered of black & white backgrounds and boring "eye-frien
 </div>
 <br>
 
-A skin defined by a simple object:
+A skin is defined by a simple object:
 
 ```js
 export default {

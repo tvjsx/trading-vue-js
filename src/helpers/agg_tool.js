@@ -10,6 +10,7 @@ export default class AggTool {
         this.int = int // Itarval in ms
         this.dc = dc
         this.st_id = null
+        this.data_changed = false
 
     }
 
@@ -24,6 +25,7 @@ export default class AggTool {
         let old = this.symbols[sym]
         let t = Utils.now()
         let isds = sym.includes('datasets.')
+        this.data_changed = true
 
         if (!old) {
 
@@ -71,7 +73,11 @@ export default class AggTool {
                     break
             }
         }
-        this.dc.ww.just('update-data', out)
+        // TODO: fill gaps
+        if (this.data_changed) {
+            this.dc.ww.just('update-data', out)
+            this.data_changed = false
+        }
         setTimeout(() => this.update(), this.int)
     }
 

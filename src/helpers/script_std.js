@@ -688,6 +688,7 @@ export default class ScriptStd {
     // (can be called from init(), update() or post())
     settings(upd) {
         this.env.send_modify({ settings: upd })
+        Object.assign(this.env.src.sett, upd)
     }
 
     offset(src, num, _id) {
@@ -709,6 +710,10 @@ export default class ScriptStd {
     // percentile_nearest_rank
     nearestrank() {
         // TODO: this
+    }
+
+    now() {
+        return new Date().getTime()
     }
 
     percentrank() {
