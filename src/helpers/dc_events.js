@@ -108,7 +108,8 @@ export default class DCEvents {
             let arr = prev.filter(x => x.v === n.v)
             if (!arr.length && n.p.settings.$props) {
                 let id = n.p.settings.$uuid
-                if (Utils.is_scr_props_upd(n, prev)) {
+                if (Utils.is_scr_props_upd(n, prev) &&
+                    Utils.delayed_exec(n.p)) {
                     delta[id] = n.v
                     changed = true
                     this.tv.$set(n.p, 'loading', true)
@@ -116,7 +117,7 @@ export default class DCEvents {
             }
         }
 
-        if (changed) {
+        if (changed && Object.keys(delta).length) {
             let tf = this.tv.$refs.chart.interval_ms ||
                      this.data.chart.tf
             let range = this.tv.getRange()
@@ -233,18 +234,18 @@ export default class DCEvents {
     scripts_onrange(r) {
         if (!this.sett.scripts) return
         let delta = {}
-        let update = false
 
         this.get('.').forEach(v => {
             if (v.script && v.script.execOnRange &&
                 v.settings.$uuid) {
-                delta[v.settings.$uuid] = v.settings
-                update = Utils.delayed_exec(v)
                 // TODO: execInterrupt flag?
+                if (Utils.delayed_exec(v)) {
+                    delta[v.settings.$uuid] = v.settings
+                }
             }
         })
 
-        if (update) {
+        if (Object.keys(delta).length) {
             let tf = this.tv.$refs.chart.interval_ms ||
                      this.data.chart.tf
             let range = this.tv.getRange()
