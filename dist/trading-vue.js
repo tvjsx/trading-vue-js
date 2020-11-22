@@ -6478,7 +6478,7 @@ var lib_default = /*#__PURE__*/__webpack_require__.n(lib);
   // Checks if it's time to make a script update
   // (based on execInterval in ms)
   delayed_exec: function delayed_exec(v) {
-    if (!v.script.execInterval) return true;
+    if (!v.script || !v.script.execInterval) return true;
     var t = this.now();
     var dt = v.script.execInterval;
 
@@ -17075,7 +17075,7 @@ var dc_events_DCEvents = /*#__PURE__*/function () {
           if (typeof_default()(obj[k]) === 'object') {
             this.merge("".concat(upd.uuid, ".").concat(k), upd.fields[k]);
           } else {
-            this.tv.$set(obj, k, upd.fileds[k]);
+            this.tv.$set(obj, k, upd.fields[k]);
           }
         }
       }
