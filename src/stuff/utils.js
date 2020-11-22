@@ -282,7 +282,8 @@ export default {
     // Checks if it's time to make a script update
     // (based on execInterval in ms)
     delayed_exec(v) {
-        if (!v.script.execInterval) return true
+        if (!v.script || !v.script.execInterval)
+            return true
         let t = this.now()
         let dt = v.script.execInterval
         if (!v.settings.$last_exec ||

@@ -263,7 +263,7 @@ export default class DCEvents {
                 if (typeof obj[k] === 'object') {
                     this.merge(`${upd.uuid}.${k}`, upd.fields[k])
                 } else {
-                    this.tv.$set(obj, k, upd.fileds[k])
+                    this.tv.$set(obj, k, upd.fields[k])
                 }
             }
         }
