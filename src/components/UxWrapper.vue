@@ -93,6 +93,7 @@ export default {
             this.y = y + this.oy
         },
         parse_coord(str, scale) {
+            str = str.trim()
             if (str === '0' || str === '') return 0
             let plus = str.split('+')
             if (plus.length === 2) {
@@ -275,11 +276,12 @@ export default {
         height: 11px;
         font-size: 1.5em;
         line-height: 0.5em;
-        padding: 1px 0px 1px 2px;
+        padding: 1px 1px 1px 1px;
         border-radius: 10px;
         right: 5px;
         top: 5px;
         user-select: none;
+        text-align: center;
     }
     .tvjs-ux-wrapper-close-hb {
 
