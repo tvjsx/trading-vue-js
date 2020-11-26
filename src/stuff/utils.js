@@ -126,13 +126,14 @@ export default {
         try {
             let ia = new IndexedArray(arr, "0")
             let res = ia.getRange(t1, t2)
-            return [res]
+            let i0 = ia.valpos[t1].next
+            return [res, i0]
         } catch(e) {
             // Something wrong with fancy slice lib
             // Fast fix: fallback to filter
             return [arr.filter(x =>
                 x[0] >= t1 && x[0] <= t2
-            )]
+            ), 0]
         }
     },
 
