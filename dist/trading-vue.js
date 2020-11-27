@@ -1,5 +1,5 @@
 /*!
- * TradingVue.JS - v0.10.0-alpha - Thu Nov 26 2020
+ * TradingVue.JS - v0.10.0-alpha - Fri Nov 27 2020
  *     https://github.com/tvjsx/trading-vue-js
  *     Copyright (c) 2019 C451 Code's All Right;
  *     Licensed under the MIT license
@@ -6319,13 +6319,14 @@ var lib_default = /*#__PURE__*/__webpack_require__.n(lib);
     try {
       var ia = new lib_default.a(arr, "0");
       var res = ia.getRange(t1, t2);
-      return [res];
+      var i0 = ia.valpos[t1].next;
+      return [res, i0];
     } catch (e) {
       // Something wrong with fancy slice lib
       // Fast fix: fallback to filter
       return [arr.filter(function (x) {
         return x[0] >= t1 && x[0] <= t2;
-      })];
+      }), 0];
     }
   },
   // Fast filter (index-based)
@@ -6734,7 +6735,7 @@ function GridMaker(id, params, master_grid) {
     // Gets last y_range fn()
     var yrs = Object.values(lm).filter(function (x) {
       return x.y_range;
-    }); // The first y_range() determines the range 
+    }); // The first y_range() determines the range
 
     if (yrs.length) y_range_fn = yrs[0].y_range;
   } // Calc vertical ($/₿) range
@@ -7097,6 +7098,7 @@ function GridMaker(id, params, master_grid) {
     // a problem here ?
     self.$_mult = dollar_mult();
     self.ys = [];
+    if (!sub.length) return;
     var v = Math.abs(sub[sub.length - 1][1] || 1);
     var y1 = search_start_pos(v);
     var y2 = search_start_neg(-v);
@@ -9170,7 +9172,7 @@ var mouse_Mouse = /*#__PURE__*/function () {
 // Usuful stuff for creating overlays. Include as mixin
 
 /* harmony default export */ var mixins_overlay = ({
-  props: ['id', 'num', 'interval', 'cursor', 'colors', 'layout', 'sub', 'data', 'settings', 'grid_id', 'font', 'config', 'meta', 'tf'],
+  props: ['id', 'num', 'interval', 'cursor', 'colors', 'layout', 'sub', 'data', 'settings', 'grid_id', 'font', 'config', 'meta', 'tf', 'i0'],
   mounted: function mounted() {
     // TODO(1): when hot reloading, dynamicaly changed mixins
     // dissapear (cuz it's a hack), the only way for now
@@ -11938,6 +11940,7 @@ function Gridvue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len == nul
               type: d.type,
               data: d.data,
               settings: d.settings,
+              i0: d.i0,
               tf: d.tf
             });
             count[d.type] = 0;
@@ -11957,6 +11960,7 @@ function Gridvue_type_script_lang_js_arrayLikeToArray(arr, len) { if (len == nul
             type: x.type,
             data: x.data,
             settings: x.settings,
+            i0: x.i0,
             tf: x.tf,
             num: i,
             grid_id: _this5.$props.grid_id,
@@ -14288,13 +14292,15 @@ var ti_mapping_TI = /*#__PURE__*/function () {
       var _this2 = this;
 
       return source.map(function (d) {
+        var res = utils.fast_filter(d.data, _this2.ti_map.i2t_mode(_this2.range[0] - _this2.interval, d.indexSrc), _this2.ti_map.i2t_mode(_this2.range[1], d.indexSrc));
         return {
           type: d.type,
           name: d.name,
-          data: _this2.ti_map.parse(utils.fast_filter(d.data, _this2.ti_map.i2t_mode(_this2.range[0] - _this2.interval, d.indexSrc), _this2.ti_map.i2t_mode(_this2.range[1], d.indexSrc))[0] || [], d.indexSrc || 'map'),
+          data: _this2.ti_map.parse(res[0] || [], d.indexSrc || 'map'),
           settings: d.settings || _this2.settings_ov,
           grid: d.grid || {},
           tf: utils.parse_tf(d.tf),
+          i0: res[1],
           loading: d.loading
         };
       });
@@ -14383,6 +14389,7 @@ var ti_mapping_TI = /*#__PURE__*/function () {
         type: this.chart.type || 'Candles',
         main: true,
         data: this.sub,
+        i0: this.sub_start,
         settings: this.chart.settings || this.settings_ohlcv,
         grid: this.chart.grid || {}
       });
