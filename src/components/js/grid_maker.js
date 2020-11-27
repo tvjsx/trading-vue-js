@@ -26,7 +26,7 @@ function GridMaker(id, params, master_grid = null) {
     if (lm && Object.keys(lm).length) {
         // Gets last y_range fn()
         let yrs = Object.values(lm).filter(x => x.y_range)
-        // The first y_range() determines the range 
+        // The first y_range() determines the range
         if (yrs.length) y_range_fn = yrs[0].y_range
     }
 
@@ -387,6 +387,8 @@ function GridMaker(id, params, master_grid = null) {
         // a problem here ?
         self.$_mult = dollar_mult()
         self.ys = []
+
+        if (!sub.length) return
 
         let v = Math.abs(sub[sub.length - 1][1] || 1)
         let y1 = search_start_pos(v)
