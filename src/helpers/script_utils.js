@@ -187,6 +187,17 @@ export function size_of(object) {
     return bytes
 }
 
+// Update onchart/offchart
+export function update(data, val) {
+    const i = data.length - 1
+    const last = data[i]
+    if (!last || val[0] > last[0]) {
+        data.push(val)
+    } else {
+        data[i] = val
+    }
+}
+
 export function now() {
     return (new Date()).getTime()
 }
