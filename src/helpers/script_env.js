@@ -110,7 +110,7 @@ export default class ScriptEnv {
             } else {
                 val = src.props[k].def
             }
-            props += `var ${k} = ${val}\n`
+            props += `var ${k} = ${JSON.stringify(val)}\n`
         }
         // TODO: add argument values to _id
 

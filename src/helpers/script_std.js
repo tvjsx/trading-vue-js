@@ -1022,7 +1022,6 @@ export default class ScriptStd {
                 } else {
                     sym.data_type = ARR
                 }
-
                 break
             case 'number':
                 sym = new Sym(null, y)
@@ -1036,6 +1035,7 @@ export default class ScriptStd {
         }
 
         this.env.syms[id] = sym
+        if (!sym.main) sym.update(x)
         return sym
     }
 
