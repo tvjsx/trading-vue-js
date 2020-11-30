@@ -1,7 +1,7 @@
 <template>
 <div>
     <trading-vue :data="chart" :width="this.width" :height="this.height"
-            ref="tv" skin="Alps" 
+            ref="tv" skin="Alps"
             :toolbar="true" :overlays="overlays"
             :extensions="extensions"
             @data-len-changed="on_data"
@@ -97,7 +97,7 @@ export default {
                     name: 'Calculations',
                     type: 'DatasetCalc',
                     data: [],
-                    settings: { k: parseInt(this.wk) }
+                    settings: { k: parseInt(this.wk || 1) }
                 }],
                 datasets: [{
                     // Using datasets to build candles & all indicators

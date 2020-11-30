@@ -6,6 +6,8 @@ import se from './script_engine.js'
 import TS from './script_ts.js'
 import Sampler from './sampler.js'
 
+const OHLCV = ['open', 'high', 'low', 'close', 'vol']
+
 const ARR = 0
 const TSS = 1
 const NUM = 2
@@ -24,18 +26,36 @@ export default class Sym {
         this.data_type = ARR
         this.main = !!params.main
         this.idx = this.data_idx()
+        this.tmap = {}
 
         this.tf = this.tf || se.tf
         if (this.main) this.tf = se.tf
 
+        // Create a bunch of OHLCV samplers for
+        // sparse data
         if (this.aggtype === 'ohlcv') {
-            for (var id of ['open', 'high', 'low', 'close', 'vol']) {
+            for (var id of OHLCV) {
                 this[id] = TS(`${this.id}_${id}`, [])
                 this[id].__fn__ = Sampler(id).bind(this[id])
                 this[id].__tf__ = this.tf
             }
         }
 
+        // Create regular TSs & just feed them with a
+        // data points from the dataset
+        // TODO: different TS configurations depending
+        // on this.format
+        if (this.aggtype === 'copy') {
+            for (var id of OHLCV) {
+                this[id] = TS(`${this.id}_${id}`, [])
+                this[id].__tf__ = this.tf
+            }
+            for (var i = 0; i < this.data.length; i++) {
+                this.tmap[this.data[i][0]] = i
+            }
+        }
+        // Custom agg function (value calculated for the
+        // current window)
         if (typeof this.aggtype === 'function') {
             this.close = TS(`${this.id}_close`, [])
             this.close.__fn__ = this.aggtype
@@ -66,6 +86,8 @@ export default class Sym {
     update(x, t) {
         if(this.aggtype === 'ohlcv') {
             return this.update_ohlcv(x, t)
+        } else if (this.aggtype === 'copy') {
+            return this.update_copy(x, t)
         } else if (typeof this.aggtype === 'function') {
             return this.update_custom(x, t)
         }
@@ -118,6 +140,41 @@ export default class Sym {
                 break
         }
         return true
+    }
+
+    update_copy(x, t) {
+
+        t = t || se.t
+
+        // Assuming that we got an ohlcv dataset
+        let i = this.tmap[t]
+        let s = this.data[i]
+
+        let ts0 = this.__t0__
+        if (!ts0 || t >= ts0 + this.tf) {
+            for (var k = 0; k < 5; k++) {
+                let tsn = OHLCV[k]
+                this[tsn].unshift(undefined)
+            }
+            this.__t0__ = t - t % this.tf
+            let last = this.data.length - 1
+            if (this.__t0__ === this.data[last][0]) {
+                this.tmap[this.__t0__] = last
+                s = this.data[last]
+            }
+        }
+
+        if (s) {
+            for (var k = 0; k < 5; k++) {
+                let tsn = OHLCV[k]
+                this[tsn][0] = s[k + 1]
+            }
+        } else if (this.fillgaps) {
+            for (var k = 0; k < 5; k++) {
+                let tsn = OHLCV[k]
+                this[tsn][0] = this.close[1]
+            }
+        }
     }
 
     update_custom(x, t) {

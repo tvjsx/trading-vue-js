@@ -312,3 +312,7 @@ export default class Main {
 
 }
 ```
+
+## Useful tips
+
+The chart layout can be accesed through `tv.$refs.chart._layout`
