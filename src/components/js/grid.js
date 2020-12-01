@@ -129,14 +129,13 @@ export default class Grid {
             x: event.layerX,
             y: event.layerY + this.layout.offset
         })
-        // TODO: Temp solution, need to implement
-        // a proper way to get the chart el offset
-        this.offset_x = event.layerX - event.pageX
-            + window.scrollX
-        this.offset_y = event.layerY - event.pageY
-            + this.layout.offset
-            + window.scrollY
 
+        let rect = this.canvas.getBoundingClientRect()
+        this.offset_x = -rect.x//event.layerX - event.pageX
+            //+ window.scrollX
+        this.offset_y = -rect.y//event.layerY - event.pageY
+            //+ this.layout.offset
+            //+ window.scrollY
         this.propagate('mousemove', event)
     }
 
