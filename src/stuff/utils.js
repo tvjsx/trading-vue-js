@@ -293,6 +293,22 @@ export default {
             return true
         }
         return false
+    },
+
+    // Format names such 'RSI, $length', where
+    // length - is one of the settings
+    format_name(ov) {
+        if (!ov.name) return undefined
+
+        let name = ov.name
+
+        for (var k in ov.settings || {}) {
+            let val = ov.settings[k]
+            let reg = new RegExp(`\\$${k}`, 'g')
+            name = name.replace(reg, val)
+        }
+
+        return name
     }
 
 }

@@ -180,7 +180,7 @@ export default {
                 )
                 return {
                     type: d.type,
-                    name: d.name,
+                    name: Utils.format_name(d),
                     data: this.ti_map.parse(res[0] || [], d.indexSrc || 'map'),
                     settings: d.settings || this.settings_ov,
                     grid: d.grid || {},
