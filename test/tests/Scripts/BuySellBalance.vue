@@ -96,14 +96,17 @@ export default {
                     trades: { type: 'Trades' }
                 },
                 update: `
-                    let balance = sym(trades, { aggtype: arr => {
-                        var buys = 0, sells = 0
-                        arr.forEach(x => {
-                            if (x[1]) buys += x[2]
-                            else sells += x[2]
-                        })
-                        return nf(buys / (buys + sells))
-                    }})
+                    let balance = sym(trades, {
+                        aggtype: arr => {
+                            var buys = 0, sells = 0
+                            arr.forEach(x => {
+                                if (x[1]) buys += x[2]
+                                else sells += x[2]
+                            })
+                            return nf(buys / (buys + sells))
+                        },
+                        window: lookback * tf
+                    })
                     return balance.close
                 `
             }
