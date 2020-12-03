@@ -1,5 +1,5 @@
 /*!
- * TradingVue.JS - v0.10.0-alpha - Mon Nov 30 2020
+ * TradingVue.JS - v0.10.0-alpha - Thu Dec 03 2020
  *     https://github.com/tvjsx/trading-vue-js
  *     Copyright (c) 2019 C451 Code's All Right;
  *     Licensed under the MIT license
@@ -6489,6 +6489,20 @@ var lib_default = /*#__PURE__*/__webpack_require__.n(lib);
     }
 
     return false;
+  },
+  // Format names such 'RSI, $length', where
+  // length - is one of the settings
+  format_name: function format_name(ov) {
+    if (!ov.name) return undefined;
+    var name = ov.name;
+
+    for (var k in ov.settings || {}) {
+      var val = ov.settings[k];
+      var reg = new RegExp("\\$".concat(k), 'g');
+      name = name.replace(reg, val);
+    }
+
+    return name;
   }
 });
 // CONCATENATED MODULE: ./src/stuff/math.js
@@ -7821,11 +7835,15 @@ var grid_Grid = /*#__PURE__*/function () {
         grid_id: this.id,
         x: event.layerX,
         y: event.layerY + this.layout.offset
-      }); // TODO: Temp solution, need to implement
-      // a proper way to get the chart el offset
+      });
+      var rect = this.canvas.getBoundingClientRect();
+      this.offset_x = -rect.x; //event.layerX - event.pageX
+      //+ window.scrollX
 
-      this.offset_x = event.layerX - event.pageX + window.scrollX;
-      this.offset_y = event.layerY - event.pageY + this.layout.offset + window.scrollY;
+      this.offset_y = -rect.y; //event.layerY - event.pageY
+      //+ this.layout.offset
+      //+ window.scrollY
+
       this.propagate('mousemove', event);
     }
   }, {
@@ -9265,6 +9283,8 @@ var mouse_Mouse = /*#__PURE__*/function () {
         args: args
       });
     },
+    // TODO: the event is not firing when the same
+    // overlay type is added to the offchart[]
     exec_script: function exec_script() {
       if (this.calc) this.$emit('exec-script', {
         grid_id: this.$props.grid_id,
@@ -14294,7 +14314,7 @@ var ti_mapping_TI = /*#__PURE__*/function () {
         var res = utils.fast_filter(d.data, _this2.ti_map.i2t_mode(_this2.range[0] - _this2.interval, d.indexSrc), _this2.ti_map.i2t_mode(_this2.range[1], d.indexSrc));
         return {
           type: d.type,
-          name: d.name,
+          name: utils.format_name(d),
           data: _this2.ti_map.parse(res[0] || [], d.indexSrc || 'map'),
           settings: d.settings || _this2.settings_ov,
           grid: d.grid || {},
@@ -17031,26 +17051,7 @@ var dc_events_DCEvents = /*#__PURE__*/function () {
     key: "exec_all_scripts",
     value: function exec_all_scripts() {
       if (!this.sett.scripts) return;
-      var skrr = dc.get('.').filter(function (x) {
-        return x.settings.$props;
-      });
-
-      var _iterator5 = dc_events_createForOfIteratorHelper(skrr),
-          _step5;
-
-      try {
-        for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
-          var s = _step5.value;
-          this.merge("".concat(s.id), {
-            loading: true
-          });
-        }
-      } catch (err) {
-        _iterator5.e(err);
-      } finally {
-        _iterator5.f();
-      }
-
+      this.set_loading(true);
       var tf = this.tv.$refs.chart.interval_ms || this.data.chart.tf;
       var range = this.tv.getRange();
       this.ww.just('exec-all-scripts', {
@@ -17111,9 +17112,30 @@ var dc_events_DCEvents = /*#__PURE__*/function () {
         ohlcv: main
       });
       this.ww._data_uploading = true;
-      this.merge('.', {
-        loading: true
+      this.set_loading(true);
+    }
+  }, {
+    key: "set_loading",
+    value: function set_loading(flag) {
+      var skrr = dc.get('.').filter(function (x) {
+        return x.settings.$props;
       });
+
+      var _iterator5 = dc_events_createForOfIteratorHelper(skrr),
+          _step5;
+
+      try {
+        for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
+          var s = _step5.value;
+          this.merge("".concat(s.id), {
+            loading: flag
+          });
+        }
+      } catch (err) {
+        _iterator5.e(err);
+      } finally {
+        _iterator5.f();
+      }
     }
   }, {
     key: "send_meta_2_ww",

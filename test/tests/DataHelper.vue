@@ -56,7 +56,7 @@ export default {
                 }],
                 offchart: [{
                     type: 'BuySellBalance',
-                    name: 'Buy/Sell Balance',
+                    name: 'Buy/Sell Balance, $lookback',
                     data: [],
                     settings: {}
                 }],

@@ -105,6 +105,8 @@ export default {
             if (event === 'custom-event') return
             this._$emit('custom-event', {event, args})
         },
+        // TODO: the event is not firing when the same
+        // overlay type is added to the offchart[]
         exec_script() {
             if (this.calc) this.$emit('exec-script', {
                 grid_id: this.$props.grid_id,

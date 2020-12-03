@@ -221,10 +221,7 @@ export default class DCEvents {
 
     exec_all_scripts() {
         if (!this.sett.scripts) return
-        let skrr = dc.get('.').filter(x => x.settings.$props)
-        for (var s of skrr) {
-            this.merge(`${s.id}`, { loading: true })
-        }
+        this.set_loading(true)
         let tf = this.tv.$refs.chart.interval_ms ||
                  this.data.chart.tf
         let range = this.tv.getRange()
@@ -278,7 +275,14 @@ export default class DCEvents {
         this.send_meta_2_ww()
         this.ww.just('upload-data', { ohlcv: main })
         this.ww._data_uploading = true
-        this.merge('.', { loading: true })
+        this.set_loading(true)
+    }
+
+    set_loading(flag) {
+        let skrr = dc.get('.').filter(x => x.settings.$props)
+        for (var s of skrr) {
+            this.merge(`${s.id}`, { loading: flag })
+        }
     }
 
     send_meta_2_ww() {
