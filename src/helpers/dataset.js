@@ -1,6 +1,8 @@
 
 // Dataset proxy between vuejs & WebWorker
 
+import { now } from './script_utils.js'
+
 export default class Dataset {
 
     constructor(dc, desc) {
@@ -37,7 +39,7 @@ export default class Dataset {
         for (var id of nids) {
             if (!pids.includes(id)) {
                 let ds = n.filter(x => x.id === id)[0]
-                this.dss = new Dataset(this, ds)
+                this.dss[id] = new Dataset(this, ds)
             }
         }
 
@@ -132,6 +134,7 @@ export default class Dataset {
 export class DatasetWW {
 
     constructor(id, data) {
+        this.last_upd = now()
         this.id = id
         if (Array.isArray(data)) {
             // Regular array
@@ -160,6 +163,7 @@ export class DatasetWW {
                     arr.push(dp)
                 }
             }
+            se.data[id].last_upd = now()
         }
     }
 
@@ -178,15 +182,19 @@ export class DatasetWW {
 
     // On dataset operation
     op(se, op) {
+        this.last_upd = now()
         switch(op.type) {
             case 'set':
                 this.data = op.data
+                se.recalc_size()
                 break
             case 'del':
                 delete se.data[this.id]
+                se.recalc_size()
                 break
             case 'mrg':
                 this.merge(op.data)
+                se.recalc_size()
                 break
         }
     }

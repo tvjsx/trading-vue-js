@@ -28,6 +28,7 @@ export default class Grid {
         this.offset_x = 0
         this.offset_y = 0
         this.deltas = 0 // Wheel delta events
+        this.wmode = this.$p.config.SCROLL_WHEEL
 
         this.listeners()
         this.overlays = []
@@ -128,14 +129,13 @@ export default class Grid {
             x: event.layerX,
             y: event.layerY + this.layout.offset
         })
-        // TODO: Temp solution, need to implement
-        // a proper way to get the chart el offset
-        this.offset_x = event.layerX - event.pageX
-            + window.scrollX
-        this.offset_y = event.layerY - event.pageY
-            + this.layout.offset
-            + window.scrollY
 
+        let rect = this.canvas.getBoundingClientRect()
+        this.offset_x = -rect.x//event.layerX - event.pageX
+            //+ window.scrollX
+        this.offset_y = -rect.y//event.layerY - event.pageY
+            //+ this.layout.offset
+            //+ window.scrollY
         this.propagate('mousemove', event)
     }
 
@@ -192,9 +192,9 @@ export default class Grid {
         if (!this.layout) return
 
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
-        this.grid()
-
         if (this.$p.shaders.length) this.apply_shaders()
+
+        this.grid()
 
         let overlays = []
         overlays.push(...this.overlays)
@@ -275,8 +275,13 @@ export default class Grid {
 
     mousezoom(delta, event) {
 
-        event.originalEvent.preventDefault()
-        event.preventDefault()
+        if (this.wmode !== 'pass') {
+            if (this.wmode === 'click' && !this.$p.meta.activated) {
+                return
+            }
+            event.originalEvent.preventDefault()
+            event.preventDefault()
+        }
 
         event.deltaX = event.deltaX || Utils.get_deltaX(event)
         event.deltaY = event.deltaY || Utils.get_deltaY(event)

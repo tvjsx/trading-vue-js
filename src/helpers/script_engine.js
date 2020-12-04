@@ -241,6 +241,7 @@ class ScriptEngine {
             last_perf: this.perf,
             iter: this.iter,
             last_t: this.t,
+            data_size: this.data_size,
             running: false
         })
     }
@@ -528,6 +529,32 @@ class ScriptEngine {
                 sym.close[0],
                 sym.vol[0]
             ])
+        }
+    }
+
+    // Calculate data size
+    recalc_size() {
+        while(true) {
+            var sz = u.size_of_dss(this.data) / (1024 * 1024)
+            let lim = this.sett.ww_ram_limit
+            if (lim && sz > lim) {
+                this.limit_size()
+            } else break
+        }
+        this.data_size = +sz.toFixed(2)
+        this.send_state()
+    }
+
+    // Limit data size by throwing out the least
+    // active datasets (measured by 'last_upd')
+    limit_size() {
+        let dss = Object.values(this.data).map(x => ({
+            id: x.id,
+            t: x.last_upd
+        }))
+        dss.sort((a, b) => a.t - b.t)
+        if (dss.length) {
+            delete this.data[dss[0].id]
         }
     }
 }

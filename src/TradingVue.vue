@@ -2,9 +2,10 @@
 <template>
     <!-- Main component  -->
     <div class="trading-vue" v-bind:id="id"
+        @mousedown="mousedown" @mouseleave="mouseleave"
          :style="{
             color: this.chart_props.colors.text,
-            font: this.font,
+            font: this.font_comp,
             width: this.width+'px',
             height: this.height+'px'}">
         <toolbar v-if="toolbar"
@@ -189,7 +190,7 @@ export default {
                 data: this.decubed,
                 width: this.$props.width - offset,
                 height: this.$props.height,
-                font: this.$props.font,
+                font: this.font_comp,
                 buttons: this.$props.legendButtons,
                 toolbar: this.$props.toolbar,
                 ib: this.$props.indexBased || this.index_based || false,
@@ -198,6 +199,7 @@ export default {
                 skin: this.skin_proto,
                 timezone: this.$props.timezone
             }
+
             this.parse_colors(chart_props.colors)
             return chart_props
         },
@@ -233,6 +235,10 @@ export default {
                 arr.push(...Object.values(x.overlays))
             }
             return arr
+        },
+        font_comp() {
+            return this.skin_proto && this.skin_proto.font ?
+                this.skin_proto.font : this.font
         }
     },
     data() {
@@ -320,19 +326,14 @@ export default {
             this.custom_event(
                 {event: 'range-changed', args: [r]}
             )
+            if (this.onrange) this.onrange(r)
         },
         set_loader(dc) {
-            const self = this
-            this.$refs.chart.$off('range-changed')
-            if (dc) this.$refs.chart.$on('range-changed', r => {
-                let tf = this.$refs.chart.interval
-                if (self.chart_props.ib) {
-                    const ti_map = this.$refs.chart.ti_map
-                    r = r.map(x => ti_map.i2t(x))
-                    tf = this.$refs.chart.interval_ms
-                }
+            this.onrange = r => {
+                let pf = this.chart_props.ib ? '_ms' : ''
+                let tf = this.$refs.chart['interval' + pf]
                 dc.range_changed(r, tf)
-            })
+            }
         },
         parse_colors(colors) {
             for (var k in this.$props) {
@@ -343,6 +344,12 @@ export default {
                     colors[k2] = this.$props[k]
                 }
             }
+        },
+        mousedown() {
+            this.$refs.chart.activated = true
+        },
+        mouseleave() {
+            this.$refs.chart.activated = false
         }
     }
 }

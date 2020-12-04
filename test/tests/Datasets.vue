@@ -97,7 +97,7 @@ export default {
                     name: 'Calculations',
                     type: 'DatasetCalc',
                     data: [],
-                    settings: { k: parseInt(this.wk) }
+                    settings: { k: parseInt(this.wk || 1) }
                 }],
                 datasets: [{
                     // Using datasets to build candles & all indicators

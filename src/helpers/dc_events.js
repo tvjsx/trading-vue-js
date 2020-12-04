@@ -108,7 +108,8 @@ export default class DCEvents {
             let arr = prev.filter(x => x.v === n.v)
             if (!arr.length && n.p.settings.$props) {
                 let id = n.p.settings.$uuid
-                if (Utils.is_scr_props_upd(n, prev)) {
+                if (Utils.is_scr_props_upd(n, prev) &&
+                    Utils.delayed_exec(n.p)) {
                     delta[id] = n.v
                     changed = true
                     this.tv.$set(n.p, 'loading', true)
@@ -116,7 +117,7 @@ export default class DCEvents {
             }
         }
 
-        if (changed) {
+        if (changed && Object.keys(delta).length) {
             let tf = this.tv.$refs.chart.interval_ms ||
                      this.data.chart.tf
             let range = this.tv.getRange()
@@ -220,10 +221,7 @@ export default class DCEvents {
 
     exec_all_scripts() {
         if (!this.sett.scripts) return
-        let skrr = dc.get('.').filter(x => x.settings.$props)
-        for (var s of skrr) {
-            this.merge(`${s.id}`, { loading: true })
-        }
+        this.set_loading(true)
         let tf = this.tv.$refs.chart.interval_ms ||
                  this.data.chart.tf
         let range = this.tv.getRange()
@@ -233,18 +231,18 @@ export default class DCEvents {
     scripts_onrange(r) {
         if (!this.sett.scripts) return
         let delta = {}
-        let update = false
 
         this.get('.').forEach(v => {
             if (v.script && v.script.execOnRange &&
                 v.settings.$uuid) {
-                delta[v.settings.$uuid] = v.settings
-                update = Utils.delayed_exec(v)
                 // TODO: execInterrupt flag?
+                if (Utils.delayed_exec(v)) {
+                    delta[v.settings.$uuid] = v.settings
+                }
             }
         })
 
-        if (update) {
+        if (Object.keys(delta).length) {
             let tf = this.tv.$refs.chart.interval_ms ||
                      this.data.chart.tf
             let range = this.tv.getRange()
@@ -262,7 +260,7 @@ export default class DCEvents {
                 if (typeof obj[k] === 'object') {
                     this.merge(`${upd.uuid}.${k}`, upd.fields[k])
                 } else {
-                    this.tv.$set(obj, k, upd.fileds[k])
+                    this.tv.$set(obj, k, upd.fields[k])
                 }
             }
         }
@@ -277,7 +275,14 @@ export default class DCEvents {
         this.send_meta_2_ww()
         this.ww.just('upload-data', { ohlcv: main })
         this.ww._data_uploading = true
-        this.merge('.', { loading: true })
+        this.set_loading(true)
+    }
+
+    set_loading(flag) {
+        let skrr = dc.get('.').filter(x => x.settings.$props)
+        for (var s of skrr) {
+            this.merge(`${s.id}`, { loading: flag })
+        }
     }
 
     send_meta_2_ww() {

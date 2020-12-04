@@ -150,3 +150,54 @@ export function nextt(data, t, ti = 0) {
     return t < data[mid][ti] ? mid : mid + 1
 
 }
+
+// Estimated size of datasets
+export function size_of_dss(data) {
+    let bytes = 0
+    for (var id in data) {
+        if (data[id].data && data[id].data[0]) {
+            let s0 = size_of(data[id].data[0])
+            bytes += s0 * data[id].data.length
+        }
+    }
+    return bytes
+}
+
+
+// Used to measure the size of dataset
+export function size_of(object) {
+    var list = [], stack = [object], bytes = 0
+    while (stack.length) {
+        var value = stack.pop()
+        var type = typeof value
+        if (type === 'boolean') {
+            bytes += 4
+        } else if (type === 'string') {
+            bytes += value.length * 2
+        } else if (type === 'number') {
+            bytes += 8
+        } else if (type === 'object' &&
+            list.indexOf(value) === -1) {
+            list.push(value)
+            for(var i in value) {
+                stack.push(value[i])
+            }
+        }
+    }
+    return bytes
+}
+
+// Update onchart/offchart
+export function update(data, val) {
+    const i = data.length - 1
+    const last = data[i]
+    if (!last || val[0] > last[0]) {
+        data.push(val)
+    } else {
+        data[i] = val
+    }
+}
+
+export function now() {
+    return (new Date()).getTime()
+}

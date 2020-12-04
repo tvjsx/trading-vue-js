@@ -1,5 +1,6 @@
 <script>
 // Line drawing tool
+// TODO: make an angle-snap when "Shift" is pressed
 
 import Overlay from '../../mixins/overlay.js'
 import Tool from '../../mixins/tool.js'
@@ -7,13 +8,14 @@ import Icons from '../../stuff/icons.json'
 import Pin from '../primitives/pin.js'
 import Seg from '../primitives/seg.js'
 import Line from '../primitives/line.js'
+import Ray from '../primitives/ray.js'
 
 export default {
     name: 'LineTool',
     mixins: [Overlay, Tool],
     methods: {
         meta_info() {
-            return { author: 'C451', version: '1.0.0' }
+            return { author: 'C451', version: '1.1.0' }
         },
         tool() {
             return {
@@ -29,6 +31,11 @@ export default {
                         // Rewrites the default setting fields
                         settings: { extended: true },
                         icon: Icons['extended.png']
+                    },
+                    'Ray': {
+                        // Rewrites the default setting fields
+                        settings: { ray: true },
+                        icon: Icons['ray.png']
                     }
                 }
             }
@@ -55,7 +62,9 @@ export default {
             ctx.strokeStyle = this.color
             ctx.beginPath()
 
-            if (this.sett.extended) {
+            if (this.sett.ray) {
+                new Ray(this, ctx).draw(this.p1, this.p2)
+            } else if (this.sett.extended) {
                 new Line(this, ctx).draw(this.p1, this.p2)
             } else {
                 new Seg(this, ctx).draw(this.p1, this.p2)

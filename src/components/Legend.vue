@@ -18,6 +18,7 @@
         <span class="t-vue-iname">{{ind.name}}</span>
         <button-group
             v-bind:buttons="common.buttons"
+            v-bind:config="common.config"
             v-bind:ov_id="ind.id"
             v-bind:grid_id="grid_id"
             v-bind:index="ind.index"
@@ -161,6 +162,7 @@ export default {
     margin-left: 10px;
     pointer-events: none;
     text-align: left;
+    user-select: none;
 }
 .trading-vue-ohlcv {
     pointer-events: none;

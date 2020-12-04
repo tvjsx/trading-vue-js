@@ -3,9 +3,10 @@
 export default {
     mounted() {
         this.ctrllist()
+        this.skin_styles()
     },
     methods: {
-        // Build / rebuild component list 
+        // Build / rebuild component list
         ctrllist() {
             this.ctrl_destroy()
             this.controllers = []
@@ -44,6 +45,20 @@ export default {
             for (var ctrl of this.controllers) {
                 if (ctrl.destroy) ctrl.destroy()
             }
+        },
+        skin_styles() {
+            let id = 'tvjs-skin-styles'
+            let stbr = document.getElementById(id)
+            if (stbr) {
+                let parent = stbr.parentNode
+                parent.removeChild(stbr)
+            }
+            if (this.skin_proto && this.skin_proto.styles) {
+                let sheet = document.createElement('style')
+                sheet.setAttribute("id", id)
+                sheet.innerHTML = this.skin_proto.styles
+                this.$el.appendChild(sheet)
+            }
         }
     },
     computed: {
@@ -81,6 +96,7 @@ export default {
         // to fix the actual reactivity problem
         skin(n, p) {
             if (n !== p) this.resetChart()
+            this.skin_styles()
         },
         extensions() {
             this.ctrllist()

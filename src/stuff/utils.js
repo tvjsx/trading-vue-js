@@ -126,13 +126,14 @@ export default {
         try {
             let ia = new IndexedArray(arr, "0")
             let res = ia.getRange(t1, t2)
-            return [res]
+            let i0 = ia.valpos[t1].next
+            return [res, i0]
         } catch(e) {
             // Something wrong with fancy slice lib
             // Fast fix: fallback to filter
             return [arr.filter(x =>
                 x[0] >= t1 && x[0] <= t2
-            )]
+            ), 0]
         }
     },
 
@@ -282,7 +283,8 @@ export default {
     // Checks if it's time to make a script update
     // (based on execInterval in ms)
     delayed_exec(v) {
-        if (!v.script.execInterval) return true
+        if (!v.script || !v.script.execInterval)
+            return true
         let t = this.now()
         let dt = v.script.execInterval
         if (!v.settings.$last_exec ||
@@ -291,6 +293,22 @@ export default {
             return true
         }
         return false
+    },
+
+    // Format names such 'RSI, $length', where
+    // length - is one of the settings
+    format_name(ov) {
+        if (!ov.name) return undefined
+
+        let name = ov.name
+
+        for (var k in ov.settings || {}) {
+            let val = ov.settings[k]
+            let reg = new RegExp(`\\$${k}`, 'g')
+            name = name.replace(reg, val)
+        }
+
+        return name
     }
 
 }

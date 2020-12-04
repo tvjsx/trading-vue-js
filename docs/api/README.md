@@ -1,6 +1,6 @@
 # API Book
 
-This guide version is **0.8.0**
+This guide version is **0.9.0**
 
 ![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=Current%20lib%20version)
 
@@ -52,7 +52,16 @@ This guide version is **0.8.0**
 |---|---|---|---|---|---|
 |![](assets/README-0487d08a.png)|![](assets/README-6ce736c2.png)|![](assets/README-cbe4028c.png)|![](assets/README-bc4359ae.png)|![](assets/README-ed2c9def.png)| ![](assets/README-b0d2d797.png)|
 
-## Methods
+Pass the following object to define a custom button:
+
+```js
+{
+    name: '<button-id>',
+    icon: '<Icon>' // Base64 URL
+}
+```
+
+# Methods
 
 ### resetChart(...)
 
@@ -164,7 +173,7 @@ Can be emitted from overlay or **trading-vue** itself. Propagates all the way up
 ```
 register-tools, tool-selected, grid-mousedown, drawing-mode-off, change-settings,
 scroll-lock, object-selected, remove-tool, before-destroy, new-shader, remove-shaders,
-remove-layer-meta
+remove-layer-meta, data-len-changed
 ```
 
 *Example:*
@@ -201,7 +210,8 @@ IMPORTANT: All data must be sorted by time (in ascending order). The main OHLCV 
         "tf": <Number|'1s'...'1Y'>, // Forced timeframe
         "grid": { // Grid settings (optional)
             "logScale": <true|false>,
-            "height": <Number> // Grid height (weight)
+            "height": <Number>, // Grid height (weight)
+            "id": // New grid id (merge w/another, offchart only)
         }
         "settings": { } // Settings (depending on "type")
     },
@@ -217,7 +227,8 @@ IMPORTANT: All data must be sorted by time (in ascending order). The main OHLCV 
             "grid": { }, // The same as in "chart",
             "tf": <Number|'1s'...'1Y'>, // Forced timeframe
             "loading": <true|false>, // Show loading animation
-            "script": { } // See 'script settings'
+            "script": { } // See 'script settings',
+            "scripts": <true|false> // Enable/disable scripts
         },
         ...
     ],

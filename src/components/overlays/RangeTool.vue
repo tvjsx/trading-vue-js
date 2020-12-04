@@ -25,13 +25,13 @@ export default {
                 mods: {
                     'Time': {
                         // Rewrites the default setting fields
-                        settings: { price: false, time: true },
-                        hidden: true
+                        icon: Icons['time_range.png'],
+                        settings: { price: false, time: true }
                     },
                     'PriceTime': {
                         // Rewrites the default setting fields
-                        settings: { price: true, time: true },
-                        hidden: true
+                        icon: Icons['price_time.png'],
+                        settings: { price: true, time: true }
                     },
                     'ShiftMode': {
                         // Rewrites the default setting fields

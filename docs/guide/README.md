@@ -1,8 +1,11 @@
 # Getting Started
 
-This guide's version is **0.8.0**
+This guide's version is **0.9.0**
 
 ![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=Current%20lib%20version)
+
+## Scripts Guide is [here](https://github.com/tvjsx/trading-vue-js/blob/master/docs/guide/SCRIPTS.md)
+## Extensions Guide is [there](https://github.com/tvjsx/trading-vue-js/blob/master/docs/guide/EXTENSIONS.md)
 
 **TradingVue.js** is a hackable charting lib for traders, highly inspired by UX of TradingView.com. It allows you to create custom indicators and even new types of charts.
 

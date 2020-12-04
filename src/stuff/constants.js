@@ -38,6 +38,7 @@ const ChartConfig = {
     TB_ICON: 25,     // Toolbar icon size px
     TB_ITEM_M: 6,    // Toolbar item margin px
     TB_ICON_BRI: 1,  // Toolbar icon brightness
+    TB_ICON_HOLD: 420, // ms, wait to expand
     TB_BORDER: 1,    // Toolbar border px
     TB_B_STYLE: 'dotted', // Toolbar border style
     TOOL_COLL: 7,    // Tool collision threshold
@@ -54,6 +55,9 @@ const ChartConfig = {
     VOLSCALE: 0.15,  // %/100 of height
     UX_OPACITY: 0.9, // Ux background opacity
     ZOOM_MODE: 'tv', // 'tv' or 'tl'
+    L_BTN_SIZE: 21,  // Legend Button size, px
+    L_BTN_MARGIN: '-6px 0 -6px 0', // css margin
+    SCROLL_WHEEL: 'prevent', // 'pass', 'click'
 }
 
 ChartConfig.FONT =

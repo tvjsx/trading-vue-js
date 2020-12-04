@@ -7,7 +7,7 @@ export default {
     props: [
         'id', 'num', 'interval', 'cursor', 'colors',
         'layout', 'sub', 'data', 'settings', 'grid_id',
-        'font', 'config', 'meta', 'tf'
+        'font', 'config', 'meta', 'tf', 'i0'
     ],
     mounted() {
         // TODO(1): when hot reloading, dynamicaly changed mixins
@@ -105,6 +105,8 @@ export default {
             if (event === 'custom-event') return
             this._$emit('custom-event', {event, args})
         },
+        // TODO: the event is not firing when the same
+        // overlay type is added to the offchart[]
         exec_script() {
             if (this.calc) this.$emit('exec-script', {
                 grid_id: this.$props.grid_id,

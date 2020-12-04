@@ -6,6 +6,7 @@ import DayPack from './DayPack.json'
 import NightPack from './NightPack.json'
 import DaySkin from './DaySkin.js'
 import NightSkin from './NightSkin.js'
+Main.__name__ = 'skin-pack'
 
 const widgets = { }
 const components = {  }

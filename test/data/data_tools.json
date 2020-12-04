@@ -6676,6 +6676,12 @@
             "settings": {
                 "color": "#3186c4"
             }
+        },
+        {
+            "type": "LineTool:Ray",
+            "settings": {
+                "color": "#c43169"
+            }
         }
     ]
 }

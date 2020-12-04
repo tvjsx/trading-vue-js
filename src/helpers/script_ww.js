@@ -62,6 +62,7 @@ self.onmessage = async e => {
                 se.data[id] = new DatasetWW(id, data)
             }
 
+            se.recalc_size()
             data_requested = false
             se.exec_all()
 

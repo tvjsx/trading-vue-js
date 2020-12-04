@@ -170,20 +170,26 @@ export default {
             }
         },
         overlay_subset(source) {
-            return source.map(d => ({
-                type: d.type,
-                name: d.name,
-                data: this.ti_map.parse(Utils.fast_filter(
-                    d.data,
-                    this.ti_map.i2t_mode(this.range[0] - this.interval,
-                        d.indexSrc),
+            return source.map(d => {
+                let res = Utils.fast_filter(
+                    d.data, this.ti_map.i2t_mode(
+                        this.range[0] - this.interval,
+                        d.indexSrc
+                    ),
                     this.ti_map.i2t_mode(this.range[1], d.indexSrc)
-                )[0] || [], d.indexSrc || 'map'),
-                settings: d.settings || this.settings_ov,
-                grid: d.grid || {},
-                tf: Utils.parse_tf(d.tf),
-                loading: d.loading
-            }))
+                )
+                return {
+                    type: d.type,
+                    name: Utils.format_name(d),
+                    data: this.ti_map.parse(res[0] || [], d.indexSrc || 'map'),
+                    settings: d.settings || this.settings_ov,
+                    grid: d.grid || {},
+                    tf: Utils.parse_tf(d.tf),
+                    i0: res[1],
+                    loading: d.loading
+                }
+
+            })
         },
         section_props(i) {
             return i === 0 ?
@@ -256,6 +262,7 @@ export default {
                 type: this.chart.type || 'Candles',
                 main: true,
                 data: this.sub,
+                i0: this.sub_start,
                 settings: this.chart.settings || this.settings_ohlcv,
                 grid: this.chart.grid || {}
             })
@@ -302,7 +309,8 @@ export default {
         meta() {
             return {
                 last: this.last_candle,
-                sub_start: this.sub_start
+                sub_start: this.sub_start,
+                activated: this.activated
             }
         },
         forced_tf() {
@@ -344,7 +352,8 @@ export default {
 
             // Meta data
             last_candle: [],
-            sub_start: undefined
+            sub_start: undefined,
+            activated: false
 
         }
     },

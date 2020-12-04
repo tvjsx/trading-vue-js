@@ -8008,7 +8008,7 @@
     "offchart": [
         {
             "type": "ScriptOverlay",
-            "name": "Skrrr Exec",
+            "name": "EMA x $number",
             "data": [],
             "settings": {
                 "colors": ["#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4","#00bcd4"]

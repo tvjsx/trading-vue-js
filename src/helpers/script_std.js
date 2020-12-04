@@ -613,6 +613,7 @@ export default class ScriptStd {
 
     // Display data point on the main chart
     // TODO: optionally enable scripts for $synth ovs
+    // TODO: add indexBased option
     onchart(x, name, sett = {}, _id) {
         let off = 0
         name = name || u.get_fn_id('Onchart', _id)
@@ -630,19 +631,19 @@ export default class ScriptStd {
             sett.$synth = true
             sett.skipNaN = true
             let post = Array.isArray(x) ? 's': ''
-            this.env.onchart[name] = Object.assign({
+            this.env.onchart[name] = {
                 name: name,
                 type: type || 'Spline' + post,
                 data: [],
                 settings: sett,
                 scripts: false,
                 grid: sett.grid || {}
-            }, sett)
+            }
         }
         off *= se.tf
         let v = Array.isArray(x) ?
             [se.t + off, ...x] : [se.t + off, x]
-        this.env.onchart[name].data.push(v)
+        u.update(this.env.onchart[name].data, v)
     }
 
     // Create a new offchart overlay and put
@@ -664,19 +665,19 @@ export default class ScriptStd {
             sett.$synth = true
             sett.skipNaN = true
             let post = Array.isArray(x) ? 's': ''
-            this.env.offchart[name] = Object.assign({
+            this.env.offchart[name] = {
                 name: name,
                 type: type || 'Spline' + post,
                 data: [],
                 settings: sett,
                 scripts: false,
                 grid: sett.grid || {}
-            }, sett)
+            }
         }
         off *= se.tf
         let v = Array.isArray(x) ?
             [se.t + off, ...x] : [se.t + off, x]
-        this.env.offchart[name].data.push(v)
+        u.update(this.env.offchart[name].data, v)
     }
 
     // Returns true when the candle(<tf>) is being closed
@@ -688,6 +689,7 @@ export default class ScriptStd {
     // (can be called from init(), update() or post())
     settings(upd) {
         this.env.send_modify({ settings: upd })
+        Object.assign(this.env.src.sett, upd)
     }
 
     offset(src, num, _id) {
@@ -709,6 +711,10 @@ export default class ScriptStd {
     // percentile_nearest_rank
     nearestrank() {
         // TODO: this
+    }
+
+    now() {
+        return new Date().getTime()
     }
 
     percentrank() {
@@ -1016,7 +1022,6 @@ export default class ScriptStd {
                 } else {
                     sym.data_type = ARR
                 }
-
                 break
             case 'number':
                 sym = new Sym(null, y)
@@ -1030,6 +1035,7 @@ export default class ScriptStd {
         }
 
         this.env.syms[id] = sym
+        if (!sym.main) sym.update(x)
         return sym
     }
 

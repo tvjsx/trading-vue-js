@@ -102,10 +102,15 @@ export default class ScriptEnv {
         }
 
         let props = ``
-
         for (var k in src.props || {}) {
-            let val = JSON.stringify(src.props[k].val)
-            props += `var ${k} = ${val}\n`
+            if (src.props[k].val !== undefined) {
+                var val = src.props[k].val
+            } else if (this.src.sett[k] !== undefined) {
+                val = this.src.sett[k]
+            } else {
+                val = src.props[k].def
+            }
+            props += `var ${k} = ${JSON.stringify(val)}\n`
         }
         // TODO: add argument values to _id
 
