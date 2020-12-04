@@ -34,29 +34,29 @@ export default class DCCore extends DCEvents {
     init_data($root) {
 
         if (!('chart' in this.data)) {
-            this.tv.$set(this.data, 'chart', {
+            this.data.chart = {
                 type: 'Candles',
                 data: this.data.ohlcv || []
-            })
+            }
         }
 
         if (!('onchart' in this.data)) {
-            this.tv.$set(this.data, 'onchart', [])
+            this.data.onchart = []
         }
 
         if (!('offchart' in this.data)) {
-            this.tv.$set(this.data, 'offchart', [])
+            this.data.offchart = []
         }
 
         if (!this.data.chart.settings) {
-            this.tv.$set(this.data.chart,'settings', {})
+            this.data.chart.settings = {}
         }
 
         // Remove ohlcv cuz we have Data v1.1^
         delete this.data.ohlcv
 
         if (!('datasets' in this.data)) {
-            this.tv.$set(this.data, 'datasets', [])
+            this.data.datasets = []
         }
 
         // Init dataset proxies
@@ -128,7 +128,7 @@ export default class DCCore extends DCEvents {
             let i = count[ov.type]++
             ov.id = `onchart.${ov.type}${i}`
             if (!ov.name) ov.name = ov.type + ` ${i}`
-            if (!ov.settings) this.tv.$set(ov, 'settings', {})
+            if (!ov.settings) ov.settings = {}
 
             // grid_id,layer_id => DC id mapping
             this.gldc[`g0_${ov.type}_${i}`] = ov.id
@@ -144,7 +144,7 @@ export default class DCCore extends DCEvents {
             let i = count[ov.type]++
             ov.id = `offchart.${ov.type}${i}`
             if (!ov.name) ov.name = ov.type + ` ${i}`
-            if (!ov.settings) this.tv.$set(ov, 'settings', {})
+            if (!ov.settings) ov.settings = {}
 
             // grid_id,layer_id => DC id mapping
             gid++
@@ -332,7 +332,7 @@ export default class DCCore extends DCEvents {
         // TODO: Is there a simpler approach?
         Object.assign(new_obj, obj.v)
         Object.assign(new_obj, data)
-        this.tv.$set(obj.p, obj.i, new_obj)
+        obj.p[obj.i] = new_obj
 
     }
 
@@ -358,7 +358,7 @@ export default class DCCore extends DCEvents {
 
             // Dst === Overlap === Src
             if (!obj.v.length && !data.length) {
-                this.tv.$set(obj.p, obj.i, od)
+                obj.p[obj.i] = od
                 return obj.v
             }
 
@@ -368,15 +368,12 @@ export default class DCCore extends DCEvents {
             // If dst is totally contained in src
             if (!obj.v.length) { obj.v = data.splice(d2[0]) }
 
-            this.tv.$set(
-                obj.p, obj.i, this.combine(obj.v, od, data)
-            )
+            obj.p[obj.i] = this.combine(obj.v, od, data)
 
         } else {
 
-            this.tv.$set(
-                obj.p, obj.i, this.combine(obj.v, [], data)
-            )
+
+            obj.p[obj.i] = this.combine(obj.v, [], data)
 
         }
 
@@ -473,11 +470,7 @@ export default class DCCore extends DCEvents {
                 this.scroll_to(upd_t)
             }
         } else if (upd_t === last_t) {
-            if (main) {
-                this.tv.$set(data, data.length - 1, point)
-            } else {
-                data[data.length - 1] = point
-            }
+            data[data.length - 1] = point
         }
 
     }

@@ -6,26 +6,26 @@
             v-bind:grid_id="grid_id"
             v-bind:common="legend_props"
             v-bind:meta_props="get_meta_props"
-            v-on:legend-button-click="button_click">
+            @legend-button-click="button_click">
         </chart-legend>
         <grid v-bind="grid_props" ref="grid"
             v-bind:grid_id="grid_id"
-             v-on:register-kb-listener="register_kb"
-             v-on:remove-kb-listener="remove_kb"
-             v-on:range-changed="range_changed"
-             v-on:cursor-changed="cursor_changed"
-             v-on:cursor-locked="cursor_locked"
-             v-on:layer-meta-props="emit_meta_props"
-             v-on:custom-event="emit_custom_event"
-             v-on:sidebar-transform="sidebar_transform"
-             v-on:rezoom-range="rezoom_range">
+             @register-kb-listener="register_kb"
+             @remove-kb-listener="remove_kb"
+             @range-changed="range_changed"
+             @cursor-changed="cursor_changed"
+             @cursor-locked="cursor_locked"
+             @layer-meta-props="emit_meta_props"
+             @custom-event="emit_custom_event"
+             @sidebar-transform="sidebar_transform"
+             @rezoom-range="rezoom_range">
         </grid>
         <sidebar
             :ref="'sb-' + grid_id"
             v-bind="sidebar_props"
             v-bind:grid_id="grid_id"
             v-bind:rerender="rerender"
-            v-on:sidebar-transform="sidebar_transform">
+            @sidebar-transform="sidebar_transform">
         </sidebar>
     </div>
 </template>
@@ -64,7 +64,7 @@ export default {
             this.$emit('sidebar-transform', s)
         },
         emit_meta_props(d) {
-            this.$set(this.meta_props, d.layer_id, d)
+            this.meta_props[d.layer_id] = d
             this.$emit('layer-meta-props', d)
         },
         emit_custom_event(d) {

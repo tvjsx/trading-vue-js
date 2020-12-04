@@ -14,7 +14,7 @@ export default {
             for (var x of this.$props.extensions) {
                 let name = x.Main.__name__
                 if (!this.xSettings[name]) {
-                    this.$set(this.xSettings, name, {})
+                    this.xSettings[name] = {}
                 }
                 let nc = new x.Main(
                     this,      // tv inst

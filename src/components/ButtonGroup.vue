@@ -10,7 +10,7 @@
         :display="display"
         :icon="b.icon"
         :config="config"
-        v-on:legend-button-click="button_click"
+        @legend-button-click="button_click"
     >
     </legend-button>
 </span>

@@ -31,7 +31,7 @@ export default {
     },
     data() {
         return {
-            chart: {}, //new DataCube(Data),
+            chart: new DataCube(Data),
             width: window.innerWidth,
             height: window.innerHeight,
             colors: {

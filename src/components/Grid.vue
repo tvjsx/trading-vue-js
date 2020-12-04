@@ -55,6 +55,7 @@ export default {
         this.$emit('custom-event', {
             event: 'register-tools', args: tools
         })
+        // TODO: vue3
         //this.$on('custom-event', e =>
         //    this.on_ux_event(e, 'grid'))
     },
@@ -85,24 +86,19 @@ export default {
                 backgroundColor: this.$props.colors.back
             },
             hs: [
-                h(Crosshair, {
-                    props: this.common_props(),
-                    on: this.layer_events
-                }),
-                h(KeyboardListener, {
-                    on: this.keyboard_events
-                }),
+                h(Crosshair, Object.assign(
+                    this.common_props(),
+                    this.layer_events
+                )),
+                h(KeyboardListener, this.keyboard_events),
                 h(UxLayer, {
-                    props: {
-                        id, tv_id: this.$props.tv_id,
-                        uxs: this.uxs,
-                        colors: this.$props.colors,
-                        config: this.$props.config,
-                        updater: Math.random()
-                    },
-                    on: {
-                        'custom-event': this.emit_ux_event
-                    }
+                    id,
+                    tv_id: this.$props.tv_id,
+                    uxs: this.uxs,
+                    colors: this.$props.colors,
+                    config: this.$props.config,
+                    updater: Math.random(),
+                    onCustomEvent: this.emit_ux_event
                 })
             ].concat(this.get_overlays(h))
         })
@@ -147,20 +143,20 @@ export default {
                     count[d.type] = 0
                 }
             }
-            return comp_list.map((x, i) => h(x.cls, {
-                    on: this.layer_events,
-                    attrs: Object.assign(this.common_props(), {
-                        id: `${x.type}_${count[x.type]++}`,
-                        type: x.type,
-                        data: x.data,
-                        settings: x.settings,
-                        i0: x.i0,
-                        tf: x.tf,
-                        num: i,
-                        grid_id: this.$props.grid_id,
-                        meta: this.$props.meta
-                    })
-                })
+            return comp_list.map((x, i) => h(x.cls, Object.assign(
+                this.common_props(),
+                this.layer_events,
+                {
+                    id: `${x.type}_${count[x.type]++}`,
+                    type: x.type,
+                    data: x.data,
+                    settings: x.settings,
+                    i0: x.i0,
+                    tf: x.tf,
+                    num: i,
+                    grid_id: this.$props.grid_id,
+                    meta: this.$props.meta
+                }))
             )
         },
         common_props() {
@@ -247,35 +243,35 @@ export default {
     data() {
         return {
             layer_events: {
-                'new-grid-layer': this.new_layer,
-                'delete-grid-layer': this.del_layer,
-                'show-grid-layer': d => {
+                onNewGridLayer: this.new_layer,
+                onDeleteGridLayer: this.del_layer,
+                onShowGridLayer: d => {
                     this.renderer.show_hide_layer(d)
                     this.redraw()
                 },
-                'redraw-grid': this.redraw,
-                'layer-meta-props': d => this.$emit('layer-meta-props', d),
-                'custom-event': d => this.$emit('custom-event', d)
+                onRedrawGrid: this.redraw,
+                onLayerMetaProps: d => this.$emit('layer-meta-props', d),
+                onCustomEvent: d => this.$emit('custom-event', d)
             },
             keyboard_events: {
-                'register-kb-listener': event => {
+                onRegisterKbListener: event => {
                     this.$emit('register-kb-listener', event)
                 },
-                'remove-kb-listener': event => {
+                onRemoveKbListener: event => {
                     this.$emit('remove-kb-listener', event)
                 },
-                'keyup': event => {
+                onkeyup: event => {
                     if (!this.is_active) return
                     this.renderer.propagate('keyup', event)
                 },
-                'keydown': event => {
+                onkeydown: event => {
                     if (!this.is_active) return // TODO: is this neeeded?
                     this.renderer.propagate('keydown', event)
                 },
-                'keypress': event => {
+                onkeypress: event => {
                     if (!this.is_active) return
                     this.renderer.propagate('keypress', event)
-                },
+                }
             }
         }
     }

@@ -6,15 +6,15 @@
             :key="grid.id" ref="sec"
             v-bind:common="section_props(i)"
             v-bind:grid_id="i"
-            v-on:register-kb-listener="register_kb"
-            v-on:remove-kb-listener="remove_kb"
-            v-on:range-changed="range_changed"
-            v-on:cursor-changed="cursor_changed"
-            v-on:cursor-locked="cursor_locked"
-            v-on:sidebar-transform="set_ytransform"
-            v-on:layer-meta-props="layer_meta_props"
-            v-on:custom-event="emit_custom_event"
-            v-on:legend-button-click="legend_button_click"
+            @register-kb-listener="register_kb"
+            @remove-kb-listener="remove_kb"
+            @range-changed="range_changed"
+            @cursor-changed="cursor_changed"
+            @cursor-locked="cursor_locked"
+            @sidebar-transform="set_ytransform"
+            @layer-meta-props="layer_meta_props"
+            @custom-event="emit_custom_event"
+            @legend-button-click="legend_button_click"
             >
         </grid-section>
         <botbar v-bind="botbar_props"
@@ -109,7 +109,7 @@ export default {
         set_ytransform(s) {
             let obj = this.y_transforms[s.grid_id] || {}
             Object.assign(obj, s)
-            this.$set(this.y_transforms, s.grid_id, obj)
+            this.y_transforms[s.grid_id] = obj
             this.update_layout()
             Utils.overwrite(this.range, this.range)
         },
@@ -202,10 +202,9 @@ export default {
         layer_meta_props(d) {
             // TODO: check reactivity when layout is changed
             if (!(d.grid_id in this.layers_meta)) {
-                this.$set(this.layers_meta, d.grid_id, {})
+                this.layers_meta[d.grid_id] = {}
             }
-            this.$set(this.layers_meta[d.grid_id],
-                d.layer_id, d)
+            this.layers_meta[d.grid_id][d.layer_id] = d
 
             // Rerender
             this.update_layout()

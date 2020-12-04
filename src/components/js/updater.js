@@ -24,7 +24,7 @@ class CursorUpdater {
                     if (this.cursor.t) once = false
                 }
                 if(c.values) {
-                    this.comp.$set(this.cursor.values, grid.id, c.values)
+                    this.cursor.values[grid.id] = c.values
                 }
             }
             if (grid.id !== e.grid_id) continue

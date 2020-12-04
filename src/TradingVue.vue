@@ -10,7 +10,7 @@
             height: this.height+'px'}">
         <toolbar v-if="toolbar"
             ref="toolbar"
-            v-on:custom-event="custom_event"
+            @custom-event="custom_event"
             v-bind="chart_props"
             v-bind:config="chart_config">
         </toolbar>
@@ -24,9 +24,9 @@
             v-bind="chart_props"
             v-bind:tv_id="id"
             v-bind:config="chart_config"
-            v-on:custom-event="custom_event"
-            v-on:range-changed="range_changed"
-            v-on:legend-button-click="legend_button">
+            @custom-event="custom_event"
+            @range-changed="range_changed"
+            @legend-button-click="legend_button">
         </chart>
     </div>
 </template>

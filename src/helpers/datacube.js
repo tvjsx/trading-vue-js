@@ -70,7 +70,7 @@ export default class DataCube extends DCCore {
                 obj.p.indexOf(obj.v)
 
             if (i !== -1) {
-                this.tv.$set(obj.p, i, data)
+                obj.p[i] = data
             }
         }
 

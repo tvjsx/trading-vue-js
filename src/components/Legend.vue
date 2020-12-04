@@ -24,7 +24,7 @@
             v-bind:index="ind.index"
             v-bind:tv_id="common.tv_id"
             v-bind:display="ind.v"
-            v-on:legend-button-click="button_click">
+            @legend-button-click="button_click">
         </button-group>
         <span class="t-vue-ivalues" v-if="ind.v">
             <span class="t-vue-lspan t-vue-ivalue"
