@@ -309,6 +309,15 @@ export default {
         }
 
         return name
-    }
+    },
+
+    // WTF with modern web development
+    is_mobile: (w => 'onorientationchange' in w &&
+       (!!navigator.maxTouchPoints ||
+        !!navigator.msMaxTouchPoints ||
+        ('ontouchstart' in w ||
+        (w.DocumentTouch &&
+        document instanceof w.DocumentTouch))))
+        (typeof window !== 'undefined' ? window : {})
 
 }
