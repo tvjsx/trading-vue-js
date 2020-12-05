@@ -163,6 +163,12 @@ export default {
     pointer-events: none;
     text-align: left;
     user-select: none;
+    font-weight: 300;
+}
+@media (min-resolution: 2x) {
+    .trading-vue-legend {
+        font-weight: 400;
+    }
 }
 .trading-vue-ohlcv {
     pointer-events: none;
@@ -170,7 +176,6 @@ export default {
 }
 .t-vue-lspan {
     font-variant-numeric: tabular-nums;
-    font-weight: 100;
     font-size: 0.95em;
     color: #999999; /* TODO: move => params */
     margin-left: 0.1em;
@@ -179,12 +184,10 @@ export default {
 .t-vue-title {
     margin-right: 0.25em;
     font-size: 1.45em;
-    font-weight: 200;
 }
 .t-vue-ind {
     margin-left: 0.2em;
     margin-bottom: 0.5em;
-    font-weight: 200;
     font-size: 1.0em;
     margin-top: 0.3em;
 }
