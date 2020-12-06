@@ -88,7 +88,10 @@ export default {
             this.range_changed([t1, t2])
         },
         cursor_changed(e) {
-            this.updater.sync(e)
+            if (e.mode) this.cursor.mode = e.mode
+            if (this.cursor.mode !== 'explore') {
+                this.updater.sync(e)
+            }
             if (this._hook_xchanged) this.ce('?x-changed', e)
         },
         cursor_locked(state) {
@@ -332,7 +335,7 @@ export default {
             cursor: {
                 x: null, y: null, t: null, y$: null,
                 grid_id: null, locked: false, values: {},
-                scroll_lock: false
+                scroll_lock: false, mode: Utils.xmode()
             },
 
             // A trick to re-render botbar

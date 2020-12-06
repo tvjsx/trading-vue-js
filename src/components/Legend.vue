@@ -8,11 +8,17 @@
              :style="{ color: common.colors.title }">
               {{common.title_txt}}
         </span>
-        O<span class="t-vue-lspan" >{{ohlcv[0]}}</span>
-        H<span class="t-vue-lspan" >{{ohlcv[1]}}</span>
-        L<span class="t-vue-lspan" >{{ohlcv[2]}}</span>
-        C<span class="t-vue-lspan" >{{ohlcv[3]}}</span>
-        V<span class="t-vue-lspan" >{{ohlcv[4]}}</span>
+        <span v-if="show_values">
+            O<span class="t-vue-lspan" >{{ohlcv[0]}}</span>
+            H<span class="t-vue-lspan" >{{ohlcv[1]}}</span>
+            L<span class="t-vue-lspan" >{{ohlcv[2]}}</span>
+            C<span class="t-vue-lspan" >{{ohlcv[3]}}</span>
+            V<span class="t-vue-lspan" >{{ohlcv[4]}}</span>
+        </span>
+        <span v-if="!show_values" class="t-vue-lspan"
+            :style="{color: common.colors.text}">
+            {{(common.meta.last || [])[4]}}
+        </span>
     </div>
     <div class="t-vue-ind" v-for="ind in this.indicators">
         <span class="t-vue-iname">{{ind.name}}</span>
@@ -28,7 +34,8 @@
         </button-group>
         <span class="t-vue-ivalues" v-if="ind.v">
             <span class="t-vue-lspan t-vue-ivalue"
-                  v-for="v in ind.values" :style="{ color: v.color }">
+                v-if="show_values"
+                v-for="v in ind.values" :style="{ color: v.color }">
                 {{v.value}}
             </span>
         </span>
@@ -121,6 +128,9 @@ export default {
         main_type() {
             let f = this.common.data.find(x => x.main)
             return f ? f.type : undefined
+        },
+        show_values() {
+            return this.common.cursor.mode !== 'explore'
         }
     },
     methods: {
