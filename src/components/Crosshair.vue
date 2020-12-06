@@ -1,6 +1,7 @@
 <script>
 
 import Crosshair from './js/crosshair.js'
+import Utils from '../stuff/utils.js'
 
 export default {
     name: 'Crosshair',
@@ -23,16 +24,16 @@ export default {
 
                 if (!this.ch) this.create()
 
+                // Explore = default mode on mobile
                 const cursor = this.$props.cursor
+                const explore = cursor.mode === 'explore'
 
                 if (!cursor.x || !cursor.y) {
                     this.ch.hide()
                     this.$emit('redraw-grid')
                     return
                 }
-                this.ch.visible = true
-                //this.ch.update(cursor.x, cursor.y)
-
+                this.ch.visible = !explore
             },
             deep: true
         }

@@ -311,6 +311,11 @@ export default {
         return name
     },
 
+    // Default cursor mode
+    xmode() {
+        return this.is_mobile ? 'explore' : 'default'
+    },
+
     // WTF with modern web development
     is_mobile: (w => 'onorientationchange' in w &&
        (!!navigator.maxTouchPoints ||
@@ -319,5 +324,6 @@ export default {
         (w.DocumentTouch &&
         document instanceof w.DocumentTouch))))
         (typeof window !== 'undefined' ? window : {})
+
 
 }

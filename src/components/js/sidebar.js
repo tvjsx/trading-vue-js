@@ -28,7 +28,7 @@ export default class Sidebar {
         let mc = this.mc = new Hammer.Manager(this.canvas)
         mc.add(new Hammer.Pan({
             direction: Hammer.DIRECTION_VERTICAL,
-            threshold: 1
+            threshold: 0
         }))
 
         mc.add( new Hammer.Tap({ event: 'doubletap', taps: 2 }) );
