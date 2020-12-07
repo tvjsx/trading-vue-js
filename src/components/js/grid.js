@@ -360,6 +360,7 @@ export default class Grid {
 
     mousezoom(delta, event) {
 
+        // TODO: for mobile
         if (this.wmode !== 'pass') {
             if (this.wmode === 'click' && !this.$p.meta.activated) {
                 return
