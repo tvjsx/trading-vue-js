@@ -312,8 +312,16 @@ export default class DCEvents {
             .forEach(x => this.del(x.id))
         if (this.data.tool && this.data.tool !== 'Cursor' &&
            !this.data.drawingMode) {
-            this.tv.$set(this.data, 'drawingMode', true)
-            this.build_tool(args[0])
+            // Prevent from "null" tools (tool created with HODL)
+            if (args[1].type !== 'tap') {
+                this.tv.$set(this.data, 'drawingMode', true)
+                this.build_tool(args[0])
+            } else {
+                this.tv.showTheTip(
+                    `<b>Hodl</b>+<b>Drug</b> to create, ` +
+                    `<b>Tap</b> to finish a tool`
+                )
+            }
         } else if (this.sett.shift_measure && args[1].shiftKey) {
             rem()
             this.tv.$nextTick(() =>

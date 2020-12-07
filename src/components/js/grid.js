@@ -195,7 +195,11 @@ export default class Grid {
             args: [this.id, event]
         })
         this.propagate('mousemove', this.touch2mouse(event))
+        this.update()
         this.propagate('mousedown', this.touch2mouse(event))
+        setTimeout(() => {
+            this.propagate('click', this.touch2mouse(event))
+        })
     }
 
     // Convert touch to "mouse" event
@@ -226,8 +230,8 @@ export default class Grid {
     pan_fade(event) {
         let dt = Utils.now() - this.drug.t0
         let dx = this.range[1] - this.drug.r[1]
-        let v = 50 * dx / dt
-        let v0 = Math.abs(v * 0.015)
+        let v = 42 * dx / dt
+        let v0 = Math.abs(v * 0.01)
         if (dt > 500) return
         clearInterval(this.fade_id)
         this.fade_id = setInterval(() => {
