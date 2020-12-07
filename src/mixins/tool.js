@@ -2,6 +2,7 @@
 // Usuful stuff for creating tools. Include as mixin
 
 import Keys from '../stuff/keys.js'
+import Utils from '../stuff/utils.js'
 
 export default {
     methods: {
@@ -9,7 +10,6 @@ export default {
             // Collision functions (float, float) => bool,
             this.collisions = []
             this.pins = []
-
             this.mouse.on('mousemove', e => {
                 if (this.collisions.some(f => f(
                     this.mouse.x, this.mouse.y,
@@ -22,7 +22,7 @@ export default {
             })
 
             this.mouse.on('mousedown', e => {
-                if (e.defaultPrevented) return
+                if (Utils.default_prevented(e)) return
                 if (this.collisions.some(f => f(
                     this.mouse.x, this.mouse.y,
                 ))) {

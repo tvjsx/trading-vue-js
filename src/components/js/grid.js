@@ -79,7 +79,7 @@ export default class Grid {
         mc.on('panmove', event => {
             if (Utils.is_mobile) {
                 this.calc_offset()
-                this.propagate('mousemove', event)
+                this.propagate('mousemove', this.touch2mouse(event))
             }
             if (this.drug) {
                 this.mousedrag(
@@ -106,6 +106,7 @@ export default class Grid {
 
         mc.on('tap', event => {
             if (!Utils.is_mobile) return
+            this.sim_mousedown(event)
             clearInterval(this.fade_id)
             this.comp.$emit('cursor-changed', {})
             this.comp.$emit('cursor-changed', {
@@ -134,10 +135,12 @@ export default class Grid {
         })
 
         mc.on('press', event => {
+            if (!Utils.is_mobile) return
             clearInterval(this.fade_id)
             this.calc_offset()
             this.emit_cursor_coord(event, { mode: 'aim' })
             setTimeout(() => this.update())
+            this.sim_mousedown(event)
         })
 
         let add = addEventListener
@@ -175,12 +178,37 @@ export default class Grid {
     }
 
     mousedown(event) {
+        if (Utils.is_mobile) return
         this.propagate('mousedown', event)
         this.comp.$emit('cursor-locked', true)
         if (event.defaultPrevented) return
         this.comp.$emit('custom-event', {
             event: 'grid-mousedown', args: [this.id, event]
         })
+    }
+
+    // Simulated mousedown (for mobile)
+    sim_mousedown(event) {
+        if (event.srcEvent.defaultPrevented) return
+        this.comp.$emit('custom-event', {
+            event: 'grid-mousedown',
+            args: [this.id, event]
+        })
+        this.propagate('mousemove', this.touch2mouse(event))
+        this.propagate('mousedown', this.touch2mouse(event))
+    }
+
+    // Convert touch to "mouse" event
+    touch2mouse(e) {
+        this.calc_offset()
+        return {
+            original: e.srcEvent,
+            layerX: e.center.x + this.offset_x,
+            layerY: e.center.y + this.offset_y,
+            preventDefault: function() {
+                this.original.preventDefault()
+            }
+        }
     }
 
     click(event) {
