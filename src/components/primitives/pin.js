@@ -1,5 +1,7 @@
 // Semi-automatic pin object. For stretching things.
 
+import Utils from '../../stuff/utils.js'
+
 export default class Pin {
 
     // (Comp reference, a name in overlay settings,
@@ -8,6 +10,12 @@ export default class Pin {
 
         this.RADIUS = comp.$props.config.PIN_RADIUS || 5.5
         this.RADIUS_SQ = Math.pow(this.RADIUS + 7, 2)
+
+        if (Utils.is_mobile) {
+            this.RADIUS += 2
+            this.RADIUS_SQ *= 2.5
+        }
+
         this.COLOR_BACK = comp.$props.colors.back
         this.COLOR_BR = comp.$props.colors.text
 
@@ -133,7 +141,7 @@ export default class Pin {
     }
 
     mousedown(event, force = false) {
-        if (event.defaultPrevented && !force) return
+        if (Utils.default_prevented(event) && !force) return
         switch (this.state) {
             case 'tracking':
                 this.state = 'settled'

@@ -316,6 +316,13 @@ export default {
         return this.is_mobile ? 'explore' : 'default'
     },
 
+    default_prevented(event) {
+        if (event.original) {
+            return event.original.defaultPrevented
+        }
+        return event.defaultPrevented
+    },
+
     // WTF with modern web development
     is_mobile: (w => 'onorientationchange' in w &&
        (!!navigator.maxTouchPoints ||

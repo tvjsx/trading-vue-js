@@ -2,6 +2,7 @@
 // Draws a segment, adds corresponding collision f-n
 
 import Math2 from '../../stuff/math.js'
+import Utils from '../../stuff/utils.js'
 
 export default class Seg {
 
@@ -10,6 +11,7 @@ export default class Seg {
         this.ctx = ctx
         this.comp = overlay
         this.T = overlay.$props.config.TOOL_COLL
+        if (Utils.is_mobile) this.T *= 2
     }
 
     // p1[t, $], p2[t, $] (time-price coordinates)
