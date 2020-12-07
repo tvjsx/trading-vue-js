@@ -29,7 +29,7 @@ import Data from '../data/data_earn.json'
 //import Data from '../data/data_fresh_1D.json'
 import DataCube from '../../src/helpers/datacube.js'
 import Utils from '../../src/stuff/utils.js'
-import Earnings from './MouseEvents/Earnings.vue'
+import Earnings from './Stocks/Earnings.vue'
 import Illuminati from './shared/illuminati.js'
 import Eye from './shared/Eye.vue'
 

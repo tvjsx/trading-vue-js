@@ -31,7 +31,11 @@ export default class Sidebar {
             threshold: 0
         }))
 
-        mc.add( new Hammer.Tap({ event: 'doubletap', taps: 2 }) );
+        mc.add( new Hammer.Tap({
+            event: 'doubletap',
+            taps: 2,
+            posThreshold: 50
+        }))
 
         mc.on('panstart', event => {
             if (this.$p.y_transform) {

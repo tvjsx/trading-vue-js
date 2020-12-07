@@ -28,6 +28,10 @@
             v-on:range-changed="range_changed"
             v-on:legend-button-click="legend_button">
         </chart>
+        <transition name="tvjs-drift">
+            <the-tip :data="tip" v-if="tip"
+                @remove-me="tip = null"/>
+        </transition>
     </div>
 </template>
 
@@ -37,12 +41,13 @@ import Const from './stuff/constants.js'
 import Chart from './components/Chart.vue'
 import Toolbar from './components/Toolbar.vue'
 import Widgets from './components/Widgets.vue'
+import TheTip from './components/TheTip.vue'
 import XControl from './mixins/xcontrol.js'
 
 export default {
     name: 'TradingVue',
     components: {
-        Chart, Toolbar, Widgets
+        Chart, Toolbar, Widgets, TheTip
     },
     mixins: [ XControl ],
     props: {
@@ -242,7 +247,7 @@ export default {
         }
     },
     data() {
-        return { reset: 0 }
+        return { reset: 0, tip: null }
     },
     beforeDestroy() {
         this.custom_event({ event: 'before-destroy' })
@@ -350,6 +355,9 @@ export default {
         },
         mouseleave() {
             this.$refs.chart.activated = false
+        },
+        showTheTip(text, color = "orange") {
+            this.tip = { text, color }
         }
     }
 }

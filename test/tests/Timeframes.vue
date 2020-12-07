@@ -98,4 +98,18 @@ export default {
         Fira Sans, Droid Sans, Helvetica Neue,
         sans-serif
 }
+@media only screen and (max-device-width: 480px) {
+    .tf-selector {
+        top: 50px;
+        right: 140px;
+        max-width: 140px;
+        font: 12px -apple-system,BlinkMacSystemFont,
+            Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,
+            Fira Sans,Droid Sans,Helvetica Neue,
+            sans-serif;
+    }
+    .log-scale, .gc-mode {
+        right: 50px !important;
+    }
+}
 </style>
