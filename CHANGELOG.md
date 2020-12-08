@@ -1,6 +1,34 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.10.0] - 2020-12-07
+
+- The first package of mobile improvements
+- Enhances skins
+- Small modifications of scripts execution
+- Improvements of Interfaces (aka inline overlay UI)
+- Script fixes (update onchart/offchart OVs)
+- New aggtype: copy (fast aggregation through copying)
+- CSS tranforms support (transition)
+- Overlay name templates, e.g. "RSI, $length"
+- Fixed loading animation for some cases
+
+## [0.9.0] - 2020-11-17
+
+- Scripts: advanced samplers (sym() function)
+- Implemented Dataset ops (update, merge, remove)
+- Countless small bug fixes as always
+- Scripts: add onclose()
+- Fixed auto-scroll (when new candle is added)
+- Scripts: offchart/onchart updates
+- DC: aggtool v2 (completely rewritten)
+- Custom legend buttons (your custom icon)
+- Tool groups
+- Scroll wheel modes: prevent, pass, click
+- WebWorker RAM limit
+- LineTool: add Ray mode
+- Legend buttons handlers [EXT]
+
 ## [0.8.0] - 2020-10-15
 
 - Timezones (initial support)
