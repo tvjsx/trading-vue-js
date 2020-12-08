@@ -302,6 +302,9 @@ export default {
             }
             return cursor
         },
+        showTheTip(text, color = "orange") {
+            this.tip = { text, color }
+        },
         legend_button(event) {
             this.custom_event({
                 event: 'legend-button-click', args: [event]
@@ -355,9 +358,6 @@ export default {
         },
         mouseleave() {
             this.$refs.chart.activated = false
-        },
-        showTheTip(text, color = "orange") {
-            this.tip = { text, color }
         }
     }
 }

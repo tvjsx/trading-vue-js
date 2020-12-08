@@ -1,6 +1,6 @@
 # API Book
 
-This guide version is **0.9.0**
+This guide version is **0.10.0**
 
 ![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=Current%20lib%20version)
 
@@ -127,6 +127,13 @@ Gets the cursor [object](https://github.com/tvjsx/trading-vue-js/tree/master/doc
 
 * **Returns**: Object
 
+### showTheTip()
+
+Shows a pop-up with specified text.
+
+* **Arguments**: text (String) Text
+* **Arguments**: color (String) Color
+
 ### $refs.chart.hooks(...args)
 
 Set hooks to the internal events. You'll get events like this `?<hook name>`
@@ -217,7 +224,7 @@ IMPORTANT: All data must be sorted by time (in ascending order). The main OHLCV 
     },
     "onchart": [ // Displayed ON the chart
         {
-            "name": "<Indicator name>",
+            "name": "<Indicator name>", // Or template, e.g. "RSI, $length"
             "type": "<e.g. EMA, SMA>",
             "data": [
                 [timestamp, ... ], // Arbitrary length
