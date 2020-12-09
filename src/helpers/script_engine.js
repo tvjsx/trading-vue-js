@@ -113,7 +113,7 @@ class ScriptEngine {
             }
         }
 
-        s.env = new ScriptEnv(s, Object.assign({
+        s.env = new ScriptEnv(s, Object.assign(this.shared, {
             open: this.open,
             high: this.high,
             low: this.low,
@@ -214,9 +214,10 @@ class ScriptEngine {
         this.close = TS('close', [])
         this.vol = TS('vol', [])
 
-        // Shared TSs
+        // Shared TSs & user vars
         this.tss = {}
         this.std_plus = {}
+        this.shared = {}
 
         // Engine state
         this.iter = 0
