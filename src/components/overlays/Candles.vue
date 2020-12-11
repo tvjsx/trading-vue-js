@@ -46,12 +46,15 @@ export default {
         },
         use_for() { return ['Candles'] },
 
-        // When added as offchart overlay
+        // In case it's added as offchart overlay
         y_range() {
-            return [
-                Math.max(...this.$props.sub.map(x => x[2])),
-                Math.min(...this.$props.sub.map(x => x[3]))
-            ]
+            var hi = -Infinity, lo = Infinity
+            for (var i = 0, n = this.sub.length; i < n; i++) {
+                let x = this.sub[i]
+                if (x[2] > hi) hi = x[2]
+                if (x[3] < lo) lo = x[3]
+            }
+            return [hi, lo]
         }
     },
 
