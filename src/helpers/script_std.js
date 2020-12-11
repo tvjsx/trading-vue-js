@@ -682,6 +682,8 @@ export default class ScriptStd {
 
     // Returns true when the candle(<tf>) is being closed
     onclose(tf) {
+        if (!this.env.shared.onclose) return false
+        if (!tf) tf = se.tf
         return (se.t + se.tf) % u.tf_from_str(tf) === 0
     }
 
@@ -1022,6 +1024,7 @@ export default class ScriptStd {
                 } else {
                     sym.data_type = ARR
                 }
+
                 break
             case 'number':
                 sym = new Sym(null, y)
@@ -1035,7 +1038,6 @@ export default class ScriptStd {
         }
 
         this.env.syms[id] = sym
-        if (!sym.main) sym.update(x)
         return sym
     }
 
