@@ -332,5 +332,4 @@ export default {
         document instanceof w.DocumentTouch))))
         (typeof window !== 'undefined' ? window : {})
 
-
 }
