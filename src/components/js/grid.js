@@ -2,6 +2,7 @@
 // emits Vue-events if something has changed (e.g. range)
 // Think of it as an I/O system for Grid.vue
 
+import FrameAnimation from '../../stuff/frame.js'
 import * as Hammer from 'hammerjs'
 import Hamster from 'hamsterjs'
 import Utils from '../../stuff/utils.js'
@@ -107,7 +108,7 @@ export default class Grid {
         mc.on('tap', event => {
             if (!Utils.is_mobile) return
             this.sim_mousedown(event)
-            clearInterval(this.fade_id)
+            if (this.fade) this.fade.stop()
             this.comp.$emit('cursor-changed', {})
             this.comp.$emit('cursor-changed', {
                 /*grid_id: this.id,
@@ -136,7 +137,7 @@ export default class Grid {
 
         mc.on('press', event => {
             if (!Utils.is_mobile) return
-            clearInterval(this.fade_id)
+            if (this.fade) this.fade.stop()
             this.calc_offset()
             this.emit_cursor_coord(event, { mode: 'aim' })
             setTimeout(() => this.update())
@@ -233,14 +234,16 @@ export default class Grid {
         let v = 42 * dx / dt
         let v0 = Math.abs(v * 0.01)
         if (dt > 500) return
-        clearInterval(this.fade_id)
-        this.fade_id = setInterval(() => {
+        if (this.fade) this.fade.stop()
+        this.fade = new FrameAnimation(self => {
             v *= 0.85
-            if (Math.abs(v) < v0) clearInterval(this.fade_id)
+            if (Math.abs(v) < v0) {
+                self.stop()
+            }
             this.range[0] += v
             this.range[1] += v
             this.change_range()
-        }, 10)
+        })
     }
 
     calc_offset() {
