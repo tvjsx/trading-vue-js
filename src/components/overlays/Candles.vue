@@ -13,7 +13,7 @@ export default {
     mixins: [Overlay],
     methods: {
         meta_info() {
-            return { author: 'C451', version: '1.2.0' }
+            return { author: 'C451', version: '1.2.1' }
         },
         init() {
             this.price = new Price(this)
@@ -33,13 +33,15 @@ export default {
             }
 
             if (this.show_volume) {
-                for (var v of cnv.volume) {
-                    new Volbar(this, ctx, v)
+                var cv = cnv.volume
+                for (var i = 0, n = cv.length; i < n; i++) {
+                    new Volbar(this, ctx, cv[i])
                 }
             }
 
-            for (var c of cnv.candles) {
-                new Candle(this, ctx, c)
+            var cc = cnv.candles
+            for (var i = 0, n = cc.length; i < n; i++) {
+                new Candle(this, ctx, cc[i])
             }
 
             if (this.price_line) this.price.draw(ctx)

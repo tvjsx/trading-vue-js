@@ -7,14 +7,15 @@ export default {
     mixins: [Overlay],
     methods: {
         meta_info() {
-            return { author: 'C451', version: '1.0.1' }
+            return { author: 'C451', version: '1.0.2' }
         },
         draw(ctx) {
-            let layout = this.$props.layout
+            const layout = this.$props.layout
+            const data = this.$props.data
             ctx.lineWidth = 1.5
             ctx.strokeStyle = 'black'
-            for (var p of this.$props.data) {
-
+            for (var k = 0, n = data.length; k < n; k++) {
+                let p = data[k]
                 ctx.fillStyle = p[1] ? this.buy_color : this.sell_color
                 ctx.beginPath()
                 let x = layout.t2screen(p[0]) // x - Mapping
@@ -83,7 +84,7 @@ export default {
             return this.sett.sellColor || '#ec4662'
         },
         label_color() {
-            return this.sett.labelColor || '#333'
+            return this.sett.labelColor || '#999'
         },
         marker_size() {
             return this.sett.markerSize || 5

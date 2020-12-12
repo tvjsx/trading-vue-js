@@ -50408,7 +50408,8 @@
                 ]
             ],
             "settings": {
-                "display": false
+                "display": false,
+                "skipNaN": true
             }
         },
         {
@@ -67216,7 +67217,9 @@
                     7680.742182854006
                 ]
             ],
-            "settings": {}
+            "settings": {
+                "skipNaN": true
+            }
         }
     ],
     "offchart": [
@@ -104892,7 +104895,9 @@
                     203.14785841335026
                 ]
             ],
-            "settings": {}
+            "settings": {
+                "skipNaN": true
+            }
         }
     ]
 }
