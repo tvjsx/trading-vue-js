@@ -11,7 +11,7 @@ export default class FrameAnimation {
         this.id = setInterval(() => {
             // The prev frame took too long
             if (Utils.now() - this.t > 100) return
-            if (Utils.now() - this.t0 > 1000) {
+            if (Utils.now() - this.t0 > 1200) {
                 this.stop()
             }
             if (this.id) cb(this)

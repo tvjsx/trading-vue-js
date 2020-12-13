@@ -113,7 +113,7 @@ export default {
         },
         colorWickSm: {
             type: String,
-            default: '#bdbec0'
+            default: 'transparent' // deprecated
         },
         colorVolUp: {
             type: String,
