@@ -20,29 +20,21 @@ export default class CandleExt {
             this.style.colorWickUp :
             this.style.colorWickDw
 
-        const wick_color_sm = this.style.colorWickSm
-
-
         let w = Math.max(data.w, 1)
         let hw = Math.max(Math.floor(w * 0.5), 1)
         let h = Math.abs(data.o - data.c)
         let max_h = data.c === data.o ? 1 : 2
+        let x05 = Math.floor(data.x) - 0.5
 
-        this.ctx.strokeStyle = w > 1 ? wick_color : wick_color_sm
+        this.ctx.strokeStyle = wick_color
 
         this.ctx.beginPath()
-        this.ctx.moveTo(
-            Math.floor(data.x) - 0.5,
-            Math.floor(data.h)
-        )
-        this.ctx.lineTo(
-            Math.floor(data.x) - 0.5,
-            Math.floor(data.l)
-        )
+        this.ctx.moveTo(x05, Math.floor(data.h))
+        this.ctx.lineTo(x05, Math.floor(data.l))
 
         this.ctx.stroke()
 
-        if (data.w > 1.5 || data.o === data.c) {
+        if (data.w > 1.5) {
 
             this.ctx.fillStyle = body_color
             // TODO: Move common calculations to layout.js
@@ -60,12 +52,13 @@ export default class CandleExt {
 
             this.ctx.beginPath()
             this.ctx.moveTo(
-                Math.floor(data.x) - 0.5,
+                x05,
                 Math.floor(Math.min(data.o, data.c)),
             )
             this.ctx.lineTo(
-                Math.floor(data.x) - 0.5,
-                Math.floor(Math.max(data.o, data.c)),
+                x05,
+                Math.floor(Math.max(data.o, data.c)) +
+                    (data.o === data.c ? 1 : 0)
             )
 
             this.ctx.stroke()
