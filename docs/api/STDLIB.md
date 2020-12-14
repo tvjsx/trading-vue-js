@@ -130,7 +130,7 @@ Return the an array. Id is auto-genrated</p>
 <dt><a href="#hour">hour([time])</a> ⇒ <code>number</code></dt>
 <dd><p>Returns hours of a given timestamp</p>
 </dd>
-<dt><a href="#iff">iff(cond, x, y)</a></dt>
+<dt><a href="#iff">iff(cond, x, y)</a> ⇒ <code>*</code></dt>
 <dd><p>Returns x or y depending on the condition</p>
 </dd>
 <dt><a href="#kc">kc(src, len, mult, [use_tr])</a> ⇒ <code>Array.&lt;TS&gt;</code></dt>
@@ -191,7 +191,7 @@ Return the an array. Id is auto-genrated</p>
 <dd><p>Sends settings update
 (can be called from init(), update() or post())</p>
 </dd>
-<dt><a href="#offset">offset(num)</a></dt>
+<dt><a href="#offset">offset(num)</a> ⇒ <code>TS</code></dt>
 <dd><p>Shifts TS left or right by &quot;num&quot; candles</p>
 </dd>
 <dt><a href="#now">now()</a> ⇒ <code>number</code></dt>
@@ -248,7 +248,7 @@ Used in RSI</p>
 <dt><a href="#stoch">stoch(src, high, low, len)</a> ⇒ <code>TS</code></dt>
 <dd><p>Stochastic</p>
 </dd>
-<dt><a href="#sum">sum(src, len)</a></dt>
+<dt><a href="#sum">sum(src, len)</a> ⇒ <code>TS</code></dt>
 <dd><p>Returns the sliding sum of last &quot;len&quot; values of the source</p>
 </dd>
 <dt><a href="#supertrend">supertrend(factor, atrlen)</a> ⇒ <code>Array.&lt;TS&gt;</code></dt>
@@ -257,7 +257,7 @@ Used in RSI</p>
 <dt><a href="#swma">swma(src)</a> ⇒ <code>TS</code></dt>
 <dd><p>Symmetrically Weighted Moving Average</p>
 </dd>
-<dt><a href="#sym">sym(x, y)</a></dt>
+<dt><a href="#sym">sym(x, y)</a> ⇒ <code>Sym</code></dt>
 <dd><p>Creates a new Symbol.</p>
 </dd>
 <dt><a href="#tan">tan(x)</a> ⇒ <code>number</code></dt>
@@ -805,7 +805,7 @@ Returns hours of a given timestamp
 
 <a name="iff"></a>
 
-## iff(cond, x, y)
+## iff(cond, x, y) ⇒ <code>\*</code>
 Returns x or y depending on the condition
 
 **Kind**: global function
@@ -1048,10 +1048,11 @@ Sends settings update
 
 <a name="offset"></a>
 
-## offset(num)
+## offset(num) ⇒ <code>TS</code>
 Shifts TS left or right by "num" candles
 
 **Kind**: global function
+**Returns**: <code>TS</code> - - New / existing time-series
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1271,10 +1272,11 @@ Stochastic
 
 <a name="sum"></a>
 
-## sum(src, len)
+## sum(src, len) ⇒ <code>TS</code>
 Returns the sliding sum of last "len" values of the source
 
 **Kind**: global function
+**Returns**: <code>TS</code> - - New time-series
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1308,15 +1310,28 @@ Symmetrically Weighted Moving Average
 
 <a name="sym"></a>
 
-## sym(x, y)
+## sym(x, y) ⇒ <code>Sym</code>
 Creates a new Symbol.
 
 **Kind**: global function
+**Returns**: <code>Sym</code> - Argument variations:
+<data>(Array), [<params>(Object)]
+<ts>(TS), [<params>(Object)]
+<point>(Number), [<params>(Object)]
+<tf>(String) 1m, 5m, 1H, etc. (uses main OHLCV)
+Params object: {
+ id: <String>,
+ tf: <String|Number>,
+ aggtype: <String> (TODO: Type of aggregation)
+ format: <String> (Data format, e.g. "time:price:vol")
+ window: <String|Number> (Aggregation window)
+ main <true|false> (Use as the main chart)
+}
 
 | Param | Type | Description |
 | --- | --- | --- |
 | x | <code>\*</code> | Something, depends on arg variation |
-| y | <code>\*</code> | Something, depends on arg variation Argument variations: <data>(Array), [<params>(Object)] <ts>(TS), [<params>(Object)] <point>(Number), [<params>(Object)] <tf>(String) 1m, 5m, 1H, etc. (uses main OHLCV) Params object: {  id: <String>,  tf: <String|Number>,  aggtype: <String> (TODO: Type of aggregation)  format: <String> (Data format, e.g. "time:price:vol")  window: <String|Number> (Aggregation window)  main <true|false> (Use as the main chart) } |
+| y | <code>\*</code> | Something, depends on arg variation |
 
 <a name="tan"></a>
 
