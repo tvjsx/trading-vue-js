@@ -662,6 +662,7 @@ export default class ScriptStd {
      * @param {boolean} cond - Condition
      * @param {*} x - Frist value
      * @param {*} y - Second value
+     * @return {*}
      */
     iff(cond, x, y) {
         return cond ? x : y
@@ -959,6 +960,7 @@ export default class ScriptStd {
 
     /** Shifts TS left or right by "num" candles
      * @param {number} num - Offset measured in candles
+     * @return {TS} - New / existing time-series
      */
     offset(src, num, _id) {
         if (src.__id__) {
@@ -1287,6 +1289,7 @@ export default class ScriptStd {
     /** Returns the sliding sum of last "len" values of the source
      * @param {TS} src - Input
      * @param {number} len - Length
+     * @return {TS} - New time-series
      */
     sum(src, len, _id) {
         let id = this._tsid(_id, `sum(${len})`)
@@ -1343,6 +1346,7 @@ export default class ScriptStd {
     /** Creates a new Symbol.
      * @param {*} x - Something, depends on arg variation
      * @param {*} y - Something, depends on arg variation
+     * @return {Sym}
      * Argument variations:
      * <data>(Array), [<params>(Object)]
      * <ts>(TS), [<params>(Object)]
