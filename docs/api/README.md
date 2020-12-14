@@ -7,6 +7,7 @@ This guide version is **0.10.0**
 ### DataCube API is [here](https://github.com/C451/trading-vue-js/tree/master/docs/datacube)
 ### Inline Shaders API is [here](https://github.com/C451/trading-vue-js/tree/master/docs/api/SHADERS.md)
 ### Index-Based mode API is [there](https://github.com/tvjsx/trading-vue-js/blob/master/docs/api/IB.md)
+### Std-lib for scripts API is [over there](https://github.com/tvjsx/trading-vue-js/blob/master/docs/api/STDLIB.md)
 
 ## Props
 
