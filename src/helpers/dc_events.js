@@ -43,6 +43,9 @@ export default class DCEvents {
                 case 'modify-overlay':
                     this.modify_overlay(e.data.data)
                     break
+                case 'script-signal':
+                    this.tv.$emit('signal', e.data.data)
+                    break
             }
             for (var ctrl of this.tv.controllers) {
                 if (ctrl.post_ww) ctrl.post_ww(e.data)

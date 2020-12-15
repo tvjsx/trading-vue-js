@@ -147,7 +147,7 @@ export default class ScriptStd {
     /**
      * Is the variable NaN ?
      * @param {*} x - The variable
-     * @return {*} - New value
+     * @return {boolean} - New value
      */
     na(x) {
         return x == undefined || x !== x
@@ -242,15 +242,25 @@ export default class ScriptStd {
         return Math.acos(x)
     }
 
-    // Emits an event
+    /** Emits an event to DataCube
+     * @param {string} type - Signal type
+     * @param {*} data - Signal data
+     */
     signal(type, data = {}) {
-        // TODO: this
+        if (this.se.shared.event !== 'update') return
+        this.se.send('script-signal', { type, data })
     }
 
-    // Emits an event if cond === true
+    /** Emits an event if cond === true
+     * @param {(boolean|TS)} cond - The condition
+     * @param {string} type - Signal type
+     * @param {*} data - Signal data
+     */
     signalif(cond, type, data = {}) {
+        if (this.se.shared.event !== 'update') return
+        if (cond && cond.__id__) cond = cond[0]
         if (cond) {
-        // TODO: this
+            this.se.send('script-signal', { type, data })
         }
     }
 
@@ -326,9 +336,15 @@ export default class ScriptStd {
         return sum / args.length
     }
 
-    // Candles since the event occured (cond === true)
-    since(cond) {
-        // TODO: this
+    /** Candles since the event occured (cond === true)
+     * @param {(boolean|TS)} cond - the condition
+     */
+    since(cond, _id) {
+        let id = this._tsid(_id, `since()`)
+        if (cond && cond.__id__) cond = cond[0]
+        let s = this.ts(undefined, id)
+        s[0] = cond ? 0 : s[1] + 1
+        return s
     }
 
     /** Bollinger Bands
@@ -597,8 +613,21 @@ export default class ScriptStd {
         return this.ts(true, id, src.__tf__)
     }
 
-    fixnan(x) {
-        // TODO: this
+    /** For a given series replaces NaN values with
+     * previous nearest non-NaN value
+     * @param {TS} src - Input time-series
+     * @return {TS}
+     */
+    fixnan(src) {
+        if (this.na(src[0])) {
+            for (var i = 1; i < src.length; i++) {
+                if (!this.na(src[i])) {
+                    src[0] = src[i]
+                    break
+                }
+            }
+        }
+        return src
     }
 
     /* TODO: think
@@ -629,8 +658,18 @@ export default class ScriptStd {
         return this.ts(high, id, src.__tf__)
     }
 
-    highestbars(src, len) {
-        // TODO: this
+    /** Highest value offset for a given number of bars back
+     * @param {TS} src - Input
+     * @param {number} len - Length
+     */
+    highestbars(src, len, _id) {
+        let id = this._tsid(_id, `highestbars(${len})`)
+        let high = -Infinity
+        let hi = 0
+        for (var i = 0; i < len; i++) {
+            if (src[i] > high) { high = src[i], hi = i }
+        }
+        return this.ts(-hi, id, src.__tf__)
     }
 
     /** Hull Moving Average
@@ -659,12 +698,13 @@ export default class ScriptStd {
     }
 
     /** Returns x or y depending on the condition
-     * @param {boolean} cond - Condition
+     * @param {(boolean|TS)} cond - Condition
      * @param {*} x - Frist value
      * @param {*} y - Second value
      * @return {*}
      */
     iff(cond, x, y) {
+        if (cond && cond.__id__) cond = cond[0]
         return cond ? x : y
     }
 
@@ -753,8 +793,18 @@ export default class ScriptStd {
         return this.ts(low, id, src.__tf__)
     }
 
-    lowestbars(src, len) {
-        // TODO: this
+    /** Lowest value offset for a given number of bars back
+     * @param {TS} src - Input
+     * @param {number} len - Length
+     */
+    lowestbars(src, len, _id) {
+        let id = this._tsid(_id, `lowestbars(${len})`)
+        let low = Infinity
+        let li = 0
+        for (var i = 0; i < len; i++) {
+            if (src[i] < low) { low = src[i], li = i }
+        }
+        return this.ts(-li, id, src.__tf__)
     }
 
     /** Moving Average Convergence/Divergence
@@ -791,9 +841,13 @@ export default class ScriptStd {
         se.send('modify-overlay', { uuid:id, fields })
     }
 
-    // max_bars_back
+    /** Sets the reverse buffer size for a given
+     * time-series (default = 5, grows on demand)
+     * @param {TS} src - Input
+     * @param {number} len - New length
+     */
     buffsize(src, len) {
-        // TODO: this
+        src.__len__ = len
     }
 
     /** Money Flow Index
@@ -1453,10 +1507,6 @@ export default class ScriptStd {
         return this.ts(tsi, id, src.__tf__)
     }
 
-    valuewhen() {
-        // TODO: this
-    }
-
     variance(src, len) {
         // TODO: this
     }
@@ -1484,8 +1534,15 @@ export default class ScriptStd {
      * @param {number} [time] - Time in ms (current t, if not defined)
      * @return {number} - Week
      */
-    weekofyear() {
-        // TODO: this
+    weekofyear(time) {
+        let date = new Date(time || se.t)
+        date.setUTCHours(0, 0, 0, 0)
+        date.setDate(date.getUTCDate() + 3 - (date.getUTCDay() + 6) % 7)
+        let week1 = new Date(date.getUTCFullYear(), 0, 4)
+        return 1 + Math.round(
+            ((date - week1) / 86400000 - 3 +
+            (week1.getUTCDay() + 6) % 7) / 7
+        )
     }
 
     /** Weighted moving average

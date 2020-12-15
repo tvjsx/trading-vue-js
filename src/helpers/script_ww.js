@@ -150,6 +150,7 @@ se.send = (type, data) => {
         case 'engine-state':
         case 'modify-overlay':
         case 'module-data':
+        case 'script-signal':
 
             self.postMessage({type, data})
 

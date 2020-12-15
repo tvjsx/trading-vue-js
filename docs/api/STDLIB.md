@@ -16,7 +16,7 @@ Return the an array. Id is auto-genrated</p>
 <dt><a href="#nz">nz(x, [v])</a> ⇒ <code>*</code></dt>
 <dd><p>Replaces the variable if it&#39;s NaN</p>
 </dd>
-<dt><a href="#na">na(x)</a> ⇒ <code>*</code></dt>
+<dt><a href="#na">na(x)</a> ⇒ <code>boolean</code></dt>
 <dd><p>Is the variable NaN ?</p>
 </dd>
 <dt><a href="#nf">nf(x, [v])</a> ⇒ <code>*</code></dt>
@@ -43,6 +43,12 @@ Return the an array. Id is auto-genrated</p>
 <dt><a href="#acos">acos(x)</a> ⇒ <code>number</code></dt>
 <dd><p>Arccosine function</p>
 </dd>
+<dt><a href="#signal">signal(type, data)</a></dt>
+<dd><p>Emits an event to DataCube</p>
+</dd>
+<dt><a href="#signalif">signalif(cond, type, data)</a></dt>
+<dd><p>Emits an event if cond === true</p>
+</dd>
 <dt><a href="#alma">alma(src, len, offset, sigma)</a> ⇒ <code>TS</code></dt>
 <dd><p>Arnaud Legoux Moving Average</p>
 </dd>
@@ -57,6 +63,9 @@ Return the an array. Id is auto-genrated</p>
 </dd>
 <dt><a href="#avg">avg(...args)</a> ⇒ <code>number</code></dt>
 <dd><p>Average of arguments</p>
+</dd>
+<dt><a href="#since">since(cond)</a></dt>
+<dd><p>Candles since the event occured (cond === true)</p>
 </dd>
 <dt><a href="#bb">bb(src, len, mult)</a> ⇒ <code>Array.&lt;TS&gt;</code></dt>
 <dd><p>Bollinger Bands</p>
@@ -118,11 +127,18 @@ Return the an array. Id is auto-genrated</p>
 <dt><a href="#falling">falling(src, len)</a> ⇒ <code>TS</code></dt>
 <dd><p>Test if &quot;src&quot; TS is falling for &quot;len&quot; candles</p>
 </dd>
+<dt><a href="#fixnan">fixnan(src)</a> ⇒ <code>TS</code></dt>
+<dd><p>For a given series replaces NaN values with
+previous nearest non-NaN value</p>
+</dd>
 <dt><a href="#floor">floor(x)</a> ⇒ <code>number</code></dt>
 <dd><p>Shortcut for Math.floor()</p>
 </dd>
 <dt><a href="#highest">highest(src, len)</a> ⇒ <code>TS</code></dt>
 <dd><p>Highest value for a given number of candles back</p>
+</dd>
+<dt><a href="#highestbars">highestbars(src, len)</a></dt>
+<dd><p>Highest value offset for a given number of bars back</p>
 </dd>
 <dt><a href="#hma">hma(src, len)</a> ⇒ <code>TS</code></dt>
 <dd><p>Hull Moving Average</p>
@@ -151,6 +167,9 @@ Return the an array. Id is auto-genrated</p>
 <dt><a href="#lowest">lowest(src, len)</a> ⇒ <code>TS</code></dt>
 <dd><p>Lowest value for a given number of candles back</p>
 </dd>
+<dt><a href="#lowestbars">lowestbars(src, len)</a></dt>
+<dd><p>Lowest value offset for a given number of bars back</p>
+</dd>
 <dt><a href="#macd">macd(src, fast, slow, sig)</a> ⇒ <code>Array.&lt;TS&gt;</code></dt>
 <dd><p>Moving Average Convergence/Divergence</p>
 </dd>
@@ -159,6 +178,10 @@ Return the an array. Id is auto-genrated</p>
 </dd>
 <dt><a href="#modify">modify(id, fields)</a></dt>
 <dd><p>Sends update to some overlay / main chart</p>
+</dd>
+<dt><a href="#buffsize">buffsize(src, len)</a></dt>
+<dd><p>Sets the reverse buffer size for a given
+time-series (default = 5, grows on demand)</p>
 </dd>
 <dt><a href="#mfi">mfi(src, len)</a> ⇒ <code>TS</code></dt>
 <dd><p>Money Flow Index</p>
@@ -329,11 +352,11 @@ Replaces the variable if it's NaN
 
 <a name="na"></a>
 
-## na(x) ⇒ <code>\*</code>
+## na(x) ⇒ <code>boolean</code>
 Is the variable NaN ?
 
 **Kind**: global function
-**Returns**: <code>\*</code> - - New value
+**Returns**: <code>boolean</code> - - New value
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -440,6 +463,31 @@ Arccosine function
 | --- | --- | --- |
 | x | <code>number</code> | Input |
 
+<a name="signal"></a>
+
+## signal(type, data)
+Emits an event to DataCube
+
+**Kind**: global function
+
+| Param | Type | Description |
+| --- | --- | --- |
+| type | <code>string</code> | Signal type |
+| data | <code>\*</code> | Signal data |
+
+<a name="signalif"></a>
+
+## signalif(cond, type, data)
+Emits an event if cond === true
+
+**Kind**: global function
+
+| Param | Type | Description |
+| --- | --- | --- |
+| cond | <code>boolean</code> \| <code>TS</code> | The condition |
+| type | <code>string</code> | Signal type |
+| data | <code>\*</code> | Signal data |
+
 <a name="alma"></a>
 
 ## alma(src, len, offset, sigma) ⇒ <code>TS</code>
@@ -501,6 +549,17 @@ Average of arguments
 | Param | Type | Description |
 | --- | --- | --- |
 | ...args | <code>number</code> | Numeric values |
+
+<a name="since"></a>
+
+## since(cond)
+Candles since the event occured (cond === true)
+
+**Kind**: global function
+
+| Param | Type | Description |
+| --- | --- | --- |
+| cond | <code>boolean</code> \| <code>TS</code> | the condition |
 
 <a name="bb"></a>
 
@@ -754,6 +813,18 @@ Test if "src" TS is falling for "len" candles
 | src | <code>TS</code> | Input |
 | len | <code>number</code> | Length |
 
+<a name="fixnan"></a>
+
+## fixnan(src) ⇒ <code>TS</code>
+For a given series replaces NaN values with
+previous nearest non-NaN value
+
+**Kind**: global function
+
+| Param | Type | Description |
+| --- | --- | --- |
+| src | <code>TS</code> | Input time-series |
+
 <a name="floor"></a>
 
 ## floor(x) ⇒ <code>number</code>
@@ -772,6 +843,18 @@ Highest value for a given number of candles back
 
 **Kind**: global function
 **Returns**: <code>TS</code> - - New time-series
+
+| Param | Type | Description |
+| --- | --- | --- |
+| src | <code>TS</code> | Input |
+| len | <code>number</code> | Length |
+
+<a name="highestbars"></a>
+
+## highestbars(src, len)
+Highest value offset for a given number of bars back
+
+**Kind**: global function
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -812,7 +895,7 @@ Returns x or y depending on the condition
 
 | Param | Type | Description |
 | --- | --- | --- |
-| cond | <code>boolean</code> | Condition |
+| cond | <code>boolean</code> \| <code>TS</code> | Condition |
 | x | <code>\*</code> | Frist value |
 | y | <code>\*</code> | Second value |
 
@@ -895,6 +978,18 @@ Lowest value for a given number of candles back
 | src | <code>TS</code> | Input |
 | len | <code>number</code> | Length |
 
+<a name="lowestbars"></a>
+
+## lowestbars(src, len)
+Lowest value offset for a given number of bars back
+
+**Kind**: global function
+
+| Param | Type | Description |
+| --- | --- | --- |
+| src | <code>TS</code> | Input |
+| len | <code>number</code> | Length |
+
 <a name="macd"></a>
 
 ## macd(src, fast, slow, sig) ⇒ <code>Array.&lt;TS&gt;</code>
@@ -932,6 +1027,19 @@ Sends update to some overlay / main chart
 | --- | --- | --- |
 | id | <code>string</code> | Overlay id |
 | fields | <code>Object</code> | Fields to be overwritten |
+
+<a name="buffsize"></a>
+
+## buffsize(src, len)
+Sets the reverse buffer size for a given
+time-series (default = 5, grows on demand)
+
+**Kind**: global function
+
+| Param | Type | Description |
+| --- | --- | --- |
+| src | <code>TS</code> | Input |
+| len | <code>number</code> | New length |
 
 <a name="mfi"></a>
 
