@@ -282,7 +282,7 @@ export default class DCEvents {
     }
 
     set_loading(flag) {
-        let skrr = dc.get('.').filter(x => x.settings.$props)
+        let skrr = this.get('.').filter(x => x.settings.$props)
         for (var s of skrr) {
             this.merge(`${s.id}`, { loading: flag })
         }

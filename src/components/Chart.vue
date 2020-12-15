@@ -100,8 +100,8 @@ export default {
             if (this._hook_xlocked) this.ce('?x-locked', state)
         },
         calc_interval() {
-            if (this.ohlcv.length < 2) return
             let tf = Utils.parse_tf(this.forced_tf)
+            if (this.ohlcv.length < 2 && !tf) return
             this.interval_ms = tf || Utils.detect_interval(this.ohlcv)
             this.interval = this.$props.ib ? 1 : this.interval_ms
             Utils.warn(

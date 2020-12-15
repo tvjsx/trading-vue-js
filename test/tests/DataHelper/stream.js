@@ -13,7 +13,7 @@ export default function Stream(url) {
             data = JSON.parse(data.data)
             cb(data)
         } catch(e) {
-            console.log(e.toString())
+            console.log(e)
         }
     }
 
