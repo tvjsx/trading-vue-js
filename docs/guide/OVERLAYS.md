@@ -589,7 +589,7 @@ init: `
 
 ### Live trading
 
-The main question: can an overlay be a fully-functional trading program? The answer is **yes**! You can make an fully functional trading bot with one overlay. Of course, if you prefer to handle trading signals in your app, you can also do that.
+The main question: can an overlay be a fully-functional trading program? The answer is **yes**! You can make a fully functional trading bot with overlay only. Of course, if you prefer to handle trading signals in your app, you can do that too.
 
 As always, an example will explain it better. What strategy shall we use? You guessed it right:
 
