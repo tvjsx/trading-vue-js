@@ -7,7 +7,9 @@ This guide's version is **1.0.0-rc.1**
 As the title says, this guide is for OGs, meaning you'll need to have some experience with the project and Vue.js.
 
 **The 101 guide**: https://github.com/tvjsx/trading-vue-js/tree/master/docs/guide
+
 **The app for testing**: https://github.com/tvjsx/trading-vue-101
+
 **Introduction to scripts**: https://github.com/tvjsx/trading-vue-js/blob/master/docs/guide/SCRIPTS.md
 
 ## Prerequisites
