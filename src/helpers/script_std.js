@@ -1150,7 +1150,7 @@ export default class ScriptStd {
 
     /** Relative Strength Index
      * @param {TS} x - First Input
-     * @param {number|TS} y - First Input
+     * @param {number|TS} y - Second Input
      * @return {TS} - New time-series
      */
     rsi(x, y, _id) {

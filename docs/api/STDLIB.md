@@ -1276,7 +1276,7 @@ Relative Strength Index
 | Param | Type | Description |
 | --- | --- | --- |
 | x | <code>TS</code> | First Input |
-| y | <code>number</code> \| <code>TS</code> | First Input |
+| y | <code>number</code> \| <code>TS</code> | Second Input |
 
 <a name="sar"></a>
 
