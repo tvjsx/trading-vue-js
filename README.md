@@ -218,12 +218,12 @@ That's why the title doesn't lie: you can draw ANYTHING.
 * ~~Docs~~
 * ~~Tests~~
 * Solve known issues (marked as 'TODO: IMPORTANT')
-* Performance improvements
+* ~~Performance improvements~~
 * ~~Data-manipulation helpers~~
 * ~~Add more built-in overlays~~
 * ~~Add toolbar (drawing tools)~~
-* Custom loayout / layout persistence
-* Fix and improve mobile version
+* ~~Custom loayout / layout persistence~~[POST-RELEASE]
+* ~~Fix and improve mobile version~~
 * **Version 1.0.0 here**
 
 Progress in details: https://github.com/tvjsx/trading-vue-js/projects/1

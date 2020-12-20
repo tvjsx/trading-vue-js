@@ -339,7 +339,7 @@ draw(ctx) {
 }
 ```
 
-You also can use a predefined primitives, which can be imported as `import primitives form 'trading-vue-js'`. (the source codes are here:  https://github.com/tvjsx/trading-vue-js/tree/master/src/components/primitives)
+You can also use a predefined primitives, which can be imported as `import primitives form 'trading-vue-js'`. (the source codes are here:  https://github.com/tvjsx/trading-vue-js/tree/master/src/components/primitives)
 
 ### Tool Descriptor
 
