@@ -1,6 +1,10 @@
 
 # Std-lib (Scripts)
 
+This guide version is **1.0.0**
+
+![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=Current%20lib%20version)
+
 ## Functions
 
 <dl>

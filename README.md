@@ -20,7 +20,7 @@ If you create trading software - this lib is probably for you. If you like to ma
 <br>
 
 <div align="center">
-    <img width="780" heigth="446" src="https://github.com/tvjsx/trading-vue-js/blob/master/assets/README-new-preview.gif?raw=true" alt="White preview">
+    <img width="720" heigth="420" src="https://github.com/tvjsx/trading-vue-js/blob/master/assets/V1.gif?raw=true" alt="White preview">
 </div>
 
 <br>
@@ -217,7 +217,7 @@ That's why the title doesn't lie: you can draw ANYTHING.
 
 * ~~Docs~~
 * ~~Tests~~
-* Solve known issues (marked as 'TODO: IMPORTANT')
+* ~~Solve known issues (marked as 'TODO: IMPORTANT')~~ [PARTIALLY]
 * ~~Performance improvements~~
 * ~~Data-manipulation helpers~~
 * ~~Add more built-in overlays~~
