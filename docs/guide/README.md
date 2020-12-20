@@ -1,6 +1,6 @@
 # Getting Started
 
-This guide's version is **0.10.0**
+This guide's version is **1.0.0**
 
 ![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=Current%20lib%20version)
 
