@@ -32,7 +32,8 @@ export default {
                 height: layout.height,
             },
             style: {
-                backgroundColor: this.$props.colors.back
+                backgroundColor: this.$props.colors.back,
+                cursor:'ns-resize'
             },
         })
     },
