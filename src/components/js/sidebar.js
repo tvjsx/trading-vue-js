@@ -101,7 +101,7 @@ export default class Sidebar {
         var x, y, w, h, side = this.side
         var sb = this.layout.sb
 
-        this.ctx.fillStyle = this.$p.colors.back
+        //this.ctx.fillStyle = this.$p.colors.back
         this.ctx.font = this.$p.font
 
         switch(side) {
@@ -111,7 +111,8 @@ export default class Sidebar {
                 w = Math.floor(sb)
                 h = this.layout.height
 
-                this.ctx.fillRect(x, y, w, h)
+                //this.ctx.fillRect(x, y, w, h)
+                this.ctx.clearRect(x, y, w, h)
 
                 this.ctx.strokeStyle = this.$p.colors.scale
 
@@ -126,7 +127,8 @@ export default class Sidebar {
                 y = 0
                 w = Math.floor(sb)
                 h = this.layout.height
-                this.ctx.fillRect(x, y, w, h)
+                //this.ctx.fillRect(x, y, w, h)
+                this.ctx.clearRect(x, y, w, h)
 
                 this.ctx.strokeStyle = this.$p.colors.scale
 
