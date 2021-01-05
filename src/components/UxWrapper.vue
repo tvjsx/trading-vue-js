@@ -282,6 +282,7 @@ export default {
         top: 5px;
         user-select: none;
         text-align: center;
+        z-index: 100;
     }
     .tvjs-ux-wrapper-close-hb {
 

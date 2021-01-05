@@ -337,6 +337,15 @@ draw(ctx) {
     this.ctx.moveTo(x1, y1)
     this.ctx.lineTo(x2, y2)
 }
+// ...
+computed: {
+    p1() {
+        return this.$props.settings.p1
+    },
+    p2() {
+        return this.$props.settings.p2
+    }
+}    
 ```
 
 You can also use a predefined primitives, which can be imported as `import primitives form 'trading-vue-js'`. (the source codes are here:  https://github.com/tvjsx/trading-vue-js/tree/master/src/components/primitives)

@@ -178,6 +178,9 @@ export default class DCEvents {
         if (args.length && this.sett.scripts) {
             let obj = this.get_overlay(args[0])
             if (!obj || obj.scripts === false) return
+            if (obj.script && obj.script.src) {
+                args[0].src = obj.script.src // opt, override the src
+            }
             // Parse script props & get the values from the ov
             // TODO: remove unnecessary script initializations
             let s = obj.settings
