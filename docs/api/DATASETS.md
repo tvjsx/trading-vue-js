@@ -86,7 +86,7 @@ dc.get('datasets..data') // All datasets, array of Promises
 
 ## Limiting RAM
 
-Datasets allow you to keep data for multiple symbols at the same time. For example, you don't need to reload all data every time user switches between `BTC/USD` & `LTC/USD`. Instead you can upload new datasets and update them (through `merge`) for the active symbol.
+Datasets allow you to keep data for multiple symbols at the same time. For example, you don't need to reload all data every time user switches between `BTC/USD` & `LTC/USD`. Instead you can keep uploading new datasets and updating them (through `merge`) for the active symbol.
 
 For this reason there is a max-size limit for all datasets:
 
