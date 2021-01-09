@@ -96,7 +96,7 @@ let dc = new DataCube({}, {
 })
 ```
 
-Then each time you upload new dataset, all sets will be purged by `last_upd` time. To force this operation send an empty `upload-data` event:
+Then, each time you upload new dataset, all sets will be purged by the `last_upd` time. To force this operation send an empty `upload-data` event:
 
 ```js
 dc.ww.just('upload-data', {})
