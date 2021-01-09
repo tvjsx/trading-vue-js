@@ -50,7 +50,7 @@ dc.update({
 To trigger the `update` functions of the scripts, in addition send an array of the latest `ohlcv` points:
 
 ```js
-dc.update({
+dc.ww.just('update-data', {
     'datasets.dataset-id-1': [...],
     'datasets.dataset-id-2': [...],
     'datasets.dataset-id-3': [...],
