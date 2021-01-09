@@ -84,8 +84,7 @@ dc.get('datasets..data') // All datasets, array of Promises
 
 **WARNING:** if you uploaded gigabytes of data it will likely make the query pretty slow.
 
-## Limiting datasets
-
+## Limiting RAM
 
 Datasets designed to allow keeping data for several symbols simultaneously. For example, you don't need to reload all data every time user switches between `BTC/USD` & `LTC/USD`. Instead you can upload new datasets and update them (through `merge`) for the active symbol.
 
@@ -97,7 +96,7 @@ let dc = new DataCube({}, {
 })
 ```
 
-Then each time you upload new dataset, the all sets will be purged by `last_upd` time. To force this operation send an empty `upload-data` event:
+Then each time you upload new dataset, all sets will be purged by `last_upd` time. To force this operation send an empty `upload-data` event:
 
 ```js
 dc.ww.just('upload-data', {})
