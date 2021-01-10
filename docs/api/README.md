@@ -302,7 +302,7 @@ Data for building overlays. Defined in `mixins/overlay.js`, accessed through ove
 | settings | Object | Indicator's settings, defined in `data.json` |
 | grid_id | Number | Current grid id |
 | config  | Object | Chart config, see 'constants.js' |
-| meta | Objects | Contains the last price and other info |
+| meta | Object | Contains the last price and other info |
 | i0 | Number | The first global index of the current subset |
 
 ### Cursor data*
