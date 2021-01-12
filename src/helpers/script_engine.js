@@ -352,7 +352,8 @@ class ScriptEngine {
             this.close[0] = data[4]
             this.vol[0] = data[5]
             for (var id in this.tss) {
-                this.tss[id] = this.tss[id].__fn__()
+                if (this.tss[id].__tf__) this.tss[id].__fn__()
+                else this.tss[id][0] = this.tss[id].__fn__()
             }
         }
     }
