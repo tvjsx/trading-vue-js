@@ -55,6 +55,16 @@ export default {
                 state: 'tracking',
                 hidden: this.shift
             }))
+            var self = this;
+            this.pins[0].on('settled', () => {
+                // Call when current tool drawing is finished
+                // (Optionally) reset the mode back to 'Cursor'
+                if(self.pins[1].state == 'settled')
+                {
+                    _this.set_state('finished')
+                    _this.$emit('drawing-mode-off')
+                }
+            })
             this.pins[1].on('settled', () => {
                 // Call when current tool drawing is finished
                 // (Optionally) reset the mode back to 'Cursor'

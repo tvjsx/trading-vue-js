@@ -52,10 +52,10 @@ export default {
             this.pins[0].on('settled', () => {
                 // Call when current tool drawing is finished
                 // (Optionally) reset the mode back to 'Cursor'
-                if(self.pins[1].state == 'finished')
+                if(self.pins[1].state == 'settled')
                 {
-                    this.set_state('finished')
-                    this.$emit('drawing-mode-off')
+                    _this.set_state('finished')
+                    _this.$emit('drawing-mode-off')
                 }
             })
             this.pins[1].on('settled', () => {

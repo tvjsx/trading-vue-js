@@ -312,6 +312,16 @@ init() {
     this.pins.push(new Pin(this, 'p2', {
         state: 'tracking'
     }))
+    var self = this;
+    this.pins[0].on('settled', () => {
+        // Call when current tool drawing is finished
+        // (Optionally) reset the mode back to 'Cursor'
+        if(self.pins[1].state == 'settled')
+        {
+            _this.set_state('finished')
+            _this.$emit('drawing-mode-off')
+        }
+    })
     this.pins[1].on('settled', () => {
         // Call when current tool drawing is finished
         // (Optionally) reset the mode back to 'Cursor'
@@ -345,7 +355,7 @@ computed: {
     p2() {
         return this.$props.settings.p2
     }
-}    
+}
 ```
 
 You can also use a predefined primitives, which can be imported as `import primitives form 'trading-vue-js'`. (the source codes are here:  https://github.com/tvjsx/trading-vue-js/tree/master/src/components/primitives)
