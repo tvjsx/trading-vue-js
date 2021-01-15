@@ -377,6 +377,7 @@ export default class DCEvents {
         switch (type) {
             case 'Remove':
                 if (this.data.selected) {
+                    this.tv.$emit('before-tool-destroyed', this.data.selected)
                     this.del(this.data.selected)
                     this.remove_trash_icon()
                     this.drawing_mode_off()
