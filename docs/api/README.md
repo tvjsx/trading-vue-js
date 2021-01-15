@@ -89,8 +89,8 @@ export default {
 
 Sets custom time range.
 
-* **Arguments**: t1 (Number) Left-bound of the range
-* **Arguments**: t2 (Number) Right-bound of the range
+* **Arguments**: t1 (Number) Left-bound of the range | Index (in IB mode)
+* **Arguments**: t2 (Number) Right-bound of the range | Index (in IB mode)
 
 *Example:*
 
@@ -120,7 +120,7 @@ Gets current timerange.
 
 Goto to a specific timestamp
 
-* **Arguments**: t (Number) Target timestamp
+* **Arguments**: t (Number) Target timestamp | Index (in IB mode)
 
 ### getCursor()
 
