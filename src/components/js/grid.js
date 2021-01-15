@@ -2,6 +2,7 @@
 // emits Vue-events if something has changed (e.g. range)
 // Think of it as an I/O system for Grid.vue
 
+import FrameAnimation from '../../stuff/frame.js'
 import * as Hammer from 'hammerjs'
 import Hamster from 'hamsterjs'
 import Utils from '../../stuff/utils.js'
@@ -14,6 +15,8 @@ export default class Grid {
 
         this.MIN_ZOOM = comp.config.MIN_ZOOM
         this.MAX_ZOOM = comp.config.MAX_ZOOM
+
+        if (Utils.is_mobile) this.MIN_ZOOM *= 0.5
 
         this.canvas = canvas
         this.ctx = canvas.getContext('2d')
@@ -41,13 +44,18 @@ export default class Grid {
         this.hm.wheel((event, delta) => this.mousezoom(-delta * 50, event))
 
         let mc = this.mc = new Hammer.Manager(this.canvas)
-        mc.add(new Hammer.Pan({ threshold: 0}))
+        let T = Utils.is_mobile ? 10 : 0
+        mc.add(new Hammer.Pan({ threshold: T}))
         mc.add(new Hammer.Tap())
-        mc.add(new Hammer.Pinch())
+        mc.add(new Hammer.Pinch({ threshold: 0}))
         mc.get('pinch').set({ enable: true })
+        if (Utils.is_mobile) mc.add(new Hammer.Press())
 
         mc.on('panstart', event => {
             if (this.cursor.scroll_lock) return
+            if (this.cursor.mode === 'aim') {
+                return this.emit_cursor_coord(event)
+            }
             let tfrm = this.$p.y_transform
             this.drug = {
                 x: event.center.x + this.offset_x,
@@ -58,7 +66,8 @@ export default class Grid {
                     (tfrm.offset || 0) : 0,
                 y_r: tfrm && tfrm.range ?
                     tfrm.range.slice() : undefined,
-                B: this.layout.B
+                B: this.layout.B,
+                t0: Utils.now()
             }
             this.comp.$emit('cursor-changed', {
                 grid_id: this.id,
@@ -69,6 +78,10 @@ export default class Grid {
         })
 
         mc.on('panmove', event => {
+            if (Utils.is_mobile) {
+                this.calc_offset()
+                this.propagate('mousemove', this.touch2mouse(event))
+            }
             if (this.drug) {
                 this.mousedrag(
                     this.drug.x + event.deltaX,
@@ -79,24 +92,35 @@ export default class Grid {
                     x: event.center.x + this.offset_x,
                     y: event.center.y + this.offset_y
                 })
+            } else if (this.cursor.mode === 'aim') {
+                this.emit_cursor_coord(event)
             }
         })
 
-        mc.on('panend', () => {
+        mc.on('panend', event => {
+            if (Utils.is_mobile && this.drug) {
+                this.pan_fade(event)
+            }
             this.drug = null
             this.comp.$emit('cursor-locked', false)
         })
 
         mc.on('tap', event => {
+            if (!Utils.is_mobile) return
+            this.sim_mousedown(event)
+            if (this.fade) this.fade.stop()
+            this.comp.$emit('cursor-changed', {})
             this.comp.$emit('cursor-changed', {
-                grid_id: this.id,
-                x: event.center.x + this.offset_x,
-                y: event.center.y + this.offset_y
+                /*grid_id: this.id,
+                x: undefined,//event.center.x + this.offset_x,
+                y: undefined,//event.center.y + this.offset_y,*/
+                mode: 'explore'
             })
             this.update()
         })
 
         mc.on('pinchstart', () =>  {
+            this.drug = null
             this.pinch = {
                 t: this.range[1] - this.range[0],
                 r: this.range.slice()
@@ -111,6 +135,15 @@ export default class Grid {
             if (this.pinch) this.pinchzoom(event.scale)
         })
 
+        mc.on('press', event => {
+            if (!Utils.is_mobile) return
+            if (this.fade) this.fade.stop()
+            this.calc_offset()
+            this.emit_cursor_coord(event, { mode: 'aim' })
+            setTimeout(() => this.update())
+            this.sim_mousedown(event)
+        })
+
         let add = addEventListener
         add("gesturestart", this.gesturestart)
         add("gesturechange", this.gesturechange)
@@ -123,35 +156,30 @@ export default class Grid {
     gestureend(event) { event.preventDefault() }
 
     mousemove(event) {
-
+        if (Utils.is_mobile) return
         this.comp.$emit('cursor-changed', {
             grid_id: this.id,
             x: event.layerX,
             y: event.layerY + this.layout.offset
         })
-
-        let rect = this.canvas.getBoundingClientRect()
-        this.offset_x = -rect.x//event.layerX - event.pageX
-            //+ window.scrollX
-        this.offset_y = -rect.y//event.layerY - event.pageY
-            //+ this.layout.offset
-            //+ window.scrollY
+        this.calc_offset()
         this.propagate('mousemove', event)
     }
 
     mouseout(event) {
+        if (Utils.is_mobile) return
         this.comp.$emit('cursor-changed', {})
         this.propagate('mouseout', event)
     }
 
     mouseup(event) {
         this.drug = null
-    //    this.pinch = null
         this.comp.$emit('cursor-locked', false)
         this.propagate('mouseup', event)
     }
 
     mousedown(event) {
+        if (Utils.is_mobile) return
         this.propagate('mousedown', event)
         this.comp.$emit('cursor-locked', true)
         if (event.defaultPrevented) return
@@ -160,8 +188,68 @@ export default class Grid {
         })
     }
 
+    // Simulated mousedown (for mobile)
+    sim_mousedown(event) {
+        if (event.srcEvent.defaultPrevented) return
+        this.comp.$emit('custom-event', {
+            event: 'grid-mousedown',
+            args: [this.id, event]
+        })
+        this.propagate('mousemove', this.touch2mouse(event))
+        this.update()
+        this.propagate('mousedown', this.touch2mouse(event))
+        setTimeout(() => {
+            this.propagate('click', this.touch2mouse(event))
+        })
+    }
+
+    // Convert touch to "mouse" event
+    touch2mouse(e) {
+        this.calc_offset()
+        return {
+            original: e.srcEvent,
+            layerX: e.center.x + this.offset_x,
+            layerY: e.center.y + this.offset_y,
+            preventDefault: function() {
+                this.original.preventDefault()
+            }
+        }
+    }
+
     click(event) {
         this.propagate('click', event)
+    }
+
+    emit_cursor_coord(event, add = {}) {
+        this.comp.$emit('cursor-changed', Object.assign({
+            grid_id: this.id,
+            x: event.center.x + this.offset_x,
+            y: event.center.y + this.offset_y + this.layout.offset
+        }, add))
+    }
+
+    pan_fade(event) {
+        let dt = Utils.now() - this.drug.t0
+        let dx = this.range[1] - this.drug.r[1]
+        let v = 42 * dx / dt
+        let v0 = Math.abs(v * 0.01)
+        if (dt > 500) return
+        if (this.fade) this.fade.stop()
+        this.fade = new FrameAnimation(self => {
+            v *= 0.85
+            if (Math.abs(v) < v0) {
+                self.stop()
+            }
+            this.range[0] += v
+            this.range[1] += v
+            this.change_range()
+        })
+    }
+
+    calc_offset() {
+        let rect = this.canvas.getBoundingClientRect()
+        this.offset_x = -rect.x
+        this.offset_y = -rect.y
     }
 
     new_layer(layer) {
@@ -275,6 +363,7 @@ export default class Grid {
 
     mousezoom(delta, event) {
 
+        // TODO: for mobile
         if (this.wmode !== 'pass') {
             if (this.wmode === 'click' && !this.$p.meta.activated) {
                 return

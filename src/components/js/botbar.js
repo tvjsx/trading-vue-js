@@ -27,9 +27,10 @@ export default class Botbar {
 
         const sb = this.layout.grids[0].sb
 
-        this.ctx.fillStyle = this.$p.colors.back
+        //this.ctx.fillStyle = this.$p.colors.back
         this.ctx.font = this.$p.font
-        this.ctx.fillRect(0, 0, width, height)
+        //this.ctx.fillRect(0, 0, width, height)
+        this.ctx.clearRect(0, 0, width, height)
 
         this.ctx.strokeStyle = this.$p.colors.scale
 

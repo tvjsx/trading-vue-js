@@ -28,6 +28,10 @@
             @range-changed="range_changed"
             @legend-button-click="legend_button">
         </chart>
+        <transition name="tvjs-drift">
+            <the-tip :data="tip" v-if="tip"
+                @remove-me="tip = null"/>
+        </transition>
     </div>
 </template>
 
@@ -37,12 +41,13 @@ import Const from './stuff/constants.js'
 import Chart from './components/Chart.vue'
 import Toolbar from './components/Toolbar.vue'
 import Widgets from './components/Widgets.vue'
+import TheTip from './components/TheTip.vue'
 import XControl from './mixins/xcontrol.js'
 
 export default {
     name: 'TradingVue',
     components: {
-        Chart, Toolbar, Widgets
+        Chart, Toolbar, Widgets, TheTip
     },
     mixins: [ XControl ],
     props: {
@@ -108,7 +113,7 @@ export default {
         },
         colorWickSm: {
             type: String,
-            default: '#bdbec0'
+            default: 'transparent' // deprecated
         },
         colorVolUp: {
             type: String,
@@ -242,7 +247,7 @@ export default {
         }
     },
     data() {
-        return { reset: 0 }
+        return { reset: 0, tip: null }
     },
     beforeUnmount() {
         this.custom_event({ event: 'before-destroy' })
@@ -264,15 +269,16 @@ export default {
             // TODO: limit goto & setRange (out of data error)
             if (this.chart_props.ib) {
                 const ti_map = this.$refs.chart.ti_map
-                t = ti_map.smth2i(t)
+                t = ti_map.gt2i(t, this.$refs.chart.ohlcv)
             }
             this.$refs.chart.goto(t)
         },
         setRange(t1, t2) {
             if (this.chart_props.ib) {
                 const ti_map = this.$refs.chart.ti_map
-                t1 = ti_map.smth2i(t1)
-                t2 = ti_map.smth2i(t2)
+                const ohlcv = this.$refs.chart.ohlcv
+                t1 = ti_map.gt2i(t1, ohlcv)
+                t2 = ti_map.gt2i(t2, ohlcv)
             }
             this.$refs.chart.setRange(t1, t2)
         },
@@ -296,6 +302,9 @@ export default {
                 return copy
             }
             return cursor
+        },
+        showTheTip(text, color = "orange") {
+            this.tip = { text, color }
         },
         legend_button(event) {
             this.custom_event({

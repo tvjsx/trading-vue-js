@@ -106,5 +106,6 @@ export default {
     border-right: 1px solid black;
     z-index: 101;
     padding-top: 3px;
+    user-select: none;
 }
 </style>

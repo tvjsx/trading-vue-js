@@ -113,7 +113,7 @@ class ScriptEngine {
             }
         }
 
-        s.env = new ScriptEnv(s, Object.assign({
+        s.env = new ScriptEnv(s, Object.assign(this.shared, {
             open: this.open,
             high: this.high,
             low: this.low,
@@ -123,7 +123,8 @@ class ScriptEngine {
             t: () => this.t,
             iter: () => this.iter,
             tf: this.tf,
-            range: this.range
+            range: this.range,
+            onclose: true
         }, this.tss))
 
         this.map[s.uuid] = s
@@ -153,15 +154,32 @@ class ScriptEngine {
         let mfs1 = this.make_mods_hooks('pre_step')
         let mfs2 = this.make_mods_hooks('post_step')
 
+        let step = (sel, unshift) => {
+            for (var m = 0; m < mfs1.length; m++) {
+                mfs1[m](sel) // pre_step
+            }
+
+            for (var id of sel) {
+                this.map[id].env.step(unshift)
+            }
+
+            for (var m = 0; m < mfs2.length; m++) {
+                mfs2[m](sel) // post_step
+            }
+        }
+
         try {
             let ohlcv = this.data.ohlcv.data
             let i = ohlcv.length - 1
             let last = ohlcv[i]
             let sel = Object.keys(this.map)
             let unshift = false
+            this.shared.event = 'update'
 
             for (var candle of candles) {
                 if (candle[0] > last[0]) {
+                    this.shared.onclose = true
+                    step(sel, false) // On candle close
                     ohlcv.push(candle)
                     unshift = true
                     i++
@@ -176,17 +194,8 @@ class ScriptEngine {
             this.t = ohlcv[i][0]
             this.step(ohlcv[i], unshift)
 
-            for (var m = 0; m < mfs1.length; m++) {
-                mfs1[m](sel) // pre_step
-            }
-
-            for (var id of sel) {
-                this.map[id].env.step(unshift)
-            }
-
-            for (var m = 0; m < mfs2.length; m++) {
-                mfs2[m](sel) // post_step
-            }
+            this.shared.onclose = false
+            step(sel, unshift)
 
             this.limit()
             this.send_update()
@@ -214,9 +223,10 @@ class ScriptEngine {
         this.close = TS('close', [])
         this.vol = TS('vol', [])
 
-        // Shared TSs
+        // Shared TSs & user vars
         this.tss = {}
         this.std_plus = {}
+        this.shared = {}
 
         // Engine state
         this.iter = 0
@@ -277,6 +287,7 @@ class ScriptEngine {
 
             let ohlcv = this.data.ohlcv.data
             let start = this.start(ohlcv)
+            this.shared.event = 'step'
 
             for (var i = start; i < ohlcv.length; i++) {
 
@@ -289,6 +300,7 @@ class ScriptEngine {
                 this.iter = i - start
                 this.t = ohlcv[i][0]
                 this.step(ohlcv[i])
+                this.shared.onclose = i !== ohlcv.length - 1
 
                 // SLOW DOWN TEST:
                 //for (var k = 1; k < 1000000; k++) {}
@@ -317,8 +329,6 @@ class ScriptEngine {
         this.post_run_mods(sel)
 
         this.perf = Utils.now() - t1
-        //console.log('Perf',  this.perf)
-
         this.running = false
 
         this.send('overlay-data', this.format_map(sel))
@@ -342,7 +352,8 @@ class ScriptEngine {
             this.close[0] = data[4]
             this.vol[0] = data[5]
             for (var id in this.tss) {
-                this.tss[id] = this.tss[id].__fn__()
+                if (this.tss[id].__tf__) this.tss[id].__fn__()
+                else this.tss[id][0] = this.tss[id].__fn__()
             }
         }
     }

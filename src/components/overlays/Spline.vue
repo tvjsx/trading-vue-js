@@ -11,7 +11,7 @@ export default {
     mixins: [Overlay],
     methods: {
         meta_info() {
-            return { author: 'C451', version: '1.1.1' }
+            return { author: 'C451', version: '1.1.2' }
         },
         // Here goes your code. You are provided with:
         // { All stuff is reactive }
@@ -38,23 +38,27 @@ export default {
 
             const layout = this.$props.layout
             const i = this.data_index
+            const data = this.$props.data
 
             if (!this.skip_nan) {
-                for (var p of this.$props.data) {
+                for (var k = 0, n = data.length; k < n; k++) {
+                    let p = data[k]
                     let x = layout.t2screen(p[0])
                     let y = layout.$2screen(p[i])
                     ctx.lineTo(x, y)
                 }
             } else {
-                for (var p of this.$props.data) {
+                var skip = false
+                for (var k = 0, n = data.length; k < n; k++) {
+                    let p = data[k]
                     let x = layout.t2screen(p[0])
                     let y = layout.$2screen(p[i])
                     if (p[i] == null || y !== y) {
-                        this._skip = true
+                        skip = true
                     } else {
-                        if (this._skip) ctx.moveTo(x, y)
+                        if (skip) ctx.moveTo(x, y)
                         ctx.lineTo(x, y)
-                        this._skip = false
+                        skip = false
                     }
                 }
             }
@@ -89,6 +93,7 @@ export default {
         data_index() {
             return this.sett.dataIndex || 1
         },
+        // Don't connect separate parts if true
         skip_nan() {
             return this.sett.skipNaN
         }

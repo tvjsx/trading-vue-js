@@ -8,11 +8,17 @@
              :style="{ color: common.colors.title }">
               {{common.title_txt}}
         </span>
-        O<span class="t-vue-lspan" >{{ohlcv[0]}}</span>
-        H<span class="t-vue-lspan" >{{ohlcv[1]}}</span>
-        L<span class="t-vue-lspan" >{{ohlcv[2]}}</span>
-        C<span class="t-vue-lspan" >{{ohlcv[3]}}</span>
-        V<span class="t-vue-lspan" >{{ohlcv[4]}}</span>
+        <span v-if="show_values">
+            O<span class="t-vue-lspan" >{{ohlcv[0]}}</span>
+            H<span class="t-vue-lspan" >{{ohlcv[1]}}</span>
+            L<span class="t-vue-lspan" >{{ohlcv[2]}}</span>
+            C<span class="t-vue-lspan" >{{ohlcv[3]}}</span>
+            V<span class="t-vue-lspan" >{{ohlcv[4]}}</span>
+        </span>
+        <span v-if="!show_values" class="t-vue-lspan"
+            :style="{color: common.colors.text}">
+            {{(common.meta.last || [])[4]}}
+        </span>
     </div>
     <div class="t-vue-ind" v-for="ind in this.indicators">
         <span class="t-vue-iname">{{ind.name}}</span>
@@ -28,7 +34,8 @@
         </button-group>
         <span class="t-vue-ivalues" v-if="ind.v">
             <span class="t-vue-lspan t-vue-ivalue"
-                  v-for="v in ind.values" :style="{ color: v.color }">
+                v-if="show_values"
+                v-for="v in ind.values" :style="{ color: v.color }">
                 {{v.value}}
             </span>
         </span>
@@ -121,6 +128,9 @@ export default {
         main_type() {
             let f = this.common.data.find(x => x.main)
             return f ? f.type : undefined
+        },
+        show_values() {
+            return this.common.cursor.mode !== 'explore'
         }
     },
     methods: {
@@ -163,6 +173,12 @@ export default {
     pointer-events: none;
     text-align: left;
     user-select: none;
+    font-weight: 300;
+}
+@media (min-resolution: 2x) {
+    .trading-vue-legend {
+        font-weight: 400;
+    }
 }
 .trading-vue-ohlcv {
     pointer-events: none;
@@ -170,7 +186,6 @@ export default {
 }
 .t-vue-lspan {
     font-variant-numeric: tabular-nums;
-    font-weight: 100;
     font-size: 0.95em;
     color: #999999; /* TODO: move => params */
     margin-left: 0.1em;
@@ -179,12 +194,10 @@ export default {
 .t-vue-title {
     margin-right: 0.25em;
     font-size: 1.45em;
-    font-weight: 200;
 }
 .t-vue-ind {
     margin-left: 0.2em;
     margin-bottom: 0.5em;
-    font-weight: 200;
     font-size: 1.0em;
     margin-top: 0.3em;
 }

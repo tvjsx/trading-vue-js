@@ -1,6 +1,6 @@
 # DataCube API
 
-This guide version is **0.8.0**
+This guide version is **0.10.0**
 
 ![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=Current%20lib%20version)
 
@@ -61,8 +61,9 @@ new DataCube({
 | script_depth | Number | 0 === Exec on all data, default = 0 |
 | auto_scroll | Boolean  | Auto scroll to a new candle, default = true |
 | scripts | Boolean | Enable overlays scripts, default = true |
-| node_url <sup style="color:#14b32a">new</sup> | String | Use node.js instead of WW |
-| shift_measure <sup style="color:#14b32a">new</sup>  | String  | Shift+click measurment, default = true |
+| node_url | String | Use node.js instead of WW |
+| shift_measure | String  | Shift+click measurment, default = true |
+| ww_ram_limit <sup style="color:#14b32a">new</sup> | Number  | WebWorker RAM limit (MB), default = 0 |
 
 
 ## Query system

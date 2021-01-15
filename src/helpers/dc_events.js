@@ -43,6 +43,9 @@ export default class DCEvents {
                 case 'modify-overlay':
                     this.modify_overlay(e.data.data)
                     break
+                case 'script-signal':
+                    this.tv.$emit('signal', e.data.data)
+                    break
             }
             for (var ctrl of this.tv.controllers) {
                 if (ctrl.post_ww) ctrl.post_ww(e.data)
@@ -175,6 +178,9 @@ export default class DCEvents {
         if (args.length && this.sett.scripts) {
             let obj = this.get_overlay(args[0])
             if (!obj || obj.scripts === false) return
+            if (obj.script && obj.script.src) {
+                args[0].src = obj.script.src // opt, override the src
+            }
             // Parse script props & get the values from the ov
             // TODO: remove unnecessary script initializations
             let s = obj.settings
@@ -279,7 +285,7 @@ export default class DCEvents {
     }
 
     set_loading(flag) {
-        let skrr = dc.get('.').filter(x => x.settings.$props)
+        let skrr = this.get('.').filter(x => x.settings.$props)
         for (var s of skrr) {
             this.merge(`${s.id}`, { loading: flag })
         }
@@ -312,8 +318,16 @@ export default class DCEvents {
             .forEach(x => this.del(x.id))
         if (this.data.tool && this.data.tool !== 'Cursor' &&
            !this.data.drawingMode) {
-            this.data.drawingMode = true
-            this.build_tool(args[0])
+            // Prevent from "null" tools (tool created with HODL)
+            if (args[1].type !== 'tap') {
+                this.tv.$set(this.data, 'drawingMode', true)
+                this.build_tool(args[0])
+            } else {
+                this.tv.showTheTip(
+                    `<b>Hodl</b>+<b>Drug</b> to create, ` +
+                    `<b>Tap</b> to finish a tool`
+                )
+            }
         } else if (this.sett.shift_measure && args[1].shiftKey) {
             rem()
             this.tv.$nextTick(() =>

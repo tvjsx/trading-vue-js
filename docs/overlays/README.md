@@ -1,6 +1,6 @@
 # Built-in Overlays
 
-This guide's version is **0.7.0**
+This guide's version is **1.0.0**
 
 ![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=Current%20lib%20version)
 
@@ -157,6 +157,7 @@ The Style object, if defined, overwrites all the color settings of a particular 
 | lineWidth | Number | General line width, px |
 | lineWidths | Array of Numbers | Line widths, [px]|
 | colors | Array of Strings | Line colors, [hex] |
+| skipNaN | Boolean | Skip NaN values, default = false |
 
 ## Channel
 

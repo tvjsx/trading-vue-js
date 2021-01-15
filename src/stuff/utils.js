@@ -122,7 +122,7 @@ export default {
 
     // Fast filter. Really fast, like 10X
     fast_filter(arr, t1, t2) {
-        if (!arr.length) return arr
+        if (!arr.length) return [arr, undefined]
         try {
             let ia = new IndexedArray(arr, "0")
             let res = ia.getRange(t1, t2)
@@ -139,7 +139,7 @@ export default {
 
     // Fast filter (index-based)
     fast_filter_i(arr, t1, t2) {
-        if (!arr.length) return arr
+        if (!arr.length) return [arr, undefined]
         let i1 =  Math.floor(t1)
         if (i1 < 0) i1 = 0
         let i2 =  Math.floor(t2 + 1)
@@ -309,6 +309,27 @@ export default {
         }
 
         return name
-    }
+    },
+
+    // Default cursor mode
+    xmode() {
+        return this.is_mobile ? 'explore' : 'default'
+    },
+
+    default_prevented(event) {
+        if (event.original) {
+            return event.original.defaultPrevented
+        }
+        return event.defaultPrevented
+    },
+
+    // WTF with modern web development
+    is_mobile: (w => 'onorientationchange' in w &&
+       (!!navigator.maxTouchPoints ||
+        !!navigator.msMaxTouchPoints ||
+        ('ontouchstart' in w ||
+        (w.DocumentTouch &&
+        document instanceof w.DocumentTouch))))
+        (typeof window !== 'undefined' ? window : {})
 
 }

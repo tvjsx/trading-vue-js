@@ -70,6 +70,7 @@ function Layout(params) {
         var x1, x2, mid, prev = undefined
 
         let splitter = self.px_step > 5 ? 1 : 0
+        let hf_px_step = self.px_step * 0.5
 
         for (var i = 0; i < sub.length; i++) {
             let p = sub[i]
@@ -88,8 +89,8 @@ function Layout(params) {
             if (sub[i-1] && p[0] - sub[i-1][0] > interval) {
                 prev = null
             }
-            x1 = prev || Math.floor(mid - self.px_step * 0.5)
-            x2 = Math.floor(mid + self.px_step * 0.5) - 0.5
+            x1 = prev || Math.floor(mid - hf_px_step)
+            x2 = Math.floor(mid + hf_px_step) - 0.5
             self.volume.push({
                 x1: x1,
                 x2: x2,

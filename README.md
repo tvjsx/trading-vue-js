@@ -22,7 +22,7 @@ If you create trading software - this lib is probably for you. If you like to ma
 <br>
 
 <div align="center">
-    <img width="780" heigth="446" src="https://github.com/tvjsx/trading-vue-js/blob/master/assets/README-new-preview.gif?raw=true" alt="White preview">
+    <img width="720" heigth="420" src="https://github.com/tvjsx/trading-vue-js/blob/master/assets/V1.gif?raw=true" alt="White preview">
 </div>
 
 <br>
@@ -219,13 +219,13 @@ That's why the title doesn't lie: you can draw ANYTHING.
 
 * ~~Docs~~
 * ~~Tests~~
-* Solve known issues (marked as 'TODO: IMPORTANT')
-* Performance improvements
+* ~~Solve known issues (marked as 'TODO: IMPORTANT')~~ [PARTIALLY]
+* ~~Performance improvements~~
 * ~~Data-manipulation helpers~~
 * ~~Add more built-in overlays~~
 * ~~Add toolbar (drawing tools)~~
-* Custom loayout / layout persistence
-* Fix and improve mobile version
+* ~~Custom loayout / layout persistence~~[POST-RELEASE]
+* ~~Fix and improve mobile version~~
 * **Version 1.0.0 here**
 
 Progress in details: https://github.com/tvjsx/trading-vue-js/projects/1

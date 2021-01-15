@@ -37,10 +37,13 @@ function GridMaker(id, params, master_grid = null) {
             if (y_range_fn) {
                 var [hi, lo] = y_range_fn(hi, lo)
             } else {
-                hi = Math.max(...sub.map(x => x[2]))
-                lo = Math.min(...sub.map(x => x[3]))
+                hi = -Infinity, lo = Infinity
+                for (var i = 0, n = sub.length; i < n; i++) {
+                    let x = sub[i]
+                    if (x[2] > hi) hi = x[2]
+                    if (x[3] < lo) lo = x[3]
+                }
             }
-
         } else {
             // Offchart indicator range
             hi = -Infinity, lo = Infinity
@@ -100,8 +103,7 @@ function GridMaker(id, params, master_grid = null) {
         // TODO: add custom formatter f()
 
         self.prec = calc_precision(sub)
-        let subn = sub.filter(x => typeof x[1] === 'number')
-        let lens = subn.map(x => x[1].toFixed(self.prec).length)
+        let lens = []
         lens.push(self.$_hi.toFixed(self.prec).length)
         lens.push(self.$_lo.toFixed(self.prec).length)
         let str = '0'.repeat(Math.max(...lens)) + '    '
@@ -116,11 +118,20 @@ function GridMaker(id, params, master_grid = null) {
 
         var max_r = 0, max_l = 0
 
+        let min = Infinity
+        let max = -Infinity
+
+        // Speed UP
+        for (var i = 0, n = data.length; i < n; i++) {
+            let x = data[i]
+            if (x[1] > max) max = x[1]
+            else if (x[1] < min) min = x[1]
+        }
         // Get max lengths of integer and fractional parts
-        data.forEach(x => {
+        [min, max].forEach(x => {
             // Fix undefined bug
-            var str = x[1] != null ? x[1].toString() : ''
-            if (x[1] < 0.000001) {
+            var str = x != null ? x.toString() : ''
+            if (x < 0.000001) {
                 // Parsing the exponential form. Gosh this
                 // smells trickily
                 var [ls, rs] = str.split('e-')

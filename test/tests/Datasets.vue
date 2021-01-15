@@ -125,7 +125,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .sampler-window {
     position: absolute;
     top: 13px;

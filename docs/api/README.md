@@ -1,12 +1,13 @@
 # API Book
 
-This guide version is **0.9.0**
+This guide version is **1.0.0**
 
 ![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=Current%20lib%20version)
 
 ### DataCube API is [here](https://github.com/C451/trading-vue-js/tree/master/docs/datacube)
 ### Inline Shaders API is [here](https://github.com/C451/trading-vue-js/tree/master/docs/api/SHADERS.md)
 ### Index-Based mode API is [there](https://github.com/tvjsx/trading-vue-js/blob/master/docs/api/IB.md)
+### Std-lib for scripts API is [over there](https://github.com/tvjsx/trading-vue-js/blob/master/docs/api/STDLIB.md)
 
 ## Props
 
@@ -88,8 +89,8 @@ export default {
 
 Sets custom time range.
 
-* **Arguments**: t1 (Number) Left-bound of the range
-* **Arguments**: t2 (Number) Right-bound of the range
+* **Arguments**: t1 (Number) Left-bound of the range | Index (in IB mode)
+* **Arguments**: t2 (Number) Right-bound of the range | Index (in IB mode)
 
 *Example:*
 
@@ -119,13 +120,20 @@ Gets current timerange.
 
 Goto to a specific timestamp
 
-* **Arguments**: t (Number) Target timestamp
+* **Arguments**: t (Number) Target timestamp | Index (in IB mode)
 
 ### getCursor()
 
 Gets the cursor [object](https://github.com/tvjsx/trading-vue-js/tree/master/docs/api#cursor-data)
 
 * **Returns**: Object
+
+### showTheTip()
+
+Shows a pop-up with specified text.
+
+* **Arguments**: text (String) Text
+* **Arguments**: color (String) Color
 
 ### $refs.chart.hooks(...args)
 
@@ -217,7 +225,7 @@ IMPORTANT: All data must be sorted by time (in ascending order). The main OHLCV 
     },
     "onchart": [ // Displayed ON the chart
         {
-            "name": "<Indicator name>",
+            "name": "<Indicator name>", // Or template, e.g. "RSI, $length"
             "type": "<e.g. EMA, SMA>",
             "data": [
                 [timestamp, ... ], // Arbitrary length
@@ -294,6 +302,8 @@ Data for building overlays. Defined in `mixins/overlay.js`, accessed through ove
 | settings | Object | Indicator's settings, defined in `data.json` |
 | grid_id | Number | Current grid id |
 | config  | Object | Chart config, see 'constants.js' |
+| meta | Object | Contains the last price and other info |
+| i0 | Number | The first global index of the current subset |
 
 ### Cursor data*
 

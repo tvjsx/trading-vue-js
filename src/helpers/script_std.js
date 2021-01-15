@@ -92,8 +92,12 @@ export default class ScriptStd {
         return x
     }
 
-    // Creates a new time-series & records each x.
-    // Return the an array. Id is auto-genrated
+    /**
+     * Creates a new time-series & records each x.
+     * Returns  an array. Id is auto-genrated
+     * @param {*} x - A variable to sample from
+     * @return {TS} - New time-series
+     */
     ts(x, _id, _tf) {
         if (_tf) return this.tstf(x, _tf, _id)
         let ts = this.env.tss[_id]
@@ -106,9 +110,14 @@ export default class ScriptStd {
         return ts
     }
 
-    // Creates a new time-series & records each x.
-    // Uses Sampler to aggregate the values
-    // Return the an array. Id is auto-genrated
+    /**
+     * Creates a new time-series & records each x.
+     * Uses Sampler to aggregate the values
+     * Return the an array. Id is auto-genrated
+     * @param {*} x - A variable to sample from
+     * @param {(number|string)} tf - Timeframe in ms or as a string
+     * @return {TS} - New time-series
+     */
     tstf(x, tf, _id) {
         let ts = this.env.tss[_id]
         if (!ts) {
@@ -122,7 +131,12 @@ export default class ScriptStd {
         return ts
     }
 
-    // Replace if NaN
+    /**
+     * Replaces the variable if it's NaN
+     * @param {*} x - The variable
+     * @param {*} [v] - A value to replace with
+     * @return {*} - New value
+     */
     nz(x, v) {
         if (x == undefined || x !== x) {
             return v || 0
@@ -130,12 +144,20 @@ export default class ScriptStd {
         return x
     }
 
-    // Is NaN ?
+    /**
+     * Is the variable NaN ?
+     * @param {*} x - The variable
+     * @return {boolean} - New value
+     */
     na(x) {
         return x == undefined || x !== x
     }
 
-    // Replace with NaN if Infinite
+    /** Replaces the var with NaN if Infinite
+     * @param {*} x - The variable
+     * @param {*} [v] - A value to replace with
+     * @return {*} - New value
+     */
     nf(x, v) {
         if (!isFinite(x)) {
             return v !== undefined ? v : NaN
@@ -144,6 +166,12 @@ export default class ScriptStd {
     }
 
     // Math operators on t-series and numbers
+
+    /** Adds values / time-series
+     * @param {(TS|*)} x - First input
+     * @param {(TS|*)} y - Second input
+     * @return {TS} - New time-series
+     */
     add(x, y, _id) {
         // __id__ means this is a time-series
         let id = this._tsid(_id, `add`)
@@ -152,6 +180,11 @@ export default class ScriptStd {
         return this.ts(x0 + y0, id, x.__tf__)
     }
 
+    /** Subtracts values / time-series
+     * @param {(TS|*)} x - First input
+     * @param {(TS|*)} y - Second input
+     * @return {TS} - New time-series
+     */
     sub(x, y, _id) {
         let id = this._tsid(_id, `sub`)
         let x0 = this.na(x) ? NaN : (x.__id__ ? x[0] : x)
@@ -159,6 +192,11 @@ export default class ScriptStd {
         return this.ts(x0 - y0, id, x.__tf__)
     }
 
+    /** Multiplies values / time-series
+     * @param {(TS|*)} x - First input
+     * @param {(TS|*)} y - Second input
+     * @return {TS} - New time-series
+     */
     mult(x, y, _id) {
         let id = this._tsid(_id, `mult`)
         let x0 = this.na(x) ? NaN : (x.__id__ ? x[0] : x)
@@ -166,6 +204,11 @@ export default class ScriptStd {
         return this.ts(x0 * y0, id, x.__tf__)
     }
 
+    /** Divides values / time-series
+     * @param {(TS|*)} x - First input
+     * @param {(TS|*)} y - Second input
+     * @return {TS} - New time-series
+     */
     div(x, y, _id) {
         let id = this._tsid(_id, `div`)
         let x0 = this.na(x) ? NaN : (x.__id__ ? x[0] : x)
@@ -173,33 +216,61 @@ export default class ScriptStd {
         return this.ts(x0 / y0, id, x.__tf__)
     }
 
+    /** Returns a negative value / time-series
+     * @param {(TS|*)} x - Input
+     * @return {TS} - New time-series
+     */
     neg(x, _id) {
         let id = this._tsid(_id, `neg`)
         let x0 = this.na(x) ? NaN : (x.__id__ ? x[0] : x)
         return this.ts(-x0, id, x.__tf__)
     }
 
+    /** Absolute value
+     * @param {number} x - Input
+     * @return {number} - Absolute value
+     */
     abs(x) {
         return Math.abs(x)
     }
 
+    /** Arccosine function
+     * @param {number} x - Input
+     * @return {number} - Arccosine of x
+     */
     acos(x) {
         return Math.acos(x)
     }
 
-    // Emits an event
+    /** Emits an event to DataCube
+     * @param {string} type - Signal type
+     * @param {*} data - Signal data
+     */
     signal(type, data = {}) {
-        // TODO: this
+        if (this.se.shared.event !== 'update') return
+        this.se.send('script-signal', { type, data })
     }
 
-    // Emits an event if cond === true
+    /** Emits an event if cond === true
+     * @param {(boolean|TS)} cond - The condition
+     * @param {string} type - Signal type
+     * @param {*} data - Signal data
+     */
     signalif(cond, type, data = {}) {
+        if (this.se.shared.event !== 'update') return
+        if (cond && cond.__id__) cond = cond[0]
         if (cond) {
-        // TODO: this
+            this.se.send('script-signal', { type, data })
         }
     }
 
-    // Arnaud Legoux Moving Average
+    /** Arnaud Legoux Moving Average
+     * @param {TS} src - Input
+     * @param {number} len - Length
+     * @param {number} offset - Offset
+     * @param {number} sigma - Sigma
+     * @return {TS} - New time-series
+     */
     alma(src, len, offset, sigma, _id) {
         let id = this._tsid(_id, `alma(${len},${offset},${sigma})`)
         let m = Math.floor(offset * (len - 1))
@@ -214,15 +285,26 @@ export default class ScriptStd {
         return this.ts(sum / norm, id, src.__tf__)
     }
 
+    /** Arcsine function
+     * @param {number} x - Input
+     * @return {number} - Arcsine of x
+     */
     asin(x) {
         return Math.asin(x)
     }
 
+    /** Arctangent function
+     * @param {number} x - Input
+     * @return {number} - Arctangent of x
+     */
     atan(x) {
         return Math.atan(x)
     }
 
-    // Average True Range
+    /** Average True Range
+     * @param {number} len - Length
+     * @return {TS} - New time-series
+     */
     atr(len, _id, _tf) {
         let tfs = _tf || ''
         let id = this._tsid(_id, `atr(${len})`)
@@ -241,6 +323,10 @@ export default class ScriptStd {
         return this.rma(tr, len, id)
     }
 
+    /** Average of arguments
+     * @param {...number} args - Numeric values
+     * @return {number}
+     */
     avg(...args) {
         args.pop() // Remove _id
         let sum = 0
@@ -250,12 +336,23 @@ export default class ScriptStd {
         return sum / args.length
     }
 
-    // Candles since the event occured (cond === true)
-    since(cond) {
-        // TODO: this
+    /** Candles since the event occured (cond === true)
+     * @param {(boolean|TS)} cond - the condition
+     */
+    since(cond, _id) {
+        let id = this._tsid(_id, `since()`)
+        if (cond && cond.__id__) cond = cond[0]
+        let s = this.ts(undefined, id)
+        s[0] = cond ? 0 : s[1] + 1
+        return s
     }
 
-    // Bollinger Bands
+    /** Bollinger Bands
+     * @param {TS} src - Input
+     * @param {number} len - Length
+     * @param {number} mult - Multiplier
+     * @return {TS[]} - Array of new time-series (3 bands)
+     */
     bb(src, len, mult, _id) {
         let id = this._tsid(_id, `bb(${len},${mult})`)
         let basis = this.sma(src, len, id)
@@ -267,7 +364,12 @@ export default class ScriptStd {
         ]
     }
 
-    // Bollinger Bands Width
+    /** Bollinger Bands Width
+     * @param {TS} src - Input
+     * @param {number} len - Length
+     * @param {number} mult - Multiplier
+     * @return {TS} - New time-series
+     */
     bbw(src, len, mult, _id) {
         let id = this._tsid(_id, `bbw(${len},${mult})`)
         let basis = this.sma(src, len, id)[0]
@@ -275,11 +377,19 @@ export default class ScriptStd {
         return this.ts(2 * dev / basis, id, src.__tf__)
     }
 
+    /** Converts the variable to Boolean
+     * @param {number} x The variable
+     * @return {number}
+     */
     bool(x) {
         return !!x
     }
 
-    // Commodity Channel Index
+    /** Commodity Channel Index
+     * @param {TS} src - Input
+     * @param {number} len - Length
+     * @return {TS} - New time-series
+     */
     cci(src, len, _id) {
         // TODO: Not exactly precise, but pretty damn close
         let id = this._tsid(_id, `cci(${len})`)
@@ -289,17 +399,29 @@ export default class ScriptStd {
         return this.ts(cci, id, src.__tf__)
     }
 
+    /** Shortcut for Math.ceil()
+     * @param {number} x The variable
+     * @return {number}
+     */
     ceil(x) {
         return Math.ceil(x)
     }
 
-    // x[0] - x[len]
+    /** Change: x[0] - x[len]
+     * @param {TS} src - Input
+     * @param {number} [len] - Length
+     * @return {TS} - New time-series
+     */
     change(src, len = 1, _id) {
         let id = this._tsid(_id, `change(${len})`)
         return this.ts(src[0] - src[len], id, src.__tf__)
     }
 
-    // Chande Momentum Oscillator
+    /** Chande Momentum Oscillator
+     * @param {TS} src - Input
+     * @param {number} len - Length
+     * @return {TS} - New time-series
+     */
     cmo(src, len, _id) {
         let id = this._tsid(_id, `cmo(${len})`)
         let mom = this.change(src, 1, id)
@@ -313,7 +435,11 @@ export default class ScriptStd {
         return this.ts(100 * (sm1 - sm2) / (sm1 + sm2), id, src.__tf__)
     }
 
-    // Center of Gravity
+    /** Center of Gravity
+     * @param {TS} src - Input
+     * @param {number} len - Length
+     * @return {TS} - New time-series
+     */
     cog(src, len, _id) {
         let id = this._tsid(_id, `cmo(${len})`)
         let sum = this.sum(src, len, id)[0]
@@ -329,28 +455,51 @@ export default class ScriptStd {
         // TODO: this
     }
 
+    /** Cosine function
+     * @param {number} x - Input
+     * @return {number} - Cosine of x
+     */
     cos(x) {
         return Math.cos(x)
     }
 
+    /** When one time-series crosses another
+     * @param {TS} src1 - TS1
+     * @param {TS} src2 - TS2
+     * @return {TS} - New time-series
+     */
     cross(src1, src2, _id) {
         let id = this._tsid(_id, `cross`)
         let x = (src1[0] > src2[0]) !== (src1[1] > src2[1])
         return this.ts(x, id, src1.__tf__)
     }
 
+    /** When one time-series goes over another one
+     * @param {TS} src1 - TS1
+     * @param {TS} src2 - TS2
+     * @return {TS} - New time-series
+     */
     crossover(src1, src2, _id) {
         let id = this._tsid(_id, `crossover`)
         let x = (src1[0] > src2[0]) && (src1[1] <= src2[1])
         return this.ts(x, id, src1.__tf__)
     }
 
+    /** When one time-series goes under another one
+     * @param {TS} src1 - TS1
+     * @param {TS} src2 - TS2
+     * @return {TS} - New time-series
+     */
     crossunder(src1, src2, _id) {
         let id = this._tsid(_id, `crossunder`)
         let x = (src1[0] < src2[0]) && (src1[1] >= src2[1])
         return this.ts(x, id, src1.__tf__)
     }
 
+    /** Sum of all elements of src
+     * @param {TS} src1 - Input
+     * @return {TS} - New time-series
+     */
     cum(src, _id) {
         let id = this._tsid(_id, `cum`)
         let res = this.ts(0, id, src.__tf__)
@@ -358,15 +507,27 @@ export default class ScriptStd {
         return res
     }
 
+    /** Day of month, literally
+     * @param {number} [time] - Time in ms (current t, if not defined)
+     * @return {number} - Day
+     */
     dayofmonth(time) {
         return new Date(time || se.t).getUTCDate()
     }
 
+    /** Day of week, literally
+     * @param {number} [time] - Time in ms (current t, if not defined)
+     * @return {number} - Day
+     */
     dayofweek(time) {
         return new Date(time || se.t).getUTCDay() + 1
     }
 
-    // Deviation from SMA
+    /** Deviation from SMA
+     * @param {TS} src - Input
+     * @param {number} len - Length
+     * @return {TS} - New time-series
+     */
     dev(src, len, _id) {
         let id = this._tsid(_id, `dev(${len})`)
         let mean = this.sma(src, len, id)[0]
@@ -377,7 +538,11 @@ export default class ScriptStd {
         return this.ts(sum / len, id, src.__tf__)
     }
 
-    // Directional Movement Index ADX, +DI, -DI
+    /** Directional Movement Index ADX, +DI, -DI
+     * @param {number} len - Length
+     * @param {number} smooth - Smoothness
+     * @return {TS} - New time-series
+     */
     dmi(len, smooth, _id, _tf) {
         let id = this._tsid(_id, `dmi(${len},${smooth})`)
         let tfs = _tf || ''
@@ -409,7 +574,11 @@ export default class ScriptStd {
         return [adx, plus, minus]
     }
 
-    // Exponential Moving Average with alpha = 2 / (y + 1)
+    /** Exponential Moving Average with alpha = 2 / (y + 1)
+     * @param {TS} src - Input
+     * @param {number} len - Length
+     * @return {TS} - New time-series
+     */
     ema(src, len, _id) {
         let id = this._tsid(_id, `ema(${len})`)
         let a = 2 / (len + 1)
@@ -420,10 +589,19 @@ export default class ScriptStd {
         return ema
     }
 
+    /** Shortcut for Math.exp()
+     * @param {number} x The variable
+     * @return {number}
+     */
     exp(x) {
         return Math.exp(x)
     }
 
+    /** Test if "src" TS is falling for "len" candles
+     * @param {TS} src - Input
+     * @param {number} len - Length
+     * @return {TS} - New time-series
+     */
     falling(src, len, _id) {
         let id = this._tsid(_id, `falling(${len})`)
         let bot = src[0]
@@ -435,8 +613,21 @@ export default class ScriptStd {
         return this.ts(true, id, src.__tf__)
     }
 
-    fixnan(x) {
-        // TODO: this
+    /** For a given series replaces NaN values with
+     * previous nearest non-NaN value
+     * @param {TS} src - Input time-series
+     * @return {TS}
+     */
+    fixnan(src) {
+        if (this.na(src[0])) {
+            for (var i = 1; i < src.length; i++) {
+                if (!this.na(src[i])) {
+                    src[0] = src[i]
+                    break
+                }
+            }
+        }
+        return src
     }
 
     /* TODO: think
@@ -445,10 +636,19 @@ export default class ScriptStd {
         return this.ts(true, id, src.__tf__)
     }*/
 
+    /** Shortcut for Math.floor()
+     * @param {number} x The variable
+     * @return {number}
+     */
     floor(x) {
         Math.floor(x)
     }
 
+    /** Highest value for a given number of candles back
+     * @param {TS} src - Input
+     * @param {number} len - Length
+     * @return {TS} - New time-series
+     */
     highest(src, len, _id) {
         let id = this._tsid(_id, `highest(${len})`)
         let high = -Infinity
@@ -458,11 +658,25 @@ export default class ScriptStd {
         return this.ts(high, id, src.__tf__)
     }
 
-    highestbars(src, len) {
-        // TODO: this
+    /** Highest value offset for a given number of bars back
+     * @param {TS} src - Input
+     * @param {number} len - Length
+     */
+    highestbars(src, len, _id) {
+        let id = this._tsid(_id, `highestbars(${len})`)
+        let high = -Infinity
+        let hi = 0
+        for (var i = 0; i < len; i++) {
+            if (src[i] > high) { high = src[i], hi = i }
+        }
+        return this.ts(-hi, id, src.__tf__)
     }
 
-    // Hull Moving Average
+    /** Hull Moving Average
+     * @param {TS} src - Input
+     * @param {number} len - Length
+     * @return {TS} - New time-series
+     */
     hma(src, len, _id) {
         let id = this._tsid(_id, `hma(${len})`)
         let len2 = Math.floor(len/2)
@@ -475,15 +689,32 @@ export default class ScriptStd {
         return this.wma(delt, len3, id+'4')
     }
 
+    /** Returns hours of a given timestamp
+     * @param {number} [time] - Time in ms (current t, if not defined)
+     * @return {number} - Hour
+     */
     hour(time) {
         return new Date(time || se.t).getUTCHours()
     }
 
+    /** Returns x or y depending on the condition
+     * @param {(boolean|TS)} cond - Condition
+     * @param {*} x - Frist value
+     * @param {*} y - Second value
+     * @return {*}
+     */
     iff(cond, x, y) {
+        if (cond && cond.__id__) cond = cond[0]
         return cond ? x : y
     }
 
-    // Keltner Channels
+    /** Keltner Channels
+     * @param {TS} src - Input
+     * @param {number} len - Length
+     * @param {number} mult - Multiplier
+     * @param {boolean} [use_tr] - Use true range
+     * @return {TS[]} - Array of new time-series (3 bands)
+     */
     kc(src, len, mult, use_tr = true, _id, _tf) {
 
         let id = this._tsid(_id, `kc(${len},${mult},${use_tr})`)
@@ -504,14 +735,25 @@ export default class ScriptStd {
         ]
     }
 
-    // Keltner Channels Width
+    /** Keltner Channels Width
+     * @param {TS} src - Input
+     * @param {number} len - Length
+     * @param {number} mult - Multiplier
+     * @param {boolean} [use_tr] - Use true range
+     * @return {TS} - New time-series
+     */
     kcw(src, len, mult, use_tr = true, _id, _tf) {
         let id = this._tsid(_id, `kcw(${len},${mult},${use_tr})`)
         let kc = this.kc(src, len, mult, use_tr, `kcw`, _tf)
         return this.ts((kc[1][0] - kc[2][0]) / kc[0][0], id, src.__tf__)
     }
 
-    // Linear Regression
+    /** Linear Regression
+     * @param {TS} src - Input
+     * @param {number} len - Length
+     * @param {number} offset - Offset
+     * @return {TS} - New time-series
+     */
     linreg(src, len, offset = 0, _id) {
         let id = this._tsid(_id, `linreg(${len})`)
 
@@ -521,14 +763,27 @@ export default class ScriptStd {
         return this.ts(lr, id, src.__tf__)
     }
 
+    /** Shortcut for Math.log()
+     * @param {number} x The variable
+     * @return {number}
+     */
     log(x) {
         return Math.log(x)
     }
 
+    /** Shortcut for Math.log10()
+     * @param {number} x The variable
+     * @return {number}
+     */
     log10(x) {
         return Math.log10(x)
     }
 
+    /** Lowest value for a given number of candles back
+     * @param {TS} src - Input
+     * @param {number} len - Length
+     * @return {TS} - New time-series
+     */
     lowest(src, len, _id) {
         let id = this._tsid(_id, `lowest(${len})`)
         let low = Infinity
@@ -538,11 +793,27 @@ export default class ScriptStd {
         return this.ts(low, id, src.__tf__)
     }
 
-    lowestbars(src, len) {
-        // TODO: this
+    /** Lowest value offset for a given number of bars back
+     * @param {TS} src - Input
+     * @param {number} len - Length
+     */
+    lowestbars(src, len, _id) {
+        let id = this._tsid(_id, `lowestbars(${len})`)
+        let low = Infinity
+        let li = 0
+        for (var i = 0; i < len; i++) {
+            if (src[i] < low) { low = src[i], li = i }
+        }
+        return this.ts(-li, id, src.__tf__)
     }
 
-    // Moving Average Convergence/Divergence
+    /** Moving Average Convergence/Divergence
+     * @param {TS} src - Input
+     * @param {number} fast - Fast EMA
+     * @param {number} slow - Slow EMA
+     * @param {number} sig - Signal
+     * @return {TS[]} - [macd, signal, hist]
+     */
     macd(src, fast, slow, sig, _id) {
         let id = this._tsid(_id, `macd(${fast}${slow}${sig})`)
         let fast_ma = this.ema(src, fast, id+'1')
@@ -553,22 +824,37 @@ export default class ScriptStd {
         return [macd, signal, hist]
     }
 
+    /** Max of arguments
+     * @param {...number} args - Numeric values
+     * @return {number}
+     */
     max(...args) {
         args.pop() // Remove _id
         return Math.max(...args)
     }
 
-    // Send update to some overlay / main chart
+    /** Sends update to some overlay / main chart
+     * @param {string} id - Overlay id
+     * @param {Object} fields - Fields to be overwritten
+     */
     modify(id, fields) {
         se.send('modify-overlay', { uuid:id, fields })
     }
 
-    // max_bars_back
+    /** Sets the reverse buffer size for a given
+     * time-series (default = 5, grows on demand)
+     * @param {TS} src - Input
+     * @param {number} len - New length
+     */
     buffsize(src, len) {
-        // TODO: this
+        src.__len__ = len
     }
 
-    // Money Flow Index
+    /** Money Flow Index
+     * @param {TS} src - Input
+     * @param {number} len - Length
+     * @return {TS} - New time-series
+     */
     mfi(src, len, _id) {
         let id = this._tsid(_id, `mfi(${len})`)
         let vol = this.env.shared.vol
@@ -587,21 +873,37 @@ export default class ScriptStd {
         return this.ts(res, id, src.__tf__)
     }
 
+    /** Min of arguments
+     * @param {...number} args - Numeric values
+     * @return {number}
+     */
     min(...args) {
         args.pop() // Remove _id
         return Math.min(...args)
     }
 
+    /** Returns minutes of a given timestamp
+     * @param {number} [time] - Time in ms (current t, if not defined)
+     * @return {number} - Hour
+     */
     minute(time) {
         return new Date(time || se.t).getUTCMinutes()
     }
 
-    // Momentum
+    /** Momentum
+     * @param {TS} src - Input
+     * @param {number} len - Length
+     * @return {TS} - New time-series
+     */
     mom(src, len, _id) {
         let id = this._tsid(_id, `mom(${len})`)
         return this.ts(src[0] - src[len], id, src.__tf__)
     }
 
+    /** Month
+     * @param {number} [time] - Time in ms (current t, if not defined)
+     * @return {number} - Day
+     */
     month(time) {
         return new Date(time || se.t).getUTCMonth()
     }
@@ -611,9 +913,14 @@ export default class ScriptStd {
         // TODO: this
     }
 
-    // Display data point on the main chart
     // TODO: optionally enable scripts for $synth ovs
     // TODO: add indexBased option
+    /** Display data point onchart
+     * (create a new overlay in DataCube)
+     * @param {(TS|TS[]|*)} x - Data point / TS / array of TS
+     * @param {string} [name] - Overlay name
+     * @param {Object} [sett] - Object with settings & OV type
+     */
     onchart(x, name, sett = {}, _id) {
         let off = 0
         name = name || u.get_fn_id('Onchart', _id)
@@ -646,8 +953,12 @@ export default class ScriptStd {
         u.update(this.env.onchart[name].data, v)
     }
 
-    // Create a new offchart overlay and put
-    // the point there
+    /** Display data point offchart
+     * (create a new overlay in DataCube)
+     * @param {(TS|TS[]|*)} x - Data point / TS / array of TS
+     * @param {string} [name] - Overlay name
+     * @param {Object} [sett] - Object with settings & OV type
+     */
     offchart(x, name, sett = {}, _id) {
         name = name || u.get_fn_id('Offchart', _id)
         let off = 0
@@ -680,18 +991,31 @@ export default class ScriptStd {
         u.update(this.env.offchart[name].data, v)
     }
 
-    // Returns true when the candle(<tf>) is being closed
+
+    /** Returns true when the candle(<tf>) is being closed
+     * (create a new overlay in DataCube)
+     * @param {(number|string)} tf - Timeframe in ms or as a string
+     * @return {boolean}
+     */
     onclose(tf) {
+        if (!this.env.shared.onclose) return false
+        if (!tf) tf = se.tf
         return (se.t + se.tf) % u.tf_from_str(tf) === 0
     }
 
-    // Send settings update
-    // (can be called from init(), update() or post())
+    /** Sends settings update
+     * (can be called from init(), update() or post())
+     * @param {Object} upd - Settings update (object to merge)
+     */
     settings(upd) {
         this.env.send_modify({ settings: upd })
         Object.assign(this.env.src.sett, upd)
     }
 
+    /** Shifts TS left or right by "num" candles
+     * @param {number} num - Offset measured in candles
+     * @return {TS} - New / existing time-series
+     */
     offset(src, num, _id) {
         if (src.__id__) {
             src.__offset__ = num
@@ -713,6 +1037,9 @@ export default class ScriptStd {
         // TODO: this
     }
 
+    /** The current time
+     * @return {number} - timestamp
+     */
     now() {
         return new Date().getTime()
     }
@@ -721,6 +1048,13 @@ export default class ScriptStd {
         // TODO: this
     }
 
+    /** Returns price of the pivot high point
+     * Tip: works best with `offset` function
+     * @param {TS} src - Input
+     * @param {number} left - left threshold, candles
+     * @param {number} right - right threshold, candles
+     * @return {TS} - New time-series
+     */
     pivothigh(src, left, right, _id) {
         let id = this._tsid(_id, `pivothigh(${left},${right})`)
 
@@ -734,6 +1068,13 @@ export default class ScriptStd {
         return this.ts(top, id, src.__tf__)
     }
 
+    /** Returns price of the pivot low point
+     * Tip: works best with `offset` function
+     * @param {TS} src - Input
+     * @param {number} left - left threshold, candles
+     * @param {number} right - right threshold, candles
+     * @return {TS} - New time-series
+     */
     pivotlow(src, left, right, _id) {
         let id = this._tsid(_id, `pivotlow(${left},${right})`)
 
@@ -747,10 +1088,19 @@ export default class ScriptStd {
         return this.ts(bot, id, src.__tf__)
     }
 
+    /** Shortcut for Math.pow()
+     * @param {number} x The variable
+     * @return {number}
+     */
     pow(x) {
         return Math.pow(x)
     }
 
+    /** Test if "src" TS is rising for "len" candles
+     * @param {TS} src - Input
+     * @param {number} len - Length
+     * @return {TS} - New time-series
+     */
     rising(src, len, _id) {
         let id = this._tsid(_id, `rising(${len})`)
         let top = src[0]
@@ -762,8 +1112,12 @@ export default class ScriptStd {
         return this.ts(true, id, src.__tf__)
     }
 
-    // Exponentially MA with alpha = 1 / length
-    // Used in RSI
+    /** Exponentially MA with alpha = 1 / length
+     * Used in RSI
+     * @param {TS} src - Input
+     * @param {number} len - Length
+     * @return {TS} - New time-series
+     */
     rma(src, len, _id) {
         let id = this._tsid(_id, `rma(${len})`)
         let a = len
@@ -774,7 +1128,11 @@ export default class ScriptStd {
         return sum
     }
 
-    // Rate of Change
+    /** Rate of Change
+     * @param {TS} src - Input
+     * @param {number} len - Length
+     * @return {TS} - New time-series
+     */
     roc(src, len, _id) {
         let id = this._tsid(_id, `roc(${len})`)
         return this.ts(
@@ -782,11 +1140,19 @@ export default class ScriptStd {
         )
     }
 
+    /** Shortcut for Math.round()
+     * @param {number} x The variable
+     * @return {number}
+     */
     round(x) {
         return Math.round(x)
     }
 
-    // Relative Strength Index
+    /** Relative Strength Index
+     * @param {TS} x - First Input
+     * @param {number|TS} y - Second Input
+     * @return {TS} - New time-series
+     */
     rsi(x, y, _id) {
         // Check if y is a timeseries
         if (!this.na(y) && y.__id__) {
@@ -806,7 +1172,12 @@ export default class ScriptStd {
         return this.ts(rsi, id+'5', x.__tf__)
     }
 
-    // Parabolic SAR
+    /** Parabolic SAR
+     * @param {number} start - Start
+     * @param {number} inc - Increment
+     * @param {number} max - Maximum
+     * @return {TS} - New time-series
+     */
     sar(start, inc, max, _id, _tf) {
         // Source: Parabolic SAR by imuradyan
         // TODO: simplify the code
@@ -887,19 +1258,35 @@ export default class ScriptStd {
         return out
     }
 
+    /** Returns seconds of a given timestamp
+     * @param {number} [time] - Time in ms (current t, if not defined)
+     * @return {number} - Hour
+     */
     second(time) {
         return new Date(time || se.t).getUTCSeconds()
     }
 
+    /** Shortcut for Math.sing()
+     * @param {number} x The variable
+     * @return {number}
+     */
     sign(x) {
         return Math.sign(x)
     }
 
+    /** Sine function
+     * @param {number} x The variable
+     * @return {number}
+     */
     sin(x) {
         return Math.sin(x)
     }
 
-    // Simple Moving Average
+    /** Simple Moving Average
+     * @param {TS} src - Input
+     * @param {number} len - Length
+     * @return {TS} - New time-series
+     */
     sma(src, len, _id) {
         let id = this._tsid(_id, `sma(${len})`)
         let sum = 0
@@ -909,24 +1296,24 @@ export default class ScriptStd {
         return this.ts(sum / len, id, src.__tf__)
     }
 
+    /** Shortcut for Math.sqrt()
+     * @param {number} x The variable
+     * @return {number}
+     */
     sqrt(x) {
         return Math.sqrt(x)
     }
 
+    /** Standard deviation
+     * @param {TS} src - Input
+     * @param {number} len - Length
+     * @return {TS} - New time-series
+     */
     stdev(src, len, _id) {
 
         let sumf = (x, y) => {
             let res = x + y
             return res
-            // TODO: something wrong with this checks
-            /*if (Math.abs(res) <= this.STDEV_EPS) {
-                return 0
-            }
-            else if (Math.abs(res) > this.STDEV_Z) {
-                return res
-            } else {
-                return 15 // wtf?
-            }*/
         }
 
         let id = this._tsid(_id, `stdev(${len})`)
@@ -939,7 +1326,13 @@ export default class ScriptStd {
         return this.ts(Math.sqrt(sqd / len), id, src.__tf__)
     }
 
-    // Stochastic
+    /** Stochastic
+     * @param {TS} src - Input
+     * @param {TS} high - TS of high
+     * @param {TS} low - TS of low
+     * @param {number} len - Length
+     * @return {TS} - New time-series
+     */
     stoch(src, high, low, len, _id) {
         let id = this._tsid(_id, `sum(${len})`)
         let x = 100 * (src[0] - this.lowest(low, len)[0])
@@ -947,6 +1340,11 @@ export default class ScriptStd {
         return this.ts(x / y, id, src.__tf__)
     }
 
+    /** Returns the sliding sum of last "len" values of the source
+     * @param {TS} src - Input
+     * @param {number} len - Length
+     * @return {TS} - New time-series
+     */
     sum(src, len, _id) {
         let id = this._tsid(_id, `sum(${len})`)
         let sum = 0
@@ -956,7 +1354,11 @@ export default class ScriptStd {
         return this.ts(sum, id, src.__tf__)
     }
 
-    // Supertrend
+    /** Supertrend Indicator
+     * @param {number} factor - ATR multiplier
+     * @param {number} atrlen - Length of ATR
+     * @return {TS[]} - Supertrend line and direction of trend
+     */
     supertrend(factor, atrlen, _id, _tf) {
         let id = this._tsid(_id, `supertrend(${factor},${atrlen})`)
         let tfs = _tf || ''
@@ -984,7 +1386,10 @@ export default class ScriptStd {
         return [plot, this.neg(dir, id+'6')]
     }
 
-    // Symmetrically Weighted Moving Average
+    /** Symmetrically Weighted Moving Average
+     * @param {TS} src - Input
+     * @return {TS} - New time-series
+     */
     swma(src, _id) {
         let id = this._tsid(_id, `swma`)
         let sum = src[3] * this.SWMA[0] + src[2] * this.SWMA[1] +
@@ -992,19 +1397,24 @@ export default class ScriptStd {
         return this.ts(sum, id, src.__tf__)
     }
 
-    // Creates a new Symbol. Argument variations:
-    // <data>(Array), [<params>(Object)]
-    // <ts>(TS), [<params>(Object)]
-    // <point>(Number), [<params>(Object)]
-    // <tf>(String) 1m, 5m, 1H, etc. (uses main OHLCV)
-    // Params object: {
-    //  id: <String>,
-    //  tf: <String|Number>,
-    //  aggtype: <String> (TODO: Type of aggregation)
-    //  format: <String> (Data format, e.g. "time:price:vol")
-    //  window: <String|Number> (Aggregation window)
-    //  main <true|false> (Use as the main chart)
-    // }
+    /** Creates a new Symbol.
+     * @param {*} x - Something, depends on arg variation
+     * @param {*} y - Something, depends on arg variation
+     * @return {Sym}
+     * Argument variations:
+     * <data>(Array), [<params>(Object)]
+     * <ts>(TS), [<params>(Object)]
+     * <point>(Number), [<params>(Object)]
+     * <tf>(String) 1m, 5m, 1H, etc. (uses main OHLCV)
+     * Params object: {
+     *  id: <String>,
+     *  tf: <String|Number>,
+     *  aggtype: <String> (TODO: Type of aggregation)
+     *  format: <String> (Data format, e.g. "time:price:vol")
+     *  window: <String|Number> (Aggregation window)
+     *  main <true|false> (Use as the main chart)
+     * }
+     */
     sym(x, y = {}, _id) {
         let id = y.id || this._tsid(_id, `sym`)
         y.id = id
@@ -1022,6 +1432,7 @@ export default class ScriptStd {
                 } else {
                     sym.data_type = ARR
                 }
+
                 break
             case 'number':
                 sym = new Sym(null, y)
@@ -1035,10 +1446,13 @@ export default class ScriptStd {
         }
 
         this.env.syms[id] = sym
-        if (!sym.main) sym.update(x)
         return sym
     }
 
+    /** Tangent function
+     * @param {number} x The variable
+     * @return {number}
+     */
     tan(x) {
         return Math.tan(x)
     }
@@ -1051,7 +1465,10 @@ export default class ScriptStd {
         // TODO: this
     }
 
-    // True Range
+    /** True Range
+     * @param {TS} fixnan - Fix NaN values
+     * @return {TS} - New time-series
+     */
     tr(fixnan = false, _id, _tf) {
         let id = this._tsid(_id, `tr(${fixnan})`)
         let tfs = _tf || ''
@@ -1073,7 +1490,12 @@ export default class ScriptStd {
 
     }
 
-    // True strength index
+    /** True strength index
+     * @param {TS} src - Input
+     * @param {number} short - Short length
+     * @param {number} long - Long length
+     * @return {TS} - New time-series
+     */
     tsi(src, short, long, _id) {
         let id = this._tsid(_id, `tsi(${short},${long})`)
         let m = this.change(src, 1, id+'0')
@@ -1085,10 +1507,6 @@ export default class ScriptStd {
         return this.ts(tsi, id, src.__tf__)
     }
 
-    valuewhen() {
-        // TODO: this
-    }
-
     variance(src, len) {
         // TODO: this
     }
@@ -1097,7 +1515,11 @@ export default class ScriptStd {
         // TODO: this
     }
 
-    // Volume Weighted Moving Average
+    /** Volume Weighted Moving Average
+     * @param {TS} src - Input
+     * @param {number} len - length
+     * @return {TS} - New time-series
+     */
     vwma(src, len, _id) {
         let id = this._tsid(_id, `vwma(${len})`)
         let vol = this.env.shared.vol
@@ -1108,10 +1530,26 @@ export default class ScriptStd {
         return this.ts(res, id+'4', src.__tf__)
     }
 
-    weekofyear() {
-        // TODO: this
+    /** Week of year, literally
+     * @param {number} [time] - Time in ms (current t, if not defined)
+     * @return {number} - Week
+     */
+    weekofyear(time) {
+        let date = new Date(time || se.t)
+        date.setUTCHours(0, 0, 0, 0)
+        date.setDate(date.getUTCDate() + 3 - (date.getUTCDay() + 6) % 7)
+        let week1 = new Date(date.getUTCFullYear(), 0, 4)
+        return 1 + Math.round(
+            ((date - week1) / 86400000 - 3 +
+            (week1.getUTCDay() + 6) % 7) / 7
+        )
     }
 
+    /** Weighted moving average
+     * @param {TS} src - Input
+     * @param {number} len - length
+     * @return {TS} - New time-series
+     */
     wma(src, len, _id) {
         let id = this._tsid(_id, `wma(${len})`)
         let norm = 0
@@ -1124,7 +1562,10 @@ export default class ScriptStd {
         return this.ts(sum / norm, id, src.__tf__)
     }
 
-    // Williams %R
+    /** Williams %R
+     * @param {number} len - length
+     * @return {TS} - New time-series
+     */
     wpr(len, _id, _tf) {
         let id = this._tsid(_id, `wpr(${len})`)
         let tfs = _tf || ''
@@ -1139,6 +1580,10 @@ export default class ScriptStd {
         return this.ts(-res * 100 , id, _tf)
     }
 
+    /** Year
+     * @param {number} [time] - Time in ms (current t, if not defined)
+     * @return {number} - Year
+     */
     year(time) {
         return new Date(time || se.t).getUTCFullYear()
     }

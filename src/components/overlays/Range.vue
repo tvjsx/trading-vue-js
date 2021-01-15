@@ -9,7 +9,7 @@ export default {
     mixins: [Overlay],
     methods: {
         meta_info() {
-            return { author: 'C451', version: '1.0.0' }
+            return { author: 'C451', version: '1.0.1' }
         },
         // Here goes your code. You are provided with:
         // { All stuff is reactive }
@@ -34,6 +34,7 @@ export default {
             const layout = this.$props.layout
             const upper = layout.$2screen(this.sett.upper || 70)
             const lower = layout.$2screen(this.sett.lower || 30)
+            const data = this.$props.data
 
             // RSI values
 
@@ -41,7 +42,8 @@ export default {
             ctx.strokeStyle = this.color
             ctx.beginPath()
 
-            for (var p of this.$props.data) {
+            for (var k = 0, n = data.length; k < n; k++) {
+                let p = data[k]
                 let x = layout.t2screen(p[0])
                 let y = layout.$2screen(p[1])
                 ctx.lineTo(x, y)

@@ -1,8 +1,10 @@
 
 <template>
     <div :class="['trading-vue-tbitem', selected ? 'selected-item' : '']"
-        @click="emit_selected"
+        @click="emit_selected('click')"
         @mousedown="mousedown"
+        @touchstart="mousedown"
+        @touchend="emit_selected('touch')"
         :style="item_style">
         <div class="trading-vue-tbicon tvjs-pixelated"
             :style="icon_style">
@@ -56,10 +58,12 @@ export default {
         expmousedown(e) {
             if (this.show_exp_list) e.stopPropagation()
         },
-        emit_selected() {
+        emit_selected(src) {
             if (Utils.now() - this.click_start >
                 this.config.TB_ICON_HOLD) return
             clearTimeout(this.click_id)
+            //if (Utils.is_mobile && src === 'click') return
+            // TODO: double firing
             if (!this.data.group) {
                 this.$emit('item-selected', this.data)
             } else {

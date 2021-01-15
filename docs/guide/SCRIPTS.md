@@ -1,6 +1,6 @@
 # Scripts: Brief Intro
 
-This guide's version is **0.9.0**
+This guide's version is **1.0.0**
 
 ![npm](https://img.shields.io/npm/v/trading-vue-js.svg?color=brightgreen&label=Current%20lib%20version)
 
@@ -364,6 +364,12 @@ offchart(symbol.close)
 
 Every time `update()` is called your aggregation function gets all data data points in the current window (see the picture above). The window can be bigger or smaller than the main tf, by default it equals `tf`, meaning you'll get all the points corresponding to the current candle.
 
+### Built-in aggtypes
+
+| Type | Data format | Description |
+|---|---|---|
+| ohlcv | tOHLCV | Regulr candle sampler |
+| copy | tOHLCV | Fast copy-based sampling, w/o resampling |
 
 ## Script execution modes
 

@@ -88,7 +88,10 @@ export default {
             this.range_changed([t1, t2])
         },
         cursor_changed(e) {
-            this.updater.sync(e)
+            if (e.mode) this.cursor.mode = e.mode
+            if (this.cursor.mode !== 'explore') {
+                this.updater.sync(e)
+            }
             if (this._hook_xchanged) this.ce('?x-changed', e)
         },
         cursor_locked(state) {
@@ -97,8 +100,8 @@ export default {
             if (this._hook_xlocked) this.ce('?x-locked', state)
         },
         calc_interval() {
-            if (this.ohlcv.length < 2) return
             let tf = Utils.parse_tf(this.forced_tf)
+            if (this.ohlcv.length < 2 && !tf) return
             this.interval_ms = tf || Utils.detect_interval(this.ohlcv)
             this.interval = this.$props.ib ? 1 : this.interval_ms
             Utils.warn(
@@ -331,7 +334,7 @@ export default {
             cursor: {
                 x: null, y: null, t: null, y$: null,
                 grid_id: null, locked: false, values: {},
-                scroll_lock: false
+                scroll_lock: false, mode: Utils.xmode()
             },
 
             // A trick to re-render botbar

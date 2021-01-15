@@ -225,4 +225,20 @@ export default class TI {
         }
     }
 
+    // Global Time => Index (uses all data, approx. method)
+    // Used by tv.goto()
+    gt2i(smth, ohlcv) {
+        if (smth > MAX_ARR) {
+            let E = 0.1 // Fixes the arrayslicer bug
+            let [i1, i2] = Utils.fast_nearest(ohlcv, smth+E)
+            if (typeof i1 === 'number') {
+                return i1
+            } else {
+                return this.t2i(smth) // fallback
+            }
+        } else {
+            return smth // it was an index
+        }
+    }
+
 }

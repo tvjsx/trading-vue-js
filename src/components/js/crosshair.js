@@ -14,11 +14,11 @@ export default class Crosshair {
     }
 
     draw(ctx) {
-
         // Update reference to the grid
         this.layout = this.$p.layout
 
-        if (!this.visible) return
+        const cursor = this.comp.$props.cursor
+        if (!this.visible && cursor.mode === 'explore') return
 
         this.x = this.$p.cursor.x
         this.y = this.$p.cursor.y

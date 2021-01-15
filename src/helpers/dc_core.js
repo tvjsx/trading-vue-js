@@ -190,12 +190,16 @@ export default class DCCore extends DCEvents {
         let tick = data['price']
         let volume = data['volume'] || 0
         let tf = this.tv.$refs.chart.interval_ms
-        let t_next = last[0] + tf
+        if (!tf) {
+            return console.warn('Define the main timeframe')
+        }
         let now = data.t || Utils.now()
+        if (!last) last = [now - now % tf]
+        let t_next = last[0] + tf
 
         let t = now >= t_next ? (now - now % tf) : last[0]
 
-        if (t >= t_next && tick !== undefined) {
+        if ((t >= t_next || !ohlcv.length) && tick !== undefined) {
             // And new zero-height candle
             let nc = [t, tick, tick, tick, tick, volume]
             this.agg.push('ohlcv', nc, tf)
@@ -477,7 +481,9 @@ export default class DCCore extends DCEvents {
 
     scroll_to(t) {
         if (this.tv.$refs.chart.cursor.locked) return
-        let tl = this.tv.$refs.chart.last_candle[0]
+        let last = this.tv.$refs.chart.last_candle
+        if (!last) return
+        let tl = last[0]
         let d = this.tv.getRange()[1] - tl
         if (d > 0) this.tv.goto(t + d)
     }

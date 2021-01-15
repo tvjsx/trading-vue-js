@@ -123,7 +123,6 @@ body {
     border-bottom: 1px solid #8080804f;
     z-index: 1000;
 }
-
 #test-container{
     position: absolute;
     top: 50px;
@@ -135,6 +134,12 @@ body {
     font-weight: 600;
     font-size: 1.75em;
 }
+@media only screen and (max-device-width: 480px) {
+    #test-title h1 {
+        font-size: 1.25em;
+        margin-top: 14px
+    }
+}
 #test-title p {
     position: absolute;
     width: 100%;
@@ -143,7 +148,11 @@ body {
     font-weight: 200;
     color: #b7b7b7;
 }
-
+@media only screen and (max-device-width: 800px) {
+    #test-title p {
+        display: none;
+    }
+}
 .test-btn {
     top: 12px;
     position: absolute;
@@ -162,7 +171,13 @@ body {
 	text-decoration:none;
     text-shadow:0px 1px 0px #2f6627;
 }
-
+@media only screen and (max-device-width: 480px) {
+    .test-btn {
+        font-size:12px;
+        padding:5px 10px;
+        right: 7px;
+    }
+}
 .test-btn:active {
 	top: 13px;
 }
@@ -171,7 +186,11 @@ body {
     right: 115px;
     background-color:#4285f4;
 }
-
+@media only screen and (max-device-width: 480px) {
+    .prev-test {
+        right: 80px;
+    }
+}
 .test-btn .prev-test:hover {
 	background-color:#44c767;
 }
@@ -190,12 +209,26 @@ body {
         Fira Sans,Droid Sans,Helvetica Neue,
         sans-serif
 }
-
 .night-mode label {
-    vertical-align: top;
+    vertical-align:top;
     line-height: 1.75em;
 }
-
+@media only screen and (max-device-width: 480px) {
+    .night-mode {
+        right: 155px;
+    }
+    .night-mode label {
+        line-height: 2.2em;
+    }
+}
+@media only screen and (max-device-width: 800px) {
+    .night-mode {
+        top: 14px;
+    }
+    .night-mode label {
+        line-height: 2.2em;
+    }
+}
 .early-test {
     line-height: 0;
     font-weight: 500;
