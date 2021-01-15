@@ -34,7 +34,12 @@ export default {
                     this.pins.forEach(x => x.mousedown(e, true))
                 }
             })
+            var self = this;
             this.mouse.on('mouseup', e => {
+                if (this.drag)
+                {
+                    self.$emit('tool-updated', self);
+                }
                 this.drag = null
                 this.$emit('scroll-lock', false)
             })
