@@ -48,6 +48,16 @@ export default {
             this.pins.push(new Pin(this, 'p2', {
                 state: 'tracking'
             }))
+            var self = this;
+            this.pins[0].on('settled', () => {
+                // Call when current tool drawing is finished
+                // (Optionally) reset the mode back to 'Cursor'
+                if(self.pins[1].state == 'finished')
+                {
+                    this.set_state('finished')
+                    this.$emit('drawing-mode-off')
+                }
+            })
             this.pins[1].on('settled', () => {
                 // Call when current tool drawing is finished
                 // (Optionally) reset the mode back to 'Cursor'
