@@ -29,6 +29,10 @@ export default {
         'width', 'height', 'data', 'grid_id', 'y_transform', 'font', 'tv_id',
         'config', 'meta', 'shaders'
     ],
+    emits: [
+        'custom-event', 'register-tools', 'layer-meta-props',
+        'register-kb-listener', 'remove-kb-listener', 'cursor-changed',
+        'cursor-locked', 'rezoom-range', 'sidebar-transform'],
     mixins: [Canvas, UxList],
     components: { Crosshair, KeyboardListener },
     created() {

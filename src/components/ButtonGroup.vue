@@ -25,6 +25,7 @@ export default {
         'buttons', 'tv_id', 'ov_id', 'grid_id', 'index',
         'display', 'config'
     ],
+    emits: ['legend-button-click'],
     components: {
         LegendButton
     },

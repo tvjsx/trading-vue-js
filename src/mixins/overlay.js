@@ -9,6 +9,12 @@ export default {
         'layout', 'sub', 'data', 'settings', 'grid_id',
         'font', 'config', 'meta', 'tf', 'i0'
     ],
+    emits: [
+        'new-grid-layer', 'layer-meta-props', 'delete-grid-layer',
+        'custom-event', 'show-grid-layer', 'drawing-mode-off',
+        'scroll-lock', 'change-settings', 'object-selected',
+        'new-shader', 'remove-tool', 'redraw-grid'
+    ],
     mounted() {
         // TODO(1): when hot reloading, dynamicaly changed mixins
         // dissapear (cuz it's a hack), the only way for now

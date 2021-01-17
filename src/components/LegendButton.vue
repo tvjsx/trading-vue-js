@@ -15,6 +15,7 @@ export default {
     name: 'LegendButton',
     props: ['id', 'tv_id', 'grid_id', 'ov_id', 'index', 'display',
             'icon', 'config'],
+    emits: ['legend-button-click'],
     mounted() {
     },
     computed: {

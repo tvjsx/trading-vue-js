@@ -45,6 +45,7 @@ export default {
         'overlays', 'tv_id', 'config', 'buttons', 'toolbar', 'ib',
         'skin', 'timezone'
     ],
+    emits: ['custom-event', 'range-changed', 'legend-button-click'],
     mixins: [Shaders, DataTrack],
     components: {
         GridSection,

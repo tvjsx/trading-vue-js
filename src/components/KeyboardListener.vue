@@ -6,6 +6,10 @@
 
 export default {
     name: 'KeyboardListener',
+    emits: [
+        'register-kb-listener', 'remove-kb-listener',
+        'keydown', 'keyup', 'keypress'
+    ],
     render() { return [] },
     created: function () {
         this.$emit('register-kb-listener', {

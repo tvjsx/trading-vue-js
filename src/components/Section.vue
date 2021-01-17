@@ -40,6 +40,10 @@ import Shaders from '../mixins/shaders.js'
 export default {
     name: 'GridSection',
     props: ['common', 'grid_id'],
+    emits: [
+        'register-kb-listener', 'remove-kb-listener', 'range-changed',
+        'cursor-changed', 'cursor-locked', 'sidebar-transform',
+        'layer-meta-props', 'custom-event', 'legend-button-click'],
     mixins: [Shaders],
     components: {
         Grid,

@@ -59,6 +59,7 @@ export default {
     props: [
         'common', 'values', 'grid_id', 'meta_props'
     ],
+    emits: ['legend-button-click'],
     components: { ButtonGroup, Spinner },
     computed: {
         ohlcv() {

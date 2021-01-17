@@ -50,6 +50,10 @@ export default {
         Chart, Toolbar, Widgets, TheTip
     },
     mixins: [ XControl ],
+    emits: [
+        'register-tools', 'data-len-changed', 'range-changed',
+        'signal'
+    ],
     props: {
         titleTxt: {
             type: String,

@@ -8,6 +8,7 @@
 export default {
     name: 'TheTip',
     props: ['data'],
+    emits: ['remove-me'],
     mounted() {
         setTimeout(() => this.$emit('remove-me'), 3000)
     },

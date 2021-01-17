@@ -18,6 +18,7 @@
 export default {
     name: 'ItemList',
     props: ['config', 'items', 'colors', 'dc'],
+    emits: ['item-selected', 'close-list'],
     mounted() {
         window.addEventListener(
             'mousedown', this.onmousedown
