@@ -4,7 +4,7 @@ import se from './script_engine.js'
 
 const DEF_LIMIT = 5   // default buff length
 
-export default function(T) {
+export default function(T, auto = false) {
 
     // Define a TS type (part of the candle)
     let Ti = ['high', 'low', 'close', 'vol'].indexOf(T)
@@ -14,7 +14,7 @@ export default function(T) {
         let tf = this.__tf__
         let id = this.__id__
         t = t || se.t
-        let val = x !== undefined ? x : se[T][0]
+        let val = auto ? se[T][0] : x
         // TODO: closing at a specific time
         // (timezone, end of the month...)
         if (!this.__t0__ || t >= this.__t0__ + tf) {

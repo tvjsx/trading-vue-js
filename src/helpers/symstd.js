@@ -28,7 +28,7 @@ export default {
                 if (m[0] in se.tss) continue
                 let ts = se.tss[m[0]] = TS(m[0], [])
                 ts.__tf__ = u.tf_from_pair(m[2], m[3])
-                ts.__fn__ = Sampler(m[1]).bind(ts)
+                ts.__fn__ = Sampler(m[1], true).bind(ts)
             }
         } while (m)
 
@@ -140,7 +140,7 @@ export default {
             if (sym in se.tss) continue
             let ts = se.tss[sym] = TS(sym, [])
             ts.__tf__ = u.tf_from_str(tf)
-            ts.__fn__ = Sampler(type).bind(ts)
+            ts.__fn__ = Sampler(type, true).bind(ts)
         }
     }
 }
