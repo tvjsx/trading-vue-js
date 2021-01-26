@@ -132,6 +132,27 @@ export default class ScriptStd {
     }
 
     /**
+     * Creates a new custom sampler.
+     * Return the an array. Id is auto-genrated
+     * @param {*} x - A variable to sample from
+     * @param {string} type - Sampler type
+     * @param {(number|string)} tf - Timeframe in ms or as a string
+     * @return {TS} - New time-series
+     */
+    sample(x, type, tf, _id) {
+        let ts = this.env.tss[_id]
+        if (!ts) {
+            ts = this.env.tss[_id] = [x]
+            ts.__id__ = _id
+            ts.__tf__ = u.tf_from_str(tf)
+            ts.__fn__ = Sampler(type).bind(ts)
+        } else {
+            ts.__fn__(x)
+        }
+        return ts
+    }
+
+    /**
      * Replaces the variable if it's NaN
      * @param {*} x - The variable
      * @param {*} [v] - A value to replace with
