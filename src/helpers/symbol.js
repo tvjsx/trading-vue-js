@@ -199,7 +199,7 @@ export default class Sym {
                 }
 
                 if (sub.length || this.fillgaps === false) {
-                    var val = this.close.__fn__(sub)
+                    var val = this.close.__fn__(sub) // TODO: prob a bug
                 } else if (this.fillgaps !== false) {
                     val = this.close[0]
                 }
