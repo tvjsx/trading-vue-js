@@ -62,7 +62,7 @@ export default {
                 {
                     this.$emit('tool-updated', self);
                 }
-            })
+            });
             this.pins[1].on('settled', () => {
                 this.$emit('tool-updated', self);
                 // Call when current tool drawing is finished
