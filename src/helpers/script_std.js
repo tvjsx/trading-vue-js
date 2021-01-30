@@ -33,6 +33,7 @@ export default class ScriptStd {
                 case 'constructor':
                 case 'ts':
                 case 'tstf':
+                case 'sample':
                 case '_index_tracking':
                 case '_tsid':
                 case '_i':
