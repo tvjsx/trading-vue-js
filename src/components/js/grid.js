@@ -159,8 +159,8 @@ export default class Grid {
         if (Utils.is_mobile) return
         this.comp.$emit('cursor-changed', {
             grid_id: this.id,
-            x: event.layerX,
-            y: event.layerY + this.layout.offset
+            x: event.layerX + this.offset_x + (event.pageX-event.layerX),
+            y: event.layerY + this.offset_y  + (event.pageY-event.layerY) + this.layout.offset
         })
         this.calc_offset()
         this.propagate('mousemove', event)
