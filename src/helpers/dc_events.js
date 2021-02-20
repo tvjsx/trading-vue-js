@@ -369,6 +369,7 @@ export default class DCEvents {
         sett.$uuid = `${id}-${Utils.now()}`
 
         this.tv.$set(this.data, 'selected', sett.$uuid)
+        this.add_settings_icon()
         this.add_trash_icon()
     }
 
@@ -376,14 +377,16 @@ export default class DCEvents {
     system_tool(type) {
         switch (type) {
             case 'Remove':
-                if (this.data.selected) {
+                if (this.data.selected)
+                {
                     this.tv.$emit('before-tool-destroyed', this.data.selected)
                     this.del(this.data.selected)
                     this.remove_trash_icon()
+                    this.remove_settings_icon()
                     this.drawing_mode_off()
                     this.on_scroll_lock(false)
                 }
-                break
+            break
         }
     }
 
@@ -411,6 +414,7 @@ export default class DCEvents {
                 $selected: false
             })
             this.remove_trash_icon()
+            this.remove_settings_icon()
         }
         this.tv.$set(this.data, 'selected', null)
 
@@ -421,6 +425,7 @@ export default class DCEvents {
             $selected: true
         })
 
+        this.add_settings_icon()
         this.add_trash_icon()
     }
 
@@ -437,6 +442,24 @@ export default class DCEvents {
     remove_trash_icon() {
         // TODO: Does not call Toolbar render (distr version)
         const type = 'System:Remove'
+        Utils.overwrite(this.data.tools,
+            this.data.tools.filter(x => x.type !== type)
+        )
+    }
+
+    add_settings_icon() {
+        const type = 'System:Settings'
+        if (this.data.tools.find(x => x.type === type)) {
+            return
+        }
+        this.data.tools.push({
+            type, icon: Icons['settings.png']
+        })
+    }
+
+    remove_settings_icon() {
+        // TODO: Does not call Toolbar render (distr version)
+        const type = 'System:Settings'
         Utils.overwrite(this.data.tools,
             this.data.tools.filter(x => x.type !== type)
         )
