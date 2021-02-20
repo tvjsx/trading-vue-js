@@ -57,13 +57,13 @@ export default class DCEvents {
     on_custom_event(event, args) {
         switch(event) {
             case 'register-tools': this.register_tools(args)
-                break
+            break
             case 'exec-script': this.exec_script(args)
-                break
+            break
             case 'exec-all-scripts': this.exec_all_scripts()
-                break
+            break
             case 'data-len-changed': this.data_changed(args)
-                break
+            break
             case 'tool-selected':
                 if (!args[0]) break // TODO: Quick fix, investigate
                 if (args[0].split(':')[0] === 'System') {
@@ -74,24 +74,25 @@ export default class DCEvents {
                 if (args[0] === 'Cursor') {
                     this.drawing_mode_off()
                 }
-                break
+            break
             case 'grid-mousedown': this.grid_mousedown(args)
-                break
+            break
             case 'drawing-mode-off': this.drawing_mode_off()
-                break
+            break
             case 'change-settings': this.change_settings(args)
-                break
+            break
             case 'range-changed': this.scripts_onrange(...args)
-                break
+            break
             case 'scroll-lock': this.on_scroll_lock(args[0])
-                break
+            break
             case 'object-selected': this.object_selected(args)
-                break
+            break
             case 'remove-tool': this.system_tool('Remove')
-                break
+            break
+            case 'settings-tool': this.system_tool('Settings')
+            break
             case 'before-destroy': this.before_destroy()
-                break
-
+            break
         }
 
     }
@@ -387,6 +388,14 @@ export default class DCEvents {
                     this.on_scroll_lock(false)
                 }
             break
+            case 'Settings':
+            {
+                if (this.data.selected)
+                {
+                    this.tv.$emit('settings-tool-clicked', this.data.selected)
+                }
+            }
+            break;
         }
     }
 
@@ -413,8 +422,8 @@ export default class DCEvents {
             this.merge(`${q}.settings`, {
                 $selected: false
             })
-            this.remove_trash_icon()
             this.remove_settings_icon()
+            this.remove_trash_icon()
         }
         this.tv.$set(this.data, 'selected', null)
 
