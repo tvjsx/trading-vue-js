@@ -226,8 +226,8 @@ export default {
                 this.remove_meta_props(...d.args)
             }
         },
-        update_layout(clac_tf) {
-            if (clac_tf) this.calc_interval()
+        update_layout(calc_tf) {
+            if (calc_tf) this.calc_interval()
             const lay = new Layout(this)
             Utils.copy_layout(this._layout, lay)
             if (this._hook_update) this.ce('?chart-update', lay)
