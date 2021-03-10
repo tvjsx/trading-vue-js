@@ -70,7 +70,7 @@ let common = {
             }
         })]
     },
-    devtool: '#source-map',
+    devtool: 'source-map',
     plugins: [
         new VueLoaderPlugin(),
         new webpack.BannerPlugin({

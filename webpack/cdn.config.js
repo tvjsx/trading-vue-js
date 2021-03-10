@@ -101,5 +101,6 @@ module.exports = [{
             include: /\.js$/,
             sourceMap: false,
         })]
-    }
+    },
+    devtool: 'source-map'
 }]
