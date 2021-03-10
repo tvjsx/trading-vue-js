@@ -12,7 +12,7 @@ const PATH = `./src/helpers/tmp/`
 module.exports = class WWPlugin {
     apply(compiler) {
         compiler.hooks.afterEmit.tap('AfterEmitPlugin', (compilation) => {
-            http.get(`http://localhost:${port}/main.worker.js`, resp => {
+            http.get(`http://localhost:${port}/script_ww.worker.js`, resp => {
                 let data = ''
 
                 resp.on('data', (chunk) => {

@@ -71,5 +71,6 @@ module.exports = {
                 res.send("[OK]")
             })
         }
-    }
+    },
+    devtool: 'source-map'
 }

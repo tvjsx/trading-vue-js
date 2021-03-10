@@ -69,5 +69,6 @@ module.exports = (env, options) => ({
                 }
             })
         ]
-    }
+    },
+    devtool: 'source-map'
 })
