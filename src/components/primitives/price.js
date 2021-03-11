@@ -5,7 +5,6 @@ export default class Price {
 
     constructor(comp) {
         this.comp = comp
-        this.data = comp.$props.data
     }
 
     // Defines an inline shader (has access to both
@@ -20,9 +19,9 @@ export default class Price {
         this.comp.$emit('new-shader', {
             target: 'sidebar', draw: ctx => {
 
-                if (!last_bar()) return
-
                 let bar = last_bar()
+                if (!bar) return
+
                 let w = ctx.canvas.width
                 let h = config.PANHEIGHT
                 let lbl = bar.price.toFixed(layout.prec)
@@ -47,7 +46,7 @@ export default class Price {
         if (!this.shader) this.init_shader()
 
         let layout = this.comp.$props.layout
-        let last = this.comp.$props.meta.last
+        let last = this.comp.$props.last
 
         let dir = last[4] >= last[1]
         let color = dir ? this.green() : this.red()
@@ -64,13 +63,13 @@ export default class Price {
 
     last_bar() {
 
-        if (!this.data.length) return undefined
+        if (!this.comp.data.length) return undefined
         let layout = this.comp.$props.layout
-        let last = this.data[this.data.length - 1]
+        let last = this.comp.data[this.comp.data.length - 1]
         let y = layout.$2screen(last[4])
-        let cndl = layout.c_magnet(last[0])
+        //let cndl = layout.c_magnet(last[0])
         return {
-            y: Math.floor(cndl.c) - 0.5,
+            y: y, //Math.floor(cndl.c) - 0.5,
             price: last[4],
             color: last[4] >= last[1] ? this.green() : this.red()
         }

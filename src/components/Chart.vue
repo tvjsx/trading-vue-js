@@ -189,7 +189,8 @@ export default {
                     grid: d.grid || {},
                     tf: Utils.parse_tf(d.tf),
                     i0: res[1],
-                    loading: d.loading
+                    loading: d.loading,
+                    last: d.data[d.data.length - 1]
                 }
 
             })
@@ -267,7 +268,8 @@ export default {
                 data: this.sub,
                 i0: this.sub_start,
                 settings: this.chart.settings || this.settings_ohlcv,
-                grid: this.chart.grid || {}
+                grid: this.chart.grid || {},
+                last: this.ohlcv[this.ohlcv.length - 1]
             })
             p.overlays = this.$props.overlays
             return p

@@ -141,7 +141,8 @@ export default {
                         data: d.data,
                         settings: d.settings,
                         i0: d.i0,
-                        tf: d.tf
+                        tf: d.tf,
+                        last: d.last
                     })
                     count[d.type] = 0
                 }
@@ -157,7 +158,8 @@ export default {
                         tf: x.tf,
                         num: i,
                         grid_id: this.$props.grid_id,
-                        meta: this.$props.meta
+                        meta: this.$props.meta,
+                        last: x.last
                     })
                 })
             )
