@@ -65,7 +65,7 @@ export default {
         // Updates current cursor values
         this.updater = new CursorUpdater(this)
 
-        this.update_last_candle()
+        this.update_last_values()
         this.init_shaders(this.skin)
     },
     methods: {
@@ -172,8 +172,8 @@ export default {
                 skin: this.$props.skin
             }
         },
-        overlay_subset(source) {
-            return source.map(d => {
+        overlay_subset(source, side) {
+            return source.map((d, i) => {
                 let res = Utils.fast_filter(
                     d.data, this.ti_map.i2t_mode(
                         this.range[0] - this.interval,
@@ -190,7 +190,7 @@ export default {
                     tf: Utils.parse_tf(d.tf),
                     i0: res[1],
                     loading: d.loading,
-                    last: d.data[d.data.length - 1]
+                    last: (this.last_values[side] || [])[i]
                 }
 
             })
@@ -243,10 +243,18 @@ export default {
             if (!this.$refs.keyboard) return
             this.$refs.keyboard.remove(event)
         },
-        update_last_candle() {
-            // TODO: add last values for all overlays
+        update_last_values() {
             this.last_candle = this.ohlcv ?
                 this.ohlcv[this.ohlcv.length - 1] : undefined
+            this.last_values = { onchart: [], offchart: [] }
+            this.onchart.forEach((x, i) => {
+                let d = x.data || []
+                this.last_values.onchart[i] = d[d.length - 1]
+            })
+            this.offchart.forEach((x, i) => {
+                let d = x.data || []
+                this.last_values.offchart[i] = d[d.length - 1]
+            })
         },
         // Hook events for extensions
         ce(event, ...args) {
@@ -261,7 +269,7 @@ export default {
         // Component-specific props subsets:
         main_section() {
             let p = Object.assign({}, this.common_props())
-            p.data = this.overlay_subset(this.onchart)
+            p.data = this.overlay_subset(this.onchart, 'onchart')
             p.data.push({
                 type: this.chart.type || 'Candles',
                 main: true,
@@ -269,14 +277,14 @@ export default {
                 i0: this.sub_start,
                 settings: this.chart.settings || this.settings_ohlcv,
                 grid: this.chart.grid || {},
-                last: this.ohlcv[this.ohlcv.length - 1]
+                last: this.last_candle
             })
             p.overlays = this.$props.overlays
             return p
         },
         sub_section() {
             let p = Object.assign({}, this.common_props())
-            p.data = this.overlay_subset(this.offchart)
+            p.data = this.overlay_subset(this.offchart, 'offchart')
             p.overlays = this.$props.overlays
             return p
         },
@@ -288,7 +296,7 @@ export default {
             return p
         },
         offsub() {
-             return this.overlay_subset(this.offchart)
+             return this.overlay_subset(this.offchart, 'offchart')
         },
         // Datasets: candles, onchart, offchart indicators
         ohlcv() {
@@ -357,6 +365,7 @@ export default {
 
             // Meta data
             last_candle: [],
+            last_values: {},
             sub_start: undefined,
             activated: false
 
@@ -414,7 +423,7 @@ export default {
                     this.cursor.locked = false
                 }
                 if (this._hook_data) this.ce('?chart-data', nw)
-                this.update_last_candle()
+                this.update_last_values()
                 // TODO: update legend values for overalys
                 this.rerender++
             },
