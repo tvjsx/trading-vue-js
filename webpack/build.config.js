@@ -64,7 +64,6 @@ let common = {
         minimize: true,
         minimizer: [new TerserPlugin({
             include: /\.min\.js$/,
-            sourceMap: true,
             extractComments: {
                 banner: BANNER
             }
