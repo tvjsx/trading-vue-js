@@ -15,8 +15,58 @@ export default class Botbar {
         this.data = this.$p.sub
         this.range = this.$p.range
         this.layout = this.$p.layout
+        //add interval and cursor
+        this.interval = this.$p.interval;
+        this.cursor = comp.$props.cursor;
+
+        //add off set for draging method andd add lisners for events
+        this.offset_x = 0;
+        this.offset_y = 0;
+        //call lsitners
+        this.listeners();
 
     }
+
+    //add listener event to class
+    listeners() {
+        let mc = (this.mc = new Hammer.Manager(this.canvas));
+        let T = Utils.is_mobile ? 10 : 0;
+        mc.add(
+          new Hammer.Pan({
+            direction: Hammer.DIRECTION_VERTICAL,
+            threshold: T,
+          })
+        );
+    
+        mc.on("panstart", (event) => {
+          if (this.cursor.scroll_lock) return;
+    
+          this.drug = {
+            x: event.center.x + this.offset_x,
+            r: this.range.slice(),
+            t: this.range[1] - this.range[0],
+            t0: Utils.now(),
+          };
+        });
+    
+        mc.on("panmove", (event) => {
+          if (Utils.is_mobile) {
+            this.calc_offset();
+            this.propagate("mousemove", this.touch2mouse(event));
+          }
+          if (this.drug) {
+            this.mousedrag(this.drug.x + event.deltaX);
+          }
+        });
+    
+        mc.on("panend", (event) => {
+          if (Utils.is_mobile && this.drug) {
+            this.pan_fade(event);
+          }
+          this.drug = null;
+          this.comp.$emit("cursor-locked", false);
+        });
+      }
 
     update() {
 
@@ -183,4 +233,95 @@ export default class Botbar {
     mouseup() { }
     mousedown() { }
 
+    touch2mouse(e) {
+        this.calc_offset();
+        return {
+          original: e.srcEvent,
+          layerX: e.center.x + this.offset_x,
+          layerY: e.center.y + this.offset_y,
+          preventDefault: function() {
+            this.original.preventDefault();
+          },
+        };
+      }
+    
+      upper_border() {
+        this.ctx.strokeStyle = this.$p.colors.scale;
+        this.ctx.beginPath();
+        this.ctx.moveTo(0, 0.5);
+        this.ctx.lineTo(this.layout.width, 0.5);
+        this.ctx.stroke();
+      }
+    
+      mousedrag(x) {
+        let dt = (this.drug.t * (this.drug.x - x)) / this.layout.botbar.width;
+        let lftmrgn = this.layout.botbar.width / 4;
+        let rghtmrgn = this.layout.botbar.width - this.layout.botbar.width / 4;
+    
+        if (this.drug.x < lftmrgn) {
+          this.range[0] = this.drug.r[0] + dt;
+        } else if (this.drug.x > rghtmrgn) {
+          this.range[1] = this.drug.r[1] + dt;
+        } else {
+          this.range[0] = this.drug.r[0] + dt;
+        }
+    
+        //
+    
+        this.change_range();
+      }
+    
+      calc_offset() {
+        let rect = this.canvas.getBoundingClientRect();
+        this.offset_x = -rect.x;
+        this.offset_y = -rect.y;
+      }
+    
+      change_range() {
+        // TODO: better way to limit the view. Problem:
+        // when you are at the dead end of the data,
+        // and keep scrolling,
+        // the chart continues to scale down a little.
+        // Solution: I don't know yet
+    
+        if (!this.range.length || this.data.length < 2) return;
+    
+        let l = this.data.length - 1;
+        let data = this.data;
+        let range = this.range;
+    
+        range[0] = Utils.clamp(
+          range[0],
+          -Infinity,
+          data[l][0] - this.interval * 5.5
+        );
+    
+        range[1] = Utils.clamp(
+          range[1],
+          data[0][0] + this.interval * 5.5,
+          +Infinity
+        );
+    
+        // TODO: IMPORTANT scrolling is jerky The Problem caused
+        // by the long round trip of 'range-changed' event.
+        // First it propagates up to update layout in Chart.vue,
+        // then it moves back as watch() update. It takes 1-5 ms.
+        // And because the delay is different each time we see
+        // the lag. No smooth movement and it's annoying.
+        // Solution: we could try to calc the layout immediatly
+        // somewhere here. Still will hurt the sidebar & bottombar
+        this.comp.$emit("range-changed", range);
+      }
+    
+      trackpad_scroll(event) {
+        let dt = this.range[1] - this.range[0];
+    
+        this.range[0] += event.deltaX * dt * 0.011;
+        this.range[1] += event.deltaX * dt * 0.011;
+    
+        this.change_range();
+      }
+      destroy() {
+        if (this.mc) this.mc.destroy();
+      }
 }

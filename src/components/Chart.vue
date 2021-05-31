@@ -17,8 +17,11 @@
             v-on:legend-button-click="legend_button_click"
             >
         </grid-section>
-        <botbar v-bind="botbar_props"
-            :shaders="shaders" :timezone="timezone">
+        <botbar 
+            v-bind="botbar_props"
+            v-on:range-changed="range_changed"
+            :shaders="shaders" 
+            :timezone="timezone">
         </botbar>
     </div>
 </template>
@@ -175,12 +178,10 @@ export default {
         overlay_subset(source, side) {
             return source.map((d, i) => {
                 let res = Utils.fast_filter(
-                    d.data, this.ti_map.i2t_mode(
-                        this.range[0] - this.interval,
-                        d.indexSrc
-                    ),
+                    d.data,
+                    this.ti_map.i2t_mode(this.range[0] - this.interval, d.indexSrc),
                     this.ti_map.i2t_mode(this.range[1], d.indexSrc)
-                )
+                );
                 return {
                     type: d.type,
                     name: Utils.format_name(d),
@@ -244,8 +245,9 @@ export default {
             this.$refs.keyboard.remove(event)
         },
         update_last_values() {
-            this.last_candle = this.ohlcv ?
-                this.ohlcv[this.ohlcv.length - 1] : undefined
+            this.last_candle = this.ohlcv 
+                ? this.ohlcv[this.ohlcv.length - 1] 
+                : undefined
             this.last_values = { onchart: [], offchart: [] }
             this.onchart.forEach((x, i) => {
                 let d = x.data || []

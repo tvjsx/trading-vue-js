@@ -45,7 +45,12 @@ export default class Grid {
 
         let mc = this.mc = new Hammer.Manager(this.canvas)
         let T = Utils.is_mobile ? 10 : 0
-        mc.add(new Hammer.Pan({ threshold: T}))
+        mc.add(
+            new Hammer.Pan({ 
+                direction: Hammer.DIRECTION_ALL,
+                threshold: T,
+            })
+        )
         mc.add(new Hammer.Tap())
         mc.add(new Hammer.Pinch({ threshold: 0}))
         mc.get('pinch').set({ enable: true })
@@ -402,6 +407,9 @@ export default class Grid {
             this.range[0] -= diff1
             this.range[1] += diff2
         } else {
+            let offset = event.originalEvent.offsetX;
+            let diff1 = (offset / (this.canvas.width)) * diff;
+            let diff2 = diff - diff1;
             this.range[0] -= diff
         }
 

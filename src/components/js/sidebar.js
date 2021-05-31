@@ -7,8 +7,11 @@ var PANHEIGHT
 export default class Sidebar {
 
     constructor(canvas, comp, side = 'right') {
+        //variables for min and max zoom
+        this.MIN_ZOOM = comp.config.MIN_ZOOM;
+        this.MAX_ZOOM = comp.config.MAX_ZOOM;
 
-        PANHEIGHT = comp.config.PANHEIGHT
+        PANHEIGHT = comp.config.PANHEIGHT;
 
         this.canvas = canvas
         this.ctx = canvas.getContext('2d')
@@ -18,10 +21,27 @@ export default class Sidebar {
         this.range = this.$p.range
         this.id = this.$p.grid_id
         this.layout = this.$p.layout.grids[this.id]
+        //Interval
+        this.interval = this.$p.interval;
 
         this.side = side
-        this.listeners()
 
+        //init panmove for drag y axis
+        this.y_range = [this.layout.$_hi, this.layout.$_lo];
+        if (this.$p.y_transform) {
+        this.zoom = this.$p.y_transform.zoom;
+        } else {
+        this.zoom = 1.0;
+        }
+        this.comp.$emit("sidebar-transform", {
+        grid_id: this.id,
+        zoom: this.zoom,
+        auto: false,
+        range: this.y_range,
+        drugging: false,
+        });
+
+        this.listeners()
     }
 
     listeners() {
@@ -228,24 +248,30 @@ export default class Sidebar {
 
         let range = this.y_range.slice()
         let delta = range[0] - range[1]
+        let upmrgn = this.layout.height / 4;
+        let lwmrgn = this.layout.height - this.layout.height / 4;
 
         if (!this.layout.grid.logScale) {
-            range[0] = range[0] + delta * zk * diff1
-            range[1] = range[1] - delta * zk * diff2
-        } else {
-
-            let px_mid = this.layout.height / 2
-            let new_hi = px_mid - px_mid * (1/z)
-            let new_lo = px_mid + px_mid * (1/z)
-
+            if (this.drug.yc < upmrgn) {
+              range[0] = range[0] + delta * zk * diff1;
+            } else if (this.drug.yc > lwmrgn) {
+              range[1] = range[1] + delta * zk * diff2;
+            } else {
+              range[0] = range[0] + delta * zk * diff1;
+              range[1] = range[1] - delta * zk * diff2;
+            }
+          } else {
+            let px_mid = this.layout.height / 2;
+            let new_hi = px_mid - px_mid * (1 / z);
+            let new_lo = px_mid + px_mid * (1 / z);
+      
             // Use old mapping to get a new range
-            let f = y => math.exp((y - this.drug.B) / this.drug.A)
-
-            let copy = range.slice()
-            range[0] = f(new_hi)
-            range[1] = f(new_lo)
-
-        }
+            let f = (y) => math.exp((y - this.drug.B) / this.drug.A);
+      
+            let copy = range.slice();
+            range[0] = f(new_hi);
+            range[1] = f(new_lo);
+          }
 
         return range
     }
@@ -296,6 +322,32 @@ export default class Sidebar {
     mousemove() { }
     mouseout() { }
     mouseup() { }
-    mousedown() { }
+    mousedown(event) {
+        if (Utils.is_mobile) return;
+        // this.propagate("mousedown", event);
+        this.comp.$emit("cursor-locked", true);
+        if (event.defaultPrevented) return;
+        this.comp.$emit("custom-event", {
+          event: "grid-mousedown",
+          args: [this.id, event],
+        });
+      }
+
+    // Propagate mouse event to overlays
+    propagate(name, event) {
+        for (var layer of this.overlays) {
+        if (layer.renderer[name]) {
+            layer.renderer[name](event);
+        }
+        const mouse = layer.renderer.mouse;
+        const keys = layer.renderer.keys;
+        if (mouse.listeners) {
+            mouse.emit(name, event);
+        }
+        if (keys && keys.listeners) {
+            keys.emit(name, event);
+        }
+        }
+    }
 
 }
