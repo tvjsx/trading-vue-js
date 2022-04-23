@@ -44,19 +44,21 @@ module.exports = (env, options) => ({
     ],
     devServer: {
         host: '0.0.0.0',
-        onListening: function(server) {
-            const port = server.listeningApp.address().port
+        /*onListening: function(server) {
+            const port = server.listeningApp.address().port // todo: TypeError: Cannot read properties of undefined (reading 'address')
             global.port = port
-        },
-        before(app){
-            app.get("/debug", function(req, res) {
+        },*/
+        onBeforeSetupMiddleware: function (devServer) {
+            devServer.app.get("/debug", function (req, res) {
                 try {
                     let argv = JSON.parse(req.query.argv)
                     console.log(...argv)
-                } catch(e) {}
+                } catch(e) {
+                    console.log(e.toString())
+                }
                 res.send("[OK]")
-            })
-        }
+            });
+        },
     },
     optimization: {
         minimize: options.mode === 'production',
