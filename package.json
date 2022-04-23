@@ -1,6 +1,6 @@
 {
-  "name": "trading-vue-js",
-  "version": "1.0.1",
+  "name": "trading-vue3-js",
+  "version": "1.0.2",
   "description": "Hackable charting lib for traders",
   "main": "./dist/trading-vue.js",
   "scripts": {
@@ -24,6 +24,11 @@
     ]
   },
   "author": "C451",
+  "contributors": [
+    {
+      "name": "sudoshu"
+    }
+  ],
   "license": "MIT",
   "files": [
     "dist/*",
@@ -40,8 +45,8 @@
     "finviz",
     "trading-systems"
   ],
-  "homepage": "https://github.com/C451/trading-vue-js#readme",
-  "repository": "github:C451/trading-vue-js",
+  "homepage": "https://github.com/sudoshu/trading-vue3-js#readme",
+  "repository": "github:sudoshu/trading-vue3-js",
   "devDependencies": {
     "@ava/babel": "^2.0.0",
     "@babel/core": "^7.17.9",
