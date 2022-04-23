@@ -1,4 +1,4 @@
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const { VueLoaderPlugin } = require('vue-loader');
 const TerserPlugin = require('terser-webpack-plugin')
 
 const webpack = require('webpack')
@@ -10,8 +10,8 @@ const DATE = new Date().toDateString()
 const BANNER =
 
 `TradingVue.JS - v${VERS} - ${DATE}\n` +
-`    https://github.com/tvjsx/trading-vue-js\n` +
-`    Copyright (c) 2019 C451 Code's All Right;\n` +
+`    https://github.com/sudoshu/trading-vue3-js\n` +
+`    Copyright (c) 2022 sudoshu;\n` +
 `    Licensed under the MIT license`
 
 if (!fs.existsSync('./src/helpers/tmp/ww$$$.json')) {
@@ -64,13 +64,13 @@ let common = {
         minimize: true,
         minimizer: [new TerserPlugin({
             include: /\.min\.js$/,
-            sourceMap: true,
+            //sourceMap: true, //todo: i think this is gone now...
             extractComments: {
                 banner: BANNER
             }
         })]
     },
-    devtool: '#source-map',
+    //devtool: '#source-map', //todo: no clue ...
     plugins: [
         new VueLoaderPlugin(),
         new webpack.BannerPlugin({
