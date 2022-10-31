@@ -681,6 +681,5 @@ export default {
 
 * If you want to get crispy pixel-perfect lines, try to add/subtract 0.5 from px coordinates.
 * Combining primitives with the same style into one path will speed-up the overlay.
-* Sometimes you need to quickly prototype an overlay, http://tvjs.io/play is the place to go
 * You can pre-render repetitive drawing calls with [OffscreenCanvas](https://developer.mozilla.org/en-US/docs/Web/API/OffscreenCanvas)
 * To make direct requests to exchange from Vue.js, wrap it into [Electron](https://www.electronjs.org/)
