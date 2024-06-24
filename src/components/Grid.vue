@@ -7,7 +7,6 @@ import UxList from '../mixins/uxlist.js'
 import Crosshair from './Crosshair.vue'
 import KeyboardListener from './KeyboardListener.vue'
 import UxLayer from './UxLayer.vue'
-
 import Spline from "./overlays/Spline.vue"
 import Splines from "./overlays/Splines.vue"
 import Range from "./overlays/Range.vue"

@@ -9,6 +9,7 @@ import Pin from '../primitives/pin.js'
 import Seg from '../primitives/seg.js'
 import Line from '../primitives/line.js'
 import Ray from '../primitives/ray.js'
+import PriceLine from '../primitives/priceLine.js'
 
 export default {
     name: 'LineTool',
@@ -36,7 +37,13 @@ export default {
                         // Rewrites the default setting fields
                         settings: { ray: true },
                         icon: Icons['ray.png']
-                    }
+                    },
+                    'PriceLine': {
+                        // Rewrites the default setting fields
+                        settings: { price_line: true },
+                        icon: Icons['price_line.png']
+                    },
+
                 }
             }
         },
@@ -45,18 +52,29 @@ export default {
             // First pin is settled at the mouse position
             this.pins.push(new Pin(this, 'p1'))
             // Second one is following mouse until it clicks
-            this.pins.push(new Pin(this, 'p2', {
-                state: 'tracking'
-            }))
-            this.pins[1].on('settled', () => {
+            if(this.sett.price_line){
+                this.pins.push(new Pin(this, 'p2', {
+                    state: 'settled'
+                }))
                 // Call when current tool drawing is finished
                 // (Optionally) reset the mode back to 'Cursor'
                 this.set_state('finished')
                 this.$emit('drawing-mode-off')
-            })
+            }
+            else{
+                this.pins.push(new Pin(this, 'p2', {
+                    state: 'tracking'
+                }))
+                this.pins[1].on('settled', () => {
+                    // Call when current tool drawing is finished
+                    // (Optionally) reset the mode back to 'Cursor'
+                    this.set_state('finished')
+                    this.$emit('drawing-mode-off')
+                })
+            }
         },
         draw(ctx) {
-            if (!this.p1 || !this.p2) return
+            if (!this.p1 || (!this.p2 && !this.sett.price_line)) return
 
             ctx.lineWidth = this.line_width
             ctx.strokeStyle = this.color
@@ -66,13 +84,14 @@ export default {
                 new Ray(this, ctx).draw(this.p1, this.p2)
             } else if (this.sett.extended) {
                 new Line(this, ctx).draw(this.p1, this.p2)
+            } else if (this.sett.price_line) {
+                new PriceLine(this, ctx).draw(this.p1)
             } else {
                 new Seg(this, ctx).draw(this.p1, this.p2)
             }
 
             ctx.stroke()
             this.render_pins(ctx)
-
         },
         use_for() { return ['LineTool'] },
         data_colors() { return [this.color] }
@@ -98,6 +117,5 @@ export default {
     data() {
         return {}
     }
-
 }
 </script>

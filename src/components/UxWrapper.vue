@@ -29,6 +29,7 @@
             @click="close"
             :style="btn_style"
         >×</div>
+        
     </div>
 </div>
 </template>
@@ -40,6 +41,9 @@ import Utils from '../stuff/utils.js'
 export default {
     name: 'UxWrapper',
     props: ['ux', 'updater', 'colors', 'config'],
+    components: {
+    GridOptions
+     },
     mounted() {
         this.self = document.getElementById(this.uuid)
         this.w = this.self.offsetWidth // TODO: => width: "content"
@@ -146,6 +150,7 @@ export default {
         }
     },
     computed: {
+        
         uxr() {
             return this.$props.ux // just a ref
         },
@@ -247,7 +252,6 @@ export default {
         }
     }
 }
-
 </script>
 <style>
     .trading-vue-ux-wrapper {
