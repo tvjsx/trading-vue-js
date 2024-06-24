@@ -11,17 +11,22 @@
         :colors="colors"
         :config="config">
     </ux-wrapper>
+    <div class="grid-options">
+      <GridOptions @toggle-grid="toggleGrid"/>
+    </div>
 </span>
+
 </template>
 
 <script>
 
+import GridOptions from './GridOptions.vue';
 import UxWrapper from './UxWrapper.vue'
 
 export default {
     name: 'UxLayer',
     props: ['tv_id', 'id', 'uxs', 'updater', 'colors', 'config'],
-    components: { UxWrapper },
+    components: { UxWrapper,GridOptions },
     created () {
     },
     mounted() {
@@ -50,3 +55,12 @@ export default {
 }
 
 </script>
+<style>
+.grid-options {
+    position: absolute;
+    top: 10px; /* Adjust this value to fine-tune the vertical position */
+    right: 10px; /* Adjust this value to fine-tune the horizontal position */
+    z-index: 100; /* Ensure it's above other content */
+}
+</style>
+        
